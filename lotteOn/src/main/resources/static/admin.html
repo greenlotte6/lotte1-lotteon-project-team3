@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 메인</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <!--Style-->
+    <link rel="stylesheet" href="style/admin.css"/>
+    <!--JavaScript-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script/admin.js"></script>
+
+</head>
+<body>
+<div id="container">
+    <header>
+    </header>
+    <main>
+        <aside>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-with-cogwheels.png">환경설정
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 기본설정</a>
+                        <a href=""> - 배너관리</a>
+                        <a href=""> - 약관관리</a>
+                        <a href=""> - 카테고리</a>
+                        <a href=""> - 버전관리</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-market.png">상점관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 상점목록</a>
+                        <a href=""> - 매출현황</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-persons.png">회원관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 회원목록</a>
+                        <a href=""> - 포인트관리</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-package.png">상품관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 상품목록</a>
+                        <a href=""> - 상품등록</a>
+                        <a href=""> - 카테고리</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-credit-card.png">주문관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 주문현황</a>
+                        <a href=""> - 배송현황</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-coupon.png">쿠폰관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 쿠폰목록</a>
+                        <a href=""> - 쿠폰발급현황</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="images/admin-board.png">고객센터
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 공지사항</a>
+                        <a href=""> - 자주묻는질문</a>
+                        <a href=""> - 문의하기</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="adminMain">
+            <div class="mainTop">
+                <h4>관리자메인</h4>
+                <div><span>HOME > <p>관리자 메인</p></span></div>
+            </div>
+            <div class="graph">
+                <h3>집계현황</h3>
+                <div class="graphArea">
+                    <div>
+                        <canvas id="orderChart"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="operationStatus">
+                <h3>운영현황</h3>
+                <table class="fsttable">
+                    <tr>
+                        <th>입금대기</th>
+                        <th>배송준비</th>
+                        <th>취소요청</th>
+                        <th>교환요청</th>
+                        <th>반품요청</th>
+                    </tr>
+                    <tr>
+                        <td>101</td>
+                        <td>124</td>
+                        <td>14</td>
+                        <td>7</td>
+                        <td>24</td>
+                    </tr>
+                </table>
+                <table class="sectable">
+                    <tr>
+                        <th colspan="2">주문건수</th>
+                        <th colspan="2">주문금액</th>
+                        <th colspan="2">회원가입</th>
+                        <th colspan="2">방문자 수</th>
+                        <th colspan="2">문의 게시물</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">131</td>
+                        <td colspan="2">3,700,000</td>
+                        <td colspan="2">232</td>
+                        <td colspan="2">2,500</td>
+                        <td colspan="2">25</td>
+                    </tr>
+                    <tr>
+                        <td>오늘</td>
+                        <td>60</td>
+                        <td>오늘</td>
+                        <td>1,200,000</td>
+                        <td>오늘</td>
+                        <td>102</td>
+                        <td>어제</td>
+                        <td>1,200</td>
+                        <td>어제</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>어제</td>
+                        <td>71</td>
+                        <td>어제</td>
+                        <td>2,500,000</td>
+                        <td>어제</td>
+                        <td>130</td>
+                        <td>오늘</td>
+                        <td>1,300</td>
+                        <td>오늘</td>
+                        <td>13</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="lastFloor">
+                <div class="notice">
+                    <h3>공지사항</h3>
+                    <table>
+                        <tr>
+                            <th>[ 안내 ]</th>
+                            <td>해외결제 사칭문자 주의</td>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 안내 ]</th>
+                            <td>로젠택배반품 / 교환수거지</td>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 안내 ]</th>
+                            <td>위치정보 이용약관 개정 공지</td>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 안내 ]</th>
+                            <td>구매회원 이용약관 개정</td>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 안내 ]</th>
+                            <td>
+                                씨티은행 시트템 점검에 따<br>
+                                ...
+                            </td>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="customerQnA">
+                    <h3>고객문의</h3>
+                    <table>
+                        <tr>
+                            <th>[ 가입 ]</th>
+                            <td>가입 문의내용</td>
+                            <th class="thDate">abc**</th>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 탈퇴 ]</th>
+                            <td>탈퇴 문의내용</td>
+                            <th class="thDate">abc**</th>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 회원정보 ]</th>
+                            <td>회원정보 문의내용</td>
+                            <th class="thDate">abc**</th>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 회원정보 ]</th>
+                            <td>회원정보 문의내용</td>
+                            <th class="thDate">abc**</th>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                        <tr>
+                            <th>[ 회원정보 ]</th>
+                            <td>회원정보 문의내용</td>
+                            <th class="thDate">abc**</th>
+                            <th class="thDate">22.10.31</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</div>
+</body>
+</html>
