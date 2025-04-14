@@ -1,0 +1,21 @@
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path id="haarujv0ka" d="M0 30h17V0H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <rect fill="#F2F2F2" width="50" height="50" rx="25"/>
+        <g transform="translate(17 10)">
+            <path d="M15.894 29.777H1.106a.89.89 0 0 1-.885-.894V1.117a.89.89 0 0 1 .885-.894h14.788c.489 0 .885.4.885.894v27.766a.89.89 0 0 1-.885.894zM.221 25.675h16.558" stroke="#000" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.894 29.777H1.106a.89.89 0 0 1-.885-.894V1.117a.89.89 0 0 1 .885-.894h14.788c.489 0 .885.4.885.894v27.766a.89.89 0 0 1-.885.894" fill="#505050"/>
+            <path d="M15.894 29.777H1.106a.89.89 0 0 1-.885-.894V1.117a.89.89 0 0 1 .885-.894h14.788c.489 0 .885.4.885.894v27.766a.89.89 0 0 1-.885.894z" stroke="#000" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round"/>
+            <mask id="n7xam8bhlb" fill="#fff">
+                <use xlink:href="#haarujv0ka"/>
+            </mask>
+            <path fill="#FFF" mask="url(#n7xam8bhlb)" d="M.221 25.675H16.78V4.27H.22z"/>
+            <path stroke="#000" stroke-linecap="round" mask="url(#n7xam8bhlb)" d="M.221 25.675H16.78V4.27H.22z"/>
+            <path stroke="#000" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round" mask="url(#n7xam8bhlb)" d="M16.779 4.271H.221"/>
+            <path d="M10.25 2.642H6.75a.372.372 0 0 1-.368-.372v-.186c0-.204.165-.372.368-.372h3.498c.203 0 .368.168.368.372v.186a.372.372 0 0 1-.368.372" fill="#FFF" mask="url(#n7xam8bhlb)"/>
+            <path d="M10.25 2.642H6.75a.372.372 0 0 1-.368-.372v-.186c0-.204.165-.372.368-.372h3.498c.203 0 .368.168.368.372v.186a.372.372 0 0 1-.368.372z" stroke="#000" stroke-width=".5" stroke-linecap="round" mask="url(#n7xam8bhlb)"/>
+        </g>
+    </g>
+</svg>
