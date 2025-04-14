@@ -13,19 +13,24 @@
                 <li><a href="#">리서치 패널가입</a></li>
             </ul>
             <div class="selectMenu">
-                <select>
+                <select onchange="window.open(value,'_blank');">
                     <option selected disabled>판매자서비스</option>
+                    <option value="https://support.lotteon.com/">판매자교육 센터</option>
+                    <option value="https://api.lotteon.com/">API센터</option>
                 </select>
-                <select>
+                <select onchange="window.open(value,'_blank');">
                     <option selected disabled>Family Site</option>
+                    <option value="https://www.lotteeatz.com/eatzevent.html">롯데리아</option>
+                    <option value="https://kor.lottedfs.com/kr/shopmain/home">롯데면세점</option>
+                    <option value="https://www.lottecinema.co.kr/">롯데시네마</option>
+                    <option value="https://www.lotteworld.com/">롯데월드</option>
+                    <option value="https://www.giantsclub.com/">롯데자이언츠</option>
                 </select>
             </div>
         </div>
         <hr>
         <div class="companyInfo">
-            <h2 class="logoArea">
-                <img src="/images/lotteOn_footer_logo.png" alt="footerLogo">
-            </h2>
+            <img src="/images/lotteOn_footer_logo.png" alt="footerLogo">
             <div class="infoWrapper">
                 <div class="company">
                     <h3>롯데쇼핑 주식회사</h3>
@@ -35,8 +40,7 @@
                         <li>사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부)</li>
                         <li>
                             통신판매업 신고 : 2024-서울강남-04439&nbsp;
-                            <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=5298500774" target="_blank">사업자 정보
-                                확인</a>
+                            <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=5298500774" class="anchorLine" target="_blank">사업자 정보 확인</a>
                         </li>
                         <li>호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부</li>
                     </ul>
@@ -49,82 +53,70 @@
                 </div>
                 <div class="customer">
                     <h3>고객센터</h3>
-                    <div class="stringLine withList" style="margin-bottom: 5px;">
+                    <div>
                         <p>전화번호 : 1899-7000(유료)</p>
                         <p>
                             E-mail :
-                            <a href="#" class="emailNoline">lotteon@lotte.net</a>
+                            <a href="#">lotteon@lotte.net</a>
                         </p>
                         <p>
-                            <a href="#" target="_blank">분쟁해결기준</a>
+                            <a href="#" class="anchorLine" target="_blank">분쟁해결기준</a>
                         </p>
                     </div>
-                    <div class="stringLine withList">
-                        <ul>
+                    <div>
+                        <ul class="list">
                             <li>
-                                <a href="#" target="_blank">FAQ 보기</a>
+                                <a href="#">FAQ 보기</a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">1:1 문의하기</a>
+                                <a href="#">1:1 문의하기</a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">고객센터</a>
+                                <a href="#">고객센터</a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">공지사항</a>
+                                <a href="#">공지사항</a>
                             </li>
                         </ul>
                     </div>
-                    <h3 style="padding-top: 16px;">전자금융거래 분쟁 담당</h3>
-                    <div class="stringLine withList">
+                    <h3>전자금융거래 분쟁 담당</h3>
+                    <div>
                         <p>Tel : 1899-7000(유료)</p>
                         <p>
                             E-mail :
-                            <a href="#" class="emailNoline">lotteon@lotte.net</a>
+                            <a href="#" class="anchorLine">lotteon@lotte.net</a>
                         </p>
                         <p>
-                            <a href="#" target="_blank">안전거래센터</a>
+                            <a href="#" class="anchorLine" target="_blank">안전거래센터</a>
                         </p>
                     </div>
-                    <div class="v-popover">
+                    <div>
                         <h3>콘텐츠산업진흥법에 의한 콘텐츠보호안내</h3>
-                        <a href="#">자세히보기</a>
+                        <a href="#" class="anchorLine">자세히보기</a>
                     </div>
                 </div>
             </div>
         </div>
-        <ul class="outlink">
-            <li>
-                <a href="#">
-                    <img src="/images/ico_footer2.png">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="/images/ico_footer1.png">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="/images/ico_footer3.png">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="/images/ico_footer4.png">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="/images/ico_footer5.png">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="/images/ico_footer6.png">
-                </a>
-            </li>
-        </ul>
+        <div class="outlink">
+            <a href="https://www.lotteon.com/common/footerSafePopup">
+                <img src="/images/ico_footer2.png">
+            </a>
+            <a href="https://kolsa.or.kr/">
+                <img src="/images/ico_footer1.png">
+            </a>
+            <a href="https://hometax.go.kr/">
+                <img src="/images/ico_footer3.png">
+            </a>
+            <a href="http://upss.gs1kr.org/">
+                <img src="/images/ico_footer4.png">
+            </a>
+            <a href="https://107.relaycall.or.kr">
+                <img src="/images/ico_footer5.png">
+            </a>
+            <a href="https://www.pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS213&mCode=C040050000&nttId=8926">
+                <img src="/images/ico_footer6.png">
+            </a>
+        </div>
     </div>
     <hr>
     <div class="footerInfo">
