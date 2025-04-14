@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개 메인</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const swiper = new Swiper('.swiper', {
+                slidesPerView: 2,         // 한 화면에 보여질 슬라이드 개수
+                spaceBetween: 20,
+                pagination: {
+                el: '.swiper-pagination',
+                },
+                navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                },
+                scrollbar: {
+                el: '.swiper-scrollbar',
+                },
+            });
+        });
+    </script>
+    <style>
+        li {
+            display: inline-block;
+            list-style: none;
+            padding: 0; /* 기본 들여쓰기 제거 시 필요 */
+            margin: 0;  /* 필요시 여백도 제거 */
+            padding: 5px 20px;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            align-items: flex-start; /* 또는 center: 중앙 정렬 */
+            justify-content: space-between; /* 공간 분배 */
+            padding: 20px; /* 필요에 따라 조정 */
+        }
+        .logo {
+            display: inline-block;
+            align-content: center;
+            align-content: center;
+        }
+        .header_menu {
+            margin-left: 400px;
+            padding-top: 10px;
+        }
+        .main_image {
+            min-height: 700px;
+            background-image: url(/images/blog_main.jpg);
+            background-size: cover;       /* 박스를 꽉 채움 (잘릴 수 있음) */
+            background-position: center;  /* 가운데 정렬 */
+            background-repeat: no-repeat;
+        }
+        .image_comment {
+            color: white;
+            font-size: 33px;
+            font-weight: 500;
+            width: 1140px;
+            margin: 0 auto;
+            margin-top: 570px;
+        }
+        .subtitle {
+            height: 185px;
+            font-size: 25px;
+            padding: 30px;
+        }
+        .sub {
+            max-width: 1140px;
+        }
+        .new {
+            max-width: 1140px;
+            height: 770px;
+            padding: 70px 0;
+        }
+        .show_image img {
+            border-radius: 10px;
+            width: 100%;
+        }
+        .swiper-slide h3{
+            font-size: 25px;
+            margin: 15px 0;
+
+        }
+        .swiper-slide p {
+            line-height: 1.5;
+        }
+        .swiper-slide {
+            height: 600px;
+            width: 500px !important;
+            margin: 10px 40px;
+            padding: 20px;
+        }
+        
+        .development {
+            border: 1px solid purple;
+            max-width: 1140px;
+            height: 550px;
+        }
+        h2 {
+            font-size: 33px;
+            font-weight: 500;
+        }
+        .flowchart {
+            border: 1px solid orangered;
+            max-width: 1140px;
+            height: 2700px;
+        }
+        .employment {
+            max-width: 1140px;
+            height: 195px;
+        }
+        .employment img {
+            border-radius: 15px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="/images/ON_CI_BI.png" alt="로고" width="166px">
+            </a>
+        </div>
+        <nav class="header_menu">
+            <ul>
+                <li><a>HOME</a></li>
+                <li><a>기업문화</a></li>
+                <li><a>소식과 이야기</a></li>
+                <li><a>채용</a></li>
+                <li><a>미디어</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="main_image">
+            <span style="visibility: hidden;">공간 확보용</span>
+            <div class="image_comment">
+                <p>취향을, 브랜드를, 혜택을 발견하는 즐거움</p>
+                <p>지금 롯데온에서 만나요</p>
+            </div>
+        </section>
+        <section class="subtitle">
+            <div class="sub">
+                <p>쇼핑 좀 해본 사람들이 만든 플랫폼,</p>
+                <p>롯데ON은 풍부한 오프라인 쇼핑 인프라, 온라인 쇼핑 노하우,</p>
+                <p>IT기술로 세상에 없던 새로운 쇼핑 경험을 제공하고</p>
+                <p>꼭 이용하고 싶은 온라인 쇼핑 플랫폼으로 발전하고 있어요.</p>
+            </div>
+        </section>
+        <section class="new">
+            <h2>쇼핑을 새롭게, 세상을 이롭게 만들어나가요.</h2>
+
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div class="show_image">
+                            <img src="/images/360x203 (1).jfif" alt="이미지1">
+                        </div>
+                        <div>
+                            <h3>
+                                함께하는 성장, <br>
+                                세상을 더 이롭게 만들어요
+                            </h3>
+                            <p>
+                                'Dream Together for a Better Earth'를 목표로<br>
+                                ESG를 실천해나가고 있으며, 롯데ON 플랫폼을 활용한<br>
+                                크라우드 펀딩 기부 릴레이, 상품기부 등 이로운 세상을 위한<br>
+                                다양한 사회공헌 활동들을 진행하고 있어요.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">Slide 2</div>
+                    <div class="swiper-slide">Slide 3</div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            
+        </section>
+        <section class="development"></section>
+        <section class="flowchart"></section>
+        <section class="employment">
+            <a href="#">
+                <img src="/images/employment.png" alt="채용중">
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer_menu">
+            <a href="#">HOME</a>
+            <a href="#">기업문화</a>
+            <a href="#">소식과 이야기</a>
+            <a href="#">채용</a>
+            <a href="#">미디어</a>
+        </div>
+
+    </footer>
+</body>
+</html>
