@@ -1,0 +1,194 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+body {
+    min-width: 1200px;
+    height: 150vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+/* --------------------- header --------------------- */
+/* --------------------- header --------------------- */
+/* --------------------- main --------------------- */
+
+#container {
+    margin: 0 auto;
+    width: 1200px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 100px;
+}
+.mainLogo {
+    text-align: center;
+}
+.sellerRegMain {
+    width: 1000px;
+    height: auto;
+    margin: 0 auto;
+}
+article {
+    padding: 10px 0;
+    border-bottom: 2px solid #E60012;
+    margin-bottom: 10px;
+}
+.sellerRegMain h4 {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.fsttable {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+.fsttable table {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+}
+.fsttable table th {
+    width: 160px;
+    height: 65px;
+    background-color: rgba(228, 228, 228, 0.31);
+}
+.fsttable table td {
+    padding: 10px;
+    display: flex;
+    border-bottom: 1px solid #eee;
+}
+.fsttable table tr:last-child td {
+    border-bottom: none;
+}
+.fsttable table td p {
+    margin-left: 15px;
+    position: relative;
+    top: 10px;
+}
+.fsttable table input {
+    padding: 10px;
+    border: 2px solid #ddd;
+}
+
+.sectable {
+    width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+}
+.sectable table {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+}
+.sectable table th {
+    width: 160px;
+    height: 65px;
+    background-color: rgba(228, 228, 228, 0.31);
+}
+.sectable table td {
+    padding: 15px;
+    display: flex;
+    border-bottom: 1px solid #eee;
+    align-items: center;  /* 수직 정렬 */
+    justify-content:first baseline;  /* 양옆으로 배치 */
+
+}
+.sectable table tr:last-child td {
+    border-bottom: none;
+}
+.sectable table td p {
+    margin-left: 15px;
+    position: relative;
+    top: 10px;
+}
+.sectable table td input {
+    padding: 10px;
+    border: 2px solid #ddd;
+
+}
+
+.sectable table td button {
+    width: 150px;  /* 버튼 너비 설정 */
+    height: 35px;  /* 버튼 높이 설정 */
+    background-color: #E60012;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 0;
+
+}
+
+.btn_email{
+    position: relative;
+    top: 13px;
+    left: 13px;
+    background-color: #558ed5 !important;
+    color: white;
+}
+
+.btn_tel{
+    position: relative;
+    top: 13px;
+    left: 13px;
+    background-color: #558ed5 !important;
+    color: white;
+}
+
+.address {
+    flex-direction: column;
+
+}
+.address input:nth-of-type(1) {
+    width: 210px;
+    height: 20px;
+    position: relative;
+    right: 290px;
+}
+.address input {
+    width: 410px;
+    height: 20px;
+    position: relative;
+    right: 190px;
+}
+.btnarea {
+    text-align: center;
+
+}
+button {
+    background-color: #E60012;
+    color: white;
+    width: 210px;
+    height: 20px;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+
+
+
+/* --------------------- main --------------------- */
