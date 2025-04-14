@@ -73,7 +73,7 @@ header > div > * {
     margin-top: 2px;
     border: none;
     background: white;
-    background-image: url("../images/deleteSearchKeyword.svg");
+    background-image: url("../../images/deleteSearchKeyword.svg");
 }
 
 .search > input::placeholder {
@@ -91,28 +91,28 @@ header > div > * {
 }
 
 .heart {
-    background-image: url("../images/icon_heart_black.svg");
+    background-image: url("../../images/icon_heart_black.svg");
 }.heart:hover {
      transition: 0.5s;
-     background-image: url("../images/icon_heart_red.svg");
+     background-image: url("../../images/icon_heart_red.svg");
  }
 
 .my {
-    background-image: url("../images/icon_my_black.svg");
+    background-image: url("../../images/icon_my_black.svg");
 }.my:hover {
      transition: 0.5s;
-     background-image: url("../images/icon_my_red.svg");
+     background-image: url("../../images/icon_my_red.svg");
  }
 
 .cart {
-    background-image: url("../images/icon_cart_black.svg");
+    background-image: url("../../images/icon_cart_black.svg");
 }.cart:hover {
      transition: 0.5s;
-     background-image: url("../images/icon_cart_red.svg");
+     background-image: url("../../images/icon_cart_red.svg");
  }
 
 .searchIcon {
-    background-image: url("../images/icon_search_black.svg");
+    background-image: url("../../images/icon_search_black.svg");
     margin: 2px 6px 0 0;
 }
 
@@ -145,14 +145,55 @@ header > div > * {
 }
 
 .category {
+    position: relative;
     display: flex;
     align-items: center;
+    height: 100%;
     cursor: pointer;
+}
+
+.categories {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 200px;
+    max-height: 0;
+    overflow-y: hidden;
+    background: white;
+    border: 1px solid #ddd;
+    z-index: 10;
+    opacity: 0;
+    transition: ease, transform 0.3s ease, max-height 0.3s ease;
+}
+
+.category:hover .categories {
+    max-height: 700px;
+    opacity: 1;
+    overflow-y: auto;
+}
+
+.categories > ul li {
+    padding: 20px 0 20px 20px;
+    box-sizing: border-box;
+}
+
+.categories > ul li > a {
+    font-weight: 400;
+}
+
+.categories > ul li:hover {
+    transition: 0.3s;
+    background: rgba(238, 238, 238, 0.25);
+}
+
+.categories > ul li:hover > a {
+    transition: 0.3s;
+    color: #E60012;
 }
 
 .category:hover .burgerMenu {
     transition: 0.3s;
-    background-image: url("../images/burger_red.svg");
+    background-image: url("../../images/burger_red.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -166,7 +207,7 @@ header > div > * {
     width: 16px;
     height: 14px;
     margin-right: 10px;
-    background-image: url("../images/burger.svg");
+    background-image: url("../../images/burger.svg");
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
