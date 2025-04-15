@@ -4,8 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회사소개 미디어</title>
+    <style>
+        li {
+            display: inline-block;
+            list-style: none;
+            padding: 0; /* 기본 들여쓰기 제거 시 필요 */
+            margin: 0;  /* 필요시 여백도 제거 */
+            padding: 5px 20px;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        a {
+            text-decoration: none;
+        }
+        header {
+            display: flex;
+            align-items: flex-start; /* 또는 center: 중앙 정렬 */
+            justify-content: space-between; /* 공간 분배 */
+            padding: 20px; /* 필요에 따라 조정 */
+            max-width: 1140px;
+        }
+        .logo {
+            display: inline-block;
+            align-content: center;
+            align-content: center;
+        }
+        .header_menu {
+            margin-left: 400px;
+            padding-top: 10px;
+        }
+        .header_menu li a {
+            color: black;
+        }
+
+        .video-list {
+            flex-wrap: wrap;
+            gap: 20px;  /* 각 영상 사이의 간격 */
+            justify-content: space-around;
+        }
+
+        .video-item {
+            width: 100%; /* 기본적으로 전체 너비 */
+            max-width: 560px; /* 영상 최대 너비 */
+            text-align: center;
+        }
+
+        .video-item iframe {
+            width: 100%; /* 영상의 너비를 부모에 맞춤 */
+            height: 315px; /* 영상의 고정 높이 */
+            border: none;
+        }
+
+        .video-item p {
+            display: block;
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+            float: right;
+        }
+
+
+
+        footer {
+            min-height: 100px;
+        }
+        .footer_menu{
+            max-width: 1140px;
+            margin-top: 70px;
+        }
+        .footer_menu2{
+            max-width: 1140px;
+            margin-top: 20px;
+        }
+        .footer_menu nav {
+            display: inline-block;
+        }
+        .footer_menu div {
+            display: inline-block;
+            margin-left: 70px;
+        }
+        .footer_menu2 div {
+            display: inline-block;
+            margin-left: 50px;
+        }
+        .footer_menu li a {
+            color: #cc3366;
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="/images/ON_CI_BI.png" alt="로고" width="166px">
+            </a>
+        </div>
+        <nav class="header_menu">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">기업문화</a></li>
+                <li><a href="#">소식과 이야기</a></li>
+                <li><a href="#">채용</a></li>
+                <li><a href="#">미디어</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="video-list">
+            <div class="video-item">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/PEUvPBB2v6U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>[롯데ON] 🚨단, 10일!🚨 올 하반기 역대급 브랜드 쇼핑 축제, 온세상 쇼핑 페스타 (*10.14 ~10.23)</p>
+            </div>
+            <div class="video-item">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/9ZtsI8Hn1rg?si=GXlA4EF_nQynoNPa" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>[롯데ON] 🎈4월9일 롯데를 가지세요!🎈 4,300만의 브랜드 대축제!</p>
+            </div>
+            <div class="video-item">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/AEHoUyrL6bI?si=dsUW3uS589ezLNO5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>롯데레드페스티벌 개막🎉 100만 포인트가 쏟아진다!!</p>
+            </div>
+        </div>
+        
+    </main>
+
+    <footer>
+        <section class="footer_menu">
+            <nav>
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">기업문화</a></li>
+                    <li><a href="#">소식과 이야기</a></li>
+                    <li><a href="#">채용</a></li>
+                    <li><a href="#">미디어</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p>peoplevalue@lotte.net</p>
+            </div>
+        </section>
+        <section class="footer_menu2">
+            <div>
+                <p>© 2022 All rights Reserved</p>
+            </div>
+            <div>
+
+            </div>
+        </section>
+    </footer>
 </body>
 </html>
