@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자-회원목록</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <!--Style-->
+    <link rel="stylesheet" href="../../style/admin/member/list.css"/>
+    <!--JavaScript-->
+    <script src="../../script/banner.js"></script>
+</head>
+<body>
+<div id="container">
+    <header>
+    </header>
+    <main>
+        <aside>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-with-cogwheels.png">환경설정
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href="../config/basic.html"> - 기본설정</a>
+                        <a href="../config/banner.html"> - 배너관리</a>
+                        <a href="../config/policy.html"> - 약관관리</a>
+                        <a href="../config/category.html"> - 카테고리</a>
+                        <a href="../config/version.html"> - 버전관리</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-market.png">상점관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href="../shop/list.html"> - 상점목록</a>
+                        <a href="../shop/sales.html"> - 매출현황</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-persons.png">회원관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href="list.html"> - 회원목록</a>
+                        <a href="point.html"> - 포인트관리</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-package.png">상품관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 상품목록</a>
+                        <a href=""> - 상품등록</a>
+                        <a href=""> - 카테고리</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-credit-card.png">주문관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 주문현황</a>
+                        <a href=""> - 배송현황</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-coupon.png">쿠폰관리
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 쿠폰목록</a>
+                        <a href=""> - 쿠폰발급현황</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <img src="../../images/admin-board.png">고객센터
+                </div>
+                <div class="dropdown">
+                    <div>
+                        <a href=""> - 공지사항</a>
+                        <a href=""> - 자주묻는질문</a>
+                        <a href=""> - 문의하기</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="adminMain">
+            <div class="mainTop">
+                <h4>상점목록</h4>
+                <div><span>HOME > 상점관리 > <p>상점목록</p></span></div>
+            </div>
+            <div class="shopArea">
+                <div class="searchArea">
+                    <select>
+                        <option>선택</option>
+                        <option>아이디</option>
+                        <option>이름</option>
+                    </select>
+                    <input type="text" placeholder="검색어 입력">
+                    <button type="submit">검색</button>
+                </div>
+                <table>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>번호</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>성별</th>
+                        <th>등급</th>
+                        <th>포인트</th>
+                        <th>이메일</th>
+                        <th>휴대폰</th>
+                        <th>가입일</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>1</td>
+                        <td class="ellipsis">abc123</td>
+                        <td>정상수</td>
+                        <td>M</td>
+                        <td>
+                            <select>
+                                <option>ACE</option>
+                                <option>GOLD</option>
+                                <option>VIP</option>
+                                <option>MVG</option>
+                            </select>
+                        </td>
+                        <td>15,000</td>
+                        <td class="ellipsis">wnstj050505@gmail.com</td>
+                        <td class="ellipsis">010-7411-7353</td>
+                        <td>
+                            2025-04-15<br>
+                            05:29:11
+                        </td>
+                        <td>정상</td>
+                        <td>
+                            <button type="submit">[ 수정 ]</button>
+                            <button type="submit">[ 중지 ]</button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="btnarea">
+                    <button class="delbutton">선택삭제</button>
+                    <div class="pageBtn">
+                        <a><img src="../../images/back-double.png"></a>
+                        <a><img src="../../images/back-single.png" class="single"></a>
+                        <a class="number">1</a>
+                        <a class="number">2</a>
+                        <a class="number">3</a>
+                        <a><img src="../../images/right-single.png" class="single"></a>
+                        <a><img src="../../images/right-double.png"></a>
+                    </div>
+                    <button class="regbutton" type="submit">상점등록</button>
+                </div>
+            </div>
+        </div>
+        <div id="bannerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>상점 등록</h3>
+                <form>
+                    <div class="modalTable">
+                        <table class="fst">
+                            <tr>
+                                <th>아이디</th>
+                                <td>
+                                    <div>
+                                        <input type="text" placeholder="아이디 입력">
+                                        <p>영문, 숫자 4 ~ 12 자 설정</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호</th>
+                                <td>
+                                    <div>
+                                        <input type="password" placeholder="비밀번호 입력">
+                                        <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호 확인</th>
+                                <td>
+                                    <div><input type="password" placeholder="비밀번호 재입력"></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="sec">
+                            <tr>
+                                <th>회사명</th>
+                                <td>
+                                    <div><input type="text" placeholder="회사명 입력 예) (주) 상호명"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>대표</th>
+                                <td>
+                                    <div><input type="text" placeholder="이름 입력"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>사업자 등록번호</th>
+                                <td>
+                                    <div>
+                                        <input type="text" placeholder="사업자 등록번호 입력">
+                                        <p> - 포함 12자리 입력</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>통신 판매업 번호</th>
+                                <td>
+                                    <div>
+                                        <input type="text" placeholder="통신 판매업 번호 입력">
+                                        <p> - 포함 12자리 입력</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>전화번호</th>
+                                <td>
+                                    <div><input type="text" placeholder="전화번호 입력"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>팩스</th>
+                                <td>
+                                    <div><input type="text" placeholder="팩스번호 입력"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>주소</th>
+                                <td class="address">
+                                    <input type="text" placeholder="우편번호 검색 클릭"><br>
+                                    <input type="text" placeholder="기본주소 검색"><br>
+                                    <input type="text" placeholder="상세주소 입력">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modalbtn">
+                        <button>등록하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</div>
+</body>
+</html>
