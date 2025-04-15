@@ -119,23 +119,23 @@ header > div > * {
 .heart {
     background-image: url("../../images/icon_heart_black.svg");
 }.heart:hover {
-     transition: 0.5s;
-     background-image: url("../../images/icon_heart_red.svg");
- }
+    transition: 0.5s;
+    background-image: url("../../images/icon_heart_red.svg");
+}
 
 .my {
     background-image: url("../../images/icon_my_black.svg");
 }.my:hover {
-     transition: 0.5s;
-     background-image: url("../../images/icon_my_red.svg");
- }
+    transition: 0.5s;
+    background-image: url("../../images/icon_my_red.svg");
+}
 
 .cart {
     background-image: url("../../images/icon_cart_black.svg");
 }.cart:hover {
-     transition: 0.5s;
-     background-image: url("../../images/icon_cart_red.svg");
- }
+    transition: 0.5s;
+    background-image: url("../../images/icon_cart_red.svg");
+}
 
 .searchIcon {
     background-image: url("../../images/icon_search_black.svg");
@@ -296,7 +296,7 @@ main > div > * {
 .swiper2 {
     overflow: hidden;
 }
-
+  
 .swiper2 > div {
     height: 320px;
 }
