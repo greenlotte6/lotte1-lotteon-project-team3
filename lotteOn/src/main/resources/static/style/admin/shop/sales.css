@@ -28,7 +28,7 @@ button {
     cursor: pointer;
 }
 img {
-    width: px;
+    width: 25px;
     height: 25px;
 }
 /* --------------------- header --------------------- */
@@ -149,7 +149,6 @@ table tr {
     border-bottom: 2px solid #dddddd;
 }
 table tr th {
-    width: 120px;
     height: 45px;
     background-color: #93b7d0;
     color: white;
@@ -161,12 +160,11 @@ table tr td {
     padding: 10px;
     text-align: center;
     font-size: 12px;
+    height: 30px;
 }
-
-
 .btnarea {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 .btnarea button {
@@ -180,11 +178,47 @@ table tr td {
 .btnarea .delbutton {
     background-color: #8a8a8a;
 }
-.bannerArea {
+.btnarea .pageBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top: 9px;
+}
+.btnarea .pageBtn .number {
+    font-size: 17px;
+    width: 24px;
+    height: 32px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    top: 3px;
+}
+.btnarea .pageBtn .single {
+    width: 15px;
+    height: 15px;
+}
+.shopArea {
     padding: 20px;
 }
-.bannerArea button {
+.shopArea button {
     line-height: 10px;
+}
+.searchArea {
+    margin-bottom: 15px;
+}
+.searchArea select {
+    padding: 10px;
+}
+.searchArea input {
+    padding: 10px;
+}
+.searchArea button {
+    padding: 16px;
+    background-color: #3f97f6;
+    color: white;
 }
 
 
@@ -208,7 +242,7 @@ table tr td {
     padding: 20px;
     border-radius: 10px;
     width: 600px;
-    height: 600px;
+    height: 900px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
@@ -218,27 +252,6 @@ table tr td {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-}
-.modal table {
-    width: 100%;
-    display: block;
-    height: 500px;
-    overflow-y: auto;
-    border-bottom: none;
-}
-.modal table tr {
-    width: 100%;
-    height: 80px;
-}
-.modal table tr td {
-    width: 460px;
-}
-.modal table tr:nth-of-type(2) th {
-    height: 415px;
-}
-.modal table tr td {
-    font-size: 16px;
-    text-align: left;
 }
 .modal .modalbtn {
     display: flex;
@@ -253,68 +266,40 @@ table tr td {
     margin-top: 15px;
     border-radius: 5px;
 }
-.modal table .vtxt {
-    width: 446px;
-    height: 30px;
-    padding-left: 10px;
+.modal table th {
+    width: 90px;
+    height: 50px;
 }
-.modal table .txt {
-    width: 100%;
-    height: 390px;
-    padding-left: 10px;
-    box-sizing: border-box;
+.modal table td div {
+    text-align: left;
+    display: flex;
 }
-
-
-/* 모달 전체 화면 덮기 */
-.submodal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4); /* 반투명 배경 */
+.modal table td p {
+    margin-left: 10px;
 }
-/* 모달 창 내부 */
-.submodal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 600px;
-    height: 600px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+.modal .fst {
+    margin-bottom: 20px;
 }
-/* 닫기 버튼 */
-.submodal .close {
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
+.modal table td input {
+    padding: 10px;
 }
-.submodal table {
-    width: 100%;
-    display: block;
-    height: 500px;
-    overflow-y: auto;
-    border-bottom: none;
-}
-.submodal table tr {
-    width: 100%;
-    height: 80px;
-}
-.submodal table tr td {
-    width: 460px;
-}
-.submodal table tr:nth-of-type(2) th {
-    height: 415px;
-}
-.submodal table tr td {
-    font-size: 16px;
+.address {
     text-align: left;
 }
-
+.address input {
+    margin-bottom: 5px;
+    width: 410px;
+    height: 20px;
+}
+.address input:nth-of-type(3) {
+    margin-bottom: 0;
+}
+.address input:nth-of-type(1) {
+    width: 210px;
+    height: 20px;
+}
+.modal table td p {
+    position: relative;
+    top: 10px;
+}
 /* --------------------- main --------------------- */
