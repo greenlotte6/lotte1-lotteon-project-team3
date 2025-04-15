@@ -1,0 +1,99 @@
+li {
+    display: inline-block;
+    list-style: none;
+    padding: 0; /* 기본 들여쓰기 제거 시 필요 */
+    margin: 0;  /* 필요시 여백도 제거 */
+    padding: 5px 20px;
+}
+* {
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+a {
+    text-decoration: none;
+}
+header {
+    display: flex;
+    align-items: flex-start; /* 또는 center: 중앙 정렬 */
+    justify-content: space-between; /* 공간 분배 */
+    padding: 20px; /* 필요에 따라 조정 */
+    max-width: 1140px;
+}
+.logo {
+    display: inline-block;
+    align-content: center;
+    align-content: center;
+}
+.header_menu {
+    margin-left: 400px;
+    padding-top: 10px;
+}
+.header_menu li a {
+    color: black;
+}
+
+.youtube {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.video_item a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 1000px;
+    height: auto;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: background 0.2s;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.video_item a:hover {
+    background: #f9f9f9;
+}
+
+.video_item img {
+    width: 500px;
+    height: auto;
+    border-radius: 8px;
+    flex-shrink: 0; /* 이미지 크기 고정 */
+}
+
+.video_item p {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+footer {
+    min-height: 100px;
+}
+.footer_menu{
+    max-width: 1140px;
+    margin-top: 70px;
+}
+.footer_menu2{
+    max-width: 1140px;
+    margin-top: 20px;
+}
+.footer_menu nav {
+    display: inline-block;
+}
+.footer_menu div {
+    display: inline-block;
+    margin-left: 70px;
+}
+.footer_menu2 div {
+    display: inline-block;
+    margin-left: 50px;
+}
+.footer_menu li a {
+    color: #cc3366;
+}
