@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회사소개 메인</title>
+    <link rel="stylesheet" href="/css/intro_home.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
@@ -24,103 +25,7 @@
             });
         });
     </script>
-    <style>
-        li {
-            display: inline-block;
-            list-style: none;
-            padding: 0; /* 기본 들여쓰기 제거 시 필요 */
-            margin: 0;  /* 필요시 여백도 제거 */
-            padding: 5px 20px;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0 auto;
-        }
-        header {
-            display: flex;
-            align-items: flex-start; /* 또는 center: 중앙 정렬 */
-            justify-content: space-between; /* 공간 분배 */
-            padding: 20px; /* 필요에 따라 조정 */
-        }
-        .logo {
-            display: inline-block;
-            align-content: center;
-            align-content: center;
-        }
-        .header_menu {
-            margin-left: 400px;
-            padding-top: 10px;
-        }
-        .main_image {
-            min-height: 700px;
-            background-image: url(/images/blog_main.jpg);
-            background-size: cover;       /* 박스를 꽉 채움 (잘릴 수 있음) */
-            background-position: center;  /* 가운데 정렬 */
-            background-repeat: no-repeat;
-        }
-        .image_comment {
-            color: white;
-            font-size: 33px;
-            font-weight: 500;
-            width: 1140px;
-            margin: 0 auto;
-            margin-top: 570px;
-        }
-        .subtitle {
-            height: 185px;
-            font-size: 25px;
-            padding: 30px;
-        }
-        .sub {
-            max-width: 1140px;
-        }
-        .new {
-            max-width: 1140px;
-            height: 770px;
-            padding: 70px 0;
-        }
-        .show_image img {
-            border-radius: 10px;
-            width: 100%;
-        }
-        .swiper-slide h3{
-            font-size: 25px;
-            margin: 15px 0;
-
-        }
-        .swiper-slide p {
-            line-height: 1.5;
-        }
-        .swiper-slide {
-            height: 600px;
-            width: 500px !important;
-            margin: 10px 40px;
-            padding: 20px;
-        }
-        
-        .development {
-            border: 1px solid purple;
-            max-width: 1140px;
-            height: 550px;
-        }
-        h2 {
-            font-size: 33px;
-            font-weight: 500;
-        }
-        .flowchart {
-            border: 1px solid orangered;
-            max-width: 1140px;
-            height: 2700px;
-        }
-        .employment {
-            max-width: 1140px;
-            height: 195px;
-        }
-        .employment img {
-            border-radius: 15px;
-            width: 100%;
-        }
-    </style>
+    
 </head>
 <body>
     <header>
@@ -131,11 +36,11 @@
         </div>
         <nav class="header_menu">
             <ul>
-                <li><a>HOME</a></li>
-                <li><a>기업문화</a></li>
-                <li><a>소식과 이야기</a></li>
-                <li><a>채용</a></li>
-                <li><a>미디어</a></li>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">기업문화</a></li>
+                <li><a href="#">소식과 이야기</a></li>
+                <li><a href="#">채용</a></li>
+                <li><a href="#">미디어</a></li>
             </ul>
         </nav>
     </header>
@@ -166,7 +71,7 @@
                 <!-- Slides -->
                     <div class="swiper-slide">
                         <div class="show_image">
-                            <img src="/images/360x203 (1).jfif" alt="이미지1">
+                            <img src="/images/HOME/1.jpg" alt="이미지1">
                         </div>
                         <div>
                             <h3>
@@ -181,8 +86,40 @@
                             </p>
                         </div>
                     </div>
-                    <div class="swiper-slide">Slide 2</div>
-                    <div class="swiper-slide">Slide 3</div>
+                    <div class="swiper-slide">
+                        <div class="show_image">
+                            <img src="/images/HOME/3.png" alt="이미지3" style="height: 306.6px;">
+                        </div>
+                        <div>
+                            <h3>
+                                고객이 원하고 만족하는 <br>
+                                서비스를 만들어요
+                            </h3>
+                            <p>
+                                롯데ON은 단순히 상품만을 판매하는 플랫폼이 아니라,<br>
+                                상품에 대한 경험을 함께 제공할 수 있는 플랫폼을 목표로 하고 있어요.<br>
+                                해외직구, 뷰티, 그로서리, 선물하기 등 다양한 영역에서<br>
+                                새로운 서비스를 만들어가고 있어요.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="show_image">
+                            <img src="/images/HOME/2.jpg" alt="이미지2" style="height: 306.6px;">
+                        </div>
+                        <div>
+                            <h3>
+                                하이앤드테크로 온/오프라인 <br>
+                                시너지를 만들어요
+                            </h3>
+                            <p>
+                                많은 전문가들이 MAS, AWS 등 최신 기술을 운영하고 있으며,<br>
+                                최신기술과 롯데의 온/오프라인 4000만+ 고객 데이터를 결합하여<br>
+                                롯데 오프라인 매장과 연계한 다양한 서비스로<br>
+                                고객들에게 온-오프라인을 넘나드는 새로운 쇼핑 경험을 드려요.
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <!-- If we need pagination -->
                 <div class="swiper-pagination"></div>
@@ -193,8 +130,52 @@
             </div>
             
         </section>
-        <section class="development"></section>
-        <section class="flowchart"></section>
+        <section class="development">
+            <h2>롯데ON은 이렇게 성장해가고 있어요.</h2>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+        </section>
+        <section class="flowchart">
+            <h2>
+                국내 최초의 온라인 종합 쇼핑몰로 출발해<br>
+                쇼핑 경험의 변화를 이끌어내고 있어요.
+            </h2>
+            <img src="/images/history.png" alt="플로우차트">
+        </section>
         <section class="employment">
             <a href="#">
                 <img src="/images/employment.png" alt="채용중">
@@ -203,14 +184,28 @@
     </main>
 
     <footer>
-        <div class="footer_menu">
-            <a href="#">HOME</a>
-            <a href="#">기업문화</a>
-            <a href="#">소식과 이야기</a>
-            <a href="#">채용</a>
-            <a href="#">미디어</a>
-        </div>
+        <section class="footer_menu">
+            <nav>
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">기업문화</a></li>
+                    <li><a href="#">소식과 이야기</a></li>
+                    <li><a href="#">채용</a></li>
+                    <li><a href="#">미디어</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p>peoplevalue@lotte.net</p>
+            </div>
+        </section>
+        <section class="footer_menu2">
+            <div>
+                <p>© 2022 All rights Reserved</p>
+            </div>
+            <div>
 
+            </div>
+        </section>
     </footer>
 </body>
 </html>
