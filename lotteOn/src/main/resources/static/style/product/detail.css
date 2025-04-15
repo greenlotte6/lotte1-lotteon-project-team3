@@ -99,7 +99,7 @@ header > div > * {
     margin-top: 2px;
     border: none;
     background: white;
-    background-image: url("/images/deleteSearchKeyword.svg");
+    background-image: url("../../images/deleteSearchKeyword.svg");
 }
 
 .search > input::placeholder {
@@ -117,28 +117,28 @@ header > div > * {
 }
 
 .heart {
-    background-image: url("/images/icon_heart_black.svg");
+    background-image: url("../../images/icon_heart_black.svg");
 }.heart:hover {
     transition: 0.5s;
-    background-image: url("/images/icon_heart_red.svg");
+    background-image: url("../../images/icon_heart_red.svg");
 }
 
 .my {
-    background-image: url("/images/icon_my_black.svg");
+    background-image: url("../../images/icon_my_black.svg");
 }.my:hover {
     transition: 0.5s;
-    background-image: url("/images/icon_my_red.svg");
+    background-image: url("../../images/icon_my_red.svg");
 }
 
 .cart {
-    background-image: url("/images/icon_cart_black.svg");
+    background-image: url("../../images/icon_cart_black.svg");
 }.cart:hover {
     transition: 0.5s;
-    background-image: url("/images/icon_cart_red.svg");
+    background-image: url("../../images/icon_cart_red.svg");
 }
 
 .searchIcon {
-    background-image: url("/images/icon_search_black.svg");
+    background-image: url("../../images/icon_search_black.svg");
     margin: 2px 6px 0 0;
 }
 
@@ -219,7 +219,7 @@ header > div > * {
 
 .category:hover .burgerMenu {
     transition: 0.3s;
-    background-image: url("/images/burger_red.svg");
+    background-image: url("../../images/burger_red.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -233,7 +233,7 @@ header > div > * {
     width: 16px;
     height: 14px;
     margin-right: 10px;
-    background-image: url("/images/burger.svg");
+    background-image: url("../../images/burger.svg");
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
@@ -286,6 +286,7 @@ main > div > * {
 
 .detailContainer {
     margin-top: 30px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
 }
@@ -332,15 +333,253 @@ main > div > * {
     padding-right: 9px;
     color: #E60012;
 }
+
 .price {
     padding-right: 3px;
 }
+
 .won {
     position: relative;
-    top: 6px;
+    top: 7px;
     font-size: 18px;
     vertical-align: top;
 }
+
+.realPrice {
+    display: flex;
+    color: #B5B5B5;
+    margin-top: 8px;
+}
+
+.realPrice > p {
+    color: #B5B5B5;
+}
+
+.adBanner {
+    margin-top: 12px;
+}
+
+.adBanner img {
+    width: 350px;
+    border-radius: 6px;
+}
+
+.chooseProduct {
+    display: flex;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.chooseProduct > p {
+    width: 128px;
+    font-size: 14px;
+}
+
+.chooseOption {
+    width: 100%;
+    position: relative;
+}
+
+.chooseOption > p {
+    position: relative;
+    font-size: 12px;
+    padding: 16.5px 14px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.chooseOption > p:after {
+    content: "";
+    position: absolute;
+    top: 27px;
+    right: 14px;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    background-image: url("../../images/select_arr.svg");
+    background-repeat: no-repeat;
+    background-size: 20px auto;
+}
+
+.options {
+    position: absolute;
+    top: 51px;
+    width: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    max-height: 0;
+    overflow-y: hidden;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease, max-height 0.2s ease;
+}
+
+.open {
+    max-height: 700px;
+    opacity: 1;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.options li {
+    display: flex;
+    justify-content: space-between;
+    padding: 16.5px 14px;
+    border-top: 1px solid #eee;
+    cursor: pointer;
+}
+.options li:first-child {
+    border-top: none;
+}
+
+.options li > * {
+    font-size: 12px;
+}
+
+.optionPrice {
+    display: flex;
+}
+
+.optionPrice > * {
+    font-size: 12px;
+}
+
+.optionPrice > del {
+    color: #B5B5B5;
+}
+
+.optionPrice > *:last-child {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.selectedOptions {
+    padding: 11px 10px 11px 15px;
+    border: 1px solid #eee;
+    margin-top: 5px;
+}
+
+.selectedOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.selectedOption:nth-of-type(2) {
+    margin-top: 12px;
+}
+
+.selectedOption > p {
+    font-size: 12px;
+}
+
+.selectedOption > button {
+    background-color: white;
+    border: none;
+    height: 24px;
+}
+
+.control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgb(221, 223, 225);
+    width: 88px;
+    padding: 0 1px;
+    border-radius: 3px;
+}
+.minus {
+    width: 28px;
+    height: 28px;
+    border: none;
+    font-size: 1px;
+    color: transparent;
+    background-size: cover;
+    background-color: transparent;
+    background-image: url("../../images/minus.svg");
+    vertical-align: top;
+}
+.plus {
+    width: 28px;
+    height: 28px;
+    border: none;
+    font-size: 1px;
+    color: transparent;
+    background-size: cover;
+    background-color: transparent;
+    background-image: url("../../images/plus.svg");
+    vertical-align: top;
+}
+
+.totalPriceBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-top: 30px;
+}
+
+.totalPriceBox > *:first-child {
+    padding-right: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.totalPriceBox > *:last-child {
+    padding-left: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.totalPrice {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.like {
+    width: 56px;
+    border: 1px solid #eee;
+    background-color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../../images/icon_heart_red.svg");
+}
+
+.like:hover {
+    transition: 0.3s;
+    background-image: url("../../images/icon_fill_heart_red.svg");
+}
+
+.addCart {
+    border: 1px solid #eee;
+    background: white;
+}
+
+.purchase {
+    border: 1px solid #E60012;
+    background: #E60012;
+    color: white;
+}
+
+.btnContainer > button:not(:first-child) {
+    width: 240px;
+}
+
+.btnContainer > button {
+    height: 56px;
+    border-radius: 4px;
+}
+
 /* --------------------- main --------------------- */
 
 /* --------------------- footer --------------------- */
@@ -402,7 +641,7 @@ select {
     height: 32px;
     padding: 0 38px 0 16px;
     background-color: white;
-    background-image: url("/images/icon_footer_family.svg");
+    background-image: url("../../images/icon_footer_family.svg");
     background-repeat: no-repeat;
     background-position: right 10px center;
 }

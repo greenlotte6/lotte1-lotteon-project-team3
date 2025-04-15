@@ -12,6 +12,8 @@
     
     <!-- Script -->
     <script src="/script/search.js"></script>
+    <script src="/script/chooseOption.js"></script>
+    <script src="/script/count.js"></script>
 
     <!-- Style -->
     <link rel="stylesheet" href="/style/product/detail.css"/>
@@ -101,10 +103,78 @@
                         <div>
                             <div class="priceInfo">
                                 <p class="discount">10%</p>
-                                <p class="price">23,800</p>
+                                <p class="price">21,420</p>
                                 <span class="won">원</span>
                             </div>
-                            <p class="total"></p>
+                            <del class="realPrice">
+                                <p>23,800</p>
+                                <p>원</p>
+                            </del>
+                        </div>
+                        <div class="adBanner">
+                            <a href="#">
+                                <img src="/images/adBanner.jpg" alt="광고 배너">
+                            </a>
+                        </div>
+                        <div class="chooseProduct">
+                            <p>상품 선택</p>
+                            <div class="chooseOption">
+                                <p class="chooseBtn">상품을 선택해주세요</p>
+                                <div class="options">
+                                    <ul>
+                                        <li>
+                                            <p>통밀먹인 오겹살 1kg+1kg 구이용</p>
+                                            <div class="optionPrice">
+                                                <del>23,800원</del>
+                                                <p>21,420원</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <p>통밀먹인 오겹살 2kg+2kg 구이용</p>
+                                            <div class="optionPrice">
+                                                <del>23,800원</del>
+                                                <p>21,420원</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <p>통밀먹인 오겹살 3kg+3kg 구이용</p>
+                                            <div class="optionPrice">
+                                                <del>23,800원</del>
+                                                <p>21,420원</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="selectedOptions">
+                                    <div class="selectedOption">
+                                        <p>통밀먹인 오겹살 1kg+1kg 구이용</p>
+                                        <button>
+                                            <img src="/images/cancel.svg" alt="삭제 버튼">
+                                        </button>
+                                    </div>
+                                    <div class="selectedOption">
+                                        <div class="control">
+                                            <button class="minus"></button>
+                                            <div class="count">1</div>
+                                            <button class="plus"></button>
+                                        </div>
+                                        <div class="optionPrice multi">
+                                            <del>23,800원</del>
+                                            <p>21,420원</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="totalPriceBox">
+                            <p>총 상품금액: </p>
+                            <p class="totalPrice"></p>
+                            <p>원</p>
+                        </div>
+                        <div class="btnContainer">
+                            <button class="like"></button>
+                            <button class="addCart">장바구니 담기</button>
+                            <button class="purchase">바로 구매하기</button>
                         </div>
                     </div>
                 </div>
