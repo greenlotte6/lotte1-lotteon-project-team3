@@ -164,25 +164,26 @@ table tr td {
 }
 .btnarea {
     display: flex;
+    justify-content: center;
     align-items: center;
-    position: relative;
 }
 .btnarea button {
     width: 100px;
     height: 50px;
-    background-color: #8a8a8a;
+    background-color: #3f97f6;
     color: white;
     text-align: center;
     margin-top: 15px;
+}
+.btnarea .delbutton {
+    background-color: #8a8a8a;
 }
 .btnarea .pageBtn {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: absolute;
-    top: 25px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    top: 9px;
 }
 .btnarea .pageBtn .number {
     font-size: 17px;
@@ -200,7 +201,8 @@ table tr td {
     height: 15px;
 }
 .shopArea {
-    padding: 20px;
+    padding: 10px;
+    margin-top: 10px;
 }
 .shopArea button {
     line-height: 10px;
@@ -218,5 +220,209 @@ table tr td {
     padding: 16px;
     background-color: #3f97f6;
     color: white;
+}
+tr td select {
+    font-size: 12px;
+}
+tr td select option {
+    font-size: 12px;
+}
+
+
+
+/* 모달 전체 화면 덮기 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 닫기 버튼 */
+.modal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.modal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.modal table {
+    margin-bottom: 20px;
+}
+.modal table th {
+    width: 90px;
+    height: 50px;
+}
+.modal table td div {
+    text-align: left;
+    display: flex;
+}
+.modal .fst {
+    margin-bottom: 20px;
+}
+.modal table td input {
+    padding: 10px;
+}
+.modal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.modal .total {
+    display: flex;
+    justify-content: flex-end;
+}
+.modal .total table{
+    width: 250px;
+    height: 150px;
+    border: none;
+}
+.modal .total table tr:last-of-type {
+    border: none;
+}
+
+
+
+
+
+
+/* 모달 전체 화면 덮기 */
+.submodal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.submodal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 닫기 버튼 */
+.submodal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modaltop {
+    display: flex;
+}
+.modaltop p {
+    margin-left: 15px;
+    position: relative;
+    top: 5px;
+}
+.submodal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.submodal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.submodal table {
+    margin-bottom: 20px;
+}
+.submodal table th {
+    width: 90px;
+    height: 50px;
+}
+.submodal table td div {
+    text-align: left;
+    display: flex;
+}
+.submodal .fst {
+    margin-bottom: 20px;
+}
+.submodal table td input {
+    padding: 10px;
+}
+.submodal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.submodal table td .status {
+    font-size: 16px;
+}
+.submodal table input {
+    width: 400px;
+    border-radius: 3px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+}
+.submodal table tr td div select {
+    font-size: 16px;
+    width: 400px;
+    height: 43px;
+}
+.submodal table tr td div option {
+    font-size: 16px;
+}
+.submodal .thd tr td div input {
+    width: 240px;
+}
+.modalTable {
+    padding: 20px;
+}
+.infotop h2 {
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+.infotop {
+    border-bottom: 2px solid black;
+}
+.submodal table .addr{
+    width: 600px;
+}
+.submodal table .subinfo {
+    width: 600px;
+    height: 200px;
 }
 /* --------------------- main --------------------- */

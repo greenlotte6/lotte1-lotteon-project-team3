@@ -7,7 +7,7 @@
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <!--Style-->
-    <link rel="stylesheet" href="../../style/admin/shop/list.css"/>
+    <link rel="stylesheet" href="../../style/admin/member/point.css"/>
     <!--JavaScript-->
     <script src="../../script/banner.js"></script>
 </head>
@@ -59,8 +59,7 @@
                 </div>
                 <div class="dropdown">
                     <div>
-                        <a href=""> - 상품목록</a>
-                        <a href=""> - 상품등록</a>
+                        <a href="../product/list.html"> - 상품목록</a>
                         <a href=""> - 카테고리</a>
                     </div>
                 </div>
@@ -102,18 +101,15 @@
         </aside>
         <div class="adminMain">
             <div class="mainTop">
-                <h4>상점목록</h4>
-                <div><span>HOME > 상점관리 > <p>상점목록</p></span></div>
+                <h4>포인트관리</h4>
+                <div><span>HOME > 상점관리 > <p>포인트관리</p></span></div>
             </div>
             <div class="shopArea">
                 <div class="searchArea">
                     <select>
                         <option>선택</option>
-                        <option>상호명</option>
-                        <option>대표</option>
-                        <option>사업자등록번호</option>
-                        <option>통신판매업번호</option>
-                        <option>연락처</option>
+                        <option>아이디</option>
+                        <option>이름</option>
                     </select>
                     <input type="text" placeholder="검색어 입력">
                     <button type="submit">검색</button>
@@ -122,132 +118,39 @@
                     <tr>
                         <th><input type="checkbox"></th>
                         <th>번호</th>
-                        <th>상호명</th>
-                        <th>대표</th>
-                        <th>사업자등록번호</th>
-                        <th>통신판매업번호</th>
-                        <th>연락처</th>
-                        <th>운영</th>
-                        <th>관리</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>지급 포인트</th>
+                        <th>잔여 포인트</th>
+                        <th>지급 내용</th>
+                        <th>지급 날짜</th>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>1</td>
-                        <td>(주) 롯데온</td>
+                        <td>abc123</td>
                         <td>정상수</td>
-                        <td>112-12-12345</td>
-                        <td>2024-부산남구-04433</td>
-                        <td>010-1245-1234</td>
-                        <td>🟢</td>
+                        <td>1,000</td>
+                        <td>15,000</td>
+                        <td>구매확정 포인트 지급</td>
                         <td>
-                            <button type="submit">[ 중단 ]</button>
+                            2025-04-16<br>
+                            13:10:11
                         </td>
                     </tr>
                 </table>
                 <div class="btnarea">
                     <button class="delbutton">선택삭제</button>
                     <div class="pageBtn">
-                        <a><img src="../../images/back-double.png"></a>
-                        <a><img src="../../images/back-single.png" class="single"></a>
-                        <a class="number">1</a>
-                        <a class="number">2</a>
-                        <a class="number">3</a>
-                        <a><img src="../../images/right-single.png" class="single"></a>
-                        <a><img src="../../images/right-double.png"></a>
+                        <a href=""><img src="../../images/back-double.png"></a>
+                        <a href=""><img src="../../images/back-single.png" class="single"></a>
+                        <a href="" class="number">1</a>
+                        <a href="" class="number">2</a>
+                        <a href="" class="number">3</a>
+                        <a href=""><img src="../../images/right-single.png" class="single"></a>
+                        <a href=""><img src="../../images/right-double.png"></a>
                     </div>
-                    <button class="regbutton" type="submit">상점등록</button>
                 </div>
-            </div>
-        </div>
-        <div id="bannerModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3>상점 등록</h3>
-                <form>
-                    <div class="modalTable">
-                        <table class="fst">
-                            <tr>
-                                <th>아이디</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="아이디 입력">
-                                        <p>영문, 숫자 4 ~ 12 자 설정</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>비밀번호</th>
-                                <td>
-                                    <div>
-                                        <input type="password" placeholder="비밀번호 입력">
-                                        <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>비밀번호 확인</th>
-                                <td>
-                                    <div><input type="password" placeholder="비밀번호 재입력"></div>
-                                </td>
-                            </tr>
-                        </table>
-                        <table class="sec">
-                            <tr>
-                                <th>회사명</th>
-                                <td>
-                                    <div><input type="text" placeholder="회사명 입력 예) (주) 상호명"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>대표</th>
-                                <td>
-                                    <div><input type="text" placeholder="이름 입력"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>사업자 등록번호</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="사업자 등록번호 입력">
-                                        <p> - 포함 12자리 입력</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>통신 판매업 번호</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="통신 판매업 번호 입력">
-                                        <p> - 포함 12자리 입력</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>전화번호</th>
-                                <td>
-                                    <div><input type="text" placeholder="전화번호 입력"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>팩스</th>
-                                <td>
-                                    <div><input type="text" placeholder="팩스번호 입력"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>주소</th>
-                                <td class="address">
-                                    <input type="text" placeholder="우편번호 검색 클릭"><br>
-                                    <input type="text" placeholder="기본주소 검색"><br>
-                                    <input type="text" placeholder="상세주소 입력">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modalbtn">
-                        <button>등록하기</button>
-                    </div>
-                </form>
             </div>
         </div>
     </main>

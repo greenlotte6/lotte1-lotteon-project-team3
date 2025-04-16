@@ -164,25 +164,26 @@ table tr td {
 }
 .btnarea {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    position: relative;
 }
 .btnarea button {
     width: 100px;
     height: 50px;
-    background-color: #8a8a8a;
+    background-color: #3f97f6;
     color: white;
     text-align: center;
     margin-top: 15px;
+}
+.btnarea .delbutton {
+    background-color: #8a8a8a;
 }
 .btnarea .pageBtn {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: absolute;
-    top: 25px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    top: 9px;
 }
 .btnarea .pageBtn .number {
     font-size: 17px;
@@ -200,7 +201,8 @@ table tr td {
     height: 15px;
 }
 .shopArea {
-    padding: 20px;
+    padding: 10px;
+    margin-top: 10px;
 }
 .shopArea button {
     line-height: 10px;
@@ -218,5 +220,122 @@ table tr td {
     padding: 16px;
     background-color: #3f97f6;
     color: white;
+}
+tr td select {
+    font-size: 12px;
+}
+tr td select option {
+    font-size: 12px;
+}
+
+
+
+/* 모달 전체 화면 덮기 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: 1750px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 닫기 버튼 */
+.modal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.modal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.modal table {
+    margin-bottom: 20px;
+}
+.modal table th {
+    width: 90px;
+    height: 50px;
+}
+.modal table td div {
+    text-align: left;
+    display: flex;
+}
+.modal .fst {
+    margin-bottom: 20px;
+}
+.modal table td input {
+    padding: 10px;
+}
+.modal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.modal table td .status {
+    font-size: 16px;
+}
+.modal table input {
+    width: 400px;
+    border-radius: 3px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+}
+.modal table input[type="file"] {
+    width: 300px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+.modal table tr td div select {
+    font-size: 16px;
+    width: 424px;
+    height: 43px;
+}
+.modal table tr td div option {
+    font-size: 16px;
+}
+.modal .thd tr td div input {
+    width: 240px;
+}
+.address {
+    text-align: left;
+}
+.address input {
+    margin-bottom: 5px;
+    width: 410px;
+    height: 20px;
+}
+.address input:nth-of-type(3) {
+    margin-bottom: 0;
+}
+.address input:nth-of-type(1) {
+    width: 210px;
+    height: 20px;
 }
 /* --------------------- main --------------------- */
