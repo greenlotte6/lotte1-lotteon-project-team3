@@ -59,8 +59,7 @@
                 </div>
                 <div class="dropdown">
                     <div>
-                        <a href=""> - 상품목록</a>
-                        <a href=""> - 상품등록</a>
+                        <a href="../product/list.html"> - 상품목록</a>
                         <a href=""> - 카테고리</a>
                     </div>
                 </div>
@@ -102,8 +101,8 @@
         </aside>
         <div class="adminMain">
             <div class="mainTop">
-                <h4>상점목록</h4>
-                <div><span>HOME > 상점관리 > <p>상점목록</p></span></div>
+                <h4>회원목록</h4>
+                <div><span>HOME > 상점관리 > <p>회원목록</p></span></div>
             </div>
             <div class="shopArea">
                 <div class="searchArea">
@@ -111,6 +110,8 @@
                         <option>선택</option>
                         <option>아이디</option>
                         <option>이름</option>
+                        <option>이메일</option>
+                        <option>휴대폰</option>
                     </select>
                     <input type="text" placeholder="검색어 입력">
                     <button type="submit">검색</button>
@@ -159,24 +160,23 @@
                     </tr>
                 </table>
                 <div class="btnarea">
-                    <button class="delbutton">선택삭제</button>
                     <div class="pageBtn">
-                        <a><img src="../../images/back-double.png"></a>
-                        <a><img src="../../images/back-single.png" class="single"></a>
-                        <a class="number">1</a>
-                        <a class="number">2</a>
-                        <a class="number">3</a>
-                        <a><img src="../../images/right-single.png" class="single"></a>
-                        <a><img src="../../images/right-double.png"></a>
+                        <a href=""><img src="../../images/back-double.png"></a>
+                        <a href=""><img src="../../images/back-single.png" class="single"></a>
+                        <a href="" class="number">1</a>
+                        <a href="" class="number">2</a>
+                        <a href="" class="number">3</a>
+                        <a href=""><img src="../../images/right-single.png" class="single"></a>
+                        <a href=""><img src="../../images/right-double.png"></a>
                     </div>
-                    <button class="regbutton" type="submit">상점등록</button>
+                    <button class="regbutton" type="submit">선택수정</button>
                 </div>
             </div>
         </div>
         <div id="bannerModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h3>상점 등록</h3>
+                <h3>회원 수정</h3>
                 <form>
                     <div class="modalTable">
                         <table class="fst">
@@ -190,62 +190,48 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>비밀번호</th>
+                                <th>이름</th>
                                 <td>
                                     <div>
-                                        <input type="password" placeholder="비밀번호 입력">
-                                        <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
+                                        <input type="password" placeholder="이름 입력">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>비밀번호 확인</th>
-                                <td>
-                                    <div><input type="password" placeholder="비밀번호 재입력"></div>
-                                </td>
-                            </tr>
-                        </table>
-                        <table class="sec">
-                            <tr>
-                                <th>회사명</th>
-                                <td>
-                                    <div><input type="text" placeholder="회사명 입력 예) (주) 상호명"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>대표</th>
-                                <td>
-                                    <div><input type="text" placeholder="이름 입력"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>사업자 등록번호</th>
+                                <th>성별</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="사업자 등록번호 입력">
-                                        <p> - 포함 12자리 입력</p>
+                                        <label><input type="checkbox" class="gender">남</label>
+                                        <label><input type="checkbox" class="gender">여</label>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>통신 판매업 번호</th>
+                                <th>등급</th>
+                                <td>
+                                    <div><input type="text" placeholder="MVG" readonly></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상태</th>
+                                <td>
+                                    <div>정상</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="통신 판매업 번호 입력">
-                                        <p> - 포함 12자리 입력</p>
+                                        <input type="text" placeholder="이메일 입력">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>전화번호</th>
+                                <th>휴대폰</th>
                                 <td>
-                                    <div><input type="text" placeholder="전화번호 입력"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>팩스</th>
-                                <td>
-                                    <div><input type="text" placeholder="팩스번호 입력"></div>
+                                    <div>
+                                        <input type="text" placeholder="휴대전화 번호 입력">
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -256,10 +242,29 @@
                                     <input type="text" placeholder="상세주소 입력">
                                 </td>
                             </tr>
+                            <tr>
+                                <th>가입일</th>
+                                <td>
+                                    <div>2025-04-01</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>최근 로그인 날짜</th>
+                                <td>
+                                    <div>2025-04-10</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>특이사항</th>
+                                <td class="another">
+                                    <div><input type="text" placeholder="회원 기타정보 입력"></div>
+                                </td>
+                            </tr>
+
                         </table>
                     </div>
                     <div class="modalbtn">
-                        <button>등록하기</button>
+                        <button>수정하기</button>
                     </div>
                 </form>
             </div>

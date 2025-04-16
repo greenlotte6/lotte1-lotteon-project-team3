@@ -166,6 +166,7 @@ table tr td {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 .btnarea button {
     width: 100px;
@@ -175,15 +176,14 @@ table tr td {
     text-align: center;
     margin-top: 15px;
 }
-.btnarea .delbutton {
-    background-color: #8a8a8a;
-}
 .btnarea .pageBtn {
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .btnarea .pageBtn .number {
     font-size: 17px;
@@ -201,7 +201,8 @@ table tr td {
     height: 15px;
 }
 .shopArea {
-    padding: 20px;
+    padding: 10px;
+    margin-top: 10px;
 }
 .shopArea button {
     line-height: 10px;
@@ -220,6 +221,13 @@ table tr td {
     background-color: #3f97f6;
     color: white;
 }
+tr td select {
+    font-size: 12px;
+}
+tr td select option {
+    font-size: 12px;
+}
+
 
 
 /* 모달 전체 화면 덮기 */
@@ -301,5 +309,18 @@ table tr td {
 .modal table td p {
     position: relative;
     top: 10px;
+}
+.modal table td label {
+    margin-right: 5px;
+}
+.modal table td div .gender {
+    margin-right: 5px;
+}
+.modal table td .status {
+    font-size: 16px;
+}
+.modal table .another input {
+    width: 410px;
+    height: 70px;
 }
 /* --------------------- main --------------------- */

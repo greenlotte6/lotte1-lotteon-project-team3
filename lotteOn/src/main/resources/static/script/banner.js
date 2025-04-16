@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 열기
-    document.querySelector('.regbutton').addEventListener('click', function () {
+    document.querySelector('.orderinfo').addEventListener('click', function () {
         document.getElementById('bannerModal').style.display = 'block';
     });
 
@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = 'none';
         }
     });
+
+    //
     // 열기
     document.querySelector('.submitbtn').addEventListener('click', function () {
         document.getElementById('subModal').style.display = 'block';
