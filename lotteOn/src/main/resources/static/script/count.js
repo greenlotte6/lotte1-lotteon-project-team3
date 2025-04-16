@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let totalPrice2 = total2 * currentCount;
             multi2.innerText = totalPrice2.toLocaleString() + "원";
+
+            realTotalPrice.innerText = totalPrice.toLocaleString();
         }
     });
 
