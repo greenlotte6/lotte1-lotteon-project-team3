@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+  <link rel="stylesheet" href="../static/style/my_home.css">
+  <link rel="stylesheet" href="../static/style/common/_footer.css">
+  <link rel="stylesheet" href="../static/style/common/_header.css">
+  <title>마이페이지 메인</title>
+</head>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      //주문번호 클릭 시 모달 열기
+      const orderLinks= document.querySelectorAll('.order-link');
+      const modal= document.getElementById('orderModal');
+      const closeBtn = document.querySelector('.close');
+
+      orderLinks.forEach(link =>{
+        link.addEventListener('click', function(e){
+          e.preventDefault(); //기본 링크 클릭 동작 방지
+          modal.style.display = "block"; //모달 표시
+        });
+      });
+
+      //상호명 클릭 시 새로운 모달 열기
+      const companyLinks= document.querySelectorAll('.company-link');
+      const companyModal= document.getElementById('companyModal');
+      const companyCloseBtn= companyModal.querySelector('.close');
+
+      companyLinks.forEach(link =>{
+        link.addEventListener('click', function (e){
+          e.preventDefault();
+          companyModal.style.display="block";
+        });
+      });
+
+      //모달 닫기 버튼 클릭 시
+      closeBtn.addEventListener('click', function(){
+        modal.style.display= "none"; //모달 숨기기
+      });
+
+      companyCloseBtn.addEventListener('click', function (){
+        companyModal.style.display= "none";
+      });
+
+      //모달 바깥 영역 클릭 시 모달 닫기
+      window.addEventListener('click', function(e){
+        if(e.target == modal){
+          modal.style.display = "none";
+        }else if(e.target == companyModal){
+          companyModal.style.display ="none";
+        }
+      });
+
+      //문의하기 버튼 클릭 시 모달 열기
+      const inquiryBtn = document.querySelector('#companyModal button'); // 회사 모달 내 문의하기 버튼
+      const inquiryModal = document.getElementById('inquiryModal');
+      const inquiryCloseBtn = inquiryModal.querySelector('.inquiry-close');
+
+      inquiryBtn.addEventListener('click', function () {
+        inquiryModal.style.display = "block";
+      });
+
+    });
+  </script>
+
+<body>
+
+<!--주문 상세 모달-->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>주문상세 &nbsp;&nbsp;</h2><p>20xx-12-13</p>
+      <span class="close">&times;</span>
+    </div>
+    <h2 class="modal-tit">주문정보</h2>
+    <div id="orderDetail">
+      <!--주문 정보-->
+      <div>
+        <table class="table_one">
+          <thead>
+          <tr>
+            <th>날짜</th>
+            <th>상품정보</th>
+            <th>결제금액</th>
+            <th>상태</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="modal-tr1">
+            <td>20xx-01-01</td>
+            <td>
+              <div>
+                <img src="/images/ad4.png" alt="#">
+              </div>
+              <p>
+                <a href="#">
+                  주문번호: 1012211341
+                </a> <br>
+                <a href="#">
+                  (주)상호명 <br>
+                  상품명
+                </a> <br>
+                수량: 1개 <br><br>
+                <strong>34,000원</strong>
+              </p>
+            </td>
+            <td>
+              <div class="gyeoljae">
+                판매가&nbsp;&nbsp;&nbsp; 34,000원<br>
+                할인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -3,000원
+                <br><br>
+              </div>
+              결제금액 &nbsp;&nbsp; <strong>34,000원</strong>
+            </td>
+            <td>
+              배송완료
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2 class="modal-tit">배송정보</h2>
+      </div>
+      <div>
+        <table class="table_two">
+          <tr>
+            <th>이름</th>
+            <td>홍길동</td>
+          </tr>
+          <tr>
+            <th>연락처</th>
+            <td>010-1234-1001</td>
+          </tr>
+          <tr>
+            <th>주소</th>
+            <td>[210**]부산광역시 부산진구 대연동 121 10층 1004호</td>
+          </tr>
+          <tr>
+            <th>배송요청사항</th>
+            <td>없음</td>
+          </tr>
+
+        </table>
+      </div>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 상호명 모달 -->
+<div id="companyModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>판매자정보</h2>
+      <span class="close" style="margin-left: 770px">&times;</span>
+    </div>
+    <div id="companyModalBody">
+      <!-- 상호명 모달 내용-->
+      <table class="table_three">
+        <tr>
+          <th>판매자 등급</th>
+          <td>파워딜러</td>
+        </tr>
+        <tr>
+          <th>상호</th>
+          <td>(주)상호명</td>
+        </tr>
+        <tr>
+          <th>대표자</th>
+          <td>홍길동</td>
+        </tr>
+        <tr>
+          <th>전화번호</th>
+          <td>051-123-1000</td>
+        </tr>
+        <tr>
+          <th>FAX</th>
+          <td>051-123-1001</td>
+        </tr>
+        <tr>
+          <th>Eamil</th>
+          <td>company@abc.com</td>
+        </tr>
+        <tr>
+          <th>사업자번호</th>
+          <td>123-12-1234567</td>
+        </tr>
+        <tr>
+          <th>영업소 재지</th>
+          <td>[210**] 부산광역시 부산진구 대연동 121 10층 1004호</td>
+        </tr>
+      </table>
+      <div>
+        <p>
+          * 위 정보는 전자상거래법 제 20조 제2항 및 동법시행령 제 25조 제2항에 의거하여 <br>
+          소바자보호에 의거 공개합니다
+        </p>
+      </div>
+      <button type="button">문의하기</button>
+    </div>
+
+  </div>
+</div>
+
+<!--문의하기 모달-->
+<div id="inquiryModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>문의하기</h2>
+      <span class="close inquiry-close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <table>
+        <tr>
+          <th>문의종류</th>
+          <td>
+
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <header>
+    <div class="headerContainer">
+      <div class="headerUtil">
+        <a href="#" class="themeColor">회원가입</a>
+        <div class="v-l"></div>
+        <a href="#">로그인</a>
+        <div class="v-l"></div>
+        <a href="#">고객센터</a>
+      </div>
+      <div class="headerContent">
+        <div class="headerContent-left">
+          <a href="#">
+            <img src="#" alt="lotteOn Logo" class="logo">
+          </a>
+          <div class="search">
+            <input type="text" placeholder="검색어를 입력해주세요" class="inputSearch">
+            <button class="deleteSearchKeyword"></button>
+            <a href="#" class="searchIcon icon"></a>
+          </div>
+          <p><span class="themeColor rank">1</span>검색어 순위를 혀? 말어?</p>
+        </div>
+        <div class="contentLink">
+          <a href="#" class="heart icon"></a>
+          <a href="#" class="my icon"></a>
+          <a href="#" class="cart icon"></a>
+        </div>
+      </div>
+      <div class="headerNavContainer">
+        <div class="headerNav">
+          <div class="category">
+            <p class="burgerMenu icon2"></p>
+            <p>카테고리</p>
+          </div>
+          <div class="various">
+            <a href="#">신상품</a>
+            <a href="#">베스트</a>
+            <a href="#">패션</a>
+            <a href="#">뷰티</a>
+            <a href="#">라이프</a>
+            <a href="#">특가/혜택</a>
+          </div>
+          <a href="#" class="deliv">
+            <p>주문배송</p>
+            <img src="#" alt="배송정보" class="mascot">
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+
+    <div class="mypage-header">
+      <div class="mypage-title">
+        <h2>나의쇼핑정보</h2>
+      </div>
+      <div class="mypage-shortcuts">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="label">주문</span>
+              <span class="value">2</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="label">쿠폰</span>
+              <span class="value">1</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="label">포인트</span>
+              <span class="value">1,000</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="label">문의</span>
+              <span class="value">1</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="div_section">
+      <section class="left_section">
+        <aside class="sidebar">
+          <ul>
+            <li><a href="#">전체주문내역</a></li>
+            <li><a href="#">포인트내역</a></li>
+            <li><a href="#">쿠폰</a></li>
+            <li><a href="#">나의리뷰</a></li>
+            <li><a href="#">문의하기</a></li>
+            <li><a href="#">나의설정</a></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="right_section">
+        <div class="banner"></div>
+        <article>
+          <div class="article_title">
+            <h3>최근 주문내역</h3>
+            <a href="#">더보기 ></a>
+          </div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>날짜</th>
+              <th>상품정보</th>
+              <th>상품</th>
+              <th>확인/신청</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-tr1">
+              <td class="table-td">2022-12-13</td>
+              <td class="table-td">
+                <div>
+                  <img src="/images/ico_btn1.png" alt="#">
+                </div>
+                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
+                  <a href="#" class="company-link">(주)상호명 <br>
+                    상품명</a><br>
+                  수량: 1개 <br><br>
+                  <strong>34,000원</strong></p>
+              </td>
+              <td class="baesong" class="table-td">배송완료</td>
+              <td class="table-td">
+                <button class="btn_blue">구매확정</button>
+                <button class="btn_blue">상품평쓰기</button>
+                <button>반품신청</button>
+                <button>교환신청</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="table-td">2022-12-13</td>
+              <td class="table-td">
+                <div>
+                  <img src="/images/ico_btn2.png" alt="#">
+                </div>
+                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
+                  <a href="#" class="company-link">(주)상호명 <br>
+                    상품명</a> <br>
+                  수량: 1개 <br><br><br>
+                  <strong>34,000원</strong></p>
+              </td>
+              <td class="table-td">배송완료</td>
+              <td class="table-td">
+                <button class="btn_blue">구매확정</button>
+                <button class="btn_blue">상품평쓰기</button>
+                <button>반품신청</button>
+                <button>교환신청</button>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+          <div class="article_title2">
+            <h3>포인트적립내역</h3>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
