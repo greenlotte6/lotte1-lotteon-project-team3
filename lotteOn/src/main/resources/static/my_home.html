@@ -5,15 +5,126 @@
   <!-- Pretendard Font -->
   <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
-  <link rel="stylesheet" href="../static/style/common/_footer.css">
-  <link rel="stylesheet" href="../static/style/common/_header.css">
-  <link rel="stylesheet" href="../static/style/my_home.css">
+  <link rel="stylesheet" href="style/common/_footer.css">
+  <link rel="stylesheet" href="style/common/_header.css">
+  <link rel="stylesheet" href="style/my_home.css">
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      //주문번호 클릭 시 모달 열기
+      const orderLinks= document.querySelectorAll('.order-link');
+      const modal= document.getElementById('orderModal');
+      const closeBtn = document.querySelector('.close');
+
+      orderLinks.forEach(link =>{
+        link.addEventListener('click', function(e){
+          e.preventDefault(); //기본 링크 클릭 동작 방지
+          modal.style.display = "block"; //모달 표시
+        });
+      });
+
+      //모달 닫기 버튼 클릭 시
+      closeBtn.addEventListener('click', function(){
+        modal.style.display= "none"; //모달 숨기기
+      });
+
+      //모달 바깥 영역 클릭 시 모달 닫기
+      window.addEventListener('click', function(e){
+        if(e.target == modal){
+          modal.style.display = "none";
+        }
+      });
+
+    });
+  </script>
 
 
 
     <title>마이페이지 메인</title>
 </head>
 <body>
+<!--주문 상세 모달-->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>주문상세 &nbsp;&nbsp;</h2> <p>20xx-12-13</p>
+      <span class="close">&times;</span>
+    </div>
+    <h2 class="modal-tit">주문정보</h2>
+    <div id="orderDetail">
+      <!--주문 정보-->
+      <div>
+        <table class="table_one">
+          <thead>
+          <tr>
+            <th>날짜</th>
+            <th>상품정보</th>
+            <th>결제금액</th>
+            <th>상태</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><p>20xx-01-01</p></td>
+            <td>
+              <div>
+                <img src="/90x90 (9).png" alt="#">
+              </div>
+              <p>
+                <a href="#">
+                  주문번호: 1012211341
+                </a> <br>
+                <a href="#">
+                  (주)상호명 <br>
+                  상품명
+                </a> <br>
+                수량: 1개 <br><br>
+                <strong>34,000원</strong>
+              </p>
+            </td>
+            <td>
+              <p>
+                판매가&nbsp;&nbsp;&nbsp;&nbsp;34,000원<br>
+                할인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-3,000원
+                <br><br>
+                결제금액 &nbsp;&nbsp; <strong>34,000원</strong>
+              </p>
+            </td>
+            <td>
+              배송완료
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2 class="modal-tit">배송정보</h2>
+      </div>
+      <div>
+        <table class="table_two">
+          <tr>
+            <th>이름</th>
+            <td>홍길동</td>
+          </tr>
+          <tr>
+            <th>연락처</th>
+            <td>010-1234-1001</td>
+          </tr>
+          <tr>
+            <th>주소</th>
+            <td>[210**]부산광역시 부산진구 대연동 121 10층 1004호</td>
+          </tr>
+          <tr>
+            <th>배송요청사항</th>
+            <td>없음</td>
+          </tr>
+
+        </table>
+      </div>
+      </table>
+    </div>
+  </div>
+</div>
+<div>
 <div>
   <header>
     <div class="headerContainer">
@@ -138,8 +249,8 @@
               <img src="/images/ico_btn1.png" alt="#">
               </div>
               <p><a href="">주문번호: 1012211341</a><br>
-                (주)상호명 <br>
-                상품명<br>
+                <a href="#">(주)상호명 <br>
+                상품명</a><br>
                 수량: 1개 <br><br>
                 <strong>34,000원</strong></p>
             </td>
@@ -158,9 +269,9 @@
               <div>
               <img src="/images/ico_btn2.png" alt="#">
               </div>
-              <p><a href="">주문번호: 1012211341</a><br>
-                (주)상호명 <br>
-                상품명<br>
+              <p><a href="#">주문번호: 1012211341</a><br>
+                <a href="#">(주)상호명 <br>
+                상품명</a> <br>
                 수량: 1개 <br>
                 <strong>34,000원</strong></p>
             </td>
