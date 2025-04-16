@@ -299,7 +299,6 @@ main > div > * {
 .cartContainer {
     display: flex;
     justify-content: center;
-    align-items: center;
     padding-bottom: 50px;
 }
 
@@ -495,6 +494,76 @@ input[type="checkbox"]:checked {
     background: white;
 }
 
+.priceInfoBox {
+    border: 1px solid #ddddddaa;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.priceInfoBox > h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.priceInfos {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.totalPrice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+.totalPrice > p:nth-child(2) {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.order {
+    display: block;
+    width: 100%;
+}
+
+.orderBtn {
+    width: 100%;
+    height: 54px;
+    border: none;
+    border-radius: 8px;
+    background: #E60012;
+
+}
+
+.orderBtn:hover {
+    transition: 0.3s;
+    background: #d20012;
+}
+
+.orderBtn:hover > span {
+    transition: 0.3s;
+    color: rgb(250, 250, 250);
+}
+
+.orderBtn > span {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.f-w-600 {
+    font-weight: 600;
+}
+
+.f-w-400 {
+    font-weight: 400;
+}
 /* --------------------- main --------------------- */
 
 /* --------------------- footer --------------------- */
