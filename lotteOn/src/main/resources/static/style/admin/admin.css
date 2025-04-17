@@ -15,37 +15,11 @@ li {
     list-style: none;
 }
 
-body {
-    min-width: 1200px;
-    height: 150vh;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 button {
     all: unset;
     cursor: pointer;
 }
-
-/* --------------------- header --------------------- */
-/* --------------------- header --------------------- */
 /* --------------------- main --------------------- */
-
-#container {
-    margin: 0 auto;
-    width: 1200px;
-    height: auto;
-    box-sizing: border-box;
-    padding: 50px 0;
-}
-main {
-    width: 1200px;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-}
-
 
 aside {
     width: 260px;

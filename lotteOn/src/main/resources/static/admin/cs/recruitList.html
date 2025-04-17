@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>관리자-공지사항 목록</title>
+    <title>관리자-채용하기 목록</title>
     <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <!--Style-->
-    <link rel="stylesheet" href="../../style/admin/cs/noticeList.css"/>
+    <link rel="stylesheet" href="../../style/admin/cs/recruitList.css"/>
     <link rel="stylesheet" href="../../style/admin/header.css">
     <link rel="stylesheet" href="../../style/admin/footer.css">
     <!--JavaScript-->
-    <script src="../../script/cs.js"></script>
+    <script src="../../script/banner.js"></script>
 </head>
 <body>
 <div id="container">
@@ -118,39 +118,51 @@
         </aside>
         <div class="adminMain">
             <div class="mainTop">
-                <h4>공지사항 목록</h4>
-                <div><span>HOME > 고객센터 > <p>공지사항</p></span></div>
+                <h4>채용하기 목록</h4>
+                <div><span>HOME > 고객센터 > <p>채용하기</p></span></div>
             </div>
             <div class="shopArea">
                 <div class="searchArea">
                     <select>
-                        <option>유형</option>
-                        <option>고객서비스</option>
-                        <option>이벤트 당첨</option>
-                        <option>안전거래</option>
-                        <option>위해상품</option>
+                        <option>선택</option>
+                        <option>번호</option>
+                        <option>채용부서</option>
+                        <option>채용형태</option>
+                        <option>제목</option>
+                        <option>검색</option>
                     </select>
+                    <input type="text" placeholder="검색어 입력">
+                    <button type="submit">검색</button>
                 </div>
                 <table>
                     <tr>
                         <th><input type="checkbox"></th>
                         <th>번호</th>
-                        <th>유형</th>
+                        <th>채용부서</th>
+                        <th>경력사항</th>
+                        <th>채용형태</th>
                         <th>제목</th>
-                        <th>조회</th>
-                        <th>날짜</th>
-                        <th>관리</th>
+                        <th>작성자</th>
+                        <th>상태</th>
+                        <th>모집기간</th>
+                        <th>작성일</th>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>1</td>
-                        <td>고객서비스</td>
-                        <td><button type="submit" class="submitbtn">[ 안내 ] 해외결제 사칭 문자 주의</button></td>
-                        <td>120</td>
-                        <td>2025-04-17</td>
+                        <td>IT </td>
+                        <td>경력 무관</td>
+                        <td>정규직</td>
+                        <td>백엔드 개발자 모집</td>
+                        <td>관리자</td>
+                        <td>모집중</td>
                         <td>
-                            <button type="submit">[ 삭제 ]</button><br>
-                            <button type="submit">[ 수정 ]</button>
+                            2025-04-17<br>
+                            ~2025-05-17
+                        </td>
+                        <td>
+                            2025-04-16<br>
+                            13:50:11
                         </td>
                     </tr>
                 </table>
@@ -165,61 +177,17 @@
                         <a href=""><img src="../../images/right-single.png" class="single"></a>
                         <a href=""><img src="../../images/right-double.png"></a>
                     </div>
-                    <button class="regbutton" type="submit">상품등록</button>
+                    <button class="regbutton" type="submit">채용등록</button>
                 </div>
             </div>
         </div>
         <div id="bannerModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h3>공지사항 보기</h3>
+                <h3>채용등록</h3>
                 <form>
                     <div class="modalTable">
                         <table class="fst">
-                            <tr>
-                                <th>유형</th>
-                                <td>고객서비스</td>
-                            </tr>
-                            <tr>
-                                <th>제목</th>
-                                <td>[ 안내 ] 해외결제 사칭 문자 주의</td>
-                            </tr>
-                            <tr>
-                                <th>내용</th>
-                                <td>안녕하세용<br>해외결제 사칭문자 조심하세용<br>
-                                돈 많이빠져나가용</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modalbtn">
-                        <button>삭제</button>
-                        <button type="button" class="modifybtn">수정</button>
-                        <button>목록</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="subModal" class="submodal">
-            <div class="submodal-content">
-                <span class="close">&times;</span>
-                <h3>공지사항 작성</h3>
-                <form>
-                    <div class="modalTable">
-                        <table class="fst">
-                            <tr>
-                                <th>유형</th>
-                                <td>
-                                    <div>
-                                        <select>
-                                            <option>유형선택</option>
-                                            <option>고객서비스</option>
-                                            <option>이벤트 당첨</option>
-                                            <option>안전거래</option>
-                                            <option>위해상품</option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
                             <tr>
                                 <th>제목</th>
                                 <td>
@@ -229,63 +197,69 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>내용</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="내용 입력" class="writearea">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="modalbtn">
-                            <button>취소하기</button>
-                            <button>등록하기</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="regModal" class="regmodal">
-            <div class="regmodal-content">
-                <span class="close">&times;</span>
-                <h3>공지사항 작성</h3>
-                <form>
-                    <div class="modalTable">
-                        <table class="fst">
-                            <tr>
-                                <th>유형</th>
+                                <th>채용부서</th>
                                 <td>
                                     <div>
                                         <select>
-                                            <option>유형선택</option>
-                                            <option>고객서비스</option>
-                                            <option>이벤트 당첨</option>
-                                            <option>안전거래</option>
-                                            <option>위해상품</option>
+                                            <option>채용부서 선택</option>
+                                            <option>IT</option>
+                                            <option>마케팅</option>
+                                            <option>기획팀</option>
+                                            <option>영업팀</option>
                                         </select>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>제목</th>
+                                <th>경력사항</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="제목 입력">
+                                        <select>
+                                            <option>경력사항 선택</option>
+                                            <option>경력 무관</option>
+                                            <option>1~2년차</option>
+                                            <option>2~3년차</option>
+                                            <option>3~4년차</option>
+                                            <option>4~5년차</option>
+                                            <option>5년 이상</option>
+                                            <option>10년 이상</option>
+                                        </select>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>내용</th>
+                                <th>채용형태</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="내용 입력" class="writearea">
+                                        <select>
+                                            <option>채용형태 선택</option>
+                                            <option>정규직</option>
+                                            <option>계약직</option>
+                                            <option>아르바이트</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>모집기간</th>
+                                <td>
+                                    <div>
+                                        <input type="date"><p>~</p><input type="date">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>비고</th>
+                                <td>
+                                    <div>
+                                        <input type="text" placeholder="비고란" class="bgo">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="modalbtn">
-                            <button>취소하기</button>
-                            <button>수정하기</button>
+                            <button>취소</button>
+                            <button>등록</button>
                         </div>
                     </div>
                 </form>

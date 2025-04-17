@@ -7,11 +7,27 @@
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <!--Style-->
+    <link rel="stylesheet" href="../../style/admin/header.css">
     <link rel="stylesheet" href="../../style/admin/shop/sales.css"/>
+    <link rel="stylesheet" href="../../style/admin/footer.css">
 </head>
 <body>
 <div id="container">
     <header>
+        <div class="headerArea">
+            <div>
+                <a href="../admin.html"><img src="../../images/logo_lotte-on_white_text.png"></a>
+            </div>
+            <div>
+                <ul>
+                    <li><a href="">HOME</a></li>
+                    <div class="v-l"></div>
+                    <li><a href="">로그아웃</a></li>
+                    <div class="v-l"></div>
+                    <li><a href="">고객센터</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
     <main>
         <aside>
@@ -35,8 +51,8 @@
                 </div>
                 <div class="dropdown">
                     <div>
-                        <a href="list.html"> - 상점목록</a>
-                        <a href="sales.html"> - 매출현황</a>
+                        <a href="../shop/list.html"> - 상점목록</a>
+                        <a href="../shop/sales.html"> - 매출현황</a>
                     </div>
                 </div>
             </div>
@@ -68,8 +84,8 @@
                 </div>
                 <div class="dropdown">
                     <div>
-                        <a href=""> - 주문현황</a>
-                        <a href=""> - 배송현황</a>
+                        <a href="../order/list.html"> - 주문현황</a>
+                        <a href="../order/delivery.html"> - 배송현황</a>
                     </div>
                 </div>
             </div>
@@ -79,8 +95,8 @@
                 </div>
                 <div class="dropdown">
                     <div>
-                        <a href=""> - 쿠폰목록</a>
-                        <a href=""> - 쿠폰발급현황</a>
+                        <a href="../coupon/list.html"> - 쿠폰목록</a>
+                        <a href="../coupon/issued.html"> - 쿠폰발급현황</a>
                     </div>
                 </div>
             </div>
@@ -90,9 +106,10 @@
                 </div>
                 <div class="dropdown">
                     <div>
-                        <a href=""> - 공지사항</a>
-                        <a href=""> - 자주묻는질문</a>
-                        <a href=""> - 문의하기</a>
+                        <a href="../cs/noticeList.html"> - 공지사항</a>
+                        <a href="../cs/faqList.html"> - 자주묻는질문</a>
+                        <a href="../cs/qnaList.html"> - 문의하기</a>
+                        <a href="../cs/recruitList.html"> - 채용하기</a>
                     </div>
                 </div>
             </div>
@@ -245,6 +262,11 @@
         </div>
     </main>
     <footer>
+        <div class="footerArea">
+            <div>
+                <p>Copyright ©LotteON.co.kr All rights reserved.LotteON ADMINSTRATOR Version 1.1.1.1</p>
+            </div>
+        </div>
     </footer>
 </div>
 </body>
