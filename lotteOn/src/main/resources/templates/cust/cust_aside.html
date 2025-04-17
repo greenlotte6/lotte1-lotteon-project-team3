@@ -5,15 +5,11 @@
         </div>
         <div class="side_menu">
             <div class="item">
-                <a th:href="@{/cust/cust_main}">
-                    <div id="home">HOME</div>
-                </a>
+                <div id="home" onclick="location.href='/cust/cust_main'">HOME</div>
             </div>
 
             <div class="item">
-                <a th:href="@{/cust/cust_notice_main}">
-                    <div id="notice">공지사항</div>
-                </a>
+                <div id="notice">공지사항</div>
                 <div class="dropdown">
                     <div>
                         <a th:href="@{/cust/cust_notice_main}">전체</a>
@@ -26,9 +22,7 @@
             </div>
 
             <div class="item">
-                <a th:href="@{/cust/cust_faq_user}">
-                    <div id="faq">자주묻는 질문</div>
-                </a>
+                <div id="faq">자주묻는 질문</div>
                 <div class="dropdown">
                     <div>
                         <a th:href="@{/cust/cust_faq_user}">회원</a>
@@ -43,9 +37,7 @@
             </div>
 
             <div class="item">
-                <a th:href="@{/cust/cust_question_user}">
-                    <div id="question">문의하기</div>
-                </a>
+                <div id="question">문의하기</div>
                 <div class="dropdown">
                     <div>
                         <a th:href="@{/cust/cust_question_user}">회원</a>

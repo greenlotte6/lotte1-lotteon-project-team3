@@ -17,14 +17,16 @@ aside .item {
 aside .item a:hover {
     font-weight: 700;
 }
-aside .item .dropdown {
+
+.dropdown {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
     width: 100%;
 }
-aside .item:hover .dropdown {
-    max-height: 500px; /* 충분히 넉넉한 높이 */
+
+.open {
+    max-height: 500px;
 }
 
 .dropdown a {
@@ -46,7 +48,7 @@ aside .item:hover .dropdown {
 .side_title p{
     font-size: 35px;
 }
-.side_content a > div {
+.item > div:first-child {
     border-bottom: 1px solid #dfdfdf;
     padding: 20px 0;
     color: #333333;;
