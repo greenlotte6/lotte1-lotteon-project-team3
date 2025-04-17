@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+body {
+    min-width: 1200px;
+    height: 150vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+/* --------------------- header --------------------- */
+/* --------------------- header --------------------- */
+/* --------------------- main --------------------- */
+
+#container {
+    margin: 0 auto;
+    width: 1200px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 50px 0;
+}
+main {
+    width: 1200px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+aside {
+    width: 260px;
+    border-right: 1px solid rgb(220, 220, 220);
+}
+aside .item img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+aside .item {
+    background-color: rgb(220, 220, 220);
+    border-bottom: 1px solid rgba(138, 138, 138, 0.6);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    flex-direction: column;
+}
+.title {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 20px;
+}
+aside .item .dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    width: 100%;
+}
+aside .item:hover .dropdown {
+    max-height: 500px; /* 충분히 넉넉한 높이 */
+}
+
+.dropdown > div {
+    background-color: #ececec;
+}
+
+.dropdown a {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 0 10px 15px;
+    width: 100%;
+    line-height: 40px;
+    text-align: left;
+    color: black;
+    font-size: 15px;
+    border-top: 1px solid #858585;
+}
+
+.dropdown a:hover {
+    background: #dcdcdc;
+    transition: 0.3s;
+}
+
+
+.adminMain {
+    width: 840px;
+    height: auto;
+    padding: 15px 60px 30px 0;
+}
+.mainTop {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #8a8a8a;
+    padding: 10px 0;
+}
+.mainTop h4 {
+    font-size: 25px;
+    font-weight: bold;
+}
+.mainTop > div {
+    margin-left: auto;
+    display: flex;
+}
+.mainTop span {
+    display: flex;
+    gap: 5px;
+}
+.mainTop span p {
+    font-weight: bold;
+    margin: 0;
+}
+.graph {
+    padding: 20px;
+}
+.graphArea {
+    display: flex;
+    align-items: center;
+}
+h3 {
+    font-size: 21px;
+    font-weight: bold;
+}
+.graph #orderChart {
+    width: 460px !important;
+    height: auto !important;
+}
+.graph #salesChart {
+    width: 340px !important;
+    height: auto !important;
+}
+
+.operationStatus {
+    padding: 20px;
+}
+.operationStatus table {
+    width: 100%;
+    height: auto;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid rgba(220, 220, 220, 0.8);
+    margin-bottom: 20px;
+}
+.operationStatus table th {
+    padding: 10px;
+    font-size: 19px;
+    border-right: 1px solid rgba(220, 220, 220, 0.8);
+}
+.operationStatus table th:last-of-type {
+    border-right: none;
+}
+.operationStatus table td:last-of-type {
+    border-right: none;
+}
+.operationStatus table td {
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border-right: 1px solid rgba(220, 220, 220, 0.8);
+}
+.operationStatus .fsttable td {
+    color: #E60012;
+    font-weight: bold;
+}
+.operationStatus .sectable tr:nth-of-type(2) td {
+    color: #E60012;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(220, 220, 220, 0.8);
+}
+
+
+.lastFloor {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 20px;
+}
+.lastFloor table {
+    border-top: 2px solid #8a8a8a;
+    border-collapse: collapse;
+}
+.lastFloor table tr th {
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(220, 220, 220, 0.8);
+}
+.lastFloor table tr td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(220, 220, 220, 0.8);
+}
+.notice {
+    width: 48%;
+    height: auto;
+}
+
+.customerQnA {
+    width: 48%;
+    height: auto;
+}
+.thDate {
+    font-weight: normal;
+}
+h3 {
+    margin-bottom: 10px;
+}
+/* --------------------- main --------------------- */

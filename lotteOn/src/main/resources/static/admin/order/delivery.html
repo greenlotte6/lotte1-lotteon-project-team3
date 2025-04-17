@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>관리자-주문현황</title>
+    <title>관리자-배송상세</title>
     <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <!--Style-->
-    <link rel="stylesheet" href="../../style/admin/order/list.css"/>
+    <link rel="stylesheet" href="../../style/admin/order/delivery.css"/>
     <!--JavaScript-->
     <script src="../../script/orderList.js"></script>
 </head>
@@ -101,50 +101,48 @@
         </aside>
         <div class="adminMain">
             <div class="mainTop">
-                <h4>상품목록</h4>
-                <div><span>HOME > 주문관리 > <p>주문현황</p></span></div>
+                <h4>배송현황</h4>
+                <div><span>HOME > 주문관리 > <p>배송현황</p></span></div>
             </div>
             <div class="shopArea">
                 <div class="searchArea">
                     <select>
                         <option>선택</option>
+                        <option>송장번호</option>
                         <option>주문번호</option>
-                        <option>주문자</option>
-                        <option>주문자명</option>
+                        <option>수령인</option>
                     </select>
                     <input type="text" placeholder="검색어 입력">
                     <button type="submit">검색</button>
                 </div>
                 <table>
                     <tr>
+                        <th>송장번호</th>
+                        <th>택배사</th>
                         <th>주문번호</th>
-                        <th>주문자</th>
-                        <th>주문자명</th>
+                        <th>수령인</th>
                         <th>상품명</th>
-                        <th>주문건수</th>
-                        <th>주문합계</th>
-                        <th>결제수단</th>
-                        <th>주문상태</th>
-                        <th>주문일</th>
-                        <th>배송</th>
+                        <th>건수</th>
+                        <th>물품합계</th>
+                        <th>배송비</th>
+                        <th>배송상태</th>
+                        <th>접수일</th>
                     </tr>
                     <tr>
                         <td>
-                            <button type="submit" class="orderinfo">10101010101</button>
+                            <button type="submit" class="orderinfo">15121451241</button>
                         </td>
-                        <td>abc123</td>
+                        <td>로젠택배</td>
+                        <td>10101010101</td>
                         <td>정상수</td>
                         <td>도리토스</td>
-                        <td>100</td>
-                        <td>170,000</td>
-                        <td>신용카드</td>
-                        <td>결제완료</td>
+                        <td>20</td>
+                        <td>200,200</td>
+                        <td>200</td>
+                        <td>배송준비</td>
                         <td>
                             2025-04-16<br>
                             16:09:12
-                        </td>
-                        <td>
-                            <button type="submit" class="submitbtn">[ 배송하기 ]</button>
                         </td>
                     </tr>
                 </table>
@@ -180,7 +178,6 @@
                                 <th>상품명</th>
                                 <th>판매자</th>
                                 <th>가격</th>
-                                <th>할인</th>
                                 <th>수량</th>
                                 <th>배송비</th>
                                 <th>결제금액</th>
@@ -193,11 +190,10 @@
                                     (주)<br>
                                     롯데온
                                 </td>
-                                <td>170,000</td>
-                                <td>-70,000</td>
+                                <td>1,700</td>
                                 <td>100</td>
                                 <td>100</td>
-                                <td>100,100</td>
+                                <td>170,100</td>
                             </tr>
                             <tr>
                                 <td><img src="../../images/browser.png"></td>
@@ -207,69 +203,23 @@
                                     (주)<br>
                                     롯데온
                                 </td>
-                                <td>170,000</td>
-                                <td>-70,000</td>
+                                <td>1,700</td>
                                 <td>100</td>
                                 <td>100</td>
-                                <td>100,100</td>
+                                <td>170,100</td>
                             </tr>
                         </table>
-                        <div class="total">
-                            <table>
-                                <tr>
-                                    <td>총 상품금액</td>
-                                    <td>340,000</td>
-                                </tr>
-                                <tr>
-                                    <td>총 할인금액</td>
-                                    <td>-140,0000</td>
-                                </tr>
-                                <tr>
-                                    <td>배송비</td>
-                                    <td>200</td>
-                                </tr>
-                                <tr>
-                                    <td>총 결제금액</td>
-                                    <td>200,200</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="info">
-                            <div class="infotop">
-                                <h2>결제정보</h2>
-                            </div>
-                            <table>
-                                <tr>
-                                    <th>주문번호</th>
-                                    <td>10121012100</td>
-                                </tr>
-                                <tr>
-                                    <th>결제방법</th>
-                                    <td>신용카드 / 1234 **** **** 4321</td>
-                                </tr>
-                                <tr>
-                                    <th>주문자</th>
-                                    <td>정상수</td>
-                                </tr>
-                                <tr>
-                                    <th>연락처</th>
-                                    <td>010-1234-1234</td>
-                                </tr>
-                                <tr>
-                                    <th>결제상태</th>
-                                    <td>결제완료</td>
-                                    <th>총 결제금액</th>
-                                    <td>200,200</td>
-                                </tr>
-                            </table>
-                        </div>
                         <div class="info">
                             <div class="infotop">
                                 <h2>배송정보</h2>
                             </div>
                             <table>
                                 <tr>
-                                    <th>수취인</th>
+                                    <th>주문번호</th>
+                                    <td>12121212121</td>
+                                </tr>
+                                <tr>
+                                    <th>수령인</th>
                                     <td>정상수</td>
                                 </tr>
                                 <tr>
@@ -280,84 +230,20 @@
                                     <th>배송지 주소</th>
                                     <td>부산 부산진구</td>
                                 </tr>
+                                <tr>
+                                    <th>택배사</th>
+                                    <td>로젠택배</td>
+                                </tr>
+                                <tr>
+                                    <th>송장번호</th>
+                                    <td>12121212121</td>
+                                </tr>
+                                <tr>
+                                    <th>기타</th>
+                                    <td>감사수고</td>
+                                </tr>
                             </table>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="subModal" class="submodal">
-            <div class="submodal-content">
-                <span class="close">&times;</span>
-                <div class="modaltop">
-                    <h3>배송입력</h3>
-                    <p>10101010101</p>
-                </div>
-                <form>
-                    <div class="modalTable">
-                        <table>
-                            <tr>
-                                <th>주문번호</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="10101010101">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>수령인</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="수령인 입력">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>주소</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="우편번호 입력">
-                                    </div>
-                                    <div>
-                                        <input type="text" placeholder="주소 입력" class="addr">
-                                    </div>
-                                    <div>
-                                        <input type="text" placeholder="상세주소 입력" class="addr">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>택배사</th>
-                                <td>
-                                    <div>
-                                        <select>
-                                            <option>택배사 선택</option>
-                                            <option>cj</option>
-                                            <option>몰라</option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>운송장번호</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="운송장번호 입력" class="addr">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>기타</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="기타정보 입력" class="subinfo">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modalbtn">
-                        <button>등록하기</button>
                     </div>
                 </form>
             </div>
