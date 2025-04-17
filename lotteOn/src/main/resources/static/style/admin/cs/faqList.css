@@ -184,8 +184,6 @@ table tr td {
     justify-content: space-between;
     position: relative;
     top: 9px;
-    left: 50%;
-    transform: translateX(-50%);
 }
 .btnarea .pageBtn .number {
     font-size: 17px;
@@ -251,7 +249,7 @@ tr td select option {
     margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
-    width: 800px;
+    width: 850px;
     height: auto;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
@@ -265,15 +263,7 @@ tr td select option {
 }
 .modal .modalbtn {
     display: flex;
-    justify-content: center;
-}
-.modaltop {
-    display: flex;
-}
-.modaltop p {
-    margin-left: 15px;
-    position: relative;
-    top: 5px;
+    justify-content: flex-end;
 }
 .modal button {
     width: 100px;
@@ -283,6 +273,7 @@ tr td select option {
     text-align: center;
     margin-top: 15px;
     border-radius: 5px;
+    margin-left: 10px;
 }
 .modal table {
     margin-bottom: 20px;
@@ -291,39 +282,21 @@ tr td select option {
     width: 90px;
     height: 50px;
 }
-.modal table td div {
-    text-align: left;
-    display: flex;
-}
-.modal .fst {
-    margin-bottom: 20px;
-}
-.modal table td input {
-    padding: 10px;
-}
-.modal table td p {
-    position: relative;
-    top: 10px;
-    margin-left: 10px;
-}
-.modal .total {
-    display: flex;
-    justify-content: flex-end;
-}
-.modal .total table{
-    width: 250px;
-    height: 150px;
-    border: none;
-}
-.modal .total table tr:last-of-type {
-    border: none;
-}
-.modal .info table td {
-    text-align: left;
+.modal table td {
     font-size: 15px;
+    text-align: left;
 }
-
-
+.modal table td .status {
+    font-size: 16px;
+}
+.modal table tr td div select {
+    font-size: 16px;
+    width: 424px;
+    height: 43px;
+}
+.modal table tr td div option {
+    font-size: 16px;
+}
 
 
 
@@ -347,7 +320,7 @@ tr td select option {
     margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
-    width: 800px;
+    width: 850px;
     height: auto;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
@@ -371,6 +344,7 @@ tr td select option {
     text-align: center;
     margin-top: 15px;
     border-radius: 5px;
+    margin-left: 10px;
 }
 .submodal table {
     margin-bottom: 20px;
@@ -398,71 +372,123 @@ tr td select option {
     font-size: 16px;
 }
 .submodal table input {
-    width: 400px;
+    width: 650px;
     border-radius: 3px;
     border: 1px solid #8a8a8a;
     box-sizing: border-box;
 }
+.submodal table input[type="file"] {
+    width: 300px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
 .submodal table tr td div select {
     font-size: 16px;
-    width: 400px;
+    width: 200px;
     height: 43px;
+    margin-right: 7px;
 }
 .submodal table tr td div option {
     font-size: 16px;
 }
-.submodal .thd tr td div input {
-    width: 240px;
+.writearea {
+    height: 300px;
 }
-.modalTable {
+
+
+
+/* 모달 전체 화면 덮기 */
+.regmodal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.regmodal-content {
+    background-color: #fff;
+    margin: 10% auto;
     padding: 20px;
+    border-radius: 10px;
+    width: 850px;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
-.infotop h2 {
-    font-size: 19px;
+
+/* 닫기 버튼 */
+.regmodal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.regmodal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.regmodal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.regmodal table {
+    margin-bottom: 20px;
+}
+.regmodal table th {
+    width: 90px;
+    height: 50px;
+}
+.regmodal table td div {
+    text-align: left;
+    display: flex;
+}
+.regmodal .fst {
+    margin-bottom: 20px;
+}
+.regmodal table td input {
+    padding: 10px;
+}
+.regmodal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.regmodal table td .status {
+    font-size: 16px;
+}
+.regmodal table input {
+    width: 650px;
+    border-radius: 3px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+}
+.regmodal table input[type="file"] {
+    width: 300px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
     margin-bottom: 5px;
+    border-radius: 3px;
 }
-.infotop {
-    border-bottom: 2px solid black;
+.regmodal table tr td div select {
+    font-size: 16px;
+    width: 200px;
+    height: 43px;
+    margin-right: 7px;
 }
-.submodal table .addr{
-    width: 600px;
-}
-.submodal table .subinfo {
-    width: 600px;
-    height: 200px;
-}
-.submodal table td input[type="checkbox"] {
-    width: 20px;
-}
-.submodal table td .checkboxwrap {
-    display: block;
-}
-.submodal table td .checkboxwrap label {
-    display: inline-block;
-    margin-right: 5px;
-    margin-bottom: 5px;
-}
-.submodal table td .checkboxwrap .percent {
-    margin-right: 27px;
-}
-.submodal table td .checkboxwrap .mopercent {
-    margin-right: 28px;
-}
-.submodal table td .checkboxwrap .morepercent {
-    margin-right: 28px;
-}
-.submodal table td .date {
-    width: 192px;
-}
-.submodal table td .datewrap {
-    display: block;
-}
-.submodal table td .datewrap label {
-    display: inline-block;
-    margin-bottom: 10px;
-}
-.submodal table td .datewrap input[type="text"] {
-    width: 50px;
-    height: 35px;
+.regmodal table tr td div option {
+    font-size: 16px;
 }
 /* --------------------- main --------------------- */
