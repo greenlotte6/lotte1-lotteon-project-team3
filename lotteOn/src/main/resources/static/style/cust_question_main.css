@@ -12,6 +12,7 @@ main {
     align-items: stretch; 
 }
 
+/*사이드바*/
 .content > .sidebar {
     width: 210px;
     height: auto;
@@ -67,6 +68,7 @@ aside .item:hover .dropdown {
 .side_menu {
     margin-bottom: 50px;
 }
+
 .pTitle {
     font-size: 20px;
 }
@@ -121,6 +123,7 @@ aside .item:hover .dropdown {
     padding: 0 15px;
 }
 
+/*메인*/
 .main_content {
     float: right;
     margin-top: 60px;
@@ -130,29 +133,18 @@ aside .item:hover .dropdown {
 .main_content h1 {
     margin-bottom: 15px;
     font-size: 35px;
+    font-weight: 400;
 }
 .main_content > .main_notice {
     border-top: 5px solid #dfdfdf;
     width: 800px;
-    height: auto;
     margin-bottom: 20px;
 }
-.main_content > .main_faq {
-    border-top: 1px solid #dfdfdf;
-    width: 800px;
-    height: auto;
-    margin-bottom: 20px;
-}
-.main_content > .question {
-    border-top: 1px solid #dfdfdf;
-    width: 800px;
-    height: auto;
-    margin-bottom: 20px;
-}
+
 .main_content > .onetoone {
     border-top: 1px solid #dfdfdf;
     width: 800px;
-    height: auto;
+    height: 400px;
     margin-bottom: 20px;
 }
 
@@ -161,7 +153,7 @@ aside .item:hover .dropdown {
     justify-content: space-between; /* 좌우 정렬 */
     align-items: center;
     font-size: 25px;
-    margin-bottom: 10px;
+    padding: 5.3px 0;
 }
 .main_content table {
     border-top: 3px solid #333333;
@@ -176,19 +168,32 @@ td {
     height: 70px;
 }
 
-.smart_link div img {
-    width: 70px;
+.write {
+    background-color: #6d6c6c;
+    margin-top: 20px;
+    width: 100px;
+    padding: 15px;
+    float: right;
+    margin-bottom: 20px;
+}
+.write a{
+    font-size: 18px;
+    padding-left: 15px;
+    color: white;
+    font-weight: 300;
 }
 
-.smart_link {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
-    gap: 20px; /* 아이템 간 간격 */
-    padding: 20px 0;
-}
 
-.smart_link > div {
+.page {
+    clear: both;
+    display: block;
     text-align: center;
+    margin-bottom: 30px;
+}
+.num{
+    padding: 3px 8px;
+    font-size: 17px;
+    font-weight: 500;
 }
 
 .onetoone div{
