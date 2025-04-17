@@ -10,8 +10,11 @@ main {
     width: 1140px; 
     margin: 0 auto;
     align-items: stretch; 
+    height: auto;
+    padding-bottom: 40px;
 }
 
+/*사이드바*/
 .content > .sidebar {
     width: 210px;
     height: auto;
@@ -67,6 +70,7 @@ aside .item:hover .dropdown {
 .side_menu {
     margin-bottom: 50px;
 }
+
 .pTitle {
     font-size: 20px;
 }
@@ -121,6 +125,7 @@ aside .item:hover .dropdown {
     padding: 0 15px;
 }
 
+/*메인*/
 .main_content {
     float: right;
     margin-top: 60px;
@@ -130,29 +135,11 @@ aside .item:hover .dropdown {
 .main_content h1 {
     margin-bottom: 15px;
     font-size: 35px;
+    font-weight: 400;
 }
 .main_content > .main_notice {
     border-top: 5px solid #dfdfdf;
     width: 800px;
-    height: auto;
-    margin-bottom: 20px;
-}
-.main_content > .main_faq {
-    border-top: 1px solid #dfdfdf;
-    width: 800px;
-    height: auto;
-    margin-bottom: 20px;
-}
-.main_content > .question {
-    border-top: 1px solid #dfdfdf;
-    width: 800px;
-    height: auto;
-    margin-bottom: 20px;
-}
-.main_content > .onetoone {
-    border-top: 1px solid #dfdfdf;
-    width: 800px;
-    height: auto;
     margin-bottom: 20px;
 }
 
@@ -161,54 +148,81 @@ aside .item:hover .dropdown {
     justify-content: space-between; /* 좌우 정렬 */
     align-items: center;
     font-size: 25px;
-    margin-bottom: 10px;
+    padding: 5.3px 0;
 }
 .main_content table {
     border-top: 3px solid #333333;
+    border-bottom: 1px solid #333333;
     margin: 0 auto;
-    width: 100%;
-    height: auto;
-    letter-spacing: 2px;
-    border-spacing: 0;
     margin-top: 20px;
+    width: 100%;
+    border-spacing: 0;
 }
-td {
-    height: 70px;
+.main_notice table tr:last-child td {
+    border-top: 1px solid #dfdfdf;
+    border-bottom: none;
 }
-
-.smart_link div img {
-    width: 70px;
-}
-
-.smart_link {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
-    gap: 20px; /* 아이템 간 간격 */
-    padding: 20px 0;
-}
-
-.smart_link > div {
-    text-align: center;
+.main_content table input{
+    border: none;
+    width: 90%;
+    height: 50px;
+    cursor: default;
+    font-size: 18px;
+    padding: 10px;
 }
 
-.onetoone div{
-    border: 1px solid #dfdfdf;
-    display: inline-block;
-    vertical-align: top;
-    height: 300px;
-    padding: 10px 35px;
-    margin-top: 15px;
+.main_content table textarea{
+    border: none;
+    resize: none;
+    /* 기타 스타일 */
+    width: 90%;
+    min-height: 600px;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: default;
+    font-size: 18px;
 }
-.info2 {
+.main_notice span {
+    margin-left: -10px;
+    font-size: 18px;
+}
+.list_page {
+    background-color: #6d6c6c;
+    margin-top: 20px;
+    width: 100px;
+    padding: 15px;
+    float: right;
+    margin-left: 10px;
+}
+.list_page a{
+    font-size: 18px;
+    padding: 0 15px;
+    color: white;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+input:focus,
+textarea:focus {
+    outline: none;     /* 포커스 시 생기는 외곽선 제거 */
+    border: none;      /* 원한다면 border도 제거 가능 */
+}
+#type {
+    height: 50px;
+    width: 250px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+#sub {
+    height: 50px;
+    width: 200px;
+    font-size: 18px;
+    margin-top: 10px;
     margin-left: 15px;
 }
-.onetoone p{
-    margin: 0;
-    font-size: 20px;
+option {
+    font-size: 16px;
 }
-.onetoone h3{
-    margin: 15px 0;
-}
-.onetoone span {
-    font-size: 17px;
-}
+
+
+
+
