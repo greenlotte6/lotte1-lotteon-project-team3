@@ -24,7 +24,6 @@ header {
 .logo {
     display: inline-block;
     align-content: center;
-    align-content: center;
 }
 .header_menu {
     margin-left: 400px;
@@ -81,7 +80,7 @@ header {
 }
 .search input {
     padding: 8px 35px 8px 10px; /* 아이콘 들어갈 공간 확보 */
-    background: url('/images/search.svg') no-repeat right 10px center;
+    background: url('../../images/search.svg') no-repeat right 10px center;
     background-size: 16px 16px;
     border: 1px solid #ccc;
     border-radius: 6px;
