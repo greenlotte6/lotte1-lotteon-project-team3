@@ -26,15 +26,20 @@
     const inquiryModal = document.getElementById('inquiryModal');
     const inquiryCloseBtn = inquiryModal.querySelector('.inquiry-close');
 
-    //구매확정  모달 요소
+    //구매확정 모달 요소
     const confirmModal = document.getElementById('confirmModal');
     const confirmCloseBtn = confirmModal.querySelector('.close');
     const confirmButtons= document.querySelectorAll('.confirm-btn');
 
-    //상품평쓰기 버튼 클릭 시 모달 요소
+    //상품평쓰기 모달 요소
     const reviewModal = document.getElementById('reviewModal');
     const reviewCloseBtn= reviewModal.querySelector('.close');
     const reviewButtons = document.querySelectorAll('.review-btn');
+
+    //반품신청 모달 요소
+    const returnModal= document.getElementById('returnModal');
+    const returnCloseBtn= returnModal.querySelector('.close');
+    const returnButtons = document.querySelectorAll('.return-btn');
 
     //주문 상세 모달 열기
     orderLinks.forEach(link =>{
@@ -72,6 +77,13 @@
       });
     });
 
+    //반품신청 클릭 시 모달 열기
+    returnButtons.forEach(button =>{
+      button.addEventListener('click', function () {
+        returnModal.style.display= "block";
+      });
+    });
+
 
 
     //주문 모달 닫기
@@ -100,6 +112,10 @@
       reviewModal.style.display= "none";
     });
 
+    //반품신청 모달 닫기
+    returnCloseBtn.addEventListener('click', function () {
+      returnModal.style.display= "none";
+    });
 
 
     //모달 바깥 영역 클릭 시 모달 닫기
@@ -114,6 +130,8 @@
         confirmModal.style.display= "none";
       }else if(e.target== reviewModal){
         reviewModal.style.display= "none";
+      }else if(e.target== returnModal){
+        returnModal.style.display= "none";
       }
     });
 
@@ -131,7 +149,6 @@
     </div>
     <h2 class="modal-tit">주문정보</h2>
     <div id="orderDetail">
-      <!--주문 정보-->
       <div>
         <table class="table_one">
           <thead>
@@ -144,7 +161,9 @@
           </thead>
           <tbody>
           <tr class="modal-tr1">
-            <td>20xx-01-01</td>
+            <td>
+             <p>20xx-01-01</p>
+            </td>
             <td>
               <div>
                 <img src="../static/images/slide1.webp" alt="#">
@@ -330,11 +349,11 @@
     <div class="modal-body">
       <table class="table_five">
         <tr>
-          <th>상품평</th>
-          <td>상품평 출력</td>
+          <th class="five-th1">상품명</th>
+          <td>상품명 출력</td>
         </tr>
         <tr>
-          <th>만족도</th>
+          <th class="five-th2">만족도</th>
           <td>
             <div class="star-rating">
               <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5점"></label>
@@ -346,26 +365,27 @@
           </td>
         </tr>
         <tr>
-          <th>내용</th>
+          <th class="five-th3">내용</th>
           <td>
-            <input type="text" placeholder="최소 10자 이상 200자 이내 외로 작성해주세요">
+            <input type="text" placeholder="최소 10자 이상 200자 이내 외로 작성해주세요" class="placeholder">
           </td>
         </tr>
         <tr>
-          <th>사진</th>
-          <td>
-            <div>
-              <button type="button"></button>
-              <p>선택된파일없음</p>
-            </div>
-            <div>
-              <button type="button"></button>
-              <p>선택된파일없음</p>
-            </div>
-            <div>
-              <button type="button"></button>
-              <p>선택된파일없음</p>
-            </div>
+          <th class="five-th4">사진</th>
+          <td class="five-td1">
+
+              <div class="picture-1">
+                <button type="button" class="picture-btn">파일선택</button>
+                <p>선택된파일없음</p>
+              </div>
+              <div class="picture-1">
+                <button type="button" class="picture-btn">파일선택</button>
+                <p>선택된파일없음</p>
+              </div>
+              <div class="picture-1">
+                <button type="button" class="picture-btn">파일선택</button>
+                <p>선택된파일없음</p>
+              </div>
           </td>
         </tr>
       </table>
@@ -376,6 +396,62 @@
     </div>
   </div>
 </div>
+
+<!--반품신청 모달-->
+<div id="returnModal" class="modal returnmodal">
+  <div class="modal-content">
+    <div class="modal-header return-header">
+      <h2>반품신청</h2>
+      <span class="close return-close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div>
+        <h2>상품정보</h2>
+      </div>
+      <table class="table_six">
+        <thead>
+        <tr>
+        <th>날짜</th>
+        <th>상품정보</th>
+        <th>결제금액</th>
+        <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <p>0000-00-00</p>
+          </td>
+          <td>
+            <div>
+              <img src="../static/images/admin-persons.png" alt="#">
+              <p>주문번호: 101221341 <br>
+                (주) 상호명 <br>
+                상품명 <br>
+                수량: 1개 <br><br>
+                <strong>34,000원</strong>
+              </p>
+            </div>
+            </td>
+
+            <td>
+          <div>
+            <p>판매가&nbsp;34,000원 <br>
+               할인 &nbsp;&nbsp;&nbsp; -3,000원 <br><br>
+               결제금액 &nbsp; <strong>34,000원</strong>
+            </p>
+          </div>
+            </td>
+          <td>
+            <p>배송완료</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+</div>
+
 
 <div>
   <header>
@@ -498,10 +574,10 @@
               <td class="table-td">2022-12-13</td>
               <td class="table-td">
                 <div>
-                  <img src="../static/images/slide1.webp" alt="#">
+                  <img src="../static/images/slide1.webp" alt="#" class="main_img1">
                 </div>
-                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
-                  <a href="#" class="company-link">(주)상호명 <br>
+                <p><a href="#" class="order-link main_p">주문번호: 1012211341</a><br>
+                  <a href="#" class="company-link main_p">(주)상호명 <br>
                     상품명</a><br>
                   수량: 1개 <br><br>
                   <strong>34,000원</strong></p>
@@ -510,7 +586,7 @@
               <td class="table-td">
                 <button class="btn_blue confirm-btn">구매확정</button>
                 <button class="btn_blue review-btn">상품평쓰기</button>
-                <button>반품신청</button>
+                <button class="return-btn">반품신청</button>
                 <button>교환신청</button>
               </td>
             </tr>
@@ -519,7 +595,7 @@
               <td class="table-td">2022-12-13</td>
               <td class="table-td">
                 <div>
-                  <img src="../static/images/slide1.webp" alt="#">
+                  <img src="../static/images/slide1.webp" alt="#" class="main_img1">
                 </div>
                 <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
                   <a href="#" class="company-link">(주)상호명 <br>
@@ -531,7 +607,7 @@
               <td class="table-td">
                 <button class="btn_blue confirm-btn">구매확정</button>
                 <button class="btn_blue review-btn">상품평쓰기</button>
-                <button>반품신청</button>
+                <button class="return-btn">반품신청</button>
                 <button>교환신청</button>
               </td>
             </tr>
