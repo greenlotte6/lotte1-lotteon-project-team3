@@ -1,0 +1,61 @@
+body {
+    min-width: 1200px;
+    height: auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#container {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+main {
+    width: 1200px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    flex: 1;
+    margin-bottom: 35px;
+}
+/* --------------------- header --------------------- */
+
+header {
+    background-color: black;
+    width: 100%;
+}
+.headerArea {
+    display: flex;
+    justify-content: space-between; /* 공간 분배 */
+    align-items: center;
+    width: 1200px;
+    height: 90px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+header img {
+    width: 184px;
+    height: 38px;
+}
+header div ul {
+    display: flex;
+}
+header div ul li {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+header div ul li a {
+    color: white;
+}
+
+.v-l {
+    width: 1px;
+    height: 14px;
+    margin: 3px 12px 0px 12px;
+    background-color: rgb(217, 217, 217);
+}
+/* --------------------- header --------------------- */

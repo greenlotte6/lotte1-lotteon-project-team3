@@ -1,0 +1,240 @@
+li {
+    display: inline-block;
+    list-style: none;
+    padding: 0; /* 기본 들여쓰기 제거 시 필요 */
+    margin: 0;  /* 필요시 여백도 제거 */
+    padding: 5px 20px;
+}
+* {
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+a {
+    text-decoration: none;
+}
+header {
+    display: flex;
+    align-items: flex-start; /* 또는 center: 중앙 정렬 */
+    justify-content: space-between; /* 공간 분배 */
+    padding: 20px; /* 필요에 따라 조정 */
+    max-width: 1140px;
+}
+.logo {
+    display: inline-block;
+    align-content: center;
+    align-content: center;
+}
+.header_menu {
+    margin-left: 400px;
+    padding-top: 10px;
+}
+.header_menu li a {
+    color: black;
+}
+.main_image {
+    min-height: 700px;
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/기업문화/IMG_0894-Panorama_convert.jpg);
+    background-size: cover;       /* 박스를 꽉 채움 (잘릴 수 있음) */
+    background-position: center;  /* 가운데 정렬 */
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+}
+.image_comment {
+    color: white;
+    font-size: 33px;
+    font-weight: 500;
+    width: 1140px;
+    margin: 0 auto;
+    margin-top: 550px;
+}
+/* 텍스트 fade-in 애니메이션 */
+.image_comment p {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in forwards;
+}
+
+.image_comment p:nth-child(1) {
+    animation-delay: 0.5s;
+}
+
+.image_comment p:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.subtitle {
+    height: 185px;
+    padding: 30px;
+}
+.sub {
+    max-width: 1140px;
+    font-size: 22px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+.work{
+    max-width: 1140px;
+    margin-top: 70px;
+}
+.card3 {
+    display: flex;
+    border-radius: 15px;
+    box-shadow:4px 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 70px;
+}
+.image{
+    width: 50%;
+    height: 100%;
+}
+.image img{
+    display: block; 
+    width: 100%;
+    border-radius: 15px 0 0 15px;
+    object-fit: cover;
+
+}
+.article{
+    width: 50%;
+    float: right;
+    vertical-align: middle;
+    padding: 100px 50px;
+    line-height: 1.5;
+}
+.article h4 {
+    font-size: 25px;
+    margin-bottom: 25px;
+
+}
+.card3 div {
+    display: inline-block;
+}
+.growth{
+    margin-top: 130px;
+    max-width: 1140px;
+    margin-bottom: 80px;
+}
+.division1 > div{
+    width: 47%;
+    display: inline-block;
+    margin: 20px 15px;
+    padding: 10px;
+    font-size: 18px;
+}
+.division1 h4 {
+    font-size: 27px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.division1 p {
+    line-height: 1.6;
+}
+.division2 > div{
+    width: 47%;
+    display: inline-block;
+    margin: 20px 15px;
+    padding: 10px;
+    font-size: 18px;
+}
+.division2 h4 {
+    font-size: 27px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.division2 p {
+    line-height: 1.6;
+}
+
+.division1 > .c1 > div > h4::before{
+    content: "";
+    display: inline-block;
+    width: 74px;         /* 원하는 크기 */
+    height: 74px;
+    background-image: url('/images/기업문화/기업문화_icon01-150x150.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 15px;   /* h4 텍스트와 간격 */
+    vertical-align: middle;
+}
+
+.division1 > .c2 > div > h4::before{
+    content: "";
+    display: inline-block;
+    width: 74px;         /* 원하는 크기 */
+    height: 74px;
+    background-image: url('/images/기업문화/기업문화_icon02-150x150.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 15px;   /* h4 텍스트와 간격 */
+    vertical-align: middle;
+}
+
+.division2 > .c3 > div > h4::before{
+    content: "";
+    display: inline-block;
+    width: 74px;         /* 원하는 크기 */
+    height: 74px;
+    background-image: url('/images/기업문화/기업문화_icon03-150x150.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 15px;   /* h4 텍스트와 간격 */
+    vertical-align: middle;
+}
+
+.division2 > .c4 > div > h4::before {
+    content: "";
+    display: inline-block;
+    width: 74px;         /* 원하는 크기 */
+    height: 74px;
+    background-image: url('/images/기업문화/기업문화_icon04-150x150.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 15px;   /* h4 텍스트와 간격 */
+    vertical-align: middle;
+}
+
+.employment {
+    max-width: 1140px;
+    height: 195px;
+}
+.employment img {
+    border-radius: 15px;
+    width: 100%;
+}
+footer {
+    min-height: 100px;
+}
+.footer_menu{
+    max-width: 1140px;
+    margin-top: 70px;
+}
+.footer_menu2{
+    max-width: 1140px;
+    margin-top: 20px;
+}
+.footer_menu nav {
+    display: inline-block;
+}
+.footer_menu div {
+    display: inline-block;
+    margin-left: 70px;
+}
+.footer_menu2 div {
+    display: inline-block;
+    margin-left: 50px;
+}
+.footer_menu li a {
+    color: #cc3366;
+}

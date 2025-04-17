@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <link rel="stylesheet" href="style/my_order.css">
+    <link rel="stylesheet" href="style/common/_footer.css">
+    <link rel="stylesheet" href="style/common/_header.css">
+    <title>마이페이지 메인</title>
+</head>
+<div>
+    <header>
+        <div class="headerContainer">
+            <div class="headerUtil">
+                <a href="#" class="themeColor">회원가입</a>
+                <div class="v-l"></div>
+                <a href="#">로그인</a>
+                <div class="v-l"></div>
+                <a href="#">고객센터</a>
+            </div>
+            <div class="headerContent">
+                <div class="headerContent-left">
+                    <a href="#">
+                        <img src="#" alt="lotteOn Logo" class="logo">
+                    </a>
+                    <div class="search">
+                        <input type="text" placeholder="검색어를 입력해주세요" class="inputSearch">
+                        <button class="deleteSearchKeyword"></button>
+                        <a href="#" class="searchIcon icon"></a>
+                    </div>
+                    <p><span class="themeColor rank">1</span>검색어 순위를 혀? 말어?</p>
+                </div>
+                <div class="contentLink">
+                    <a href="#" class="heart icon"></a>
+                    <a href="#" class="my icon"></a>
+                    <a href="#" class="cart icon"></a>
+                </div>
+            </div>
+            <div class="headerNavContainer">
+                <div class="headerNav">
+                    <div class="category">
+                        <p class="burgerMenu icon2"></p>
+                        <p>카테고리</p>
+                    </div>
+                    <div class="various">
+                        <a href="#">신상품</a>
+                        <a href="#">베스트</a>
+                        <a href="#">패션</a>
+                        <a href="#">뷰티</a>
+                        <a href="#">라이프</a>
+                        <a href="#">특가/혜택</a>
+                    </div>
+                    <a href="#" class="deliv">
+                        <p>주문배송</p>
+                        <img src="#" alt="배송정보" class="mascot">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <div class="mypage-header">
+            <div class="mypage-title">
+                <h2>나의쇼핑정보</h2>
+            </div>
+            <div class="mypage-shortcuts">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">주문</span>
+                            <span class="value">2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">쿠폰</span>
+                            <span class="value">1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">포인트</span>
+                            <span class="value">1,000</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">문의</span>
+                            <span class="value">1</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="div_section">
+            <section class="left_section">
+                <aside class="sidebar">
+                    <ul>
+                        <li><a href="#">전체주문내역</a></li>
+                        <li><a href="#">포인트내역</a></li>
+                        <li><a href="#">쿠폰</a></li>
+                        <li><a href="#">나의리뷰</a></li>
+                        <li><a href="#">문의하기</a></li>
+                        <li><a href="#">나의설정</a></li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section class="right_section">
+                <div class="banner"></div>
+                <article>
+                    <div class="article_title">
+                        <h3>전체 주문내역</h3>
+                    </div>
+                    <table class="datetable">
+                        <tr>
+                            <th>기간별조회</th>
+                            <td>
+                                <select>
+                                    <option>기간 선택</option>
+                                    <option>1주일</option>
+                                    <option>15일</option>
+                                    <option>1개월</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option>기간 선택</option>
+                                    <option>3월</option>
+                                    <option>2월</option>
+                                    <option>1월</option>
+                                    <option>12월</option>
+                                    <option>11월</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="datetime-local"> ~ <input type="datetime-local">
+                            </td>
+                            <td>
+                                <button type="submit">[ 조회 ]</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>상품정보</th>
+                            <th>상품</th>
+                            <th>확인/신청</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="table-tr1">
+                            <td class="table-td">2022-12-13</td>
+                            <td class="table-td">
+                                <div>
+                                    <img src="/images/slide1.webp" alt="#">
+                                </div>
+                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
+                                    <a href="#" class="company-link">(주)상호명 <br>
+                                        상품명</a><br>
+                                    수량: 1개 <br><br>
+                                    <strong>34,000원</strong></p>
+                            </td>
+                            <td class="baesong" class="table-td">배송완료</td>
+                            <td class="table-td">
+                                <button class="btn_blue confirm-btn">구매확정</button>
+                                <button class="btn_blue review-btn">상품평쓰기</button>
+                                <button>반품신청</button>
+                                <button>교환신청</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="table-td">2022-12-13</td>
+                            <td class="table-td">
+                                <div>
+                                    <img src="/images/slide1.webp" alt="#">
+                                </div>
+                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
+                                    <a href="#" class="company-link">(주)상호명 <br>
+                                        상품명</a> <br>
+                                    수량: 1개 <br><br><br>
+                                    <strong>34,000원</strong></p>
+                            </td>
+                            <td class="table-td">배송완료</td>
+                            <td class="table-td">
+                                <button class="btn_blue confirm-btn">구매확정</button>
+                                <button class="btn_blue review-btn">상품평쓰기</button>
+                                <button>반품신청</button>
+                                <button>교환신청</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <div class="btnarea">
+                    <div class="pageBtn">
+                        <a href=""><img src="images/back-double.png"></a>
+                        <a href=""><img src="images/back-single.png" class="single"></a>
+                        <a href="" class="number">1</a>
+                        <a href="" class="number">2</a>
+                        <a href="" class="number">3</a>
+                        <a href=""><img src="images/right-single.png" class="single"></a>
+                        <a href=""><img src="images/right-double.png"></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="footerContainer">
+            <div class="footerTopMenu">
+                <ul>
+                    <li><a href="#">회사소개</a></li>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">전자금융거래약관</a></li>
+                    <li><a href="#" class="bold2">개인정보처리방침</a></li>
+                    <li><a href="#">청소년보호방침</a></li>
+                    <li><a href="#">임직원등록</a></li>
+                    <li><a href="#">준법경영</a></li>
+                    <li><a href="#">오류신고</a></li>
+                    <li><a href="#">리서치 패널가입</a></li>
+                </ul>
+                <div class="selectMenu">
+                    <select onchange="window.open(value,'_blank');">
+                        <option selected disabled>판매자서비스</option>
+                        <option value="https://support.lotteon.com/">판매자교육 센터</option>
+                        <option value="https://api.lotteon.com/">API센터</option>
+                    </select>
+                    <select onchange="window.open(value,'_blank');">
+                        <option selected disabled>Family Site</option>
+                        <option value="https://www.lotteeatz.com/eatzevent.html">롯데리아</option>
+                        <option value="https://kor.lottedfs.com/kr/shopmain/home">롯데면세점</option>
+                        <option value="https://www.lottecinema.co.kr/">롯데시네마</option>
+                        <option value="https://www.lotteworld.com/">롯데월드</option>
+                        <option value="https://www.giantsclub.com/">롯데자이언츠</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="companyInfo">
+                <img src="/images/lotteOn_footer_logo.png" alt="footerLogo">
+                <div class="infoWrapper">
+                    <div class="company">
+                        <h3>롯데쇼핑 주식회사</h3>
+                        <ul>
+                            <li>대표이사 : 김사무엘상현, 신동빈, 정준호, 강성현</li>
+                            <li>주소 : 서울특별시 강남구 테헤란로 507 (삼성동, WeWork빌딩), 7층</li>
+                            <li>사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부)</li>
+                            <li>
+                                통신판매업 신고 : 2024-서울강남-04439&nbsp;
+                                <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=5298500774" class="anchorLine"
+                                   target="_blank">사업자 정보 확인</a>
+                            </li>
+                            <li>호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부</li>
+                        </ul>
+                        <h4>롯데쇼핑 e커머스 사업부 에스크로</h4>
+                        <p>
+                            고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해
+                            <br>
+                            소비자 피해 방지 서비스를 이용합니다.
+                        </p>
+                    </div>
+                    <div class="customer">
+                        <h3>고객센터</h3>
+                        <div>
+                            <p>전화번호 : 1899-7000(유료)</p>
+                            <p>
+                                E-mail :
+                                <a href="#">lotteon@lotte.net</a>
+                            </p>
+                            <p>
+                                <a href="#" class="anchorLine" target="_blank">분쟁해결기준</a>
+                            </p>
+                        </div>
+                        <div>
+                            <ul class="list">
+                                <li>
+                                    <a href="#">FAQ 보기</a>
+                                </li>
+                                <li>
+                                    <a href="#">1:1 문의하기</a>
+                                </li>
+                                <li>
+                                    <a href="#">고객센터</a>
+                                </li>
+                                <li>
+                                    <a href="#">공지사항</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <h3>전자금융거래 분쟁 담당</h3>
+                        <div>
+                            <p>Tel : 1899-7000(유료)</p>
+                            <p>
+                                E-mail :
+                                <a href="#" class="anchorLine">lotteon@lotte.net</a>
+                            </p>
+                            <p>
+                                <a href="#" class="anchorLine" target="_blank">안전거래센터</a>
+                            </p>
+                        </div>
+                        <div>
+                            <h3>콘텐츠산업진흥법에 의한 콘텐츠보호안내</h3>
+                            <a href="#" class="anchorLine">자세히보기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="outlink">
+                <a href="https://www.lotteon.com/common/footerSafePopup">
+                    <img src="/images/ico_footer2.png">
+                </a>
+                <a href="https://kolsa.or.kr/">
+                    <img src="/images/ico_footer1.png">
+                </a>
+                <a href="https://hometax.go.kr/">
+                    <img src="/images/ico_footer3.png">
+                </a>
+                <a href="http://upss.gs1kr.org/">
+                    <img src="/images/ico_footer4.png">
+                </a>
+                <a href="https://107.relaycall.or.kr">
+                    <img src="/images/ico_footer5.png">
+                </a>
+                <a href="https://www.pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS213&mCode=C040050000&nttId=8926">
+                    <img src="/images/ico_footer6.png">
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="footerInfo">
+            <p>롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체 책임을 지지 않습니다.</p>
+            <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

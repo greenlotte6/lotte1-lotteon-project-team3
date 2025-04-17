@@ -1,0 +1,20 @@
+/*--------------------- footer -------------------- */
+footer {
+    background-color: black;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+.footerArea {
+    display: flex;
+    justify-content: flex-start; /* 공간 분배 */
+    width: 1200px;
+    height: 60px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    align-items: center;
+}
+.footerArea div p {
+    color: white;
+}
+/*--------------------- footer -------------------- */
