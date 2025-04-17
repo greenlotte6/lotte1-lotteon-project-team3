@@ -23,7 +23,6 @@
         .logo {
             display: inline-block;
             align-content: center;
-            align-content: center;
         }
         .header_menu {
             margin-left: 400px;
@@ -34,7 +33,7 @@
         }
         .main_image {
             min-height: 700px;
-            background-image: url(/images/blog_main.jpg);
+            background-image: url("../../images/blog_main.jpg");
             background-size: cover;       /* 박스를 꽉 채움 (잘릴 수 있음) */
             background-position: center;  /* 가운데 정렬 */
             background-repeat: no-repeat;
