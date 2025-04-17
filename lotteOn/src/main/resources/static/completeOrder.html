@@ -14,13 +14,9 @@
 
     <!-- Script -->
     <script src="/script/search.js"></script>
-    <script src="/script/daumPostCode.js"></script>
-    <script src="/script/maxLength.js"></script>
-    <script src="/script/chooseOption.js"></script>
-    <script src="/script/selectOne.js"></script>
 
     <!-- Style -->
-    <link rel="stylesheet" href="/style/product/payment.css"/>
+    <link rel="stylesheet" href="/style/product/completeOrder.css"/>
     <title>롯데ON</title>
 </head>
 <body>
@@ -95,7 +91,7 @@
         <main>
             <div class="mainContainer">
                 <div class="paymentWrapper">
-                    <h2>주문/결제</h2>
+                    <h2>주문완료</h2>
                     <div class="paymentContainer">
                         <h3 class="sectionTitle">주문상품</h3>
                         <div class="productSectionWrapper">
@@ -126,128 +122,71 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="#" method="post">
-                            <h3 class="sectionTitle">주문자 정보</h3>
-                            <div class="sectionWrapper">
-                                <div class="section">
-                                    <p>수령자</p>
-                                    <input type="text" name="receiver" placeholder="수령자를 입력하세요" required>
-                                </div>
-                                <div class="section">
-                                    <p>보내는 분</p>
-                                    <input type="text" name="sender" value="비빔면" readonly>
-                                </div>
-                                <div class="section">
-                                    <p>휴대폰</p>
-                                    <input type="text" name="hp" value="010-1004-1004" readonly>
-                                </div>
+                        <h3 class="sectionTitle">주문정보</h3>
+                        <div class="sectionWrapper">
+                            <div class="section">
+                                <p>주문번호</p>
+                                <p>100021058</p>
                             </div>
-                            <h3 class="sectionTitle">배송정보</h3>
-                            <div class="sectionWrapper">
-                                <div class="section">
-                                    <p>우편번호</p>
-                                    <input type="text" name="zip" value="47254" class="zip" id="postcode" readonly>
-                                    <button type="button" onclick="DaumPostcode()" class="findAddress">우편번호 찾기</button>
-                                </div>
-                                <div class="section">
-                                    <p>기본주소</p>
-                                    <input type="text" name="addr1" value="부산시 부산진구 중앙대로 749번" id="address" readonly>
-                                </div>
-                                <div class="section">
-                                    <p>상세주소</p>
-                                    <input type="text" name="addr2" value="범향빌딩 4층" id="detailAddress" placeholder="상세주소를 입력하세요" required>
-                                </div>
-                                <div class="section">
-                                    <p>기타</p>
-                                    <input type="text" name="other" class="other" placeholder="기타 내용을 작성해주세요 (최대 25자)" maxlength="25">
-                                </div>
+                            <div class="section">
+                                <p>결제방법</p>
+                                <p>카카오페이</p>
                             </div>
-                        </form>
-                        <form action="#" method="post">
-                            <div class="AllContainer">
-                                <div class="leftContainer">
-                                    <h3 class="sectionTitle">쿠폰/포인트 사용</h3>
-                                    <div class="sectionWrapper">
-                                        <div class="section3">
-                                            <p>잔여 포인트</p>
-                                            <div class="remainPoint">
-                                                <p>10002</p>
-                                                <p>&nbsp;P</p>
-                                            </div>
-                                        </div>
-                                        <div class="section3">
-                                            <p>포인트 사용</p>
-                                            <div>
-                                                <button type="button" class="usePointBtn">사용</button>
-                                                <input type="number" placeholder="0" class="point" min="0"></input>
-                                            </div>
-                                        </div>
-                                        <div class="section3">
-                                            <p>쿠폰 적용</p>
-                                            <div class="chooseOption">
-                                                <p class="chooseBtn">사용가능 쿠폰 2장</p>
-                                                <div class="options">
-                                                    <ul>
-                                                        <li>
-                                                            <p>신규가입 5,000원 할인</p>
-                                                        </li>
-                                                        <li>
-                                                            <p>1,000원 할인</p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h3 class="sectionTitle">결제수단</h3>
-                                    <div class="sectionWrapper marginBottomZero">
-                                        <div class="paymentMethod">
-                                            <input type="checkbox" onclick="selectOne(this)" name="phone" class="payment payment-phone">
-                                            <input type="checkbox" onclick="selectOne(this)" name="creditCard" class="payment payment-creditCard">
-                                            <input type="checkbox" onclick="selectOne(this)" name="kakaopay" class="payment payment-kakaoPay">
-                                            <input type="checkbox" onclick="selectOne(this)" name="tosspay" class="payment payment-tossPay">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="section">
+                                <p>주문자</p>
+                                <p>삼겹살</p>
+                            </div>
+                            <div class="section">
+                                <p>휴대폰</p>
+                                <p>010-1004-1004</p>
+                            </div>
+                        </div>
+                        <h3 class="sectionTitle">배송정보</h3>
+                        <div class="sectionWrapper">
+                            <div class="section">
+                                <p>수령자</p>
+                                <p>비빔면</p>
+                            </div>
+                            <div class="section">
+                                <p>연락처</p>
+                                <p>010-1052-1052</p>
+                            </div>
+                            <div class="section">
+                                <p>배송지 주소</p>
+                                <p>부산시 부산진구 중앙대로 749번 범향빌딩 4층</p>
+                            </div>
+                        </div>
+                        <h3 class="sectionTitle">결제정보</h3>
+                        <div class="sectionWrapper marginBottomZero">
+                            <div class="section5">
+                                <p>상품금액</p>
                                 <div>
-                                    <div class="rightContainer">
-                                        <h3>총 결제금액</h3>
-                                        <div class="sectionWrapper2">
-                                            <div class="section4">
-                                                <p>총 상품금액</p>
-                                                <div>
-                                                    <p>42,840</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>배송비</p>
-                                                <div>
-                                                    <p>0</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>할인금액</p>
-                                                <div>
-                                                    <p>0</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="totalPrice">
-                                            <div>
-                                                <p>총</p>
-                                                <p class="totalCount">2</p>
-                                                <p>건</p>
-                                            </div>
-                                            <p class="themeColor">42,820</p>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="payingBtn">결제하기</button> <!-- 기능 구현할 때 submit으로 변경 -->
+                                    <p>42,840</p>
+                                    <p>&nbsp;원</p>
                                 </div>
                             </div>
-                        </form>
+                            <div class="section5">
+                                <p>쿠폰/포인트 할인</p>
+                                <div>
+                                    <p>0</p>
+                                    <p>&nbsp;원</p>
+                                </div>
+                            </div>
+                            <div class="section5">
+                                <p>배송비</p>
+                                <div>
+                                    <p>0</p>
+                                    <p>&nbsp;원</p>
+                                </div>
+                            </div>
+                            <div class="section5">
+                                <p>총 주문금액</p>
+                                <div class="totalPrice">
+                                    <p>42,840</p>
+                                    <p>&nbsp;원</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

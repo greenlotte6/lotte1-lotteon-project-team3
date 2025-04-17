@@ -311,7 +311,7 @@ main > div > * {
     width: 1060px;
     margin: 0 auto;
     margin-bottom: 50px;
-    padding: 48px 56px;
+    padding: 48px 56px 36px 56px;
     box-sizing: border-box;
     border: 1px solid #eee;
     border-radius: 12px;
@@ -403,154 +403,11 @@ del {
     font-size: 14px;
 }
 
-.section > input {
-    font-size: 14px;
-    outline: none;
-    border: none;
-}
-
-.section > input::placeholder {
-    color: #999999;
-}
-
-.zip {
-    width: 60px;
-}
-
-.findAddress {
-    border: 1px solid #ddd;
-    background: white;
-    font-size: 14px;
-    padding: 4px 8px;
-}
-
-.other {
-    width: 250px;
-    box-sizing: border-box;
-}
-
-.AllContainer {
-    display: flex;
-    justify-content: space-between;
-}
-
-.leftContainer {
-    width: 552px;
-}
-
-.rightContainer {
-    width: 300px;
-    height: fit-content;
-    padding: 24px 20px 20px 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.section2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    height: 28px;
+.section > p:last-child {
+    width: fit-content;
 }
 
 .section2 > p {
-    font-size: 14px;
-}
-
-.remainPoint {
-    display: flex;
-}
-
-.remainPoint > p {
-    font-size: 14px;
-}
-
-.usePointBtn {
-    padding: 0 12px;
-    border: 1px solid #ddd;
-    background: white;
-    height: 38.5px;
-    font-size: 14px;
-}
-
-.point {
-    text-align: right;
-    font-size: 14px;
-    width: 150px;
-    padding-left: 8px;
-    padding-right: 12px;
-    height: 36px;
-    border: 1px solid #ddd;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;   
-}
-
-.chooseOption {
-    width: 300px;
-    position: relative;
-}
-
-.chooseOption > p {
-    position: relative;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    height: 36px;
-    padding-left: 12px;
-    padding-right: 4px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-}
-
-.chooseOption > p:after {
-    content: "";
-    position: absolute;
-    top: 9px;
-    right: 8px;
-    width: 20px;
-    height: 20px;
-    background-image: url("/images/select_arr.svg");
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: 16px auto;
-}
-
-.options {
-    position: absolute;
-    top: 38px;
-    width: 100%;
-    background-color: white;
-    box-sizing: border-box;
-    max-height: 0;
-    overflow-y: hidden;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 0.2s ease, max-height 0.2s ease;
-}
-
-.open {
-    max-height: 700px;
-    opacity: 1;
-    border: 1px solid #ddd;
-    border-top: none;
-}
-
-.options li {
-    display: flex;
-    align-items: center;
-    padding: 20px 4px 20px 12px;
-    border-top: 1px solid #eee;
-    cursor: pointer;
-}
-.options li:first-child {
-    border-top: none;
-}
-
-.options li > * {
     font-size: 14px;
 }
 
@@ -564,57 +421,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .section3 > p {
     font-size: 14px;
-}
-
-.paymentMethod {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-}
-
-.paymentMethod > input {
-    appearance: none;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 34px 64px;
-}
-
-.paymentMethod > input:checked {
-    border: 1px solid #222;
-}
-
-.payment-phone {
-    background-image: url("/images/mobile.svg");
-    background-position: center;
-    background-size: 50px;
-    background-repeat: no-repeat;
-}
-
-.payment-creditCard {
-    background-image: url("/images/card.svg");
-    background-position: center;
-    background-size: 50px;
-    background-repeat: no-repeat;
-}
-
-.payment-kakaoPay {
-    background-image: url("/images/kakaopay.svg");
-    background-position: center;
-    background-size: 90px;
-    background-repeat: no-repeat;
-}
-
-.payment-tossPay {
-    background-image: url("/images/tosspay.svg");
-    background-position: center;
-    background-size: 120px;
-    background-repeat: no-repeat;
-}
-
-.rightContainer > h3 {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 10px;
 }
 
 .section4 {
@@ -646,53 +452,35 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 10px 0;
 }
 
-.totalPrice {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #eee;
-    padding-top: 24px;
-}
-
-.totalPrice > div {
-    display: flex;
-}
-
-.totalPrice > div > p:first-child {
-    margin-right: 6px;
-}
-
-.totalPrice > div > p {
-    font-size: 15px;
-    padding-top: 8px;
-}
-
-.totalPrice > p {
-    font-size: 28px;
+.totalPrice > p:first-child {
+    font-size: 24px;
     font-weight: 700;
 }
 
-.totalCount {
-    color: #e62e00;
+.totalPrice > p {
+    color: #E60012;
+}
+
+.section5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    height: 28px;
+}
+
+.section5 > p {
+    font-size: 14px;
+}
+
+.section5 > div {
+    display: flex;
+    align-items: center;
+}
+
+.section5 > div > p {
+    font-size: 15px;
     font-weight: 500;
-}
-
-.payingBtn {
-    width: 100%;
-    margin-top: 16px;
-    padding: 16px 0;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
-    background-color: #E60012;
-}
-
-.payingBtn:hover {
-    transition: 0.3s;
-    background-color: #d20012;
-    color: rgb(250, 250, 250);
 }
 
 .marginBottomZero {
