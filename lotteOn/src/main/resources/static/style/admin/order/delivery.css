@@ -1,0 +1,433 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+body {
+    min-width: 1200px;
+    height: 150vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button {
+    all: unset;
+    cursor: pointer;
+}
+img {
+    width: 25px;
+    height: 25px;
+}
+/* --------------------- header --------------------- */
+/* --------------------- header --------------------- */
+/* --------------------- main --------------------- */
+
+#container {
+    margin: 0 auto;
+    width: 1200px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 50px 0;
+}
+main {
+    width: 1200px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+aside {
+    width: 260px;
+    border-right: 1px solid rgb(220, 220, 220);
+}
+aside .item img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+aside .item {
+    background-color: rgb(220, 220, 220);
+    border-bottom: 1px solid rgba(138, 138, 138, 0.6);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    flex-direction: column;
+}
+.title {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 20px;
+}
+aside .item .dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    width: 100%;
+}
+aside .item:hover .dropdown {
+    max-height: 500px; /* 충분히 넉넉한 높이 */
+}
+
+.dropdown > div {
+    background-color: #ececec;
+}
+
+.dropdown a {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 0 10px 15px;
+    width: 100%;
+    line-height: 40px;
+    text-align: left;
+    color: black;
+    font-size: 15px;
+    border-top: 1px solid #858585;
+}
+
+.dropdown a:hover {
+    background: #dcdcdc;
+    transition: 0.3s;
+}
+
+
+.adminMain {
+    width: 840px;
+    height: auto;
+    padding: 15px 60px 30px 0;
+}
+.mainTop {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #8a8a8a;
+    padding: 10px 0;
+}
+.mainTop h4 {
+    font-size: 25px;
+    font-weight: bold;
+}
+.mainTop div {
+    margin-left: auto;
+    display: flex;
+}
+.mainTop span {
+    display: flex;
+    gap: 5px;
+}
+.mainTop span p {
+    font-weight: bold;
+    margin: 0;
+}
+h3 {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+table {
+    width: 100%;
+    height: auto;
+    border-top: 2px solid #dddddd;
+    border-bottom: 2px solid #dddddd;
+    border-collapse: collapse;
+}
+table tr {
+    border-bottom: 2px solid #dddddd;
+}
+table tr th {
+    height: 45px;
+    background-color: #93b7d0;
+    color: white;
+}
+table tr th a {
+    color: white;
+}
+table tr td {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    height: 30px;
+}
+.btnarea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btnarea button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+}
+.btnarea .delbutton {
+    background-color: #8a8a8a;
+}
+.btnarea .pageBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top: 9px;
+}
+.btnarea .pageBtn .number {
+    font-size: 17px;
+    width: 24px;
+    height: 32px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    top: 3px;
+}
+.btnarea .pageBtn .single {
+    width: 15px;
+    height: 15px;
+}
+.shopArea {
+    padding: 10px;
+    margin-top: 10px;
+}
+.shopArea button {
+    line-height: 10px;
+}
+.searchArea {
+    margin-bottom: 15px;
+}
+.searchArea select {
+    padding: 10px;
+}
+.searchArea input {
+    padding: 10px;
+}
+.searchArea button {
+    padding: 16px;
+    background-color: #3f97f6;
+    color: white;
+}
+tr td select {
+    font-size: 12px;
+}
+tr td select option {
+    font-size: 12px;
+}
+
+
+
+/* 모달 전체 화면 덮기 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 닫기 버튼 */
+.modal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.modal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.modal table {
+    margin-bottom: 20px;
+}
+.modal table th {
+    width: 90px;
+    height: 50px;
+}
+.modal table td div {
+    text-align: left;
+    display: flex;
+}
+.modal .fst {
+    margin-bottom: 20px;
+}
+.modal table td input {
+    padding: 10px;
+}
+.modal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.modal .total {
+    display: flex;
+    justify-content: flex-end;
+}
+.modal .total table{
+    width: 250px;
+    height: 150px;
+    border: none;
+}
+.modal .total table tr:last-of-type {
+    border: none;
+}
+
+
+
+
+
+
+/* 모달 전체 화면 덮기 */
+.submodal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.submodal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 닫기 버튼 */
+.submodal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modaltop {
+    display: flex;
+}
+.modaltop p {
+    margin-left: 15px;
+    position: relative;
+    top: 5px;
+}
+.submodal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.submodal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.submodal table {
+    margin-bottom: 20px;
+}
+.submodal table th {
+    width: 90px;
+    height: 50px;
+}
+.submodal table td div {
+    text-align: left;
+    display: flex;
+}
+.submodal .fst {
+    margin-bottom: 20px;
+}
+.submodal table td input {
+    padding: 10px;
+}
+.submodal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.submodal table td .status {
+    font-size: 16px;
+}
+.submodal table input {
+    width: 400px;
+    border-radius: 3px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+}
+.submodal table tr td div select {
+    font-size: 16px;
+    width: 400px;
+    height: 43px;
+}
+.submodal table tr td div option {
+    font-size: 16px;
+}
+.submodal .thd tr td div input {
+    width: 240px;
+}
+.modalTable {
+    padding: 20px;
+}
+.infotop h2 {
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+.infotop {
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+}
+.submodal table .addr{
+    width: 600px;
+}
+.submodal table .subinfo {
+    width: 600px;
+    height: 200px;
+}
+.modal .info table td{
+    text-align: left;
+    font-size: 14px;
+}
+/* --------------------- main --------------------- */

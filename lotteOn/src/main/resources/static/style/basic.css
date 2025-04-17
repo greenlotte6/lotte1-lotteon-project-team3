@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+body {
+    min-width: 1200px;
+    height: 150vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+/* --------------------- header --------------------- */
+/* --------------------- header --------------------- */
+/* --------------------- main --------------------- */
+
+#container {
+    margin: 0 auto;
+    width: 1200px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 50px 0;
+}
+main {
+    width: 1200px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+aside {
+    width: 260px;
+    border-right: 1px solid rgb(220, 220, 220);
+}
+aside .item img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+aside .item {
+    background-color: rgb(220, 220, 220);
+    border-bottom: 1px solid rgba(138, 138, 138, 0.6);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    flex-direction: column;
+}
+.title {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 20px;
+}
+aside .item .dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    width: 100%;
+}
+aside .item:hover .dropdown {
+    max-height: 500px; /* 충분히 넉넉한 높이 */
+}
+
+.dropdown > div {
+    background-color: #ececec;
+}
+
+.dropdown a {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 0 10px 15px;
+    width: 100%;
+    line-height: 40px;
+    text-align: left;
+    color: black;
+    font-size: 15px;
+    border-top: 1px solid #858585;
+}
+
+.dropdown a:hover {
+    background: #dcdcdc;
+    transition: 0.3s;
+}
+
+
+.adminMain {
+    width: 840px;
+    height: auto;
+    padding: 15px 60px 30px 0;
+}
+.mainTop {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #8a8a8a;
+    padding: 10px 0;
+}
+.mainTop h4 {
+    font-size: 25px;
+    font-weight: bold;
+}
+.mainTop > div {
+    margin-left: auto;
+    display: flex;
+}
+.mainTop span {
+    display: flex;
+    gap: 5px;
+}
+.mainTop span p {
+    font-weight: bold;
+    margin: 0;
+}
+h3 {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.versionInfo {
+    padding: 20px;
+}
+.site {
+    padding: 20px;
+}
+.logo {
+    padding: 20px;
+}
+.corporateInfo {
+    padding: 20px;
+}
+.customerService {
+    padding: 20px;
+}
+.copyRight {
+    padding: 20px;
+}
+table {
+    width: 100%;
+    height: auto;
+    border-top: 2px solid #dddddd;
+    border-bottom: 2px solid #dddddd;
+    border-collapse: collapse;
+}
+table tr {
+    border-bottom: 2px solid #dddddd;
+}
+table tr th {
+    width: 120px;
+    height: 45px;
+    background-color: #93b7d0;
+    color: white;
+}
+table tr td {
+    padding: 10px;
+}
+input {
+    padding: 10px;
+}
+.btnarea {
+    display: flex;
+    justify-content: flex-end;
+}
+button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* --------------------- main --------------------- */
