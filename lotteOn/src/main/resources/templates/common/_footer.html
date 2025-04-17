@@ -2,11 +2,11 @@
     <div class="footerContainer">
         <div class="footerTopMenu">
             <ul>
-                <li><a href="#">회사소개</a></li>
-                <li><a href="#">이용약관</a></li>
-                <li><a href="#">전자금융거래약관</a></li>
-                <li><a href="#" class="bold2">개인정보처리방침</a></li>
-                <li><a href="#">청소년보호방침</a></li>
+                <li><a th:href="@{/intro/intro_home}">회사소개</a></li>
+                <li><a th:href="@{/policy/policy}">이용약관</a></li>
+                <li><a th:href="@{/policy/policy}">전자금융거래약관</a></li>
+                <li><a th:href="@{/policy/policy}" class="bold2">개인정보처리방침</a></li>
+                <li><a th:href="@{/policy/policy}">청소년보호방침</a></li>
                 <li><a href="#">임직원등록</a></li>
                 <li><a href="#">준법경영</a></li>
                 <li><a href="#">오류신고</a></li>
@@ -66,16 +66,16 @@
                     <div>
                         <ul class="list">
                             <li>
-                                <a href="#">FAQ 보기</a>
+                                <a th:href="@{/cust/cust_faq_user}">FAQ 보기</a>
                             </li>
                             <li>
-                                <a href="#">1:1 문의하기</a>
+                                <a th:href="@{/cust/cust_main}">1:1 문의하기</a>
                             </li>
                             <li>
-                                <a href="#">고객센터</a>
+                                <a th:href="@{/cust/cust_main}">고객센터</a>
                             </li>
                             <li>
-                                <a href="#">공지사항</a>
+                                <a th:href="@{/cust/cust_notice_main}">공지사항</a>
                             </li>
                         </ul>
                     </div>
