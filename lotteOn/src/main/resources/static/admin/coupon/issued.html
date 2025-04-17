@@ -117,42 +117,30 @@
                 </div>
                 <table>
                     <tr>
+                        <th>발급번호</th>
                         <th>쿠폰번호</th>
                         <th>쿠폰종류</th>
                         <th>쿠폰명</th>
-                        <th>혜택</th>
-                        <th>사용기간</th>
-                        <th>발급자</th>
-                        <th>발급수</th>
-                        <th>사용수</th>
+                        <th>사용자</th>
                         <th>상태</th>
-                        <th>발급일</th>
+                        <th>사용일</th>
                         <th>관리</th>
                     </tr>
                     <tr>
                         <td>
                             <button type="submit" class="orderinfo">10101010101</button>
                         </td>
-                        <td>개별상품 할인</td>
+                        <td>12121212121</td>
+                        <td>배송비 무료</td>
                         <td>10월 한달 감사 쿠폰</td>
-                        <td>100원 할인</td>
+                        <td>abc123</td>
+                        <td>미사용</td>
                         <td>
-                            2025-04-16<br>
-                            ~2025-04-17
+                            2025-04-17<br>
+                            10:06:12
                         </td>
                         <td>
-                            (주)<br>
-                            그린샵
-                        </td>
-                        <td>1000</td>
-                        <td>966</td>
-                        <td>발급중</td>
-                        <td>
-                            2025-04-16<br>
-                            20:40:11
-                        </td>
-                        <td>
-                            <button type="submit" class="couponbtn">종료</button>
+                            <button type="submit" class="couponbtn">[ 종료 ]</button>
                         </td>
                     </tr>
                 </table>
@@ -166,11 +154,10 @@
                         <a href=""><img src="../../images/right-single.png" class="single"></a>
                         <a href=""><img src="../../images/right-double.png"></a>
                     </div>
-                    <button type="submit" class="submitbtn">쿠폰등록</button>
                 </div>
             </div>
         </div>
-        <div id="bannerModal" class="modal">
+         <div id="bannerModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div class="modaltop">
@@ -188,8 +175,16 @@
                                     <td>(주)그린샵</td>
                                 </tr>
                                 <tr>
+                                    <th>발급번호</th>
+                                    <td>10101010101</td>
+                                    <th>사용여부</th>
+                                    <td>미사용</td>
+                                </tr>
+                                <tr>
                                     <th>쿠폰종류</th>
                                     <td>개별상품 할인</td>
+                                    <th>발급대상</th>
+                                    <td>abc123</td>
                                 </tr>
                                 <tr>
                                     <th>쿠폰명</th>
@@ -197,7 +192,7 @@
                                 </tr>
                                 <tr>
                                     <th>혜택</th>
-                                    <td>100원 할인</td>
+                                    <td>배송비 무료</td>
                                 </tr>
                                 <tr>
                                     <th>사용기간</th>
@@ -219,90 +214,6 @@
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="subModal" class="submodal">
-            <div class="submodal-content">
-                <span class="close">&times;</span>
-                <div class="modaltop">
-                    <h3>쿠폰등록</h3>
-                </div>
-                <form>
-                    <div class="modalTable">
-                        <table>
-                            <tr>
-                                <th>발급처</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="발급처 입력">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>쿠폰종류</th>
-                                <td>
-                                    <div>
-                                        <select>
-                                            <option>쿠폰종류 선택</option>
-                                            <option>개별상품 할인</option>
-                                            <option>주문상품 할인</option>
-                                            <option>배송비 무료</option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>쿠폰명</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="쿠폰명 입력">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>혜택</th>
-                                <td>
-                                    <div class="checkboxwrap">
-                                        <label><input type="checkbox">1,000원 할인</label>
-                                        <label><input type="checkbox">2,000원 할인</label>
-                                        <label><input type="checkbox">3,000원 할인</label>
-                                        <label><input type="checkbox">4,000원 할인</label>
-                                        <label><input type="checkbox">5,000원 할인</label>
-                                        <br>
-                                        <label class="percent"><input type="checkbox">10% 할인</label>
-                                        <label class="mopercent"><input type="checkbox">20% 할인</label>
-                                        <label class="morepercent"><input type="checkbox">30% 할인</label>
-                                        <label class="percent"><input type="checkbox">40% 할인</label>
-                                        <label class="percent"><input type="checkbox">50% 할인</label>
-                                        <br>
-                                        <label><input type="checkbox">배송비 무료</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>사용기간</th>
-                                <td>
-                                    <div class="datewrap">
-                                        <label><input type="date" class="date"> ~ <input type="date" class="date"></label>
-                                        <br>
-                                        <label>또는 발급일로부터 <input type="text"> 이내</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>유의사항</th>
-                                <td>
-                                    <div>
-                                        <input type="text" placeholder="유의사항 입력" class="subinfo">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modalbtn">
-                        <button>등록하기</button>
                     </div>
                 </form>
             </div>
