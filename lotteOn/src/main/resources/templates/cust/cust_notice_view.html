@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객센터 메인</title>
+    <link rel="stylesheet" href="/style/common/_header.css">
+    <link rel="stylesheet" href="/style/common/_footer.css">
+    <link rel="stylesheet" href="/style/cust/cust_aside.css">
+    <link rel="stylesheet" href="/style/cust/cust_view.css">
+
+</head>
+<body>
+    <th:block th:include="/common/_header.html"/>
+
+    <main>
+        <section class="content clearfix">
+            <th:block th:include="/cust/cust_aside.html"/>
+    
+            <div class="main_content">
+                <h1>공지사항</h1>
+                <section class="main_notice">
+                    <h3>
+                        고객서비스
+                    </h3>
+                    <table>
+                        <tr>
+                            <td><input readonly type="text" placeholder="TITLE"></td>
+                        </tr>
+                        <tr>
+                            <td><input readonly type="text" placeholder="DATE"/></td>
+                        </tr>
+                        <tr>
+                            <td><textarea readonly name="content" id="content">CONTENT</textarea></td>
+                        </tr>
+                    </table>
+                    <div class="list_page">
+                        <a th:href="@{/cust/cust_notice_main}">목록</a>
+                    </div>
+                    
+                </section>
+            </div>
+        </section>
+        
+    </main>
+
+    <th:block th:include="/common/_footer.html"/>
+</body>
+
+</html>

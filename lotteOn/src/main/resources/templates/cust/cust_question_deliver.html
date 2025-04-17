@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객센터 메인</title>
+    <link rel="stylesheet" href="/style/common/_header.css">
+    <link rel="stylesheet" href="/style/common/_footer.css">
+    <link rel="stylesheet" href="/style/cust/cust_aside.css">
+    <link rel="stylesheet" href="/style/cust/cust_question_main.css">
+
+</head>
+<body>
+    <th:block th:include="/common/_header.html"/>
+
+    <main>
+        <section class="content clearfix">
+            <th:block th:include="/cust/cust_aside.html"/>
+    
+            <div class="main_content">
+                <h1>문의하기</h1>
+                <section class="main_notice">
+                    <h3>배송</h3>
+                    <table>
+                        <tr>
+                            <td>[롯데쇼핑]</td>
+                            <td>구매회원 이용약관 개정 안내 (시행일:별도표기)</td>
+                            <td>검토중</td>
+                            <td>chhak</td>
+                            <td>25.02.17</td>
+                        </tr>
+                        <tr>
+                            <td>[롯데쇼핑]</td>
+                            <td>구매회원 이용약관 개정 안내 (시행일:별도표기)</td>
+                            <td>검토중</td>
+                            <td>chhak</td>
+                            <td>25.02.17</td>
+                        </tr>
+                        <tr>
+                            <td>[롯데쇼핑]</td>
+                            <td>구매회원 이용약관 개정 안내 (시행일:별도표기)</td>
+                            <td>답변완료</td>
+                            <td>chhak</td>
+                            <td>25.02.17</td>
+                        </tr>
+                    </table>
+                </section>
+                <div class="write">
+                    <a th:href="@{/cust/cust_question_write}">문의하기</a>
+                </div>
+
+                <div class="page">
+                    <a class="prev">◁</a>
+                    <a class="num">1</a>
+                    <a class="num">2</a>
+                    <a class="next">▷</a>
+                </div>
+                
+                <section class="onetoone">
+                    <h3>1:1 상담안내</h3>
+
+                    <div class="info1">
+                        <h2>이용안내</h2>
+                        <p>일반회원 / 비회원</p>
+                        <h3>1566-0001<span>(평일 09:00 ~ 18:00)&nbsp;&nbsp;&nbsp;&nbsp;</span></h3>
+                        <p>스마일클럽 전용</p>
+                        <h3>1566-0002<span>(365일 09:00 ~ 18:00)</span></h3>
+                    </div>
+
+                    <div class="info2">
+                        <h2>판매상담이용안내</h2>
+                        <p>판매고객</p>
+                        <h3>1566-5700<span>(평일 09:00 ~ 18:00)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h3><br>
+                        <a href="#">
+                            <h3 style="color: #333333;">판매자 가입 및 서류접수 안내 > </h3>
+                        </a>
+
+                    </div>
+                </section>
+            </div>
+        </section>
+        
+    </main>
+
+    <th:block th:include="/common/_footer.html"/>
+</body>
+
+</html>
