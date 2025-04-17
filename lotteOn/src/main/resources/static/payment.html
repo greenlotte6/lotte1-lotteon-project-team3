@@ -16,8 +16,6 @@
     <script src="/script/search.js"></script>
     <script src="/script/daumPostCode.js"></script>
     <script src="/script/maxLength.js"></script>
-    <script src="/script/chooseOption.js"></script>
-    <script src="/script/selectOne.js"></script>
 
     <!-- Style -->
     <link rel="stylesheet" href="/style/product/payment.css"/>
@@ -97,7 +95,7 @@
                 <div class="paymentWrapper">
                     <h2>주문/결제</h2>
                     <div class="paymentContainer">
-                        <h3 class="sectionTitle">주문상품</h3>
+                        <h3 class="sectionTitle">주문 상품</h3>
                         <div class="productSectionWrapper">
                             <div class="productSectionContainer">
                                 <div class="productSection">
@@ -168,83 +166,24 @@
                                 <div class="leftContainer">
                                     <h3 class="sectionTitle">쿠폰/포인트 사용</h3>
                                     <div class="sectionWrapper">
-                                        <div class="section3">
+                                        <div class="section2">
                                             <p>잔여 포인트</p>
                                             <div class="remainPoint">
                                                 <p>10002</p>
                                                 <p>&nbsp;P</p>
                                             </div>
                                         </div>
-                                        <div class="section3">
+                                        <div class="section2">
                                             <p>포인트 사용</p>
-                                            <div>
-                                                <button type="button" class="usePointBtn">사용</button>
-                                                <input type="number" placeholder="0" class="point" min="0"></input>
-                                            </div>
+                                            <input type="number" placeholder="0" class="point" min="0"></input>
                                         </div>
-                                        <div class="section3">
+                                        <div class="section2">
                                             <p>쿠폰 적용</p>
-                                            <div class="chooseOption">
-                                                <p class="chooseBtn">사용가능 쿠폰 2장</p>
-                                                <div class="options">
-                                                    <ul>
-                                                        <li>
-                                                            <p>신규가입 5,000원 할인</p>
-                                                        </li>
-                                                        <li>
-                                                            <p>1,000원 할인</p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h3 class="sectionTitle">결제수단</h3>
-                                    <div class="sectionWrapper marginBottomZero">
-                                        <div class="paymentMethod">
-                                            <input type="checkbox" onclick="selectOne(this)" name="phone" class="payment payment-phone">
-                                            <input type="checkbox" onclick="selectOne(this)" name="creditCard" class="payment payment-creditCard">
-                                            <input type="checkbox" onclick="selectOne(this)" name="kakaopay" class="payment payment-kakaoPay">
-                                            <input type="checkbox" onclick="selectOne(this)" name="tosspay" class="payment payment-tossPay">
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="rightContainer">
-                                        <h3>총 결제금액</h3>
-                                        <div class="sectionWrapper2">
-                                            <div class="section4">
-                                                <p>총 상품금액</p>
-                                                <div>
-                                                    <p>42,840</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>배송비</p>
-                                                <div>
-                                                    <p>0</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>할인금액</p>
-                                                <div>
-                                                    <p>0</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="totalPrice">
-                                            <div>
-                                                <p>총</p>
-                                                <p class="totalCount">2</p>
-                                                <p>건</p>
-                                            </div>
-                                            <p class="themeColor">42,820</p>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="payingBtn">결제하기</button> <!-- 기능 구현할 때 submit으로 변경 -->
+                                <div class="rightContainer">
+                                    
                                 </div>
                             </div>
                         </form>

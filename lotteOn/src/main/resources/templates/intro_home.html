@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개 메인</title>
+    <link rel="stylesheet" href="/style/intro_home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const swiper = new Swiper('.swiper', {
+                slidesPerView: 2,         // 한 화면에 보여질 슬라이드 개수
+                spaceBetween: 20,
+                pagination: {
+                el: '.swiper-pagination',
+                },
+                navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                },
+                scrollbar: {
+                el: '.swiper-scrollbar',
+                },
+            });
+        });
+    </script>
+    
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="/images/ON_CI_BI.png" alt="로고" width="166px">
+            </a>
+        </div>
+        <nav class="header_menu">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">기업문화</a></li>
+                <li><a href="#">소식과 이야기</a></li>
+                <li><a href="#">채용</a></li>
+                <li><a href="#">미디어</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="main_image">
+            <span style="visibility: hidden;">공간 확보용</span>
+            <div class="image_comment">
+                <p>취향을, 브랜드를, 혜택을 발견하는 즐거움</p>
+                <p>지금 롯데온에서 만나요</p>
+            </div>
+        </section>
+        <section class="subtitle">
+            <div class="sub">
+                <p>쇼핑 좀 해본 사람들이 만든 플랫폼,</p>
+                <p>롯데ON은 풍부한 오프라인 쇼핑 인프라, 온라인 쇼핑 노하우,</p>
+                <p>IT기술로 세상에 없던 새로운 쇼핑 경험을 제공하고</p>
+                <p>꼭 이용하고 싶은 온라인 쇼핑 플랫폼으로 발전하고 있어요.</p>
+            </div>
+        </section>
+        <section class="new">
+            <h2>쇼핑을 새롭게, 세상을 이롭게 만들어나가요.</h2>
+
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div class="show_image">
+                            <img src="/images/HOME/1.jpg" alt="이미지1">
+                        </div>
+                        <div>
+                            <h3>
+                                함께하는 성장, <br>
+                                세상을 더 이롭게 만들어요
+                            </h3>
+                            <p>
+                                'Dream Together for a Better Earth'를 목표로<br>
+                                ESG를 실천해나가고 있으며, 롯데ON 플랫폼을 활용한<br>
+                                크라우드 펀딩 기부 릴레이, 상품기부 등 이로운 세상을 위한<br>
+                                다양한 사회공헌 활동들을 진행하고 있어요.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="show_image">
+                            <img src="/images/HOME/3.png" alt="이미지3" style="height: 306.6px;">
+                        </div>
+                        <div>
+                            <h3>
+                                고객이 원하고 만족하는 <br>
+                                서비스를 만들어요
+                            </h3>
+                            <p>
+                                롯데ON은 단순히 상품만을 판매하는 플랫폼이 아니라,<br>
+                                상품에 대한 경험을 함께 제공할 수 있는 플랫폼을 목표로 하고 있어요.<br>
+                                해외직구, 뷰티, 그로서리, 선물하기 등 다양한 영역에서<br>
+                                새로운 서비스를 만들어가고 있어요.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="show_image">
+                            <img src="/images/HOME/2.jpg" alt="이미지2" style="height: 306.6px;">
+                        </div>
+                        <div>
+                            <h3>
+                                하이앤드테크로 온/오프라인 <br>
+                                시너지를 만들어요
+                            </h3>
+                            <p>
+                                많은 전문가들이 MAS, AWS 등 최신 기술을 운영하고 있으며,<br>
+                                최신기술과 롯데의 온/오프라인 4000만+ 고객 데이터를 결합하여<br>
+                                롯데 오프라인 매장과 연계한 다양한 서비스로<br>
+                                고객들에게 온-오프라인을 넘나드는 새로운 쇼핑 경험을 드려요.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            
+        </section>
+        <section class="development">
+            <h2>롯데ON은 이렇게 성장해가고 있어요.</h2>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+            <section class="article">
+                <span>2024.07</span>
+                <div>
+                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
+                    <a href="#" class="button">
+                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                    </a>
+                </div>
+            </section>
+        </section>
+        <section class="flowchart">
+            <h2>
+                국내 최초의 온라인 종합 쇼핑몰로 출발해<br>
+                쇼핑 경험의 변화를 이끌어내고 있어요.
+            </h2>
+            <img src="/images/history.png" alt="플로우차트">
+        </section>
+        <section class="employment">
+            <a href="#">
+                <img src="/images/employment.png" alt="채용중">
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <section class="footer_menu">
+            <nav>
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">기업문화</a></li>
+                    <li><a href="#">소식과 이야기</a></li>
+                    <li><a href="#">채용</a></li>
+                    <li><a href="#">미디어</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p>peoplevalue@lotte.net</p>
+            </div>
+        </section>
+        <section class="footer_menu2">
+            <div>
+                <p>© 2022 All rights Reserved</p>
+            </div>
+            <div>
+
+            </div>
+        </section>
+    </footer>
+</body>
+</html>

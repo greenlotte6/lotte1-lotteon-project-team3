@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개 채용</title>
+    <link rel="stylesheet" href="/style/intro_employ.css">
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="/images/ON_CI_BI.png" alt="로고" width="166px">
+            </a>
+        </div>
+        <nav class="header_menu">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">기업문화</a></li>
+                <li><a href="#">소식과 이야기</a></li>
+                <li><a href="#">채용</a></li>
+                <li><a href="#">미디어</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="title">
+            <h2>Join to LOTTE ON</h2>
+            <h1>쇼핑을 새롭게, 세상을 이롭게 이끌</h1>
+            <h1>쇼핑 좀 해 본 인재를 모십니다!</h1>
+        </div>
+        <div class="subtitle">
+            <p>롯데ON은 안정성있고 혁신성있게 우리의 문화를 만들어가고 있어요.</p>
+            <p>구성원들은 수평적이고 자율적인 문화 속에서 개선을 넘어서 혁신적인 롯데ON만의 서비스를 만들어요.</p>
+            <p>롯데ON과 함께 굵은 점을 찍어가며 성장하실 분들을 기다립니다.</p>
+        </div>
+        <section class="list">
+            <nav>
+                <form class="job_filter" onsubmit="handleSearch(event)">
+                    <select name="selection1">
+                        <option value="all1">전체 직군</option>
+                        <option value="IT">IT</option>
+                        <option value="UX">UX</option>
+                        <option value="marcketing">마케팅</option>
+                        <option value="sales">영업</option>
+                    </select>
+                    <select name="selection2">
+                        <option value="all1">전체 소속</option>
+                    </select>
+                    <select name="selection3">
+                        <option value="all1">전체 고용 형태</option>
+                        <option value="IT">정규직</option>
+                        <option value="UX">계약직</option>
+                        <option value="marcketing">인턴</option>
+                        <option value="sales">아르바이트</option>
+                        <option value="sales">프리랜스</option>
+                        <option value="sales">파견직</option>
+                        <option value="sales">일용직</option>
+                        <option value="sales">교육생</option>
+                    </select>
+                    <div class="search">
+                        <input type="text" name="keyword" placeholder="키워드 검색">
+                    </div>
+                </form>
+            </nav>
+            <script>
+                function handleSearch(event) {
+                event.preventDefault(); // 폼 제출로 인한 새로고침 방지
+
+                const form = event.target;
+                const keyword = form.keyword.value.trim();
+
+                // 예: 키워드 출력
+                console.log('검색어:', keyword);
+
+                // 여기서 실제 검색 로직을 실행하면 됩니다
+
+                }  
+            </script>
+
+            <section class="job_list">
+                <div class="job_item">
+                    <div class="job-info">
+                        <h3>가맹점 PAYMENT서비스 제휴 마케팅</h3>
+                        <p>마케팅 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
+                    </div>
+                    <div class="job_tag">상시 채용</div>
+                </div>
+                <div class="job_item">
+                    <div class="job-info">
+                        <h3>키즈 온라인 MD</h3>
+                        <p>영업 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
+                    </div>
+                    <div class="job_tag">상시 채용</div>
+                </div>
+                <div class="job_item">
+                    <div class="job-info">
+                        <h3>가맹점 PAYMENT서비스 제휴 마케팅</h3>
+                        <p>마케팅 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
+                    </div>
+                    <div class="job_tag closed">채용 마감</div>
+                </div>
+
+            </section>
+                            
+
+            <div class="page">
+                    <a class="prev">◁</a>
+                    <a class="num">1</a>
+                    <a class="num">2</a>
+                    <a class="next">▷</a>
+            </div>
+            
+        </section>
+    </main>
+
+    <footer>
+        <section class="footer_menu">
+            <nav>
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">기업문화</a></li>
+                    <li><a href="#">소식과 이야기</a></li>
+                    <li><a href="#">채용</a></li>
+                    <li><a href="#">미디어</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p>peoplevalue@lotte.net</p>
+            </div>
+        </section>
+        <section class="footer_menu2">
+            <div>
+                <p>© 2022 All rights Reserved</p>
+            </div>
+            <div>
+
+            </div>
+        </section>
+    </footer>
+    
+</body>
+</html>

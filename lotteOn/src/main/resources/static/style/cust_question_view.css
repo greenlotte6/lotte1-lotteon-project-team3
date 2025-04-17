@@ -1,0 +1,235 @@
+ul { 
+    list-style-type: none; /* 불릿 제거 */ 
+}
+a { 
+    text-decoration: none; 
+    color: black;
+}
+main { 
+    display: flex;
+    width: 1140px; 
+    margin: 0 auto;
+    align-items: stretch; 
+    height: auto;
+    padding-bottom: 40px;
+}
+
+/*사이드바*/
+.content > .sidebar {
+    width: 210px;
+    height: auto;
+    float: left;
+    margin-right: 50px;
+}
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+aside .item {
+    cursor: pointer;
+    flex-direction: column;
+}
+aside .item a:hover {
+    font-weight: 700;
+}
+aside .item .dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    width: 100%;
+}
+aside .item:hover .dropdown {
+    max-height: 500px; /* 충분히 넉넉한 높이 */
+}
+
+.dropdown a {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 0 10px 15px;
+    width: 100%;
+    line-height: 40px;
+    text-align: left;
+    color: black;
+    font-size: 15px;
+}
+
+.dropdown a:hover {
+    background: #dcdcdc;
+    transition: 0.3s;
+}
+
+.side_title p{
+    font-size: 35px;
+}
+.side_content a > div {
+    border-bottom: 1px solid #dfdfdf;
+    padding: 20px 0;
+    color: #333333;;
+}
+.side_menu {
+    margin-bottom: 50px;
+}
+
+.pTitle {
+    font-size: 20px;
+}
+.phone {
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 30px;
+}
+.phone p{
+    color: #333333;
+    margin: 0;
+}
+.phone h1 {
+    font-size: 30px;
+    margin: 0;
+    margin-bottom: 20px;
+
+}
+.phone span {
+    font-size: 16px;
+}
+.offline {
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 30px;
+}
+.offline p {
+    font-size: 20px;
+}
+.offline h4 {
+    font-size: 15px;
+    font-weight: 500;
+}
+.offline a {
+    color: #333333;
+    text-decoration: underline;
+}
+.support {
+    margin: 30px 0;
+}
+.support p {
+    font-size: 17px;
+    color: #333333;
+}
+.support .sup1 {
+    border: 1px solid #dfdfdf;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    padding: 0 15px;
+}
+.support .sup2 {
+    border: 1px solid #dfdfdf;
+    border-radius: 8px;
+    padding: 0 15px;
+}
+
+/*메인*/
+.main_content {
+    float: right;
+    margin-top: 60px;
+    margin-left: 20px;
+}
+
+.main_content h1 {
+    margin-bottom: 15px;
+    font-size: 35px;
+    font-weight: 400;
+}
+.main_content > .main_notice {
+    border-top: 5px solid #dfdfdf;
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+.main_content h3 {
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    align-items: center;
+    font-size: 25px;
+    padding: 5.3px 0;
+}
+.main_content table {
+    border-top: 3px solid #333333;
+    border-bottom: 1px solid #333333;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 100%;
+    border-spacing: 0;
+}
+.main_notice table tr:last-child td {
+    border-top: 1px solid #dfdfdf;
+    border-bottom: none;
+}
+.main_content table input{
+    border: none;
+    width: 90%;
+    height: 50px;
+    cursor: default;
+    font-size: 18px;
+}
+
+.main_content table textarea{
+    border: none;
+    resize: none;
+    /* 기타 스타일 */
+    width: 90%;
+    min-height: 600px;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: default;
+    font-size: 18px;
+}
+.main_notice span {
+    margin-left: -10px;
+    font-size: 18px;
+}
+.list_page {
+    background-color: #6d6c6c;
+    margin-top: 20px;
+    width: 80px;
+    padding: 10px;
+    float: right;
+}
+.list_page a{
+    font-size: 18px;
+    padding: 0 22px;
+    color: white;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+input:focus,
+textarea:focus {
+    outline: none;     /* 포커스 시 생기는 외곽선 제거 */
+    border: none;      /* 원한다면 border도 제거 가능 */
+}
+
+.answer_wait {
+    border: 1px solid #dfdfdf;
+    font-size: 18px;
+}
+.answer_wait p{
+    text-align: center;
+}
+
+.answer {
+    border-top: 3px solid #333333;
+    border-bottom: 1px solid #333333;
+    margin-top: 60px;
+    font-size: 18px;
+}
+.title p {
+    font-weight: 600;
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+.answer {
+    min-height: 200px;
+}
+
+.cate {
+    font-weight: 600;
+}
+
