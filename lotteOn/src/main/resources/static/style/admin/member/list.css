@@ -231,7 +231,7 @@ tr td select option {
     padding: 20px;
     border-radius: 10px;
     width: 600px;
-    height: 900px;
+    height: auto;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 

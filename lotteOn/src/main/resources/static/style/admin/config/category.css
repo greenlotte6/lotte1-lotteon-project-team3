@@ -137,6 +137,7 @@ h3 {
     width: 500px;
     height: auto;
     box-sizing: border-box;
+    border-radius: 3px;
 }
 .subcategory {
     padding-left: 20px;
@@ -153,6 +154,8 @@ h3 {
     text-align: center;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
+    border-radius: 3px;
+    padding-left: 5px;
 }
 .delete-btn {
     background-color: #E60012;
@@ -172,6 +175,9 @@ h3 {
     cursor: pointer;
     position: relative;
     margin-left: 25px;
+    border-radius: 3px;
+    padding-left: 5px;
+
 }
 #addCategoryBtn {
     margin-top: 15px;
@@ -182,6 +188,7 @@ h3 {
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
+    border-radius: 3px;
 }
 .toggle {
     background: none;

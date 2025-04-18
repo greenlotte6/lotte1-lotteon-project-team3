@@ -390,6 +390,7 @@ tr td select option {
 }
 .infotop {
     border-bottom: 2px solid black;
+    margin-bottom: 20px;
 }
 .submodal table .addr{
     width: 600px;
