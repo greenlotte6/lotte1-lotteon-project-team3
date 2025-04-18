@@ -2,144 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
-  <link rel="stylesheet" href="../static/style/my_home.css">
-  <link rel="stylesheet" href="../static/style/common/_footer.css">
-  <link rel="stylesheet" href="../static/style/common/_header.css">
+
+  <link rel="stylesheet" href="/style/my_home.css">
+  <link rel="stylesheet" href="/style/common/_header.css">
+  <link rel="stylesheet" href="/style/common/_footer.css">
+
+  <script src="/script/myHome.js"></script>
+
   <title>마이페이지 메인</title>
 </head>
-<script>
-  document.addEventListener("DOMContentLoaded", function(){
-    //주문번호  모달 요소
-    const orderLinks= document.querySelectorAll('.order-link');
-    const modal= document.getElementById('orderModal');
-    const closeBtn = document.querySelector('.close');
-
-    //상호명 모달 요소
-    const companyLinks= document.querySelectorAll('.company-link');
-    const companyModal= document.getElementById('companyModal');
-    const companyCloseBtn= companyModal.querySelector('.close');
-
-    //문의하기 모달 요소
-    const inquiryBtn = document.querySelector('#companyModal button'); // 회사 모달 내 문의하기 버튼
-    const inquiryModal = document.getElementById('inquiryModal');
-    const inquiryCloseBtn = inquiryModal.querySelector('.inquiry-close');
-
-    //구매확정 모달 요소
-    const confirmModal = document.getElementById('confirmModal');
-    const confirmCloseBtn = confirmModal.querySelector('.close');
-    const confirmButtons= document.querySelectorAll('.confirm-btn');
-
-    //상품평쓰기 모달 요소
-    const reviewModal = document.getElementById('reviewModal');
-    const reviewCloseBtn= reviewModal.querySelector('.close');
-    const reviewButtons = document.querySelectorAll('.review-btn');
-
-    //반품신청 모달 요소
-    const returnModal= document.getElementById('returnModal');
-    const returnCloseBtn= returnModal.querySelector('.close');
-    const returnButtons = document.querySelectorAll('.return-btn');
-
-    //주문 상세 모달 열기
-    orderLinks.forEach(link =>{
-      link.addEventListener('click', function(e){
-        e.preventDefault(); //기본 링크 클릭 동작 방지
-        modal.style.display = "block"; //모달 표시
-      });
-    });
-
-    //상호명 클릭 시 모달 열기
-    companyLinks.forEach(link =>{
-      link.addEventListener('click', function (e){
-        e.preventDefault();
-        companyModal.style.display="block";
-      });
-    });
-
-    //문의하기 버튼 클릭 시 모달 열기
-    inquiryBtn.addEventListener('click', function () {
-      inquiryModal.style.display = "block";
-      companyModal.style.display= "none";
-    });
-
-    //구매확정 클릭 시 모달 열기
-    confirmButtons.forEach(button =>{
-      button.addEventListener('click', function () {
-        confirmModal.style.display= "block";
-      });
-    });
-
-    //상품평쓰기 클릭 시 모달 열기
-    reviewButtons.forEach(button =>{
-      button.addEventListener('click', function () {
-        reviewModal.style.display= "block";
-      });
-    });
-
-    //반품신청 클릭 시 모달 열기
-    returnButtons.forEach(button =>{
-      button.addEventListener('click', function () {
-        returnModal.style.display= "block";
-      });
-    });
-
-
-
-    //주문 모달 닫기
-    closeBtn.addEventListener('click', function(){
-      modal.style.display= "none"; //모달 숨기기
-    });
-
-    //상호명 모달 닫기
-    companyCloseBtn.addEventListener('click', function (){
-      companyModal.style.display= "none";
-    });
-
-    //문의 모달 닫기
-    inquiryCloseBtn.addEventListener('click', function () {
-      inquiryModal.style.display= "none";
-      companyModal.style.display= "none";
-    });
-
-    //구매확정 모달 닫기
-    confirmCloseBtn.addEventListener('click', function () {
-      confirmModal.style.display= "none";
-    });
-
-    //상품평 모달 닫기
-    reviewCloseBtn.addEventListener('click', function () {
-      reviewModal.style.display= "none";
-    });
-
-    //반품신청 모달 닫기
-    returnCloseBtn.addEventListener('click', function () {
-      returnModal.style.display= "none";
-    });
-
-
-    //모달 바깥 영역 클릭 시 모달 닫기
-    window.addEventListener('click', function(e){
-      if(e.target == modal){
-        modal.style.display = "none";
-      }else if(e.target == companyModal){
-        companyModal.style.display ="none";
-      }else if(e.target== inquiryModal){
-        inquiryModal.style.display= "none";
-      }else if(e.target== confirmModal){
-        confirmModal.style.display= "none";
-      }else if(e.target== reviewModal){
-        reviewModal.style.display= "none";
-      }else if(e.target== returnModal){
-        returnModal.style.display= "none";
-      }
-    });
-
-  });
-</script>
-
 <body>
-
 <!--주문 상세 모달-->
 <div id="orderModal" class="modal">
   <div class="modal-content">
@@ -167,7 +42,7 @@
             <td>
               <div class="table_one_div">
               <div>
-                <img src="../static/images/slide1.webp" alt="#">
+                <img src="/images/slide1.webp" alt="#">
               </div>
               <p>
                 <a href="#">
@@ -427,7 +302,7 @@
           <td>
             <div class="tablesix-imgpdiv">
               <div>
-              <img src="../static/images/admin-persons.png" alt="#">
+              <img src="/images/admin-persons.png" alt="#">
               </div>
               <p>주문번호: 101221341 <br>
                 (주) 상호명 <br>
@@ -440,74 +315,153 @@
 
           <td>
             <div>
+              <div class="gyeoljae2">
               <p>판매가&nbsp;34,000원 <br>
                 할인 &nbsp;&nbsp;&nbsp; -3,000원 <br><br>
+              </div>
                 결제금액 &nbsp; <strong>34,000원</strong>
               </p>
             </div>
           </td>
           <td>
-            <p>배송완료</p>
+           배송완료
           </td>
         </tr>
         </tbody>
       </table>
+      <div>
+        <h2 class="table2-h2">반품정보 입력</h2>
+      </div>
+      <table class="table_seven">
+        <tr>
+          <th>반품유형</th>
+          <td class="radio">
+            <input type="radio" id="change" name="inquiryType" value="change">단순 변심
+            <input type="radio" id="error" name="inquiryType" value="error">파손 및 불량
+            <input type="radio" id="mistake" name="inquiryType" value="mistake">주문 실수
+            <input type="radio" id="etc" name="inquiryType" value="etc">기타
+          </td>
+        </tr>
+        <tr>
+          <th>사유입력</th>
+          <td>
+            <input type="text" name="reason">
+          </td>
+        </tr>
+        <tr>
+          <th>사진첨부(선택)</th>
+          <td>
+            <div class="picture-2">
+              <button type="button" class="picture2-btn">파일선택</button>
+              <p>선택된파일없음</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="review_btn">
+        <button type="button" class="return_btn1">반품신청</button>
+        <button type="button" class="return_btn2">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--교환신청 모달-->
+<div id="exchangeModal" class="modal exchangemodal">
+  <div class="modal-content">
+    <div class="modal-header exchange-header">
+      <h2>교환신청</h2>
+      <span class="close exchange-close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div>
+        <h2>상품정보</h2>
+      </div>
+      <table class="table_six">
+        <thead>
+        <tr>
+          <th>날짜</th>
+          <th>상품정보</th>
+          <th>결제금액</th>
+          <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <p>0000-00-00</p>
+          </td>
+          <td>
+            <div class="tablesix-imgpdiv">
+              <div>
+                <img src="/images/admin-persons.png" alt="#">
+              </div>
+              <p>주문번호: 101221341 <br>
+                (주) 상호명 <br>
+                상품명 <br>
+                수량: 1개 <br><br>
+                <strong class="strong_1">34,000원</strong>
+              </p>
+            </div>
+          </td>
+
+          <td>
+            <div>
+              <div class="gyeoljae2">
+                <p>판매가&nbsp;34,000원 <br>
+                  할인 &nbsp;&nbsp;&nbsp; -3,000원 <br><br>
+              </div>
+              결제금액 &nbsp; <strong>34,000원</strong>
+              </p>
+            </div>
+          </td>
+          <td>
+            배송완료
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <h2 class="table2-h2">반품정보 입력</h2>
+      </div>
+      <table class="table_seven">
+        <tr>
+          <th>반품유형</th>
+          <td class="radio">
+            <input type="radio" id="change1" name="inquiryType" value="change">단순 변심
+            <input type="radio" id="error1" name="inquiryType" value="error">파손 및 불량
+            <input type="radio" id="mistake1" name="inquiryType" value="mistake">주문 실수
+            <input type="radio" id="etc1" name="inquiryType" value="etc">기타
+          </td>
+        </tr>
+        <tr>
+          <th>사유입력</th>
+          <td>
+            <input type="text" name="reason">
+          </td>
+        </tr>
+        <tr>
+          <th>사진첨부(선택)</th>
+          <td>
+            <div class="picture-2">
+              <button type="button" class="picture2-btn">파일선택</button>
+              <p>선택된파일없음</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="review_btn">
+        <button type="button" class="return_btn1">반품신청</button>
+        <button type="button" class="return_btn2">취소</button>
+      </div>
     </div>
   </div>
 </div>
 
 
-<div>
-  <header>
-    <div class="headerContainer">
-      <div class="headerUtil">
-        <a href="#" class="themeColor">회원가입</a>
-        <div class="v-l"></div>
-        <a href="#">로그인</a>
-        <div class="v-l"></div>
-        <a href="#">고객센터</a>
-      </div>
-      <div class="headerContent">
-        <div class="headerContent-left">
-          <a href="#">
-            <img src="#" alt="lotteOn Logo" class="logo">
-          </a>
-          <div class="search">
-            <input type="text" placeholder="검색어를 입력해주세요" class="inputSearch">
-            <button class="deleteSearchKeyword"></button>
-            <a href="#" class="searchIcon icon"></a>
-          </div>
-          <p><span class="themeColor rank">1</span>검색어 순위를 혀? 말어?</p>
-        </div>
-        <div class="contentLink">
-          <a href="#" class="heart icon"></a>
-          <a href="#" class="my icon"></a>
-          <a href="#" class="cart icon"></a>
-        </div>
-      </div>
-      <div class="headerNavContainer">
-        <div class="headerNav">
-          <div class="category">
-            <p class="burgerMenu icon2"></p>
-            <p>카테고리</p>
-          </div>
-          <div class="various">
-            <a href="#">신상품</a>
-            <a href="#">베스트</a>
-            <a href="#">패션</a>
-            <a href="#">뷰티</a>
-            <a href="#">라이프</a>
-            <a href="#">특가/혜택</a>
-          </div>
-          <a href="#" class="deliv">
-            <p>주문배송</p>
-            <img src="#" alt="배송정보" class="mascot">
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
-  <main class="container">
+<div id="container">
+  <th:block th:include="/common/_header.html"/>
+  <main class="main_container">
 
     <div class="mypage-header">
       <div class="mypage-title">
@@ -578,7 +532,7 @@
               <td class="table-td">2022-12-13</td>
               <td class="table-td">
                 <div>
-                  <img src="../static/images/slide1.webp" alt="#" class="main_img1">
+                  <img src="/images/slide1.webp" alt="#" class="main_img1">
                 </div>
                 <p><a href="#" class="order-link main_p">주문번호: 1012211341</a><br>
                   <a href="#" class="company-link main_p">(주)상호명 <br>
@@ -586,12 +540,12 @@
                   수량: 1개 <br><br>
                   <strong>34,000원</strong></p>
               </td>
-              <td class="baesong" class="table-td">배송완료</td>
+              <td class="baesong table-td">배송완료</td>
               <td class="table-td">
                 <button class="btn_blue confirm-btn">구매확정</button>
                 <button class="btn_blue review-btn">상품평쓰기</button>
                 <button class="return-btn">반품신청</button>
-                <button>교환신청</button>
+                <button class="exchange-btn">교환신청</button>
               </td>
             </tr>
 
@@ -599,7 +553,7 @@
               <td class="table-td">2022-12-13</td>
               <td class="table-td">
                 <div>
-                  <img src="../static/images/slide1.webp" alt="#" class="main_img1">
+                  <img src="/images/slide1.webp" alt="#" class="main_img1">
                 </div>
                 <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
                   <a href="#" class="company-link">(주)상호명 <br>
@@ -612,7 +566,7 @@
                 <button class="btn_blue confirm-btn">구매확정</button>
                 <button class="btn_blue review-btn">상품평쓰기</button>
                 <button class="return-btn">반품신청</button>
-                <button>교환신청</button>
+                <button class="exchange-btn">교환신청</button>
               </td>
             </tr>
 
@@ -625,7 +579,7 @@
       </section>
     </div>
   </main>
-
+  <th:block th:include="/common/_footer.html"/>
 </div>
 </body>
 </html>
