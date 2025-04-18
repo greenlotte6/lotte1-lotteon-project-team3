@@ -7,7 +7,7 @@
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <link rel="stylesheet" href="/css/_footer.css">
     <link rel="stylesheet" href="/css/_header.css">
-    <title>나의쇼핑정보 나의설정</title>
+    <title>나의쇼핑정보 나의리뷰</title>
 </head>
 <style>
     * {
@@ -149,73 +149,39 @@
         border: 1px solid #333;
         margin-left: 50px;
         height: 80px;
-        width: 90%;
+        width: 936px;
     }
     
-    table {
-        margin-top: 20px;
+    .article {
+        width: 936px;
         margin-left: 50px;
-        margin-right: 50px;
-        margin-bottom: 20px;
-        border-spacing: 0;
-        border-top: 1px solid #333;
+        margin-top: 30px;
+        border-top: 3px solid #333;
         border-bottom: 1px solid #333;
-    }
-    .info th {
-        background-color: #dfdfdf;
-        width: 200px;
-        height: 75px;
-    }
-    .info td {
-        padding: 0 30px;
-    }
-    .info input {
-        height: 50px;
-        width: 500px;
-        font-size: 18px;
-        padding: 0 10px;
-        margin-bottom: 5px;
-    }
-    input:focus {
-        outline: none;      /* 파란 아웃라인 제거 */
-        border: none;       /* 테두리 없앰 (원할 경우) */
-        box-shadow: none;   /* 포커스 시 생기는 그림자 제거 */
-    }
-    input[name="id"] {
-        border: none;
-    }
-    input[name="name"] {
-        border: none;
-    }
-    input[name="birth"] {
-        border: none;
-    }
-    .modify_pw {
-        border: 1px solid #333;
-        width: 130px;
-        height: 50px;
+        border-spacing: 0;
         text-align: center;
-        font-size: 15px;
     }
-    .info a {
-        display: inline-block;
-        margin-left: 30px;
-        border: 1px solid #333;
-        padding: 15px 20px;
-        font-size: 15px;
-        background-color: #f0f0f0;
+    .article th {
+        height: 60px;
+        background-color: #dfdfdf;
+    }
+    .article td {
+        height: 60px;
+        border-bottom: 1px solid #dfdfdf;
     }
 
-    .leave {
-        padding: 15px 20px;
-        font-size: 15px;
+    .page {
+        margin-top: 20px;
+        margin-left: 50px;
+        text-align: center;
+
     }
-    .post {
-        height: 50px;
-        margin-left: 30px;
-        padding: 10px;
-        font-size: 15px;
+    .num{
+        padding: 3px 8px;
+        font-size: 17px;
+        font-weight: 500;
     }
+
     h1 {
         margin-left: 50px;
         margin-top: 30px;
@@ -345,63 +311,32 @@
                 <div class="ad">
                     <div>광고</div>
                 </div>
-                <h1>나의 설정</h1>
-                <table class="info">
-                    <tr>
-                        <th>사용자 ID</th>
-                        <td>
-                            <input readonly type="text" name="id" placeholder="ID"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td>
-                            <button class="modify_pw">비밀번호 수정</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td>
-                            <input readonly type="text" name="name" placeholder="이름 입력"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>생년월일</th>
-                        <td>
-                            <input readonly type="text" name="birth" placeholder="1983년 05월 03일">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>
-                            <input type="text" name="email" placeholder="email@naver.com">
-                            <a href="#">수정하기</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>휴대폰</th>
-                        <td>
-                            <input type="text" name="hp" placeholder="010-8440-7231">
-                            <a href="#">수정하기</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td>
-                            <input type="text"  id="zip" name="zip" placeholder="우편번호" style="width: 150px;">
-                            <button type="button" class="post">우편번호 찾기</button>
-                            <input type="text"  id="addr1" name="addr1" placeholder="기본주소검색">
-                            <input type="text"  id="addr2" name="addr2" placeholder="상세주소입력">
+                <h1>나의리뷰</h1>
+                <section>
 
-                        </td>
+                </section>
+                <table class="article">
+                    <tr>
+                        <th>번호</th>
+                        <th>상품명</th>
+                        <th>내용</th>
+                        <th>평점</th>
+                        <th>작성일</th>
                     </tr>
                     <tr>
-                        <th>탈퇴</th>
-                        <td>
-                            <button class="leave">탈퇴하기</button>
-                        </td>
+                        <td>1</td>
+                        <td>상품번호/상품명</td>
+                        <td>배송이 빠릅니다.</td>
+                        <td>★★★★☆</td>
+                        <td>~12/31</td>
                     </tr>
                 </table>
+                <div class="page">
+                    <a class="prev">◁</a>
+                    <a class="num">1</a>
+                    <a class="num">2</a>
+                    <a class="next">▷</a>
+                </div>
             </section>
         </div>
     </main>
