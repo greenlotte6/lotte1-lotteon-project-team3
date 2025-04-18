@@ -1,3 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+body {
+    min-width: 1200px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 header > div > * {
     width: 1200px;
     margin: 0 auto;
@@ -14,9 +39,11 @@ header > div > * {
     display: flex;
     align-items: center;
 }
+
 .headerContent-left > a {
     margin-top: 1px;
 }
+
 .logo {
     width: 184px;
     height: 38px;
@@ -92,24 +119,30 @@ header > div > * {
 
 .heart {
     background-image: url("../../images/icon_heart_black.svg");
-}.heart:hover {
-     transition: 0.5s;
-     background-image: url("../../images/icon_heart_red.svg");
- }
+}
+
+.heart:hover {
+    transition: 0.5s;
+    background-image: url("../../images/icon_heart_red.svg");
+}
 
 .my {
     background-image: url("../../images/icon_my_black.svg");
-}.my:hover {
-     transition: 0.5s;
-     background-image: url("../../images/icon_my_red.svg");
- }
+}
+
+.my:hover {
+    transition: 0.5s;
+    background-image: url("../../images/icon_my_red.svg");
+}
 
 .cart {
     background-image: url("../../images/icon_cart_black.svg");
-}.cart:hover {
-     transition: 0.5s;
-     background-image: url("../../images/icon_cart_red.svg");
- }
+}
+
+.cart:hover {
+    transition: 0.5s;
+    background-image: url("../../images/icon_cart_red.svg");
+}
 
 .searchIcon {
     background-image: url("../../images/icon_search_black.svg");
@@ -217,6 +250,7 @@ header > div > * {
     display: flex;
     align-items: center;
 }
+
 .deliv > p {
     border: 1px solid #eee;
     border-radius: 15px;
