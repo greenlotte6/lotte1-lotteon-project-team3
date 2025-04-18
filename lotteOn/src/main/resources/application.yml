@@ -14,11 +14,10 @@ server:
   servlet:
     context-path: /
 spring:
-  servlet:
-    multipart:
-      location: uploads
-      max-file-size: 10MB
-
+#  servlet:
+#    multipart:
+#      location: uploads
+#      max-file-size: 10MB
   application:
     name: lotteOn
     version: ${version}
