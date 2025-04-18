@@ -28,7 +28,9 @@
                                 </table>
                             </section>
                             <div class="submit_btn">
-                                <input type="submit" value="로그인하기" class="login_btn">
+                                <a th:href="@{/}">
+                                    <input type="submit" value="로그인하기" class="login_btn">
+                                </a>
                             </div>
                             <div class="auto_login">
                                 <div class="save_id">
@@ -48,23 +50,17 @@
                                     <div class="buttons">
                                         <button type="button" class="kakao">카카오</button>
                                         <button type="button" class="naver">네이버</button>
-                                        <button type="button" class="identification">본인인증</button>
+                                        <button type="button" class="identification"><p style="margin-left: -7px">본인인증</p></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="lotte_signUp">
-                                <a>
-                                    첫 방문이라면 <span>최대 25%할인</span> 받으세요.
-                                    <a href="#">&nbsp&nbsp자세히</a>
-                                </a>
-                            </div>
-                            <div class="signup">
-                                <a th:href="@{/member/join}">회원 가입하기</a>
+                            <div class="signup" style="margin-top: 30px">
+                                <a th:href="@{/member/join}">가입하기</a>
                             </div>
 
                         </div>
                         <div class="ad_image">
-                            <a href="#">
+                            <a th:href="@{/}">
                                 <img src="/images/real.jpg" alt="광고">
                             </a>
                         </div>
