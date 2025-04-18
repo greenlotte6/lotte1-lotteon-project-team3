@@ -1,0 +1,29 @@
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: trace
+    root: info
+
+mybatis:
+  mapper-locations: classpath:mappers/**/*.xml
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  servlet:
+    multipart:
+      location: uploads
+      max-file-size: 10MB
+
+  application:
+    name: lotteOn
+    version: ${version}
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    prefix: classpath:/templates
