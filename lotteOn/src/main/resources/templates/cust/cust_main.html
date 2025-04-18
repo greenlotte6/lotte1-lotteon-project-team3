@@ -11,11 +11,11 @@
     <script src="/script/aside.js"></script>
 </head>
 <body>
-    <th:block th:include="/common/_header.html"/>
+    <th:block th:include="~{/common/_header.html}"/>
 
     <main>
         <section class="content clearfix">
-            <th:block th:include="/cust/cust_aside.html"/>
+            <th:block th:include="~{/cust/cust_aside.html}"/>
     
             <div class="main_content">
                 <h1>롯데ON이 도와드릴게요!</h1>
@@ -195,7 +195,7 @@
         
     </main>
 
-    <th:block th:include="/common/_footer.html"/>
+    <th:block th:include="~{/common/_footer.html}"/>
 </body>
 
 </html>

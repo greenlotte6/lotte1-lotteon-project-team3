@@ -145,7 +145,7 @@ aside .item:hover .dropdown {
     border-top: 1px solid #dfdfdf;
     width: 800px;
     height: 400px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .main_content h3 {
@@ -197,6 +197,7 @@ aside .item:hover .dropdown {
     height: 300px;
     padding: 10px 35px;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 .info2 {
     margin-left: 15px;

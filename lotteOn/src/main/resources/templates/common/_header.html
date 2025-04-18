@@ -1,15 +1,15 @@
 <header>
     <div class="headerContainer">
         <div class="headerUtil">
-            <a href="#" class="themeColor">회원가입</a>
+            <a th:href="@{/member/signUp}" class="themeColor">회원가입</a>
             <div class="v-l"></div>
-            <a href="#">로그인</a>
+            <a th:href="@{/member/login}">로그인</a>
             <div class="v-l"></div>
-            <a href="#">고객센터</a>
+            <a th:href="@{/cust/cust_main}">고객센터</a>
         </div>
         <div class="headerContent">
             <div class="headerContent-left">
-                <a href="#">
+                <a th:href="@{/}">
                     <img src="/images/logo_lotte-on.png" alt="lotteOn Logo" class="logo">
                 </a>
                 <div class="search">

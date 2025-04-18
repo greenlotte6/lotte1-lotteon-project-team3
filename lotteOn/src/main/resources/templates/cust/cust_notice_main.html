@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/cust/cust_aside.css">
     <link rel="stylesheet" href="/style/cust/cust_article.css">
-
+    <script src="/script/aside.js"></script>
 </head>
 <body>
-    <th:block th:include="/common/_header.html"/>
+    <th:block th:include="~{/common/_header.html}"/>
 
     <main>
         <section class="content clearfix">
-            <th:block th:include="/cust/cust_aside.html"/>
+            <th:block th:include="~{/cust/cust_aside.html}"/>
     
             <div class="main_content">
                 <h1>공지사항</h1>
@@ -132,7 +132,7 @@
         
     </main>
 
-    <th:block th:include="/common/_footer.html"/>
+    <th:block th:include="~{/common/_footer.html}"/>
 </body>
 
 </html>
