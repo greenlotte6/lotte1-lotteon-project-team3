@@ -1,7 +1,7 @@
 <header>
     <div class="headerContainer">
         <div class="headerUtil">
-            <a th:href="@{/member/signUp}" class="themeColor">회원가입</a>
+            <a th:href="@{/member/join}" class="themeColor">회원가입</a>
             <div class="v-l"></div>
             <a th:href="@{/member/login}">로그인</a>
             <div class="v-l"></div>
@@ -21,7 +21,7 @@
             </div>
             <div class="contentLink">
                 <a href="#" class="heart icon"></a>
-                <a href="#" class="my icon"></a>
+                <a th:href="@{/myPage/my_home}" class="my icon"></a>
                 <a th:href="@{/product/cart}" class="cart icon"></a>
             </div>
         </div>

@@ -28,6 +28,11 @@ public class MemberController {
     public String signUp(){
         return "/member/signUp";
     }
+    //회원 - 약관(사업자)
+    @GetMapping("/signUp_seller")
+    public String signUp_seller(){
+        return "/member/signUp_seller";
+    }
     //회원 - 판매자가입
     @GetMapping("/registerSeller")
     public String registerSeller(){

@@ -46,7 +46,8 @@ main {
 }
 
 .sub_menu {
-    margin-top: 100px;
+    margin-top: 150px;
+    padding: 20px;
 }
 .sub_menu li a {
     font-weight: 600;

@@ -123,8 +123,7 @@ input[type=checkbox] + label {
 }
 .signup{
     text-align: center;
-    margin-top: 70px;
-    margin-bottom: 10px;
+    margin-top: 50px;
 }
 .signup a{
     color: #999999;
@@ -138,13 +137,13 @@ a.signup {
     border: 1px solid #bfbfbf;
     width: 420px;
     height: 54px;
-    text-align: center;
     padding: 12px 0;
     font-weight: 700;
     margin-bottom: 20px;
 }
 .signup span {
-    color: red;
+    font-weight: 600;
+    color: black;
 }
 .other_signUp{
     height: 45px;
