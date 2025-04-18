@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+
+  <link rel="stylesheet" href="/style/my_info.css">
+  <link rel="stylesheet" href="/style/common/_header.css">
+  <link rel="stylesheet" href="/style/common/_footer.css">
+
+
+  <title>마이페이지 메인</title>
+</head>
+<body>
+<div id="container">
+  <th:block th:include="/common/_header.html"/>
+  <main class="main_container">
+
+    <div class="mypage-header">
+      <div class="mypage-title">
+        <h2>나의쇼핑정보</h2>
+      </div>
+      <div class="mypage-shortcuts">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="label">주문</span>
+              <span class="value">2</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="label">쿠폰</span>
+              <span class="value">1</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="label">포인트</span>
+              <span class="value">1,000</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="label">문의</span>
+              <span class="value">1</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="div_section">
+      <section class="left_section">
+        <aside class="sidebar">
+          <ul>
+            <li><a href="#">전체주문내역</a></li>
+            <li><a href="#">포인트내역</a></li>
+            <li><a href="#">쿠폰</a></li>
+            <li><a href="#">나의리뷰</a></li>
+            <li><a href="#">문의하기</a></li>
+            <li><a href="#">나의설정</a></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="right_section">
+        <div class="ad">
+          <div>광고</div>
+        </div>
+        <table class="info">
+          <tr>
+            <th>사용자 ID</th>
+            <td>
+              <input readonly type="text" name="id" placeholder="ID"/>
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td>
+              <button class="modify_pw">비밀번호 수정</button>
+            </td>
+          </tr>
+          <tr>
+            <th>이름</th>
+            <td>
+              <input readonly type="text" name="name" placeholder="이름 입력"/>
+            </td>
+          </tr>
+          <tr>
+            <th>생년월일</th>
+            <td>
+              <input readonly type="text" name="birth" placeholder="1983년 05월 03일">
+            </td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>
+              <div>
+              <input type="text" name="email" placeholder="chhak0503">@
+              <input type="text" name="email2" >
+              <select id="email3">
+                <option value="">직접입력▼</option>
+                <option value="naver.com">naver.com</option>
+                <option value="gmail.com">gmail.com</option>
+              </select>
+              <a href="#" class="info_btn1">수정하기</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>휴대폰</th>
+            <td>
+              <input type="text" name="hp" placeholder="010">-
+              <input type="text" name="hp" placeholder="8440">-
+              <input type="text" name="hp" placeholder="7231">
+              <a href="#" class="info_btn2">수정하기</a>
+            </td>
+          </tr>
+          <tr>
+            <th>주소</th>
+            <td>
+              <div class="info_addr">
+              <input type="text"  id="zip" name="zip" placeholder="우편번호">
+              <button type="button" class="post info_btn3">주소검색</button>
+              <input type="text"  id="addr1" name="addr1" placeholder="기본주소검색">
+              <input type="text"  id="addr2" name="addr2" placeholder="상세주소입력">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>탈퇴</th>
+            <td>
+              <button class="leave">탈퇴하기</button>
+            </td>
+          </tr>
+        </table>
+        <button type="button" class="end_btn">수정하기</button>
+      </section>
+    </div>
+  </main>
+  <th:block th:include="/common/_footer.html"/>
+</div>
+</body>
+</html>

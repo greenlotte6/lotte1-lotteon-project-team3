@@ -15,7 +15,10 @@ public class MyPageController {
     }
 
     //마이페이지 - 전체주문내역
-
+    @GetMapping("/my_order")
+    public String myOrder() {
+        return "/myPage/my_order";
+    }
     //마이페이지 - 포인트내역
 
     //마이페이지 - 쿠폰
@@ -25,5 +28,8 @@ public class MyPageController {
     //마이페이지 - 문의하기
 
     //마이페이지 - 나의설정
-
+    @GetMapping("/my_info")
+    public String myInfo() {
+        return "/myPage/my_info";
+    }
 }
