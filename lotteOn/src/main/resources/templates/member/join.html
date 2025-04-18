@@ -74,7 +74,9 @@
                 <div class="signup-body">
                     <p>개인구매회원 (외국인 포함)</p> <br>
                     만 14세 이상 가입 가능 <br>
-                    <button type="button">회원가입</button>
+                    <a th:href="@{/member/signUp}">
+                        <button type="button">회원가입</button>
+                    </a>
                 </div>
             </div>
 
@@ -83,7 +85,9 @@
                 <div class="signup-body">
                     <p>사업자판매회원</p> <br>
                     사업자등록증을 보유한 회원
-                    <button type="button">회원가입</button>
+                    <a th:href="@{/member/signUp}">
+                        <button type="button">회원가입</button>
+                    </a>
                 </div>
             </div>
         </div>
