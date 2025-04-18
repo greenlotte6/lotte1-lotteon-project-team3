@@ -5,24 +5,11 @@ plugins {
 }
 
 group = 'kr.co.lotteOn'
-version = '0.0.1-SNAPSHOT'
-
-// application.properties 파일 참조를 위한 스크립트
-processResources {
-	filesMatching("application.yml") {
-		expand(project.properties)
-	}
-}
+version = '0.0.1'
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
 	}
 }
 
@@ -31,47 +18,21 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// 웹 관련
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// 템플릿 엔진
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// 설정 자동완성
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-validation'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-//	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
-//	implementation 'org.springframework.boot:spring-boot-starter-mail'
-//	runtimeOnly 'com.mysql:mysql-connector-j'
-
-	// Querydsl
-//	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
-//	annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
-//	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-//	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
-//	implementation 'org.modelmapper:modelmapper:3.2.2'
-
-	// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6
-//	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.3.RELEASE'
-
-	//Oauth2
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-	// Jasypt
-//	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+	// 개발 시 리로딩
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// 테스트
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-//clean {
-//	delete file("src/main/generated")
-//}
