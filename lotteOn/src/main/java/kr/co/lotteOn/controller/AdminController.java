@@ -67,13 +67,13 @@ public class AdminController {
     //상점관리 - 상점목록
     @GetMapping("/shop/list")
     public String shopList(){
-        return "/admin/config/list";
+        return "/admin/shop/list";
     }
 
     //상점관리 - 매출관리
     @GetMapping("/shop/sales")
     public String shopSales(){
-        return "/admin/config/sales";
+        return "/admin/shop/sales";
     }
 
 
