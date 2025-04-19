@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+
+    <link rel="stylesheet" href="/style/mypage/my_order.css">
+    <link rel="stylesheet" href="/style/common/_footer.css">
+    <link rel="stylesheet" href="/style/common/_header.css">
+
+    <title>마이페이지 메인</title>
+</head>
+<body>
+<div id="container">
+    <th:block th:include="/common/_header.html"/>
+    <main class="main_container">
+        <div class="mypage-header">
+            <div class="mypage-title">
+                <h2>나의쇼핑정보</h2>
+            </div>
+            <div class="mypage-shortcuts">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="label">주문</span>
+                            <span class="value">2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">쿠폰</span>
+                            <span class="value">1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">포인트</span>
+                            <span class="value">1,000</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label">문의</span>
+                            <span class="value">1</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="div_section">
+            <section class="left_section">
+                <aside class="sidebar">
+                    <ul>
+                        <li><a href="#">전체주문내역</a></li>
+                        <li><a href="#">포인트내역</a></li>
+                        <li><a href="#">쿠폰</a></li>
+                        <li><a href="#">나의리뷰</a></li>
+                        <li><a href="#">문의하기</a></li>
+                        <li><a href="#">나의설정</a></li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section class="right_section">
+                <div class="banner"></div>
+                <article>
+                    <div class="article_title">
+                        <h3>전체 주문내역</h3>
+                    </div>
+                    <table class="datetable">
+                        <tr>
+                            <th>기간별조회</th>
+                            <td>
+                                <select>
+                                    <option>기간 선택</option>
+                                    <option>1주일</option>
+                                    <option>15일</option>
+                                    <option>1개월</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option>기간 선택</option>
+                                    <option>3월</option>
+                                    <option>2월</option>
+                                    <option>1월</option>
+                                    <option>12월</option>
+                                    <option>11월</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="datetime-local"> ~ <input type="datetime-local">
+                            </td>
+                            <td>
+                                <button type="submit">[ 조회 ]</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>상품정보</th>
+                            <th>상품</th>
+                            <th>확인/신청</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="table-tr1">
+                            <td class="table-td">2022-12-13</td>
+                            <td class="table-td">
+                                <div>
+                                    <img src="/images/slide1.webp" alt="#">
+                                </div>
+                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
+                                    <a href="#" class="company-link">(주)상호명 <br>
+                                        상품명</a><br>
+                                    수량: 1개 <br><br>
+                                    <strong>34,000원</strong></p>
+                            </td>
+                            <td class="baesong table-td">배송완료</td>
+                            <td class="table-td">
+                                <button class="btn_blue confirm-btn">구매확정</button>
+                                <button class="btn_blue review-btn">상품평쓰기</button>
+                                <button>반품신청</button>
+                                <button>교환신청</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="table-td">2022-12-13</td>
+                            <td class="table-td">
+                                <div>
+                                    <img src="/images/slide1.webp" alt="#">
+                                </div>
+                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
+                                    <a href="#" class="company-link">(주)상호명 <br>
+                                        상품명</a> <br>
+                                    수량: 1개 <br><br><br>
+                                    <strong>34,000원</strong></p>
+                            </td>
+                            <td class="table-td">배송완료</td>
+                            <td class="table-td">
+                                <button class="btn_blue confirm-btn">구매확정</button>
+                                <button class="btn_blue review-btn">상품평쓰기</button>
+                                <button>반품신청</button>
+                                <button>교환신청</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <div class="btnarea">
+                    <div class="pageBtn">
+                        <a href=""><img src="../../static/images/back-double.png"></a>
+                        <a href=""><img src="../../static/images/back-single.png" class="single"></a>
+                        <a href="" class="number">1</a>
+                        <a href="" class="number">2</a>
+                        <a href="" class="number">3</a>
+                        <a href=""><img src="../../static/images/right-single.png" class="single"></a>
+                        <a href=""><img src="../../static/images/right-double.png"></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <th:block th:include="/common/_footer.html"/>
+</div>
+</body>
+</html>
