@@ -1,0 +1,347 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+main{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.mypage-header{
+    height: 75px;
+    background-color: #f2f2f2;
+    position: relative;
+    bottom: 16px;
+
+}
+.mypage-title{
+    float: left;
+    position: relative;
+    margin-top: 28px;
+    margin-left: 28px;
+    font-weight: bold;
+}
+
+.mypage-shortcuts{
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.mypage-shortcuts ul{
+    display: flex;
+    padding: 0;
+    gap: 0;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+    text-align: center;
+}
+
+.mypage-shortcuts li{
+    position: relative;
+    flex: 1;
+    padding: 5px 8px;
+    min-width: 60px;
+    text-align: center;
+    white-space: nowrap;
+
+}
+.mypage-shortcuts li:not(:last-child)::after{
+    content: "";
+    position: absolute;
+    top: 25%;
+    right: 0;
+    height: 50%;
+    width: 1px;
+    background-color: #ccc;
+
+}
+
+.mypage-shortcuts li:last-child{
+    border-right: none;
+}
+
+.mypage-shortcuts a{
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+    white-space: nowrap;
+}
+
+.mypage-shortcuts .label{
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.mypage-shortcuts .value{
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.main_container .div_section{
+    width: 1200px;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.main_container .div_section .left_section{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 160px;
+    position: relative;
+    bottom: 16.50px;
+    right: 20px;
+}
+
+.main_container .div_section .left_section .sidebar{
+    height: 700px;
+    width: 500px;
+    display: block;
+    position: relative;
+    border-right: 1px solid #9b9a9c;
+    margin-left: 20px;
+}
+.sidebar ul li{
+    padding: 6px 0;
+    margin: 6px 0;
+    margin-left: 21px;
+    margin-top: 10px;
+
+}
+
+.sidebar ul li a{
+    font-size: 16px !important;
+    color: #000000;
+}
+
+.ad {
+    border: 1px solid #333;
+    margin-left: 50px;
+    height: 80px;
+    width: 90%;
+}
+
+table {
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    border-spacing: 0;
+    border-top: 0.4px solid #000000;
+    border-bottom: 0.4px solid #000000;
+}
+
+.info{
+    width:900px;
+}
+
+.info tr{
+
+}
+.info th:nth-child(1){
+    background-color: #f2f2f2;
+    width: 153.75px;
+    height: 46.72px;
+}
+
+.info tr:nth-child(7) th:nth-child(1){
+    background-color: #f2f2f2;
+    width: 153.75px;
+    height: 135.67px;
+}
+.info th:nth-child(8){
+    background-color: #f2f2f2;
+    width: 153.75px;
+    height: 51.31px;
+}
+
+.info td{
+    width: auto;
+    height: auto;
+}
+
+.info_addr{
+    width: 382.45px;
+    height: 100px;
+    margin-left: 10px;
+}
+
+
+input:focus {
+    outline: none;      /* 파란 아웃라인 제거 */
+    border: none;       /* 테두리 없앰 (원할 경우) */
+    box-shadow: none;   /* 포커스 시 생기는 그림자 제거 */
+}
+input[name="id"] {
+    border: none;
+    margin-left: 10px;
+}
+input[name="name"] {
+    border: none;
+    width: 124.67px;
+    height: 29.88px;
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+input[name="email"]{
+    border: 1.98px solid #bfbfbf;
+    width: 124.67px;
+    height: 29.88px;
+}
+
+
+input[name="email2"]{
+    border: 1.98px solid #bfbfbf;
+    width: 124.67px;
+    height: 29.88px;
+}
+
+#email3{
+    border: 1.98px solid #bfbfbf;
+    width: 124.67px;
+    height: 29.88px;
+}
+
+.info tr:nth-child(5) td div{
+    position: relative;
+    margin-left: 10px;
+}
+.info_btn1{
+    display: inline-block;
+    text-align: -webkit-center;
+    margin-left: 15px;
+    border: 1.47px solid #808080;
+    width: 84.98px;
+    height: 30.95px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    color: #000000;
+    position: relative;
+    line-height: 30px;
+}
+
+.info_btn2{
+    display: inline-block;
+    text-align: -webkit-center;
+    margin-left: 10px;
+    border: 1.47px solid #808080;
+    width: 84.98px;
+    height: 30.95px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    color: #000000;
+    position: relative;
+    line-height: 30px;
+}
+
+
+.info_btn3{
+    display: inline-block;
+    text-align: -webkit-center;
+    margin-left: 10px;
+    border: 1.47px solid #808080;
+    width: 84.98px;
+    height: 30.95px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    color: #000000;
+    position: relative;
+    line-height: 30px;
+}
+
+input[name="hp"]{
+    border: 1.98px solid #bfbfbf;
+    width: 79.31px;
+    height: 29.88px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+
+input[name="birth"] {
+    border: none;
+    width: 124.67px;
+    height: 29.88px;
+    margin-top: 3px;
+    margin-left: 10px;
+}
+.modify_pw {
+    border: 1.47px solid #808080;
+    width: 119px;
+    height: 30.95px;
+    text-align: center;
+    font-size: 14px;
+    color: #000000;
+    margin-left: 10px;
+    padding-right: 3px;
+}
+
+input[name="zip"]{
+    width: 185.39px;
+    height: 29.88px;
+    border: 1.98px solid #bfbfbf;
+    padding-left: 10px;
+}
+
+input[name="addr1"]{
+    width: 382.45px;
+    height: 27.04px;
+    border: 1.98px solid #bfbfbf;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+input[name="addr2"]{
+    width: 382.45px;
+    height: 27.04px;
+    border: 1.98px solid #bfbfbf;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+
+.leave {
+    display: inline-block;
+    text-align: -webkit-center;
+    margin-left: 10px;
+    border: none;
+    width: 84.98px;
+    height: 30.95px;
+    font-size: 14px;
+    background-color: #c00000;
+    color: #ffffff;
+    position: relative;
+    line-height: 30px;
+}
+
+.end_btn{
+    background-color: #4f81bd;
+    width: 209.2px;
+    height: 39.4px;
+    border: none;
+    position: relative;
+    left: 400px;
+    color: #ffffff;
+    top: 5px;
+}
