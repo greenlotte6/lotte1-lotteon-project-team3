@@ -14,6 +14,15 @@
     <!--JavaScript-->
     <script src="/script/cs.js"></script>
     <script src="/script/aside.js"></script>
+    <style>
+        .submitbtn {
+            white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
+            overflow: hidden;            /* 넘치는 텍스트는 숨김 */
+            text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
+            text-align: left;            /* 텍스트 왼쪽 정렬 */
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
 <div id="container">
@@ -43,19 +52,22 @@
                         <th>제목</th>
                         <th>조회</th>
                         <th>날짜</th>
-                        <th>관리</th>
                     </tr>
-                    <tr>
+                    <tr th:each="notice, i : ${page.dtoList}">
                         <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td>고객서비스</td>
-                        <td><button type="submit" class="submitbtn">[ 안내 ] 해외결제 사칭 문자 주의</button></td>
-                        <td>120</td>
-                        <td>2025-04-17</td>
+                        <td>[[${notice.noticeNo}]]</td>
+                        <td>[[${notice.title}]]</td>
                         <td>
-                            <button type="submit">[ 삭제 ]</button><br>
-                            <button type="submit">[ 수정 ]</button>
+                            <button type="submit"
+                                    class="submitbtn"
+                                    th:attr =
+                                            "data-type=${notice.cate},
+                                            data-title=${notice.title},
+                                            data-content=${notice.content},
+                                            data-notice-no=${notice.noticeNo}">[[${notice.content}]]</button>
                         </td>
+                        <td>[[${notice.views}]]</td>
+                        <td>[[${notice.regDate}]]</td>
                     </tr>
                 </table>
                 <div class="btnarea">
@@ -82,16 +94,15 @@
                         <table class="fst">
                             <tr>
                                 <th>유형</th>
-                                <td>고객서비스</td>
+                                <td id="modalType">공지 카테고리</td>
                             </tr>
                             <tr>
                                 <th>제목</th>
-                                <td>[ 안내 ] 해외결제 사칭 문자 주의</td>
+                                <td id="modalTitle">공지 제목</td>
                             </tr>
                             <tr>
                                 <th>내용</th>
-                                <td>안녕하세용<br>해외결제 사칭문자 조심하세용<br>
-                                돈 많이빠져나가용</td>
+                                <td id="modalContent">공지 내용</td>
                             </tr>
                         </table>
                     </div>
@@ -107,14 +118,15 @@
             <div class="submodal-content">
                 <span class="close">&times;</span>
                 <h3>공지사항 작성</h3>
-                <form>
+                <form method="post" enctype="multipart/form-data" id="noticeWriteForm">
+                    <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
                     <div class="modalTable">
                         <table class="fst">
                             <tr>
                                 <th>유형</th>
                                 <td>
                                     <div>
-                                        <select>
+                                        <select name="cate">
                                             <option>유형선택</option>
                                             <option>고객서비스</option>
                                             <option>이벤트 당첨</option>
@@ -128,7 +140,7 @@
                                 <th>제목</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="제목 입력">
+                                        <input type="text" name="title" placeholder="제목 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -136,7 +148,7 @@
                                 <th>내용</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="내용 입력" class="writearea">
+                                        <textarea name="content" placeholder="내용 입력" class="writearea" style="width: 650px;"></textarea>
                                     </div>
                                 </td>
                             </tr>

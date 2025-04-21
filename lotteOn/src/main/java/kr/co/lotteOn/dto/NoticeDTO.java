@@ -25,4 +25,12 @@ public class NoticeDTO {
     //추가필드
     private MemberDTO member;
 
+    public String getRegDate(){
+        if(regDate != null){
+            return regDate.substring(0,10);   // yyyy-mm-dd
+
+        }
+        return null;
+    }
+
 }

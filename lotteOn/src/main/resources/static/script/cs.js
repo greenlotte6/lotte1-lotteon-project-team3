@@ -48,9 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const regModal = document.getElementById('regModal');
 
     // === 모달 열기 버튼들 ===
-    document.querySelector('.submitbtn')?.addEventListener('click', () => {
+    /*document.querySelector('.submitbtn')?.addEventListener('click', () => {
         bannerModal.style.display = 'block';
     });
+    */
+    document.querySelectorAll('.submitbtn')?.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const bannerModal = document.getElementById('bannerModal');
+
+            const type = btn.getAttribute('data-type');
+            const title = btn.getAttribute('data-title');
+            const content = btn.getAttribute('data-content');
+
+            document.getElementById('modalType').textContent = type;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = content.replace(/\n/g, '<br>');
+
+            bannerModal.style.display = 'block';
+        });
+    });
+
 
     document.querySelector('.regbutton')?.addEventListener('click', (e) => {
         e.stopPropagation();
