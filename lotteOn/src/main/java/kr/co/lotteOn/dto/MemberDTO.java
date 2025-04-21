@@ -23,5 +23,5 @@ public class MemberDTO {
     private String addr1;
     private String addr2;
     private String regDate;
-    private String reaveDate;
+    private String leaveDate;
 }
