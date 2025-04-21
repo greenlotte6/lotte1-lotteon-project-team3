@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <title>판매자 회원가입</title>
     <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <link rel="stylesheet" href="/style/member/registerSeller.css"/>
+    <script src="/script/validation.js"></script>
+
+    <!--주소js-->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/script/postcode.js"></script>
+
+
 </head>
 <body>
 <div id="container">
@@ -18,6 +25,7 @@
                 <img src="/images/logo_lotte-on.png">
             </a>
         </div>
+        <form th:action="@{/member/registerSeller}" method="post">
         <div class="sellerRegMain">
             <article>
                 <h4>판매자 회원가입</h4>
@@ -28,20 +36,20 @@
                     <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" placeholder="아이디 입력">
-                            <p>영문, 숫자 4 ~ 12 자 설정</p>
+                            <input type="text" id="sellerId" name="sellerId" placeholder="아이디 입력">
+                            <p class="idMsg">영문, 숫자 4 ~ 12 자 설정</p>
                         </td>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
                         <td>
-                            <input type="password" placeholder="비밀번호 입력">
-                            <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
+                            <input type="password" id="sellerPw" name="password" placeholder="비밀번호 입력">
+                            <p class="pwMsg">영문, 숫자, 특수문자 8 ~ 12자 설정</p>
                         </td>
                     </tr>
                     <tr>
                         <th>비밀번호 확인</th>
-                        <td><input type="password" placeholder="비밀번호 재입력"></td>
+                        <td><input type="password" id="sellerPw2" placeholder="비밀번호 재입력"></td>
                     </tr>
                 </table>
             </div>
@@ -50,37 +58,37 @@
                 <table>
                     <tr>
                         <th>회사명</th>
-                        <td><input type="text" placeholder="회사명 입력 예) (주) 상호명"></td>
+                        <td><input type="text" name="companyName" placeholder="회사명 입력 예) (주) 상호명"></td>
                     </tr>
                     <tr>
-                       <th>대표</th>
-                        <td><input type="text" placeholder="이름 입력"></td>
+                        <th>대표</th>
+                        <td><input type="text" name="delegate" placeholder="이름 입력"></td>
                     </tr>
                     <tr>
                         <th>사업자 등록번호</th>
                         <td>
-                            <input type="text" placeholder="사업자 등록번호 입력">
-                            <p> - 포함 12자리 입력</p>
+                            <input type="text" id="bisNum" name="businessNo" placeholder="사업자 등록번호 입력">
+                            <p class="bisNumMsg"> - 포함 12자리 입력</p>
                         </td>
                     </tr>
                     <tr>
                         <th>통신 판매업 번호</th>
-                        <td><input type="text" placeholder="통신 판매업 번호 입력"></td>
+                        <td><input type="text" name="communicationNo" placeholder="통신 판매업 번호 입력"></td>
                     </tr>
                     <tr>
                         <th>전화번호</th>
-                        <td><input type="text" placeholder="전화번호 입력"></td>
+                        <td><input type="text" name="hp" placeholder="전화번호 입력"></td>
                     </tr>
                     <tr>
                         <th>팩스</th>
-                        <td><input type="text" placeholder="팩스번호 입력"></td>
+                        <td><input type="text" name="fax" placeholder="팩스번호 입력"></td>
                     </tr>
                     <tr>
                         <th>주소</th>
                         <td class="address">
-                            <input type="text" placeholder="우편번호 검색 클릭"><br>
-                            <input type="text" placeholder="기본주소 검색"><br>
-                            <input type="text" placeholder="상세주소 입력">
+                            <input type="text" id="postcode" name="zip" placeholder="우편번호 검색 클릭" onclick="execDaumpostcode()"> <br>
+                            <input type="text" id="address" name="addr1" placeholder="기본주소 검색"><br>
+                            <input type="text" id="address2" name="addr2" placeholder="상세주소 입력">
                         </td>
                     </tr>
                 </table>
@@ -89,6 +97,7 @@
                 <button type="submit">회원가입</button>
             </div>
         </div>
+        </form>
     </main>
     <footer>
     </footer>
