@@ -27,10 +27,6 @@ public class MemberController {
     private final SellerService sellerService;
     private final MemberService memberService;
 
-    public MemberController(SellerService sellerService) {
-        this.sellerService = sellerService;
-    }
-
     //회원 - 로그인
     @GetMapping("/login")
     public String login() {
