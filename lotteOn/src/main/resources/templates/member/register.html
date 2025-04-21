@@ -28,19 +28,20 @@
                 <h4>일반 회원가입</h4>
             </article>
             <!-- 아이디,비밀번호 테이블 -->
+            <form th:action="@{/member/register}" method="post">
             <div class="fsttable">
                 <table>
                     <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" placeholder="아이디 입력">
+                            <input type="text" name="id" placeholder="아이디 입력">
                             <p>영문, 숫자 4 ~ 12 자 설정</p>
                         </td>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
                         <td>
-                            <input type="password" placeholder="비밀번호 입력">
+                            <input type="password" name="password" placeholder="비밀번호 입력">
                             <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
                         </td>
                     </tr>
@@ -55,41 +56,39 @@
                 <table>
                     <tr>
                         <th>이름</th>
-                        <td><input type="text" placeholder="이름 입력"></td>
+                        <td><input type="text" name="name" placeholder="이름 입력"></td>
                     </tr>
                     <tr>
                         <th>성별</th>
-                        <td><input type="text" placeholder="이름 입력"></td>
+                        <td><input type="text" name="gender" placeholder="이름 입력"></td>
                     </tr>
                     <tr>
                         <th>Email</th>
                         <td>
-                            <input type="text" placeholder="이메일 입력">
+                            <input type="text" name="email" placeholder="이메일 입력">
                             <button class="btn_email">이메일 인증</button>
                         </td>
                     </tr>
                     <tr>
                         <th>휴대폰</th>
-
                         <td>
-                            <input type="text" placeholder="휴대폰 입력">
+                            <input type="text" name="hp" placeholder="휴대폰 입력">
                             <button class="btn_tel">휴대폰 인증</button>
                         </td>
                     <tr>
                         <th>주소</th>
                         <td class="address">
-                            <input type="text" id="postcode" placeholder="우편번호 검색 클릭" onclick="execDaumpostcode()"><br>
-                            <input type="text" id="address" placeholder="기본주소 검색"><br>
-                            <input type="text" id="address2" placeholder="상세주소 입력">
+                            <input type="text" name="zip" placeholder="우편번호 검색 클릭"><br>
+                            <input type="text" name="addr1" placeholder="기본주소 검색"><br>
+                            <input type="text" name="addr2" placeholder="상세주소 입력">
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="btnarea">
-                <a th:href="@{/}">
                     <button type="submit">회원가입</button>
-                </a>
             </div>
+            </form>
         </div>
     </main>
     <footer>
