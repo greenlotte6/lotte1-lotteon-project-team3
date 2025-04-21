@@ -21,7 +21,7 @@ server:
 spring:
   application:
     name: lotteOn
-    version: 1.0
+    version: 0.0.2-SNAPSHOT
 
   thymeleaf:
     prefix: classpath:/templates
@@ -45,6 +45,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
     open-in-view: false
     properties:

@@ -1,12 +1,13 @@
 package kr.co.lotteOn.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -28,6 +29,14 @@ public class Member {
     private String zip;
     private String addr1;
     private String addr2;
-    private String regDate;
-    private String leaveDate;
+
+    @CreationTimestamp
+    private LocalDateTime regDate;
+    private LocalDateTime leaveDate;
+
+    @PrePersist //Default값 세팅
+    public void prePersist() {
+        if (this.rating == null) this.rating = "FAMILY";
+        if (this.role == null) this.role = "MEMBER";
+    }
 }

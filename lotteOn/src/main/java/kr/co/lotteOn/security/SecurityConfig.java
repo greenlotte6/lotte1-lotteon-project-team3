@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -26,16 +25,16 @@ public class SecurityConfig {
 
         //로그인 설정
         http.formLogin(login -> login
-                .loginPage("/user/login")
+                .loginPage("/member/login")
                 .defaultSuccessUrl("/")
-                .failureUrl("/user/login?code=100")
+                .failureUrl("/member/login?code=100")
                 .usernameParameter("id")
                 .passwordParameter("password"));
 
         //로그아웃 설정
-        http.logout(logout -> logout.logoutUrl("/user/logout")
+        http.logout(logout -> logout.logoutUrl("/member/logout")
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/user/login"));
+                .logoutSuccessUrl("/member/login"));
 
       /*
             인가 설정
@@ -43,16 +42,12 @@ public class SecurityConfig {
              에서 접두어로 ROLE_ 입력해야 haRole, hasAnyRole 권한 처리됨
              - Spring Security는 기본적으로 인가 페이지에 대해
                                 login 페이지로 redirect 수행
-
-
        */
 
         //인가 설정
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/Management/**").hasRole("ADMIN")
-                .requestMatchers("/support/**").hasAnyRole("ADMIN","STUDENT")
-                .requestMatchers("/staff/**").hasAnyRole("ADMIN","MANAGER","STAFF")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/Community/write**").authenticated()
                 .requestMatchers("/Community/modify**").authenticated()
                 .anyRequest().permitAll()
@@ -65,8 +60,6 @@ public class SecurityConfig {
 
         //기타 보안 설정
         http.csrf(AbstractHttpConfigurer::disable);
-
-
 
         return http.build();
     }

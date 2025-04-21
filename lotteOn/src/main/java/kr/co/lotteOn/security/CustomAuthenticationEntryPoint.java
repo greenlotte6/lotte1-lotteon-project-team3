@@ -10,11 +10,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/*
-이름: 김소현
-내용: 로그인 인가 처리
- */
-
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

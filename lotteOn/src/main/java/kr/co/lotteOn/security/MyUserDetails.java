@@ -1,7 +1,6 @@
-/* UserEntity 생성 후에 사용가능
 package kr.co.lotteOn.security;
 
-import kr.co.greenuniversity.entity.user.User;
+import kr.co.lotteOn.entity.Member;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,20 +15,25 @@ import java.util.List;
 @Builder
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private Member member;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //권한 목록 생성
         List<GrantedAuthority> authorities = new ArrayList<>();
         //계정 권한 앞에 접두어 ROLE_ 붙여야 됨
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + member.getRole()));
         return authorities;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return member.getId();
+    }
+
+    @Override
+    public String getPassword() {
+        return member.getPassword();
     }
 
     @Override
@@ -51,12 +55,4 @@ public class MyUserDetails implements UserDetails {
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
-
-    @Override
-    public String getPassword() {
-        return user.getPassword();
-
-    }
 }
-
- */

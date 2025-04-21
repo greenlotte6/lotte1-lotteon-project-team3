@@ -1,9 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 <header>
     <div class="headerContainer">
         <div class="headerUtil">
-            <a th:href="@{/member/join}" class="themeColor">회원가입</a>
-            <div class="v-l"></div>
-            <a th:href="@{/member/login}">로그인</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="admin/admin" class="themeColor">관리자</a>
+            <a sec:authorize="isAnonymous()" href="/member/join" class="themeColor">회원가입</a>
+            <div sec:authorize="isAnonymous()" class="v-l"></div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')" class="v-l"></div>
+            <a sec:authorize="isAnonymous()" href="/member/login">로그인</a>
+            <a sec:authorize="isAuthenticated()" href="/member/logout">로그아웃</a>
             <div class="v-l"></div>
             <a th:href="@{/cust/cust_main}">고객센터</a>
         </div>
