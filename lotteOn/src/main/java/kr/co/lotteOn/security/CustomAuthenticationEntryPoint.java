@@ -23,12 +23,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         if ("XMLHttpRequest".equals(ajaxHeader)) {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("{\"message\":\"로그인이 필요합니다.\", \"loginUrl\": \"/user/login\"}");
+            response.getWriter().write("{\"message\":\"로그인이 필요합니다.\", \"loginUrl\": \"/member/login\"}");
         } else {
             // 일반 브라우저 요청: 자바스크립트로 alert() 출력
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인이 필요합니다.'); location.href='/user/login?redirect=" + request.getRequestURI() + "';</script>");
+            out.println("<script>alert('로그인이 필요합니다.'); location.href='/member/login?redirect=" + request.getRequestURI() + "';</script>");
             out.flush();
         }
     }

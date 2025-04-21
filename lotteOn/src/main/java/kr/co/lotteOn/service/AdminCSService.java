@@ -1,18 +1,19 @@
 package kr.co.lotteOn.service;
 
-import kr.co.lotteOn.dto.FaqDTO;
-import kr.co.lotteOn.dto.NoticeDTO;
-import kr.co.lotteOn.dto.QnaDTO;
-import kr.co.lotteOn.dto.RecruitDTO;
+import com.querydsl.core.Tuple;
+import kr.co.lotteOn.dto.*;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Notice;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,8 +28,39 @@ public class AdminCSService {
     private final FaqRepository faqRepository;
 
     /*글 리스트 출력하기*/
-    public void findAll(){
+    public NoticePageResponseDTO noticeFindAll(NoticePageRequestDTO pageRequestDTO) {
+        //페이징 처리 위한 pageable 객체 생성
+        Pageable pageable = pageRequestDTO.getPageable("noticeNo");
 
+        Page<Notice> pageNotice = noticeRepository.searchAllForList(pageable);
+        log.info("pageNotice: {}", pageNotice);
+
+        // Notice Entity → NoticeDTO
+        List<NoticeDTO> noticeList = pageNotice
+                .getContent()
+                .stream()
+                .map(notice -> {
+                    // Notice를 NoticeDTO로 변환
+                    NoticeDTO noticeDTO = modelMapper.map(notice, NoticeDTO.class);
+
+                    // writer 필드를 String으로 세팅 (Notice의 writer가 Member이므로)
+                    // 필요시, MemberDTO를 사용하여 더 많은 정보 추가 가능
+                    noticeDTO.setWriter(notice.getWriter().getId()); // 여기서 member의 id를 가져옴
+
+
+
+                    return noticeDTO;
+                })
+                .toList();
+
+        int total = (int) pageNotice.getTotalElements();
+
+        return NoticePageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(noticeList)
+                .total(total)
+                .build();
     }
 
 
@@ -52,7 +84,15 @@ public class AdminCSService {
         Notice notice = modelMapper.map(noticeDTO, Notice.class);
         notice.setWriter(member);
 
-        return 0;
+        log.info("notice : {}", notice);
+
+        //JPA 저장
+        Notice savedNotice = noticeRepository.save(notice);
+        log.info("savedNotice : {}", savedNotice);
+
+        noticeRepository.save(notice);
+
+        return savedNotice.getNoticeNo();
         
     }
 
