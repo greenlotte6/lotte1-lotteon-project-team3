@@ -17,21 +17,21 @@
                     </h2>
                     <div class="login_content">
                         <div class="login_form">
-                            <section class="type_here">
-                                <table border="0">
-                                    <tr>
-                                        <td><input type="text" name="user_id" placeholder="아이디 또는 이메일 아이디"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="user_pw" placeholder="8~15자리 영문+숫자+특수문자 조합"></td>
-                                    </tr>
-                                </table>
-                            </section>
-                            <div class="submit_btn">
-                                <a th:href="@{/}">
+                            <form method="post">
+                                <section class="type_here">
+                                    <table border="0">
+                                        <tr>
+                                            <td><input type="text" name="id" placeholder="아이디 또는 이메일 아이디"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="password" name="password" placeholder="8~15자리 영문+숫자+특수문자 조합"></td>
+                                        </tr>
+                                    </table>
+                                </section>
+                                <div class="submit_btn">
                                     <input type="submit" value="로그인하기" class="login_btn">
-                                </a>
-                            </div>
+                                </div>
+                            </form>
                             <div class="auto_login">
                                 <div class="save_id">
                                     <label>
