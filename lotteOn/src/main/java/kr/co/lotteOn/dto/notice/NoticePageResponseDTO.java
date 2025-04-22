@@ -1,4 +1,4 @@
-package kr.co.lotteOn.dto;
+package kr.co.lotteOn.dto.notice;
 
 
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
-package kr.co.lotteOn.dto;
+package kr.co.lotteOn.dto.recruit;
 
+import kr.co.lotteOn.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,9 @@ public class RecruitDTO {
     private String endDate;     //종료날짜
     private String regDate;     //등록날짜
     private String status;      //채용중, 채용마감
+
+    //추가필드
+    private MemberDTO member;
 
 
 }

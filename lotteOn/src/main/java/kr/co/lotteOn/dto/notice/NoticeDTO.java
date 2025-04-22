@@ -1,10 +1,12 @@
-package kr.co.lotteOn.dto;
+package kr.co.lotteOn.dto.notice;
 
-import jakarta.persistence.Id;
+import kr.co.lotteOn.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,6 +26,9 @@ public class NoticeDTO {
 
     //추가필드
     private MemberDTO member;
+
+    // 여러 개 삭제할 때 사용
+    private List<Integer> noticeNoList;
 
     public String getRegDate(){
         if(regDate != null){

@@ -12,15 +12,30 @@
     <link rel="stylesheet" href="/style/admin/footer.css">
     <link rel="stylesheet" href="/style/admin/adminaside.css">
     <!--JavaScript-->
-    <script src="/script/cs.js"></script>
+    <script src="/script/csFaq.js"></script>
     <script src="/script/faq.js"></script>
     <script src="/script/aside.js"></script>
+    <style>
+        .submitbtn {
+            white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
+            overflow: hidden;            /* 넘치는 텍스트는 숨김 */
+            text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
+            text-align: left;            /* 텍스트 왼쪽 정렬 */
+            width: 200px;
+        }
+        .modifybtn, .deletebtn {
+            vertical-align: middle;
+        }
+        a.num {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 <div id="container">
-    <th:block th:include="/admin/_adminHeader"/>
+    <th:block th:insert="~{/admin/_adminHeader}"/>
     <main>
-        <th:block th:include="/admin/_adminAside"/>
+        <th:block th:insert="~{/admin/_adminAside}"/>
         <div class="adminMain">
             <div class="mainTop">
                 <h4>자주묻는질문</h4>
@@ -28,50 +43,55 @@
             </div>
             <div class="shopArea">
                 <div class="searchArea">
-                    <select class="typeSelect">
-                        <option value="">1차 유형</option>
-                        <option value="member">회원</option>
-                        <option value="event">쿠폰/혜택/이벤트</option>
-                        <option value="order">주문/결제</option>
-                        <option value="delivery">배송</option>
-                        <option value="cancel">취소/반품/교환</option>
-                        <option value="travel">여행/숙박/항공</option>
-                        <option value="safe">안전거래</option>
-                    </select>
-                    <select class="detailSelect">
-                        <option value="">2차 유형</option>
-                    </select>
+                    <form th:action="@{/admin/cs/faqSearch}">
+                        <select class="typeSelect">
+                            <option value="">1차 유형</option>
+                            <option value="member">회원</option>
+                            <option value="event">쿠폰/혜택/이벤트</option>
+                            <option value="order">주문/결제</option>
+                            <option value="delivery">배송</option>
+                            <option value="cancel">취소/반품/교환</option>
+                            <option value="travel">여행/숙박/항공</option>
+                            <option value="safe">안전거래</option>
+                        </select>
+                        <select class="detailSelect">
+                            <option value="">2차 유형</option>
+                        </select>
+                    </form>
                 </div>
                 <table>
                     <tr>
-                        <th><input type="checkbox"></th>
                         <th>번호</th>
                         <th>1차유형</th>
                         <th>2차유형</th>
                         <th>제목</th>
                         <th>조회</th>
                         <th>날짜</th>
-                        <th>관리</th>
+                        <th colspan="2">관리</th>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>10</td>
-                        <td>안전거래</td>
-                        <td>직거래/외부거래유도</td>
+                    <tr th:each="faq, i : ${page.dtoList}">
+                        <td>[[${page.startNo - i.index}]]</td>
+                        <td>[[${faq.title}]]</td>
+                        <td>[[${faq.cate1}]]/[[${faq.cate2}]]</td>
                         <td>
-                            <button type="submit" class="submitbtn">[ 안내 ] 해외결제 사칭 문자 주의</button>
+                            <button type="submit" class="submitbtn">[[${faq.content}]]</button>
                         </td>
-                        <td>120</td>
-                        <td>2025-04-17</td>
+                        <td>[[${faq.views}]]</td>
+                        <td>[[${faq.regDate}]]</td>
                         <td>
-                            <button type="submit">[ 삭제 ]</button>
-                            <br>
-                            <button type="submit">[ 수정 ]</button>
+                            <button type="button" class="modifybtn">
+                                수정
+                            </button>
+                        </td>
+                        <td>
+                            <form>
+                                <button type="submit" class="deletebtn" style="font-size: 12px">삭제</button>
+                                <input type="hidden" name="faqNo">
+                            </form>
                         </td>
                     </tr>
                 </table>
                 <div class="btnarea">
-                    <button class="delbutton" type="submit">선택삭제</button>
                     <div class="pageBtn">
                         <a href=""><img src="/images/back-double.png"></a>
                         <a href=""><img src="/images/back-single.png" class="single"></a>
@@ -120,14 +140,15 @@
             <div class="submodal-content">
                 <span class="close">&times;</span>
                 <h3>자주묻는질문 작성</h3>
-                <form>
+                <form method="post" enctype="multipart/form-data" id="faqWriteForm">
+                    <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
                     <div class="modalTable">
                         <table class="fst">
                             <tr>
                                 <th>유형</th>
                                 <td>
                                     <div>
-                                        <select class="typeSelect">
+                                        <select name="cate1" class="typeSelect">
                                             <option value="">1차 유형</option>
                                             <option value="member">회원</option>
                                             <option value="event">쿠폰/혜택/이벤트</option>
@@ -137,7 +158,7 @@
                                             <option value="travel">여행/숙박/항공</option>
                                             <option value="safe">안전거래</option>
                                         </select>
-                                        <select class="detailSelect">
+                                        <select  name="cate2" class="detailSelect">
                                             <option value="">2차 유형</option>
                                         </select>
                                     </div>
@@ -147,7 +168,7 @@
                                 <th>제목</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="제목 입력">
+                                        <input type="text" name="title" placeholder="제목 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -155,13 +176,12 @@
                                 <th>내용</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="내용 입력" class="writearea">
+                                        <textarea name="content" placeholder="내용 입력" class="writearea" style="width: 650px;"></textarea>
                                     </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="modalbtn">
-                            <button>취소하기</button>
                             <button>등록하기</button>
                         </div>
                     </div>
@@ -221,7 +241,7 @@
             </div>
         </div>
     </main>
-    <th:block th:include="/admin/_adminFooter"/>
+    <th:block th:insert="~{/admin/_adminFooter}"/>
 </div>
 </body>
 </html>
