@@ -5,6 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>롯데ON 로그인 : 롯데ON</title>
         <link rel="stylesheet" href="/style/member/login.css">
+        <script>
+            function checkUserType() {
+                // 선택된 userType 값 확인
+                var userType = document.querySelector("select[name='userType']").value;
+                console.log("userType selected:", userType);  // 선택된 userType 값 로그로 확인
+            }
+        </script>
 
     </head>
 
@@ -17,9 +24,17 @@
                     </h2>
                     <div class="login_content">
                         <div class="login_form">
-                            <form method="post">
+                            <form method="post" onsubmit="checkUserType()">
                                 <section class="type_here">
                                     <table border="0">
+                                        <tr>
+                                            <td>
+                                                <select name="userType">
+                                                    <option value="member">일반회원</option>
+                                                    <option value="seller">판매자회원</option>
+                                                </select>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td><input type="text" name="id" placeholder="아이디 또는 이메일 아이디"></td>
                                         </tr>

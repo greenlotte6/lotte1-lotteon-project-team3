@@ -27,47 +27,47 @@
             <div class="acceptAll">
                 <input type="checkbox" id="checkAll"><span>전체 동의하기</span>
             </div>
+            <form action="/member/signUp_seller" method="post">
             <div class="termsArea">
                 <h3><p>(필수)</p>이용약관</h3>
-                <textarea readonly>
+                <textarea readonly th:text="${termsDTO.seller}">
 
                 </textarea><br>
                 <div class="checkArea">
-                    <input type="checkbox"><span>동의하기</span>
+                    <input type="checkbox" name="terms1"><span>동의하기</span>
                 </div>
             </div>
             <div class="termsArea">
                 <h3><p>(필수)</p>전자금융 이용약관</h3>
-                <textarea readonly>
+                <textarea readonly th:text="${termsDTO.trade}">
 
                 </textarea><br>
                 <div class="checkArea">
-                    <input type="checkbox"><span>동의하기</span>
+                    <input type="checkbox" name="terms2"><span>동의하기</span>
                 </div>
             </div>
             <div class="termsArea">
                 <h3><p>(필수)</p>개인정보 수집동의</h3>
-                <textarea readonly>
+                <textarea readonly th:text="${termsDTO.privacy}">
 
                 </textarea><br>
                 <div class="checkArea">
-                    <input type="checkbox"><span>동의하기</span>
+                    <input type="checkbox" name="terms3"><span>동의하기</span>
                 </div>
             </div>
             <div class="termsArea">
                 <h3>위치정보 이용약관</h3>
-                <textarea readonly>
+                <textarea readonly th:text="${termsDTO.place}">
 
                 </textarea><br>
                 <div class="checkArea">
-                    <input type="checkbox"><span>동의하기</span>
+                    <input type="checkbox" name="terms4"><span>동의하기</span>
                 </div>
             </div>
             <div class="btnarea">
-                <a th:href="@{/member/registerSeller}">
                     <button type="submit">동의하기</button>
-                </a>
             </div>
+            </form>
         </div>
     </main>
     <footer>
