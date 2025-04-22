@@ -25,9 +25,6 @@
         .modifybtn, .deletebtn {
             vertical-align: middle;
         }
-        a.num {
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
@@ -45,15 +42,16 @@
                     <form th:action="@{/admin/cs/noticeSearch}">
                         <select name="cate" onchange="this.form.submit()">
                             <option value="" disabled selected>유형</option>
-                            <option value="고객서비스">고객서비스</option>
-                            <option value="이벤트당첨">이벤트당첨</option>
-                            <option value="안전거래">안전거래</option>
-                            <option value="위해상품">위해상품</option>
+                            <option value="고객서비스" th:selected="${page.cate == '고객서비스'}">고객서비스</option>
+                            <option value="이벤트당첨" th:selected="${page.cate == '이벤트당첨'}">이벤트당첨</option>
+                            <option value="안전거래" th:selected="${page.cate == '안전거래'}">안전거래</option>
+                            <option value="위해상품" th:selected="${page.cate == '위해상품'}">위해상품</option>
                         </select>
                     </form>
                 </div>
                 <table>
                     <tr>
+                        <th><input type="checkbox"></th>
                         <th>번호</th>
                         <th>유형</th>
                         <th>제목</th>
@@ -62,7 +60,7 @@
                         <th colspan="2">관리</th>
                     </tr>
                     <tr th:each="notice, i : ${page.dtoList}">
-
+                        <td><input type="checkbox"></td>
                         <td>[[${page.startNo - i.index}]]</td>
                         <td>[[${notice.title}]]</td>
                         <td>
@@ -94,29 +92,30 @@
                     </tr>
                 </table>
                 <div class="btnarea">
+                    <button class="delbutton" type="submit">선택삭제</button>
                     <div class="pageBtn">
                         <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.start-2})}" class="prev">
+                            <a th:href="@{/admin/cs/noticeSearch(pg=${page.start-2})}" class="prev">
                                 <img src="/images/back-double.png">
                             </a>
                         </th:block>
                         <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.start-1})}" class="prev">
+                            <a th:href="@{/admin/cs/noticeSearch(pg=${page.start-1})}" class="prev">
                                 <img src="/images/back-single.png" class="single">
                             </a>
                         </th:block>
 
                         <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            <a th:href="@{/admin/cs/noticeSearch(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
                         </th:block>
 
                         <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.end+1})}" class="next">
+                            <a th:href="@{/admin/cs/noticeSearch(pg=${page.end+1})}" class="next">
                                 <img src="/images/right-single.png" class="single">
                             </a>
                         </th:block>
                         <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.end+2})}" class="next">
+                            <a th:href="@{/admin/cs/noticeSearch(pg=${page.end+2})}" class="next">
                                 <img src="/images/right-double.png">
                             </a>
                         </th:block>
@@ -239,7 +238,7 @@
                             </tr>
                         </table>
                         <div class="modalbtn">
-                            <button type="submit">수정하기</button>
+                            <button>수정하기</button>
                         </div>
                     </div>
                 </form>

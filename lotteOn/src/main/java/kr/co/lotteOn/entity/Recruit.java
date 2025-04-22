@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -22,12 +25,23 @@ public class Recruit {
     private String experience;  //경력
     private String employType;  //채용형태
     private String title;       //글제목
-    private String writer;      //작성자
     private String content;     //글내용
-    private String startDate;     //시작날짜
-    private String endDate;     //종료날짜
-    private String regDate;     //등록날짜
     private String status;      //채용중, 채용마감
+
+    @CreationTimestamp
+    private LocalDateTime regDate;     //등록날짜
+
+    @CreationTimestamp
+    private LocalDateTime startDate;     //시작날짜
+
+    @CreationTimestamp
+    private LocalDateTime endDate;     //종료날짜
+
+    //private String writer;      //작성자 = 관리자(Admin)
+    //추가필드
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="writer")
+    private Member writer;
 
 
 }

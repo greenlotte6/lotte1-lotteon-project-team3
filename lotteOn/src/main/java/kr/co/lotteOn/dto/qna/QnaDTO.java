@@ -1,5 +1,6 @@
-package kr.co.lotteOn.dto;
+package kr.co.lotteOn.dto.qna;
 
+import kr.co.lotteOn.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,8 @@ public class QnaDTO {
     private String regDate;     //등록날짜
     private String status;      //NULL
     private String writer;      //작성자 = 관리자(Admin)
+
+    //추가필드
+    private MemberDTO member;
 }
 

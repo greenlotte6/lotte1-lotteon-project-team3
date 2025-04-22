@@ -25,16 +25,17 @@ public class Notice {
     private String title;       //글제목
     private String content;     //글내용
     private String views;       //조회수
+    private String status;      //NULL
 
     @CreationTimestamp
     private LocalDateTime regDate;     //등록날짜
-    private String status;      //NULL
+
+
     //private String writer;      //작성자 = 관리자(Admin)
-
-
     //추가필드
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="writer")
     private Member writer;
+
 
 }

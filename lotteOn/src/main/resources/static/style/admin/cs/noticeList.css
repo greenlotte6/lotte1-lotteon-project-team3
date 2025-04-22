@@ -24,9 +24,9 @@ img {
 }
 /* --------------------- main --------------------- */
 .adminMain {
-    width: 840px;
+    width: 900px;
     height: auto;
-    padding: 15px 60px 30px 0;
+    padding: 15px 0px 30px 0;
 }
 .mainTop {
     display: flex;
@@ -69,6 +69,7 @@ table tr th {
     height: 45px;
     background-color: #93b7d0;
     color: white;
+    padding-left: 10px;
 }
 table tr th a {
     color: white;
@@ -101,6 +102,7 @@ table tr td {
     justify-content: space-between;
     position: relative;
     top: 9px;
+    margin: 0 auto;
 }
 .btnarea .pageBtn .number {
     font-size: 17px;
@@ -118,8 +120,7 @@ table tr td {
     height: 15px;
 }
 .shopArea {
-    padding: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 .shopArea button {
     line-height: 10px;
