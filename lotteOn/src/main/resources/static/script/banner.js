@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-    //
     // 열기
     document.querySelector('.submitbtn').addEventListener('click', function () {
         document.getElementById('subModal').style.display = 'block';
