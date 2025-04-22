@@ -24,4 +24,8 @@ public class MemberDTO {
     private String addr2;
     private String regDate;
     private String leaveDate;
+
+    public String getFormattedRegDate() {
+        return regDate != null ? regDate.toString().substring(0, 10) : "";
+    }
 }
