@@ -26,6 +26,7 @@ public class Member {
     private String hp;
     private String rating;
     private String role;
+    private String status;
     private String zip;
     private String addr1;
     private String addr2;
@@ -38,5 +39,6 @@ public class Member {
     public void prePersist() {
         if (this.rating == null) this.rating = "FAMILY";
         if (this.role == null) this.role = "MEMBER";
+        if (this.status == null) this.status = "정상";
     }
 }

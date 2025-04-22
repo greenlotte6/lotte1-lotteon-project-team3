@@ -14,6 +14,7 @@
     <!--JavaScript-->
     <script src="/script/banner.js"></script>
     <script src="/script/aside.js"></script>
+    <script src="/script/pickMember.js"></script>
 </head>
 <body>
 <div id="container">
@@ -39,7 +40,6 @@
                 </div>
                 <table>
                     <tr>
-                        <th><input type="checkbox"></th>
                         <th>번호</th>
                         <th>아이디</th>
                         <th>이름</th>
@@ -52,30 +52,29 @@
                         <th>상태</th>
                         <th>관리</th>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td class="ellipsis">abc123</td>
-                        <td>정상수</td>
-                        <td>M</td>
-                        <td>
-                            <select>
-                                <option>ACE</option>
-                                <option>GOLD</option>
-                                <option>VIP</option>
-                                <option>MVG</option>
-                            </select>
-                        </td>
+                    <tr th:each="member, i : ${memberList}"
+                        th:attr="data-id=${member.id},
+                           data-name=${member.name},
+                           data-gender=${member.gender},
+                           data-rating=${member.rating},
+                           data-email=${member.email},
+                           data-hp=${member.hp},
+                           data-hp=${member.zip},
+                           data-hp=${member.addr1},
+                           data-hp=${member.addr2},
+                           data-regdate=${member.regDate}">
+                        <td th:text="${i.index + 1}"></td>
+                        <td th:text="${member.id}" class="ellipsis"></td>
+                        <td th:text="${member.name}"></td>
+                        <td th:text="${member.gender}"></td>
+                        <td th:text="${member.rating}"></td>
                         <td>15,000</td>
-                        <td class="ellipsis">wnstj050505@gmail.com</td>
-                        <td class="ellipsis">010-7411-7353</td>
-                        <td>
-                            2025-04-15<br>
-                            05:29:11
-                        </td>
+                        <td th:text="${member.email}" class="ellipsis"></td>
+                        <td th:text="${member.hp}" class="ellipsis"></td>
+                        <td th:text="${member.formattedRegDate}"></td>
                         <td>정상</td>
                         <td>
-                            <button type="submit">[ 수정 ]</button>
+                            <button type="submit" class="modify-btn">[ 수정 ]</button>
                             <button type="submit">[ 중지 ]</button>
                         </td>
                     </tr>
@@ -90,7 +89,6 @@
                         <a href=""><img src="/images/right-single.png" class="single"></a>
                         <a href=""><img src="/images/right-double.png"></a>
                     </div>
-                    <button class="regbutton" type="submit">선택수정</button>
                 </div>
             </div>
         </div>
@@ -105,7 +103,7 @@
                                 <th>아이디</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="아이디 입력">
+                                        <input type="text" placeholder="아이디 입력" disabled>
                                         <p>영문, 숫자 4 ~ 12 자 설정</p>
                                     </div>
                                 </td>
@@ -114,7 +112,7 @@
                                 <th>이름</th>
                                 <td>
                                     <div>
-                                        <input type="password" placeholder="이름 입력">
+                                        <input type="text" placeholder="이름 입력">
                                     </div>
                                 </td>
                             </tr>
