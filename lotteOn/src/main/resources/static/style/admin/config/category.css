@@ -124,11 +124,11 @@ h3 {
 
 }
 #addCategoryBtn {
-    margin-top: 15px;
+    margin-top: 5px;
     background: #eee;
     border: 1px solid #aaa;
     width: 500px;
-    padding: 5px 15px 5px 15px;
+    padding: 10px 15px;
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
@@ -139,5 +139,13 @@ h3 {
     border: none;
     cursor: pointer;
     font-size: 14px;
+}
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 480px;
+}
+.addbtn {
+    margin-bottom: 10px;
 }
 /* --------------------- main --------------------- */

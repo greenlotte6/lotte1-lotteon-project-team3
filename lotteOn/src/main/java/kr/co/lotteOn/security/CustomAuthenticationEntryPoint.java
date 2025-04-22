@@ -28,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             // 일반 브라우저 요청: 자바스크립트로 alert() 출력
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인이 필요합니다.'); location.href='/user/login?redirect=" + request.getRequestURI() + "';</script>");
+            out.println("<script>alert('로그인이 필요합니다.'); location.href='/member/login?redirect=" + request.getRequestURI() + "';</script>");
             out.flush();
         }
     }
