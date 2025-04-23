@@ -49,13 +49,13 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
         //카테고리 선택
         BooleanExpression expression = null;
         if(cate.equals("고객서비스")){
-            expression = qNotice.cate.eq(cate);
+            expression = qNotice.cate.like(cate + "%");
         }else if(cate.equals("이벤트당첨")){
-            expression = qNotice.cate.eq(cate);
+            expression = qNotice.cate.like(cate + "%");
         }else if(cate.equals("안전거래")){
-            expression = qNotice.cate.eq(cate);
+            expression = qNotice.cate.like(cate + "%");
         }else if(cate.equals("위해상품")){
-            expression = qNotice.cate.eq(cate);
+            expression = qNotice.cate.like(cate + "%");
         }else if(cate.equals("")){
             expression = qNotice.cate.eq(cate);
         }
