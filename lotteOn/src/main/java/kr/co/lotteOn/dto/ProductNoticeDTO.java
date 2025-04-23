@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductNoticeDTO {
 
-    private Long id;
     private String prodStatus;
     private String vatYn;
     private String receiptYn;

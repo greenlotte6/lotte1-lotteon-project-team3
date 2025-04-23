@@ -20,24 +20,28 @@ public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String productCode;
-
     private String name;
     private String description;
     private String maker;
-    private Integer price;
-    private Integer discount;
-    private Integer point;
-    private Integer stock;
-    private Integer deliveryFee;
+    private int price;
+    private int discount;
+    private int point;
+    private int stock;
+    private int deliveryFee;
     private String companyName;
+
     private String imageList;
     private String imageMain;
     private String imageDetail;
-    private Integer views;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private int views;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId")
+    private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductOption> options = new ArrayList<>();
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
