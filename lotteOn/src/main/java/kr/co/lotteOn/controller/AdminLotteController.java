@@ -17,11 +17,6 @@ public class AdminLotteController {
 
     /*------------ 관리자 - 상품관리 ------------*/
 
-    //상품관리 - 목록
-    @GetMapping("/product/list")
-    public String productList(){
-        return "/admin/product/list";
-    }
 
 
     /*------------ 관리자 - 상점관리 ------------*/
@@ -64,6 +59,12 @@ public class AdminLotteController {
     @GetMapping("/config/version")
     public String version(){
         return "/admin/config/version";
+    }
+
+    //환경설정 - 카테고리 관리
+    @GetMapping("/config/category")
+    public String category() {
+        return "/admin/config/category";
     }
 
 

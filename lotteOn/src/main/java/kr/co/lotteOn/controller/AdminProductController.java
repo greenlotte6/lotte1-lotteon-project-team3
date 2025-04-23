@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -18,23 +21,30 @@ public class AdminProductController {
 
     /*------------ 관리자 - 상품관리 ------------*/
 
-    //환경설정 - 카테고리 관리
-    @GetMapping("/config/category")
-    public String category() {
-        return "/admin/config/category";
+    //상품관리 - 목록
+    @GetMapping("/list")
+    public String productList(Model model) {
+        List<ProductDTO> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "/admin/product/list";
     }
 
-    // ✅ 상품 등록 (모달에서 JSON으로 전송됨)
     @PostMapping("/register")
     public String register(@ModelAttribute ProductDTO dto) {
 
-        System.out.println(dto.getCategoryId());
-        System.out.println(dto.getCategoryId());
-        System.out.println(dto.getCategoryId());
-        System.out.println(dto.getCategoryId());
-        System.out.println(dto.getCategoryId());
-
         productService.saveProduct(dto);
+        return "redirect:/admin/product/list";
+    }
+
+    //수정
+    @GetMapping("/edit/{id}")
+    @ResponseBody
+    public ProductDTO getProductForEdit(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
+    @PostMapping("/update")
+    public String updateProduct(@ModelAttribute ProductDTO productDTO) {
+        productService.modifyProduct(productDTO);
         return "redirect:/admin/product/list";
     }
 
