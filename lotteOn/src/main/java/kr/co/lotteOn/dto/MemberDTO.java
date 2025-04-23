@@ -19,9 +19,11 @@ public class MemberDTO {
     private String hp;
     private String rating;
     private String role;
+    private String status;
     private String zip;
     private String addr1;
     private String addr2;
+    private String another;
     private String regDate;
     private String leaveDate;
 
