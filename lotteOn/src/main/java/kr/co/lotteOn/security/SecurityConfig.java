@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.io.IOException;
+
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -19,6 +21,7 @@ public class SecurityConfig {
 
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -30,19 +33,21 @@ public class SecurityConfig {
                 .failureUrl("/member/login?code=100")
                 .usernameParameter("id")
                 .passwordParameter("password")
-                .successHandler(customAuthenticationSuccessHandler) // ✅ 성공 핸들러 적용
+                .successHandler(customAuthenticationSuccessHandler)
         );
 
         // 로그아웃 설정
         http.logout(logout -> logout
                 .logoutUrl("/member/logout")
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/member/login")
+                //.logoutSuccessUrl("/member/login")
+                .logoutSuccessHandler(customLogoutSuccessHandler)
+                .invalidateHttpSession(true)
         );
 
         // 인가 설정
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/").permitAll()
+                .requestMatchers("/","/member/login","/member/logout","/admin/admin").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/Community/write**").authenticated()
                 .requestMatchers("/Community/modify**").authenticated()
