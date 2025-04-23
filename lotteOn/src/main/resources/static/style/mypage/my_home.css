@@ -391,24 +391,32 @@ table tr:nth-child(1) .baesong{
     width: 148.76px;
     height: 39.63px;
     background-color: #a6a6a6;
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .table_one thead tr th:nth-child(2){
     width: 411.36px;
     height: 39.63px;
     background-color: #a6a6a6;
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .table_one thead tr th:nth-child(3){
     width: 196.78px;
     height: 39.63px;
     background-color: #a6a6a6;
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .table_one thead tr th:nth-child(4){
     width: 127.67px;
     height: 39.63px;
     background-color: #a6a6a6;
+    color: #ffffff;
+    font-size: 14px;
 }
 .table_one tr{
     border-bottom: 1px solid #a6a6a6;

@@ -124,22 +124,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
     //모달 바깥 영역 클릭 시 모달 닫기
-    window.addEventListener('click', function(e){
-        if(e.target == modal){
-            modal.style.display = "none";
-        }else if(e.target == companyModal){
-            companyModal.style.display ="none";
-        }else if(e.target== inquiryModal){
-            inquiryModal.style.display= "none";
-        }else if(e.target== confirmModal){
-            confirmModal.style.display= "none";
-        }else if(e.target== reviewModal){
-            reviewModal.style.display= "none";
-        }else if(e.target== returnModal){
-            returnModal.style.display= "none";
-        }else if(e.target== exchangeModal){
-            exchangeModal.style.display="none";
-        }
-    });
+    // document.querySelectorAll('.modal').forEach(modal => {
+    //     modal.addEventListener('click', function(e) {
+    //         // 'modal' 클래스 요소 자체를 클릭했을 때만 닫기
+    //         if (e.target.classList.contains('modal')) {
+    //             modal.style.display = "none";
+    //         }
+    //     });
+    // });
+
+
 
 });
