@@ -34,7 +34,7 @@ public class AdminCSService {
     
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
-    //private final QnaRepository qnaRepository;
+    private final QnaRepository qnaRepository;
     //private final RecruitRepository recruitRepository;
     private final NoticeRepository noticeRepository;
     private final FaqRepository faqRepository;
@@ -179,11 +179,13 @@ public class AdminCSService {
         Page<Faq> pageFaq = faqRepository.searchAllForList(pageable);
         log.info("pageFaq: {}", pageFaq);
 
+        //Entity -> DTO
         List<FaqDTO> faqList = pageFaq
                 .getContent()
                 .stream()
                 .map(faq -> {
                     FaqDTO faqDTO = modelMapper.map(faq, FaqDTO.class);
+                    faqDTO.setWriter(faq.getWriter().getId());
 
                     return faqDTO;
                 }).toList();
@@ -274,7 +276,7 @@ public class AdminCSService {
     /*****************************************자주묻는질문 끝***********************************/
 
     /*문의하기 - 글 리스트 출력하기*/
-    /*public QnaPageResponseDTO qnaFindAll(QnaPageRequestDTO qnaPageRequestDTO) {
+    public QnaPageResponseDTO qnaFindAll(QnaPageRequestDTO qnaPageRequestDTO) {
         Pageable pageable = qnaPageRequestDTO.getPageable("qnaNo");
 
         Page<Qna> pageQna = qnaRepository.searchAllForList(pageable);
@@ -285,6 +287,7 @@ public class AdminCSService {
                 .stream()
                 .map(qna -> {
                     QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+                    qnaDTO.setWriter(qna.getWriter().getId());
 
                     return qnaDTO;
                 })
@@ -300,10 +303,9 @@ public class AdminCSService {
                 .build();
     }
 
-     */
 
     /*문의하기 - (검색)글 리스트 출력하기*/
-    /*public QnaPageResponseDTO qnaFindAllByCate2(QnaPageRequestDTO qnaPageRequestDTO) {
+    public QnaPageResponseDTO qnaFindAllByCate(QnaPageRequestDTO qnaPageRequestDTO) {
         Pageable pageable = qnaPageRequestDTO.getPageable("qnaNo");
         Page<Qna> pageQna = qnaRepository.searchAllForCate(qnaPageRequestDTO, pageable);
         log.info("pageQna: {}", pageQna);
@@ -317,6 +319,7 @@ public class AdminCSService {
 
                     return qnaDTO;
                 }).toList();
+
         int total = (int) pageQna.getTotalElements();
 
         return QnaPageResponseDTO
@@ -327,19 +330,28 @@ public class AdminCSService {
                 .build();
     }
 
-     */
-
-    /*문의하기 - 글 작성하기*/
-    public int qnaWrite(QnaDTO qnaDTO){
-
-        return 0;
+    /*문의하기 - 글 수정하기(글찾기)*/
+    public QnaDTO qnaFindById(int qnaNo){
+        Optional<Qna> optQna = qnaRepository.findById(qnaNo);
+        if(optQna.isPresent()){
+            Qna qna = optQna.get();
+            QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+            return qnaDTO;
+        }
+        return null;
     }
 
-    /*문의하기 - 글 수정하기(글찾기)*/
+    /*문의하기 - 글 답변하기*/
+    public void qnaModify(QnaDTO qnaDTO){
+        Qna qna = qnaRepository.findById(qnaDTO.getQnaNo()).get();
+        qna.setCate1(qnaDTO.getCate1());
+        qna.setCate2(qnaDTO.getCate2());
+        qna.setTitle(qnaDTO.getTitle());
+        qna.setContent(qnaDTO.getContent());
+        qna.setComment(qnaDTO.getComment());
 
-    /*문의하기 - 글 수정하기*/
-
-    /*문의하기 - 글 삭제하기*/
+        qnaRepository.save(qna);
+    }
 
     /* ****************************************문의하기 끝***********************************/
 
