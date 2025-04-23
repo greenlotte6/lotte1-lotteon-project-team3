@@ -11,13 +11,18 @@ document.addEventListener("DOMContentLoaded", function () {
             const memberData = row.dataset;
 
             // 모달 안 input에 값 채워넣기
-            document.querySelector("#bannerModal input[placeholder='아이디 입력']").value = memberData.id;
-            document.querySelector("#bannerModal input[placeholder='이름 입력']").value = memberData.name;
-            document.querySelector("#bannerModal input[placeholder='이메일 입력']").value = memberData.email;
-            document.querySelector("#bannerModal input[placeholder='휴대전화 번호 입력']").value = memberData.hp;
-            document.querySelector("#bannerModal input[placeholder='MVG']").value = memberData.rating;
-            //document.querySelector("#bannerModal .modal-content div:contains('가입일')").textContent = memberData.regdate;
-
+            document.querySelector("#bannerModal input[name='id']").value = memberData.id;
+            document.querySelector("#bannerModal input[name='name']").value = memberData.name;
+            document.querySelector("#bannerModal input[name='rating']").value = memberData.rating;
+            document.querySelector("#bannerModal input[name='email']").value = memberData.email;
+            document.querySelector("#bannerModal input[name='hp']").value = memberData.hp;
+            document.querySelector("#bannerModal .memberStatus").textContent = memberData.status;
+            document.querySelector("#bannerModal input[name='zip']").value = memberData.zip;
+            document.querySelector("#bannerModal input[name='addr1']").value = memberData.addr1;
+            document.querySelector("#bannerModal input[name='addr2']").value = memberData.addr2;
+            document.querySelector("#bannerModal input[name='another']").value = memberData.another;
+            document.querySelector("#bannerModal .regDate").textContent = memberData.regdate;
+            console.log(memberData.another);
             // 성별 체크 (예시)
             const genderInputs = document.querySelectorAll(".gender");
             genderInputs.forEach(input => {

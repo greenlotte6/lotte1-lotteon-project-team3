@@ -30,6 +30,7 @@ public class Member {
     private String zip;
     private String addr1;
     private String addr2;
+    private String another;
 
     @CreationTimestamp
     private LocalDateTime regDate;
