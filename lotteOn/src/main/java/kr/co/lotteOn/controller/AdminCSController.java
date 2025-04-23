@@ -7,6 +7,9 @@ import kr.co.lotteOn.dto.faq.FaqPageResponseDTO;
 import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.notice.NoticePageRequestDTO;
 import kr.co.lotteOn.dto.notice.NoticePageResponseDTO;
+import kr.co.lotteOn.dto.qna.QnaDTO;
+import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
+import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
 import kr.co.lotteOn.service.AdminCSService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,16 +93,6 @@ public class AdminCSController {
         return "redirect:/admin/cs/noticeList";
     }
 
-    /*
-    //고객센터 - 공지사항 [다중삭제]
-    @PostMapping("/cs/delete-multiple")
-    public String noticeDeleteMultiple(@ModelAttribute NoticeDTO noticeDTO) {
-        adminCSService.noticeDeleteMultiple(noticeDTO);
-        return "redirect:/admin/cs/noticeList";
-    }
-     */
-
-
     /* *********************************공지사항 끝*************************************/
 
 
@@ -172,17 +165,61 @@ public class AdminCSController {
 
     //고객센터 - 문의하기 [리스트]
     @GetMapping("/cs/qnaList")
-    public String qnaList(){
+    public String qnaList(Model model, QnaPageRequestDTO pageRequestDTO) {
+        QnaPageResponseDTO pageResponseDTO = adminCSService.qnaFindAll(pageRequestDTO);
+
+        List<QnaDTO> qnaList = pageResponseDTO.getDtoList();
+        for (QnaDTO qna : qnaList) {
+
+            // 자동으로 매핑된 1차 및 2차 유형 이름을 설정
+            qna.setCate1(qna.getCate1Name());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("qna", pageResponseDTO.getDtoList());
+
         return "/admin/cs/qnaList";
     }
 
     //고객센터 - 문의하기 [카테고리별 리스트]
+    @GetMapping("/cs/qnaSearch")
+    public String search(Model model, QnaPageRequestDTO pageRequestDTO) {
+        QnaPageResponseDTO pageResponseDTO = adminCSService.qnaFindAllByCate(pageRequestDTO);
+        List<QnaDTO> qnaList = pageResponseDTO.getDtoList();
+        for (QnaDTO qna : qnaList) {
+            qna.setCate1(qna.getCate1Name());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+
+        return "/admin/cs/searchQnaList";
+    }
 
     //고객센터 - 문의하기 [리스트,글작성]
 
     //고객센터 - 문의하기 [카테고리별 리스트, 글작성]
 
     //고객센터 - 문의하기 [수정]
+    @PostMapping("/cs/qnaModify")
+    public String qnaModify(@ModelAttribute QnaDTO qnaDTO){
+        String cate1Eng = qnaDTO.getCate1NameBack();
+
+        System.out.println("QnaDTO: " + qnaDTO);
+        System.out.println("QnaDTO: " + qnaDTO);
+        System.out.println("QnaDTO: " + qnaDTO);
+        System.out.println("QnaDTO: " + qnaDTO);
+        System.out.println("QnaDTO: " + qnaDTO);
+        System.out.println("QnaDTO: " + qnaDTO);
+
+
+        //영어로 다시변경
+        qnaDTO.setCate1(cate1Eng);
+        
+        adminCSService.qnaModify(qnaDTO);
+
+        return "redirect:/admin/cs/qnaList";
+    }
+
 
     //고객센터 - 문의하기 [삭제]
 

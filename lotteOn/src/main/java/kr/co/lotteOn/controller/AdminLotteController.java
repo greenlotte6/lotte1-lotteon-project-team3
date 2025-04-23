@@ -1,12 +1,22 @@
 package kr.co.lotteOn.controller;
 
+import kr.co.lotteOn.dto.TermsDTO;
+import kr.co.lotteOn.service.TermsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/admin")
 @Controller
 public class AdminLotteController {
+
+    private final TermsService termsService;
+
+    public AdminLotteController(TermsService termsService) {
+        this.termsService = termsService;
+    }
 
     //관리자 - 메인
     @GetMapping("/admin")
@@ -58,6 +68,12 @@ public class AdminLotteController {
     @GetMapping("/config/policy")
     public String policy(){
         return "/admin/config/policy";
+    }
+
+    @PostMapping("/config/policyModify")
+    public String policyModify(TermsDTO termsDTO){
+        return null;
+
     }
 
     //환경설정 - 버전관리

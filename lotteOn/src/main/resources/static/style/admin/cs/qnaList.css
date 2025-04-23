@@ -18,9 +18,18 @@ button {
     all: unset;
     cursor: pointer;
 }
+textarea {
+    width: 650px;
+    min-height: 300px;
+    border: none;
+    resize: none;
+}
 img {
     width: 25px;
     height: 25px;
+}
+table span {
+    font-size: 12px;
 }
 /* --------------------- main --------------------- */
 .adminMain {
@@ -80,7 +89,6 @@ table tr td {
     height: 30px;
 }
 .btnarea {
-    display: flex;
     justify-content: space-between;
     align-items: center;
 }
@@ -96,12 +104,11 @@ table tr td {
     background-color: #8a8a8a;
 }
 .btnarea .pageBtn {
-    display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    top: 9px;
-    right: 50%;
+    margin-top: 30px;
+    right: 4%;
     transform: translateX(50%);
 }
 .btnarea .pageBtn .number {
@@ -145,6 +152,43 @@ tr td select {
 }
 tr td select option {
     font-size: 12px;
+}
+
+.submitbtn {
+    white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
+    overflow: hidden;            /* 넘치는 텍스트는 숨김 */
+    text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
+    text-align: left;            /* 텍스트 왼쪽 정렬 */
+    width: 200px;
+}
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+}
+
+#modifyTitle {
+    height : 40px;
+    border: none;
+}
+
+#modifyComment {
+    border: none;
+    min-height: 200px;
+}
+#modifyComment table tr th {
+    background-color : #bfbfbf;
 }
 
 

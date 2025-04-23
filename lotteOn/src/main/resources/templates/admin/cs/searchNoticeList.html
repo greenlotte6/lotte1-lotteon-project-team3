@@ -15,6 +15,22 @@
     <script src="/script/csNotice.js"></script>
     <script src="/script/aside.js"></script>
     <style>
+        a.current {
+            border: 1px solid #dfdfdf;
+            width: 15px;
+            text-align: center;
+            margin: 10px;
+            padding: 10px 15px;
+            background-color: #dfdfdf;
+        }
+
+        a.num {
+            border: 1px solid #dfdfdf;
+            width: 15px;
+            text-align: center;
+            margin: 5px;
+            padding: 10px;
+        }
         .submitbtn {
             white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
             overflow: hidden;            /* 넘치는 텍스트는 숨김 */
@@ -94,7 +110,7 @@
                 <div class="btnarea">
                     <button class="delbutton" type="submit">선택삭제</button>
                         <div class="pageBtn">
-                            <th:block th:if="${age.end > 0}">
+                            <th:block th:if="${page.end > 0}">
                                 <th:block th:if="${page.prev}">
                                     <a th:href="@{/admin/cs/searchNoticeList(pg=${page.start-2})}" class="prev">
                                         <img src="/images/back-double.png">
