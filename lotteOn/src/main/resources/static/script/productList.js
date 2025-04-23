@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         children.forEach(child => {
             const option = document.createElement('option');
             option.value = child.categoryId;
+
             option.textContent = child.name;
             secondSelect.appendChild(option);
         });

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,12 @@ public class ProductDTO {
     private Integer stock;
     private Integer deliveryFee;
     private String companyName;
-    private String imageList;
-    private String imageMain;
-    private String imageDetail;
-    private Integer views;
-    private Long categoryId;
+    private MultipartFile imageListFile;
+    private MultipartFile imageMainFile;
+    private MultipartFile imageDetailFile;
 
-    private List<ProductOptionDTO> options = new ArrayList<>();
+    private List<ProductOptionDTO> options;
     private ProductNoticeDTO notice;
+
+    private Long categoryId;
 }

@@ -14,7 +14,7 @@
     <!--JavaScript-->
     <script src="/script/productList.js"></script>
     <script src="/script/aside.js"></script>
-    <script src="/script/productregister.js"></script>
+    <!--<script src="/script/productregister.js"></script>-->
 </head>
 <body>
 <div id="container">
@@ -91,15 +91,15 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h3>상품 분류</h3>
-                <form>
+                <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
                     <div class="modalTable">
                         <table class="fst">
                             <tr>
                                 <th>1차 분류</th>
                                 <td>
                                     <div>
-                                        <select id="category1">
-                                            <option>1차 분류 선택</option>
+                                        <select id="category1" name="categoryId">
+                                            <option value="">1차 분류 선택</option>
                                         </select>
                                     </div>
                                 </td>
@@ -108,8 +108,8 @@
                                 <th>2차 분류</th>
                                 <td>
                                     <div>
-                                        <select id="category2">
-                                            <option>2차 분류 선택</option>
+                                        <select id="category2" name="categoryId">
+                                            <option value="">2차 분류 선택</option>
                                         </select>
                                     </div>
                                 </td>
@@ -121,7 +121,7 @@
                                 <th>상품명</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="상품명 입력">
+                                        <input type="text" name="name" placeholder="상품명 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -129,7 +129,7 @@
                                 <th>기본설명</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="기본설명 입력">
+                                        <input type="text" name="description" placeholder="기본설명 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -137,7 +137,7 @@
                                 <th>제조사</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="제조사 입력">
+                                        <input type="text" name="maker" placeholder="제조사 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -145,7 +145,7 @@
                                 <th>상품 금액</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="금액 입력"><p>원</p>
+                                        <input type="text" name="price" placeholder="금액 입력"><p>원</p>
                                     </div>
                                 </td>
                             </tr>
@@ -153,7 +153,7 @@
                                 <th>할인율</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="할인율 입력"><p>%</p>
+                                        <input type="text" name="discount" placeholder="할인율 입력"><p>%</p>
                                     </div>
                                 </td>
                             </tr>
@@ -161,7 +161,7 @@
                                 <th>포인트</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="포인트 입력"><p>P</p>
+                                        <input type="text" name="point" placeholder="포인트 입력"><p>P</p>
                                     </div>
                                 </td>
                             </tr>
@@ -169,7 +169,7 @@
                                 <th>재고수량</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="재고량 입력"><p>개</p>
+                                        <input type="text" name="stock" placeholder="재고량 입력"><p>개</p>
                                     </div>
                                 </td>
                             </tr>
@@ -177,7 +177,7 @@
                                 <th>배송비</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="배송비 입력"><p>원</p>
+                                        <input type="text" name="deliveryFee" placeholder="배송비 입력"><p>원</p>
                                     </div>
                                 </td>
                             </tr>
@@ -185,13 +185,13 @@
                                 <th>상품 이미지</th>
                                 <td>
                                     <div>
-                                        <input type="file" placeholder="선택된 파일 없음"><p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
+                                        <input type="file" name="imageListFile" placeholder="선택된 파일 없음"><p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
                                     </div>
                                     <div>
-                                        <input type="file" placeholder="선택된 파일 없음"><p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
+                                        <input type="file" name="imageMainFile" placeholder="선택된 파일 없음"><p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
                                     </div>
                                     <div>
-                                        <input type="file" placeholder="선택된 파일 없음"><p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
+                                        <input type="file" name="imageDetailFile" placeholder="선택된 파일 없음"><p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
                                     </div>
                                 </td>
                             </tr>
@@ -203,13 +203,13 @@
                                 <th>옵션1</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="옵션1 입력">
+                                        <input type="text" name="options[0].optionName" placeholder="옵션1 입력">
                                     </div>
                                 </td>
                                 <th>옵션1 항목</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="옵션1 항목 입력">
+                                        <input type="text" name="options[0].optionValue" placeholder="옵션1 항목 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -217,13 +217,13 @@
                                 <th>옵션2</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="옵션2 입력">
+                                        <input type="text" name="options[1].optionName" placeholder="옵션2 입력">
                                     </div>
                                 </td>
                                 <th>옵션2 항목</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="옵션2 항목 입력">
+                                        <input type="text" name="options[1].optionValue" placeholder="옵션2 항목 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -231,19 +231,19 @@
                                 <th>옵션3</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="옵션3 입력">
+                                        <input type="text" name="options[2].optionName" placeholder="옵션3 입력">
                                     </div>
                                 </td>
                                 <th>옵션3 항목</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="옵션3 항목 입력">
+                                        <input type="text" name="options[2].optionValue" placeholder="옵션3 항목 입력">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="modalbtn">
-                            <button>옵션 추가</button>
+                            <button type="button">옵션 추가</button>
                         </div>
                         <h3>상품정보 제공고시</h3>
                         <table class="fth">
@@ -251,7 +251,7 @@
                                 <th>상품상태</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="상품상태 입력">
+                                        <input type="text" name="notice.prodStatus" placeholder="상품상태 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -259,7 +259,7 @@
                                 <th>부가세 면세여부</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="부가세 면세여부 입력">
+                                        <input type="text" name="notice.vatYn" placeholder="부가세 면세여부 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -267,7 +267,7 @@
                                 <th>영수증 발행</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="영수증 발행 입력">
+                                        <input type="text" name="notice.receiptYn" placeholder="영수증 발행 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -275,7 +275,7 @@
                                 <th>사업자 구분</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="사업자 구분 입력">
+                                        <input type="text" name="notice.businessType" placeholder="사업자 구분 입력">
                                     </div>
                                 </td>
                             </tr>
@@ -283,14 +283,14 @@
                                 <th>원산지</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="원산지 입력">
+                                        <input type="text" name="notice.origin" placeholder="원산지 입력">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="modalbtn">
-                        <button>등록하기</button>
+                        <button type="submit">등록하기</button>
                     </div>
                 </form>
             </div>
