@@ -209,6 +209,7 @@ body {
 .datetable button {
     background-color: #8a8a8a;
     color: white;
+    border: none;
     position: relative;
     top: 3px;
 }
@@ -414,6 +415,7 @@ table .table-td1{
     border-collapse: collapse;
     width: 890px;
     height: 100px;
+    top: 5px;
 
 }
 /*thead*/
@@ -504,14 +506,13 @@ table .table-td1{
 }
 .table_one tbody tr:nth-child(1) td:nth-child(4){
 
-    padding-left: 80px;
+    padding-left: 40px;
 }
 
 .table_one tbody td .gyeoljae{
     width: auto;
     height: auto;
     position: relative;
-    bottom: 10px;
     left: 1px;
     letter-spacing: 1.5px;
     /*line-height: -1px;*/
@@ -525,7 +526,7 @@ table .table-td1{
     border-collapse: collapse;
     width: 890px;
     height: auto;
-
+    top: 12px;
 }
 
 .table_two th:nth-child(1){
@@ -1692,4 +1693,236 @@ margin-left: 110px;
     line-height: 1.5;
     font-size: 14px;
     color: #808080;
+}
+
+
+/*-------------------------상품평모달--------------------------------*/
+
+.reviewmodal{
+    position: fixed;
+    border: 2px solid #f2f2f2;
+    width: 736px;
+    height: 547px;
+    margin-top: 8%;
+    margin-left: 30%;
+    display: none;
+    z-index: 1000;
+    background-color: #ffffff;
+}
+
+.review-header{
+    background-color: #558ed5;
+    color: #ffffff;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.review-header h2{
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    transform: translate(-13px, -3px);
+}
+
+
+
+.review-close{
+    right: 150px;
+    bottom: 7px;
+}
+
+
+.table_five{
+    width: 665px;
+    height: auto;
+    border-collapse: collapse;
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+
+.table_five tr{
+    border-bottom: 0.4px solid #a6a6a6;
+    border-top: 0.4px solid #a6a6a6;
+}
+
+.table_five .five-th1{
+    width: 107.09px;
+    height: 46.77px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #000000;
+}
+.table_five tr:nth-child(1) td{
+    padding: 15px;
+}
+.star-rating{
+    direction: rtl;
+    display: inline-flex;
+    margin-left: 10px;
+    align-items: center;
+    height: 46.77px;
+}
+
+.star-rating input{
+    display: none;
+}
+
+.star-rating label{
+    width: 28px;
+    height: 28px;
+    font-size: 25px;
+    letter-spacing: 3px;
+    color: #d9d9d9;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating label::before{
+    content: "★";
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: gold;
+}
+
+.table_five .five-th2{
+    width: 107.09px;
+    height: 46.77px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #000000;
+}
+
+.table_five .five-th3{
+    width: 107.09px;
+    height: 161px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #000000;
+
+}
+
+.table_five .five-th4{
+    width: 107.09px;
+    height: 117px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #000000;
+}
+
+
+
+
+.table_five tr:nth-child(3) td input{
+    width: 543px;
+    height: 137px;
+    margin-left: 10px;
+    outline: none;
+    border: 2px solid #d9d9d9;
+}
+
+
+.table_five tr:nth-child(3) td input::placeholder{
+    width: 543px;
+    height: 130px;
+    position: relative;
+    bottom: 55px;
+    left: 5px;
+}
+
+
+.picture-1{
+    width: 236.75px;
+    height: 32.79px;
+    border: 1px solid #bfbfbf;
+    left: 10px ;
+    position: relative;
+    margin-bottom: 3px;
+    display: flex;             /* 추가 */
+    align-items: center;       /* 세로 정렬 */
+    gap: 8px;                  /* 버튼과 글자 사이 여백 */
+    padding-left: 5px;         /* 왼쪽 여백 */
+}
+.picture-btn{
+    width: 79.31px;
+    height: 23.62px;
+    background-color: #bfbfbf;
+    display: flex;
+    top: 5px;
+    left: 5px;
+    border: none;
+    justify-content: center;
+    text-align: center;
+    align-items: flex-start;
+    padding-top: 3px;
+}
+
+.picture-1 p{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 142px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 100%;
+    margin-left: -165px;
+
+    left: 175px;
+    bottom: 70px;
+    gap: 10px;
+    letter-spacing: 0.5px;
+}
+
+.review_btn{
+    display: flex;
+    width: 266px;
+    height: 40.31px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    gap: 3px;
+    padding: 0;
+    margin-left: 230px;
+    margin-top: 50px;
+
+}
+
+.review_btn1{
+    width: 132.44px;
+    height: 40.31px;
+    background-color: #558ed5;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+}
+
+
+.review_btn2{
+    width: 132.44px;
+    height: 40.31px;
+    background-color: #bfbfbf;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
 }

@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="/style/admin/footer.css">
     <link rel="stylesheet" href="/style/admin/adminaside.css">
     <!--JavaScript-->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/script/postcode.js"></script>
     <script src="/script/banner.js"></script>
     <script src="/script/aside.js"></script>
+    <script src="/script/validation.js"></script>
 </head>
 <body>
 <div id="container">
@@ -89,8 +92,8 @@
                                 <th>아이디</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="아이디 입력">
-                                        <p>영문, 숫자 4 ~ 12 자 설정</p>
+                                        <input type="text" id="sellerId" placeholder="아이디 입력">
+                                        <p class="idMsg">영문, 숫자 4 ~ 12 자 설정</p>
                                     </div>
                                 </td>
                             </tr>
@@ -98,15 +101,15 @@
                                 <th>비밀번호</th>
                                 <td>
                                     <div>
-                                        <input type="password" placeholder="비밀번호 입력">
-                                        <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
+                                        <input type="password" id="sellerPw" placeholder="비밀번호 입력">
+                                        <p class="pwMsg">영문, 숫자, 특수문자 8 ~ 12자 설정</p>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>비밀번호 확인</th>
                                 <td>
-                                    <div><input type="password" placeholder="비밀번호 재입력"></div>
+                                    <div><input type="password" id="sellerPw2" placeholder="비밀번호 재입력"></div>
                                 </td>
                             </tr>
                         </table>
@@ -114,21 +117,21 @@
                             <tr>
                                 <th>회사명</th>
                                 <td>
-                                    <div><input type="text" placeholder="회사명 입력 예) (주) 상호명"></div>
+                                    <div><input type="text" id="companyName" placeholder="회사명 입력 예) (주) 상호명"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>대표</th>
                                 <td>
-                                    <div><input type="text" placeholder="이름 입력"></div>
+                                    <div><input type="text" id="delegate" placeholder="이름 입력"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>사업자 등록번호</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="사업자 등록번호 입력">
-                                        <p> - 포함 12자리 입력</p>
+                                        <input type="text" id="bisNum" placeholder="사업자 등록번호 입력">
+                                        <p class="bisNumMsg"> - 포함 12자리 입력</p>
                                     </div>
                                 </td>
                             </tr>
@@ -136,7 +139,7 @@
                                 <th>통신 판매업 번호</th>
                                 <td>
                                     <div>
-                                        <input type="text" placeholder="통신 판매업 번호 입력">
+                                        <input type="text" id="commNum" placeholder="통신 판매업 번호 입력">
                                         <p> - 포함 12자리 입력</p>
                                     </div>
                                 </td>
@@ -144,7 +147,7 @@
                             <tr>
                                 <th>전화번호</th>
                                 <td>
-                                    <div><input type="text" placeholder="전화번호 입력"></div>
+                                    <div><input type="text" id="hp" placeholder="전화번호 입력"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -156,9 +159,9 @@
                             <tr>
                                 <th>주소</th>
                                 <td class="address">
-                                    <input type="text" placeholder="우편번호 검색 클릭"><br>
-                                    <input type="text" placeholder="기본주소 검색"><br>
-                                    <input type="text" placeholder="상세주소 입력">
+                                    <input type="text" id="postcode"  placeholder="우편번호 검색 클릭"  onclick="execDaumpostcode()"><br>
+                                    <input type="text" id="address" placeholder="기본주소 검색"><br>
+                                    <input type="text" id="address2" placeholder="상세주소 입력">
                                 </td>
                             </tr>
                         </table>

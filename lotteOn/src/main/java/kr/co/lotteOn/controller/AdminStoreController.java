@@ -16,6 +16,9 @@ public class AdminStoreController {
         return "/admin/shop/list";
     }
 
+    //상점 등록 처리
+
+
     //상점관리 - 매출관리
     @GetMapping("/shop/sales")
     public String shopSales(){
