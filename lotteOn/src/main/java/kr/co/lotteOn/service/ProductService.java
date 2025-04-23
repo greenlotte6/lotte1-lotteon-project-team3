@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -31,6 +32,15 @@ public class ProductService {
     private final ProductOptionRepository productOptionRepository;
     private final ProductNoticeRepository productNoticeRepository;
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
 
     public Product saveProduct(ProductDTO dto) {
         Product product = new Product();
@@ -60,7 +70,11 @@ public class ProductService {
 
         // 상품코드 생성
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        saved.setProductCode("P" + today + String.format("%04d", saved.getId()));
+        String code = String.format("P%s%04d", today, saved.getId());
+        saved.setProductCode(code);
+
+        //코드 반영을 위한 재저장
+        productRepository.save(saved);
 
         // 옵션 저장
         if (dto.getOptions() != null) {
@@ -87,6 +101,50 @@ public class ProductService {
         }
 
         return saved;
+    }
+
+    @Transactional
+    public void modifyProduct(ProductDTO productDTO) {
+        Product product = productRepository.findById(productDTO.getId()).orElseThrow();
+
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setCompanyName(productDTO.getCompanyName());
+        product.setPrice(productDTO.getPrice());
+        product.setDiscount(productDTO.getDiscount());
+        product.setPoint(productDTO.getPoint());
+        product.setStock(productDTO.getStock());
+        product.setDeliveryFee(productDTO.getDeliveryFee());
+        product.setViews(0);
+        // 기존 옵션, 공지 제거 후 다시 세팅
+        product.getOptions().clear();
+        productDTO.getOptions().forEach(optDto -> {
+            ProductOption option = ProductOption.builder()
+                    .optionName(optDto.getOptionName())
+                    .optionValue(optDto.getOptionValue())
+                    .product(product)
+                    .build();
+            product.getOptions().add(option);
+        });
+
+        if (productDTO.getNotice() != null) {
+            ProductNotice notice = ProductNotice.builder()
+                    .prodStatus(productDTO.getNotice().getProdStatus())
+                    .vatYn(productDTO.getNotice().getVatYn())
+                    .receiptYn(productDTO.getNotice().getReceiptYn())
+                    .businessType(productDTO.getNotice().getBusinessType())
+                    .origin(productDTO.getNotice().getOrigin())
+                    .product(product)
+                    .build();
+            product.setNotice(notice);
+        }
+        productRepository.save(product);
+    }
+    @Transactional(readOnly = true)
+    public ProductDTO getProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
+        return ProductDTO.fromEntity(product);
     }
 }
 

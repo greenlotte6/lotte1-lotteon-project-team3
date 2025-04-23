@@ -167,7 +167,7 @@ tr td select option {
     padding: 20px;
     border-radius: 10px;
     width: 800px;
-    height: 1750px;
+    height: auto;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
@@ -241,6 +241,119 @@ tr td select option {
     width: 240px;
 }
 .address {
+    text-align: left;
+}
+.address input {
+    margin-bottom: 5px;
+    width: 410px;
+    height: 20px;
+}
+.address input:nth-of-type(3) {
+    margin-bottom: 0;
+}
+.address input:nth-of-type(1) {
+    width: 210px;
+    height: 20px;
+}
+
+
+
+
+/* 모달 전체 화면 덮기 */
+.submodal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 창 내부 */
+.submodal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 닫기 버튼 */
+.submodal .close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.submodal .modalbtn {
+    display: flex;
+    justify-content: center;
+}
+.submodal button {
+    width: 100px;
+    height: 50px;
+    background-color: #3f97f6;
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.submodal table {
+    margin-bottom: 20px;
+}
+.submodal table th {
+    width: 90px;
+    height: 50px;
+    text-align: center;
+}
+.submodal table td div {
+    text-align: left;
+    display: flex;
+}
+.submodal .fst {
+    margin-bottom: 20px;
+}
+.submodal table td input {
+    padding: 10px;
+}
+.submodal table td p {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+}
+.submodal table td .status {
+    font-size: 16px;
+}
+.submodal table input {
+    width: 400px;
+    border-radius: 3px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+}
+.submodal table input[type="file"] {
+    width: 300px;
+    border: 1px solid #8a8a8a;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+.submodal table tr td div select {
+    font-size: 16px;
+    width: 424px;
+    height: 43px;
+}
+.submodal table tr td div option {
+    font-size: 16px;
+}
+.submodal .thd tr td div input {
+    width: 240px;
+}
+.submodal {
     text-align: left;
 }
 .address input {
