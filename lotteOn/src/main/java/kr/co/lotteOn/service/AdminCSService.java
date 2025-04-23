@@ -7,10 +7,13 @@ import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.notice.NoticePageRequestDTO;
 import kr.co.lotteOn.dto.notice.NoticePageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
+import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
+import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
 import kr.co.lotteOn.dto.recruit.RecruitDTO;
 import kr.co.lotteOn.entity.Faq;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Notice;
+import kr.co.lotteOn.entity.Qna;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -166,18 +170,6 @@ public class AdminCSService {
         noticeRepository.delete(notice);
     }
 
-    /*
-    @Transactional
-    public void noticeDeleteMultiple(NoticeDTO noticeDTO) {
-        List<Integer> noticeNoList = noticeDTO.getNoticeNoList();
-        if(noticeNoList != null && !noticeNoList.isEmpty()){
-            List<Notice> notices = noticeRepository.findAllById(noticeNoList);
-            noticeRepository.deleteAll(notices);
-        }
-
-    }
-     */
-
     /*****************************************공지사항 끝***********************************/
 
     /*자주묻는질문 - 글 리스트 출력하기*/
@@ -206,10 +198,42 @@ public class AdminCSService {
                 .build();
     }
 
-
     /*자주묻는질문 - (검색)글 리스트 출력하기*/
+    public FaqPageResponseDTO faqFindAllByCate(FaqPageRequestDTO faqPageRequestDTO) {
+        Pageable pageable = faqPageRequestDTO.getPageable("faqNo");
+        Page<Faq> pageFaq = faqRepository.searchAllForCate(faqPageRequestDTO, pageable);
+        log.info("pageFaq: {}", pageFaq);
 
-    /*자주묻는질문 - 글 수정하기(글찾기*/
+        List<FaqDTO> faqList = pageFaq
+                .getContent()
+                .stream()
+                .map(faq -> {
+                    FaqDTO faqDTO = modelMapper.map(faq, FaqDTO.class);
+                    faqDTO.setWriter(faq.getWriter().getId());
+
+                    return faqDTO;
+                })
+                .toList();
+        int total = (int) pageFaq.getTotalElements();
+
+        return FaqPageResponseDTO
+                .builder()
+                .pageRequestDTO(faqPageRequestDTO)
+                .dtoList(faqList)
+                .total(total)
+                .build();
+    }
+
+    /*자주묻는질문 - 글 수정하기(글찾기)*/
+    public FaqDTO faqFindById(int faqNo){
+        Optional<Faq> optFaq = faqRepository.findById(faqNo);
+        if(optFaq.isPresent()){
+            Faq faq = optFaq.get();
+            FaqDTO faqDTO = modelMapper.map(faq, FaqDTO.class);
+            return faqDTO;
+        }
+        return null;
+    }
 
     /*자주묻는질문 - 글 작성하기*/
     public int faqWrite(FaqDTO faqDTO){
@@ -229,10 +253,81 @@ public class AdminCSService {
     }
 
     /*자주묻는질문 - 글 수정하기*/
+    public void faqModify(FaqDTO faqDTO) {
+        Faq faq = faqRepository.findById(faqDTO.getFaqNo()).get();
+        faq.setCate1(faqDTO.getCate1());
+        faq.setCate2(faqDTO.getCate2());
+        faq.setTitle(faqDTO.getTitle());
+        faq.setContent(faqDTO.getContent());
+
+        faqRepository.save(faq);
+    }
 
     /*자주묻는질문 - 글 삭제하기*/
 
+    @Transactional
+    public void faqDelete(FaqDTO faqDTO) {
+        Faq faq = faqRepository.findById(faqDTO.getFaqNo()).get();
+        faqRepository.delete(faq);
+    }
+
     /*****************************************자주묻는질문 끝***********************************/
+
+    /*문의하기 - 글 리스트 출력하기*/
+    /*public QnaPageResponseDTO qnaFindAll(QnaPageRequestDTO qnaPageRequestDTO) {
+        Pageable pageable = qnaPageRequestDTO.getPageable("qnaNo");
+
+        Page<Qna> pageQna = qnaRepository.searchAllForList(pageable);
+        log.info("pageQna: {}", pageQna);
+
+        List<QnaDTO> qnaList = pageQna
+                .getContent()
+                .stream()
+                .map(qna -> {
+                    QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+
+                    return qnaDTO;
+                })
+                .toList();
+
+        int total = (int) pageQna.getTotalElements();
+
+        return QnaPageResponseDTO
+                .builder()
+                .pageRequestDTO(qnaPageRequestDTO)
+                .dtoList(qnaList)
+                .total(total)
+                .build();
+    }
+
+     */
+
+    /*문의하기 - (검색)글 리스트 출력하기*/
+    /*public QnaPageResponseDTO qnaFindAllByCate2(QnaPageRequestDTO qnaPageRequestDTO) {
+        Pageable pageable = qnaPageRequestDTO.getPageable("qnaNo");
+        Page<Qna> pageQna = qnaRepository.searchAllForCate(qnaPageRequestDTO, pageable);
+        log.info("pageQna: {}", pageQna);
+
+        List<QnaDTO> qnaList = pageQna
+                .getContent()
+                .stream()
+                .map(qna -> {
+                    QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+                    qnaDTO.setWriter(qna.getWriter().getId());
+
+                    return qnaDTO;
+                }).toList();
+        int total = (int) pageQna.getTotalElements();
+
+        return QnaPageResponseDTO
+                .builder()
+                .pageRequestDTO(qnaPageRequestDTO)
+                .dtoList(qnaList)
+                .total(total)
+                .build();
+    }
+
+     */
 
     /*문의하기 - 글 작성하기*/
     public int qnaWrite(QnaDTO qnaDTO){
@@ -240,13 +335,30 @@ public class AdminCSService {
         return 0;
     }
 
-    /*****************************************문의하기 끝***********************************/
+    /*문의하기 - 글 수정하기(글찾기)*/
+
+    /*문의하기 - 글 수정하기*/
+
+    /*문의하기 - 글 삭제하기*/
+
+    /* ****************************************문의하기 끝***********************************/
+
+    /*채용 - 글 리스트 출력하기*/
+
+    /*채용 - (검색)글 리스트 출력하기*/
 
     /*채용 - 글 작성하기*/
     public int recruitWrite(RecruitDTO recruitDTO){
 
         return 0;
     }
+
+    /*채용 - 글 수정하기(글찾기)*/
+
+    /*채용 - 글 수정하기*/
+
+    /*채용 - 글 삭제하기*/
+
 
     /*****************************************채용 끝***********************************/
 

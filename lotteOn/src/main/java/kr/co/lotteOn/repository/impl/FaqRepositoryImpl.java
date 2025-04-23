@@ -48,13 +48,13 @@ public class FaqRepositoryImpl implements FaqRepositoryCustom {
 
         //카테고리 선택
         BooleanExpression expression = null;
-        if(cate1.equals("member") && cate2.equals("가입")) {
+        if(cate1.equals("member") || cate2.equals("가입")) {
             expression = qFaq.cate1.eq(cate1).and(qFaq.cate2.eq(cate2));
-        }else if(cate1.equals("member") && cate2.equals("탈퇴")) {
+        }else if(cate1.equals("member") || cate2.equals("탈퇴")) {
             expression = qFaq.cate1.eq(cate1).and(qFaq.cate2.eq(cate2));
-        }else if(cate1.equals("member") && cate2.equals("회원정보")) {
+        }else if(cate1.equals("member") || cate2.equals("회원정보")) {
             expression = qFaq.cate1.eq(cate1).and(qFaq.cate2.eq(cate2));
-        }else if(cate1.equals("member") && cate2.equals("로그인")) {
+        }else if(cate1.equals("member") || cate2.equals("로그인")) {
             expression = qFaq.cate1.eq(cate1).and(qFaq.cate2.eq(cate2));
         }else if(cate1.equals("event") && cate2.equals("쿠폰/할인혜택")) {
             expression = qFaq.cate1.eq(cate1).and(qFaq.cate2.eq(cate2));

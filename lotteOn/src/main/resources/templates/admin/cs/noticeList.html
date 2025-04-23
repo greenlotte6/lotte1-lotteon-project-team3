@@ -25,7 +25,20 @@
         .modifybtn, .deletebtn {
             vertical-align: middle;
         }
+        a.current {
+            border: 1px solid #dfdfdf;
+            width: 15px;
+            text-align: center;
+            margin: 5px;
+            padding: 10px;
+            background-color: #dfdfdf;
+        }
+
         a.num {
+            border: 1px solid #dfdfdf;
+            width: 15px;
+            text-align: center;
+            margin: 5px;
             padding: 10px;
         }
     </style>
@@ -68,8 +81,7 @@
                         <td>
                             <button type="submit"
                                     class="submitbtn"
-                                    th:attr =
-                                            "data-type=${notice.cate},
+                                    th:attr = "data-type=${notice.cate},
                                             data-title=${notice.title},
                                             data-content=${notice.content},
                                             data-notice-no=${notice.noticeNo}">[[${notice.content}]]</button>
@@ -86,7 +98,7 @@
                             </button>
                         </td>
                         <td>
-                            <form th:action="@{/admin/cs/delete}" method="post">
+                            <form th:action="@{/admin/cs/noticeDelete}" method="post">
                                 <button type="submit" class="deletebtn" style="font-size: 12px">삭제</button>
                                 <input type="hidden" name="noticeNo" th:value="${notice.noticeNo}">
                             </form>
@@ -95,30 +107,32 @@
                 </table>
                 <div class="btnarea">
                     <div class="pageBtn">
-                        <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.start-2})}" class="prev">
-                                <img src="/images/back-double.png">
-                            </a>
-                        </th:block>
-                        <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.start-1})}" class="prev">
-                                <img src="/images/back-single.png" class="single">
-                            </a>
-                        </th:block>
+                        <th:block th:if="${page.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/cs/noticeList(pg=${page.start-2})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/cs/noticeList(pg=${page.start-1})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
 
-                        <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
-                        </th:block>
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/admin/cs/noticeList(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
 
-                        <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.end+1})}" class="next">
-                                <img src="/images/right-single.png" class="single">
-                            </a>
-                        </th:block>
-                        <th:block th:if="${page.prev}">
-                            <a th:href="@{/admin/cs/noticeList(pg=${page.end+2})}" class="next">
-                                <img src="/images/right-double.png">
-                            </a>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/cs/noticeList(pg=${page.end+1})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/cs/noticeList(pg=${page.end+2})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
                         </th:block>
                     </div>
                     <button class="regbutton" type="submit">작성하기</button>

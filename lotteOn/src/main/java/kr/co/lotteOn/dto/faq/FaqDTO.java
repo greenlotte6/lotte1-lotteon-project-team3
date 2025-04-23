@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FaqDTO {
 
-    private int qnaNo;    //글번호
+    private int faqNo;    //글번호
 
     private String cate1;       //카테고리 : 회원, 이벤트, 주문, 배송, 취소, 여행, 안전거래
     private String cate2;       //2차 카테고리
@@ -33,4 +33,20 @@ public class FaqDTO {
         }
         return null;
     }
+
+    // 자동 매핑을 위한 메서드 추가
+    public String getCate1Name() {
+        switch (this.cate1) {
+            case "member": return "회원";
+            case "event": return "이벤트/쿠폰";
+            case "order": return "주문/결제";
+            case "delivery": return "배송";
+            case "cancel": return "취소/반품/교환";
+            case "travel": return "여행/숙박/항공";
+            case "safe": return "안전거래";
+            default: return "알 수 없음";
+        }
+    }
+
+
 }

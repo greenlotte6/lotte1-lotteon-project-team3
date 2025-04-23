@@ -1,47 +1,3 @@
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    const bannerModal = document.getElementById('bannerModal');
-    const subModal = document.getElementById('subModal');
-    const regModal = document.getElementById('regModal');
-
-    // === 모달 열기 버튼들 ===
-    document.querySelector('.submitbtn')?.addEventListener('click', () => {
-        bannerModal.style.display = 'block';
-    });
-
-    document.querySelector('.regbutton')?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        subModal.style.display = 'block';
-    });
-
-    document.querySelector('.modifybtn')?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        bannerModal.style.display = 'none';
-        regModal.style.display = 'block';
-    });
-
-    // === 모달 닫기 버튼들 ===
-    document.querySelector('#bannerModal .close')?.addEventListener('click', () => {
-        bannerModal.style.display = 'none';
-    });
-
-    document.querySelector('#subModal .close')?.addEventListener('click', () => {
-        subModal.style.display = 'none';
-    });
-
-    document.querySelector('#regModal .close')?.addEventListener('click', () => {
-        regModal.style.display = 'none';
-    });
-
-    // === 모달 외부 클릭 시 닫기 (한 이벤트로 처리)
-    window.addEventListener('click', (e) => {
-        if (e.target === bannerModal) bannerModal.style.display = 'none';
-        if (e.target === subModal) subModal.style.display = 'none';
-        if (e.target === regModal) regModal.style.display = 'none';
-    });
-});
-
- */
 document.addEventListener('DOMContentLoaded', () => {
     const bannerModal = document.getElementById('bannerModal');
     const subModal = document.getElementById('subModal');
@@ -50,11 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // === 공지 상세 보기 모달 열기 ===
     document.querySelectorAll('.submitbtn')?.forEach(btn => {
         btn.addEventListener('click', () => {
-            const type = btn.getAttribute('data-type');
+            const type1 = btn.getAttribute('data-type1');
+            const type2 = btn.getAttribute('data-type2');
             const title = btn.getAttribute('data-title');
             const content = btn.getAttribute('data-content');
 
-            document.getElementById('modalType').textContent = type;
+            document.getElementById('modalType1').textContent = type1;
+            document.getElementById('modalType2').textContent = type2;
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalContent').innerHTML = content.replace(/\n/g, '<br>');
 
@@ -91,23 +49,28 @@ document.addEventListener('DOMContentLoaded', () => {
             regModal.style.display = 'block'; // 수정 모달 띄우기
 
             // 버튼에서 데이터를 추출해서 수정 모달에 반영
-            const type = btn.getAttribute('data-type');
+            const cate1 = btn.getAttribute('data-type1');
+            const cate2 = btn.getAttribute('data-type2');
             const title = btn.getAttribute('data-title');
             const content = btn.getAttribute('data-content');
-            const noticeNo = btn.getAttribute('data-notice-no'); // noticeNo 추출
-            console.log("noticeNo:", noticeNo);  // 값이 정상적으로 출력되는지 확인
+            const faqNo = btn.getAttribute('data-faq-no'); // faqNo 추출
+            console.log("faqNo:", faqNo);  // 값이 정상적으로 출력되는지 확인
 
-            // 수정 폼에 데이터 채우기
-            document.getElementById('modifyCate').value = type;  // 카테고리 설정
+            // --- select box에서 해당 옵션을 선택 상태로 설정
+            setTimeout(() => {
+                document.querySelector('#modifyCate1').value = cate1;
+                document.querySelector('#modifyCate2').value = cate2;
+            }, 0);
+
             document.getElementById('modifyTitle').value = title; // 제목 설정
             document.getElementById('modifyContent').value = content; //내용설정
 
             // 내용 설정
             const contentArea = document.getElementById('content');
 
-            // 추가: noticeNo를 폼에 숨겨진 input으로 추가하여 서버로 전송
-            document.getElementById('noticeNo').value = noticeNo; // hidden input에 값 설정
-            console.log("Setting noticeNo in hidden input: ", document.getElementById('noticeNo').value);
+            // 추가: faqNo를 폼에 숨겨진 input으로 추가하여 서버로 전송
+            document.getElementById('faqNo').value = faqNo; // hidden input에 값 설정
+            console.log("Setting faqNo in hidden input: ", document.getElementById('faqNo').value);
         }, 0);
     });
 

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -81,7 +83,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 공지사항 [삭제]
-    @PostMapping("/cs/delete")
+    @PostMapping("/cs/noticeDelete")
     public String noticeDelete(@ModelAttribute NoticeDTO noticeDTO) {
         adminCSService.noticeDelete(noticeDTO);
 
@@ -106,6 +108,13 @@ public class AdminCSController {
     public String faqList(Model model, FaqPageRequestDTO pageRequestDTO) {
         FaqPageResponseDTO pageResponseDTO = adminCSService.faqFindAll(pageRequestDTO);
 
+        // FAQ 리스트에서 1차, 2차 유형 매핑
+        List<FaqDTO> faqList = pageResponseDTO.getDtoList();
+        for (FaqDTO faq : faqList) {
+            // 자동으로 매핑된 1차 및 2차 유형 이름을 설정
+            faq.setCate1(faq.getCate1Name());  // 1차 유형 이름
+        }
+
         model.addAttribute("page", pageResponseDTO);
         model.addAttribute("faq", pageResponseDTO.getDtoList());
 
@@ -121,12 +130,41 @@ public class AdminCSController {
     }
 
     //고객센터 - 자주묻는질문 [카테고리별 리스트]
+    @GetMapping("/cs/faqSearch")
+    public String search(Model model, FaqPageRequestDTO pageRequestDTO) {
+        FaqPageResponseDTO pageResponseDTO = adminCSService.faqFindAllByCate(pageRequestDTO);
+
+        // FAQ 리스트에서 1차, 2차 유형 매핑
+        List<FaqDTO> faqList = pageResponseDTO.getDtoList();
+        for (FaqDTO faq : faqList) {
+            // 자동으로 매핑된 1차 및 2차 유형 이름을 설정
+            faq.setCate1(faq.getCate1Name());  // 1차 유형 이름
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+
+        return "/admin/cs/searchFaqList";
+    }
 
     //고객센터 - 자주묻는질문 [카테고리별 리스트, 글작성]
 
     //고객센터 - 자주묻는질문 [수정]
+    @PostMapping("/cs/faqModify")
+    public String faqModify(@ModelAttribute FaqDTO faqDTO){
+
+        adminCSService.faqModify(faqDTO);
+
+        return "redirect:/admin/cs/faqList";
+    }
 
     //고객센터 - 자주묻는질문 [삭제]
+    @PostMapping("/cs/faqDelete")
+    public String noticeDelete(@ModelAttribute FaqDTO faqDTO){
+
+        adminCSService.faqDelete(faqDTO);
+
+        return "redirect:/admin/cs/faqList";
+    }
 
 
     /* *********************************자주묻는질문 끝*************************************/

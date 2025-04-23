@@ -1,7 +1,5 @@
 package kr.co.lotteOn.dto.recruit;
 
-
-import kr.co.lotteOn.dto.faq.FaqDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
