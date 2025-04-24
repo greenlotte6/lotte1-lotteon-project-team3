@@ -12,35 +12,11 @@
     <link rel="stylesheet" href="/style/admin/footer.css">
     <link rel="stylesheet" href="/style/admin/adminaside.css">
     <!--JavaScript-->
+    <script src="/script/csRecruit.js"></script>
     <script src="/script/banner.js"></script>
     <script src="/script/aside.js"></script>
     <style>
-        .submitbtn {
-            white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
-            overflow: hidden;            /* 넘치는 텍스트는 숨김 */
-            text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
-            text-align: left;            /* 텍스트 왼쪽 정렬 */
-            width: 200px;
-        }
-        .modifybtn, .deletebtn {
-            vertical-align: middle;
-        }
-        a.current {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px;
-            background-color: #dfdfdf;
-        }
 
-        a.num {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
@@ -55,20 +31,21 @@
             </div>
             <div class="shopArea">
                 <div class="searchArea">
-                    <select>
-                        <option>선택</option>
-                        <option>번호</option>
-                        <option>채용부서</option>
-                        <option>채용형태</option>
-                        <option>제목</option>
-                        <option>검색</option>
-                    </select>
-                    <input type="text" placeholder="검색어 입력">
-                    <button type="submit">검색</button>
+                    <form>
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="recruitNo">번호</option>
+                            <option value="cate">채용부서</option>
+                            <option value="employType">채용형태</option>
+                            <option value="title">제목</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <input type="submit" value="검색">
+                    </form>
                 </div>
+
                 <table>
                     <tr>
-                        <th><input type="checkbox"></th>
                         <th>번호</th>
                         <th>채용부서</th>
                         <th>경력사항</th>
@@ -78,9 +55,9 @@
                         <th>상태</th>
                         <th>모집기간</th>
                         <th>작성일</th>
+                        <th colspan="2" style="padding-left: 0">관리</th>
                     </tr>
                     <tr>
-                        <td><input type="checkbox"></td>
                         <td>1</td>
                         <td>IT </td>
                         <td>경력 무관</td>
@@ -96,10 +73,24 @@
                             2025-04-16<br>
                             13:50:11
                         </td>
+                        <td class="buttons">
+                            <button type="button" class="modifybtn">수정</button>
+                        </td>
+                        <td class="buttons">
+                            <form method="post" onsubmit="return confirmDelete()">
+                                <button type="button" class="deletebtn" style="font-size: 12px">삭제</button>
+                                <input type="hidden" name="recruitNo">
+                            </form>
+                            <script>
+                                function confirmDelete() {
+                                    // 삭제 확인 메시지
+                                    return confirm("삭제하시겠습니까?");
+                                }
+                            </script>
+                        </td>
                     </tr>
                 </table>
                 <div class="btnarea">
-                    <button class="delbutton" type="submit">선택삭제</button>
                     <div class="pageBtn">
                         <a href=""><img src="/images/back-double.png"></a>
                         <a href=""><img src="/images/back-single.png" class="single"></a>
@@ -113,12 +104,99 @@
                 </div>
             </div>
         </div>
-        <div id="bannerModal" class="modal">
-            <div class="modal-content">
+        <div id="subModal" class="submodal">
+            <div class="submodal-content">
                 <span class="close">&times;</span>
                 <h3>채용등록</h3>
-                <form>
+                <form method="post" enctype="multipart/form-data" id="recruitWriteForm">
+                    <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
                     <div class="modalTable">
+                        <table class="fst">
+                            <tr>
+                                <th>제목</th>
+                                <td>
+                                    <div>
+                                        <input type="text" name="title" placeholder="제목 입력">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>채용부서</th>
+                                <td>
+                                    <div>
+                                        <select name="cate" id="cate">
+                                            <option>채용부서 선택</option>
+                                            <option value="IT">IT</option>
+                                            <option>마케팅</option>
+                                            <option>기획팀</option>
+                                            <option>영업팀</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>경력사항</th>
+                                <td>
+                                    <div>
+                                        <select>
+                                            <option>경력사항 선택</option>
+                                            <option>경력 무관</option>
+                                            <option>1~2년차</option>
+                                            <option>2~3년차</option>
+                                            <option>3~4년차</option>
+                                            <option>4~5년차</option>
+                                            <option>5년 이상</option>
+                                            <option>10년 이상</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>채용형태</th>
+                                <td>
+                                    <div>
+                                        <select>
+                                            <option>채용형태 선택</option>
+                                            <option>정규직</option>
+                                            <option>계약직</option>
+                                            <option>아르바이트</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>모집기간</th>
+                                <td>
+                                    <div>
+                                        <input type="date"><p>~</p><input type="date">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>비고</th>
+                                <td>
+                                    <div>
+                                        <input type="text" placeholder="비고란" class="bgo">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="modalbtn">
+                            <button>취소</button>
+                            <button>등록</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="regModal" class="regmodal">
+            <div class="regmodal-content">
+                <span class="close">&times;</span>
+                <h3>채용공고 수정</h3>
+                <form method="post" th:action="@{/admin/cs/recruitModify}" id="recruitUpdateForm">
+                    <div class="modalTable">
+                        <!-- recruitNo 숨겨진 input으로 추가 -->
+                        <input type="hidden" id="recruitNo" name="recruitNo">
                         <table class="fst">
                             <tr>
                                 <th>제목</th>
@@ -190,8 +268,7 @@
                             </tr>
                         </table>
                         <div class="modalbtn">
-                            <button>취소</button>
-                            <button>등록</button>
+                            <button type="submit">수정하기</button>
                         </div>
                     </div>
                 </form>

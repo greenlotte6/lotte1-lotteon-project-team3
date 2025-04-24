@@ -78,6 +78,7 @@ table tr th {
     height: 45px;
     background-color: #93b7d0;
     color: white;
+    padding-left: 10px;
 }
 table tr th a {
     color: white;
@@ -85,8 +86,9 @@ table tr th a {
 table tr td {
     padding: 10px;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     height: 30px;
+    padding-left: 15px;
 }
 .btnarea {
     justify-content: space-between;
@@ -159,7 +161,15 @@ tr td select option {
     overflow: hidden;            /* 넘치는 텍스트는 숨김 */
     text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
     text-align: left;            /* 텍스트 왼쪽 정렬 */
-    width: 200px;
+    width: 250px;
+    padding: 5px 0;
+}
+.answerbtn {
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 9px 12px;
+    font-size: 12px;
+    width: 45px;
 }
 a.current {
     border: 1px solid #dfdfdf;

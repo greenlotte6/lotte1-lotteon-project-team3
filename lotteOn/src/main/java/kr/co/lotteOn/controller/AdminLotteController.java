@@ -1,26 +1,39 @@
 package kr.co.lotteOn.controller;
 
 import kr.co.lotteOn.dto.TermsDTO;
+import kr.co.lotteOn.dto.notice.NoticeDTO;
+import kr.co.lotteOn.dto.qna.QnaDTO;
+import kr.co.lotteOn.service.AdminCSService;
+import kr.co.lotteOn.service.AdminLotteService;
 import kr.co.lotteOn.service.TermsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RequestMapping("/admin")
 @Controller
 public class AdminLotteController {
 
     private final TermsService termsService;
-
-    public AdminLotteController(TermsService termsService) {
-        this.termsService = termsService;
-    }
+    private final AdminCSService adminCSService;
+    private final AdminLotteService adminLotteService;
 
     //관리자 - 메인
     @GetMapping("/admin")
-    public String admin(){
+    public String admin(Model model){
+        List<NoticeDTO> notices = adminLotteService.findAllNoticeByLimit5();
+        List<QnaDTO> qnas = adminLotteService.findAllQnaByLimit5();
+
+        model.addAttribute("notices", notices);
+        model.addAttribute("qnas", qnas);
+
         return "/admin/admin";
     }
 
@@ -61,13 +74,19 @@ public class AdminLotteController {
 
     //환경설정 - 약관관리
     @GetMapping("/config/policy")
-    public String policy(){
+    public String policy(Model model){
+        TermsDTO termsDTO = termsService.findTerms();
+
+        model.addAttribute("termsDTO", termsDTO);
+
         return "/admin/config/policy";
     }
 
     @PostMapping("/config/policyModify")
     public String policyModify(TermsDTO termsDTO){
-        return null;
+        termsService.modifyTerms(termsDTO);
+
+        return "redirect:/admin/config/policy";
 
     }
 

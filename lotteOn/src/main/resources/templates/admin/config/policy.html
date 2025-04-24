@@ -16,99 +16,90 @@
 </head>
 <body>
 <div id="container">
-    <th:block th:include="/admin/_adminHeader"/>
+    <th:block th:insert="~{/admin/_adminHeader}"/>
     <main>
-        <th:block th:include="/admin/_adminAside"/>
+        <th:block th:insert="~{/admin/_adminAside}"/>
         <div class="adminMain">
             <div class="mainTop">
                 <h4>약관관리</h4>
                 <div><span>HOME > 환경설정 > <p>약관관리</p></span></div>
             </div>
-            <div class="terms">
-                <h3>구매회원 약관</h3>
-                <table>
-                    <tr>
-                        <th>약관 내용</th>
-                        <td>
-                            <textarea readonly>
-
-                            </textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnarea">
-                    <button type="submit">수정하기</button>
+            <form th:action="@{/admin/config/policyModify}" method="post">
+                <div class="terms">
+                    <h3>구매회원 약관</h3>
+                        <input type="hidden" name="termsId" th:value="${termsDTO.termsId}">
+                        <table>
+                            <tr>
+                                <th>약관 내용</th>
+                                <td>
+                                    <textarea name="buyer">[[${termsDTO.buyer}]]</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="btnarea">
+                            <button type="submit">수정하기</button>
+                        </div>
                 </div>
-            </div>
-            <div class="terms">
-                <h3>판매회원 약관</h3>
-                <table>
-                    <tr>
-                        <th>약관 내용</th>
-                        <td>
-                            <textarea readonly>
-
-                            </textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnarea">
-                    <button type="submit">수정하기</button>
+                <div class="terms">
+                    <h3>판매회원 약관</h3>
+                    <table>
+                        <tr>
+                            <th>약관 내용</th>
+                            <td>
+                                <textarea name="seller">[[${termsDTO.seller}]]</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btnarea">
+                        <button type="submit">수정하기</button>
+                    </div>
                 </div>
-            </div>
-            <div class="terms">
-                <h3>전자금융거래 약관</h3>
-                <table>
-                    <tr>
-                        <th>약관 내용</th>
-                        <td>
-                            <textarea readonly>
-
-                            </textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnarea">
-                    <button type="submit">수정하기</button>
+                <div class="terms">
+                    <h3>전자금융거래 약관</h3>
+                    <table>
+                        <tr>
+                            <th>약관 내용</th>
+                            <td>
+                                <textarea name="trade">[[${termsDTO.trade}]]</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btnarea">
+                        <button type="submit">수정하기</button>
+                    </div>
                 </div>
-            </div>
-            <div class="terms">
-                <h3>위치정보 이용약관</h3>
-                <table>
-                    <tr>
-                        <th>약관 내용</th>
-                        <td>
-                            <textarea readonly>
-
-                            </textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnarea">
-                    <button type="submit">수정하기</button>
+                <div class="terms">
+                    <h3>위치정보 이용약관</h3>
+                    <table>
+                        <tr>
+                            <th>약관 내용</th>
+                            <td>
+                                <textarea name="place">[[${termsDTO.place}]]</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btnarea">
+                        <button type="submit">수정하기</button>
+                    </div>
                 </div>
-            </div>
-            <div class="terms">
-                <h3>개인정보처리방침</h3>
-                <table>
-                    <tr>
-                        <th>약관 내용</th>
-                        <td>
-                            <textarea readonly>
-
-                            </textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnarea">
-                    <button type="submit">수정하기</button>
+                <div class="terms">
+                    <h3>개인정보처리방침</h3>
+                    <table>
+                        <tr>
+                            <th>약관 내용</th>
+                            <td>
+                                <textarea name="privacy">[[${termsDTO.privacy}]]</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btnarea">
+                        <button type="submit">수정하기</button>
+                    </div>
                 </div>
-            </div>
-
-
+            </form>
         </div>
     </main>
-    <th:block th:include="/admin/_adminFooter"/>
+    <th:block th:include="~{/admin/_adminFooter}"/>
 </div>
 </body>
 </html>

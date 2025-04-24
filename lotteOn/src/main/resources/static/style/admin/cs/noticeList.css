@@ -22,6 +22,7 @@ img {
     width: 25px;
     height: 25px;
 }
+
 /* --------------------- main --------------------- */
 .adminMain {
     width: 900px;
@@ -76,9 +77,14 @@ table tr th a {
 }
 table tr td {
     padding: 10px;
+    padding-left: 15px;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     height: 30px;
+}
+td.buttons {
+    width: 50px;
+    padding: 0;
 }
 .btnarea {
     display: flex;
@@ -118,6 +124,42 @@ table tr td {
 .btnarea .pageBtn .single {
     width: 15px;
     height: 15px;
+}
+.submitbtn {
+    white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
+    overflow: hidden;            /* 넘치는 텍스트는 숨김 */
+    text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
+    text-align: left;            /* 텍스트 왼쪽 정렬 */
+    width: 300px;
+    padding: 5px 0;
+}
+.modifybtn, .deletebtn {
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    padding: 6px 12px;
+    height: auto;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
 }
 .shopArea {
     margin-top: 20px;

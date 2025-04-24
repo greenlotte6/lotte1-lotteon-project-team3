@@ -28,17 +28,6 @@ public class TermsService {
         return null;
     }
 
-    public TermsDTO getTerms() {
-        int termsId = 1;
-        Optional<Terms> optTerms = termsRepository.findById(termsId);
-        if (optTerms.isPresent()) {
-            TermsDTO termsDTO = modelMapper.map(optTerms.get(), TermsDTO.class);
-            return termsDTO;
-        }
-        return null;
-    }
-
-    @Transactional
     public void modifyTerms(TermsDTO termsDTO) {
         int termsId = 1;
         Terms terms = termsRepository.findById(termsId).get();

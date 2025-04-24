@@ -21,7 +21,7 @@ public class QnaDTO {
     private String views;       //조회수
     private String regDate;     //등록날짜
     private String status;      //NULL
-    private String writer;      //작성자 = 관리자(Admin)
+    private String writer;
     private String comment;
 
     //추가필드
