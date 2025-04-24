@@ -22,6 +22,10 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
+    public boolean isIdExist(String id) {
+        return memberRepository.existsById(id);
+    }
+
     public void register(MemberDTO memberDTO) {
         // 비밀번호 암호화
         String encodedPass = passwordEncoder.encode(memberDTO.getPassword());

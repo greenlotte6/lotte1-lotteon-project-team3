@@ -27,14 +27,13 @@
                 <div><span>HOME > 상품관리 > <p>상품목록</p></span></div>
             </div>
             <div class="shopArea">
-                <form method="get" action="/admin/product/list"
+                <form method="get" action="/admin/product/list">
                 <div class="searchArea">
                     <select name="searchField">
                         <option>선택</option>
                         <option value="name">상품명</option>
                         <option value="productCode">상품번호</option>
                         <option value="companyName">판매자</option>
-                        <option value="maker">제조사</option>
                     </select>
                     <input type="text" name="searchKeyword" placeholder="검색어 입력">
                     <button type="submit">검색</button>
@@ -119,7 +118,7 @@
                                 <th>1차 분류</th>
                                 <td>
                                     <div>
-                                        <select id="category1" name="categoryId">
+                                        <select id="category1">
                                             <option value="">1차 분류 선택</option>
                                         </select>
                                     </div>

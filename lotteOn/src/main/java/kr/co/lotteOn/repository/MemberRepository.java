@@ -19,4 +19,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Modifying
     @Query("UPDATE Member m SET m.visitDate = CURRENT_TIMESTAMP WHERE m.id = :id")
     void updateVisitDate(@Param("id") String id);
+
+
+    boolean existsById(String id);
 }

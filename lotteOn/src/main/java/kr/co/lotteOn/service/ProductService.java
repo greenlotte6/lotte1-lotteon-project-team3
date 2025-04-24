@@ -111,6 +111,10 @@ public class ProductService {
     public void modifyProduct(ProductDTO productDTO) {
         Product product = productRepository.findById(productDTO.getId()).orElseThrow();
 
+        Category selectedCategory = categoryRepository.findById(productDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("카테고리 없음"));
+        product.setCategory(selectedCategory);
+
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setCompanyName(productDTO.getCompanyName());
@@ -169,15 +173,9 @@ public class ProductService {
                 case "name" -> productRepository.findByNameContaining(keyword, pageable);
                 case "productCode" -> productRepository.findByProductCodeContaining(keyword, pageable);
                 case "companyName" -> productRepository.findByCompanyNameContaining(keyword, pageable);
-                case "maker" -> productRepository.findByMakerContaining(keyword, pageable);
                 default -> productRepository.findAll(pageable);
             };
         }
-        /*
-        return products.stream()
-                .map(ProductDTO::fromEntity)
-                .collect(Collectors.toList());
-         */
         return products.map(ProductDTO::fromEntity);
     }
 }
