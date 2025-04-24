@@ -11,7 +11,7 @@
     <!--주소js-->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/script/postcode.js"></script>
-
+    <script src="/script/membervalidation.js"></script>
 </head>
 <body>
 <div id="container">
@@ -34,20 +34,20 @@
                     <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="id" placeholder="아이디 입력">
-                            <p>영문, 숫자 4 ~ 12 자 설정</p>
+                            <input type="text" name="id" id="id" placeholder="아이디 입력">
+                            <p class="idMsg">영문, 숫자 4 ~ 12 자 설정</p>
                         </td>
                     </tr>
                     <tr>
                         <th>비밀번호</th>
                         <td>
-                            <input type="password" name="password" placeholder="비밀번호 입력">
-                            <p>영문, 숫자, 특수문자 8 ~ 12자 설정</p>
+                            <input type="password" id="password" name="password" placeholder="비밀번호 입력">
+                            <p class="pwMsg">영문, 숫자, 특수문자 8 ~ 12자 설정</p>
                         </td>
                     </tr>
                     <tr>
                         <th>비밀번호 확인</th>
-                        <td><input type="password" placeholder="비밀번호 재입력"></td>
+                        <td><input type="password" id="password2" placeholder="비밀번호 재입력"></td>
                     </tr>
                 </table>
             </div>
@@ -60,27 +60,35 @@
                     </tr>
                     <tr>
                         <th>성별</th>
-                        <td><input type="text" name="gender" placeholder="이름 입력"></td>
+                        <td><input type="text" name="gender" placeholder="성별 입력"></td>
                     </tr>
                     <tr>
                         <th>Email</th>
                         <td>
-                            <input type="text" name="email" placeholder="이메일 입력">
-                            <button class="btn_email">이메일 인증</button>
+                            <input type="email" id="email" name="email" placeholder="이메일 입력">
+                            <button class="btn_email" type="button" onclick="sendEmail()">이메일 인증</button>
                         </td>
                     </tr>
+                    <tr id="emailCodeRow" style="display:none;">
+                        <th>인증코드</th>
+                        <td>
+                            <input type="text" id="emailCodeInput">
+                            <button type="button" class="accept" onclick="verifyEmailCode()">확인</button>
+                        </td>
+                    </tr>
+
                     <tr>
                         <th>휴대폰</th>
                         <td>
                             <input type="text" name="hp" placeholder="휴대폰 입력">
-                            <button class="btn_tel">휴대폰 인증</button>
+                            <button type="button" class="btn_tel">휴대폰 인증</button>
                         </td>
                     <tr>
                         <th>주소</th>
                         <td class="address">
-                            <input type="text" name="zip" placeholder="우편번호 검색 클릭"><br>
-                            <input type="text" name="addr1" placeholder="기본주소 검색"><br>
-                            <input type="text" name="addr2" placeholder="상세주소 입력">
+                            <input type="text" id="postcode" name="zip" placeholder="우편번호 검색 클릭" onclick="execDaumpostcode()"><br>
+                            <input type="text" id="address" name="addr1" placeholder="기본주소 검색"><br>
+                            <input type="text" id="address2" name="addr2" placeholder="상세주소 입력">
                         </td>
                     </tr>
                 </table>
@@ -94,5 +102,38 @@
     <footer>
     </footer>
 </div>
+<script>
+    function sendEmail() {
+        const email = document.getElementById("email").value;
+        fetch("/member/email/send", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email })
+        })
+            .then(() => {
+                alert("이메일로 인증코드가 발송되었습니다.");
+                document.getElementById("emailCodeRow").style.display = "table-row";
+            });
+    }
+
+    function verifyEmailCode() {
+        const email = document.getElementById("email").value;
+        const code = document.getElementById("emailCodeInput").value;
+
+        fetch("/member/email/verify", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email, code })
+        })
+            .then(res => res.json())
+            .then(success => {
+                if (success) {
+                    alert("이메일 인증 완료");
+                } else {
+                    alert("인증코드가 틀렸습니다.");
+                }
+            });
+    }
+</script>
 </body>
 </html>

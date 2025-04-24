@@ -114,7 +114,6 @@ article {
     display: flex;
     border-bottom: 1px solid #eee;
     align-items: center;  /* 수직 정렬 */
-    justify-content:first baseline;  /* 양옆으로 배치 */
 
 }
 .sectable table tr:last-child td {
@@ -129,6 +128,11 @@ article {
     padding: 10px;
     border: 2px solid #ddd;
 
+}
+.accept {
+    position: relative;
+    top: 14px;
+    margin-left: 10px;
 }
 
 .sectable table td button {
