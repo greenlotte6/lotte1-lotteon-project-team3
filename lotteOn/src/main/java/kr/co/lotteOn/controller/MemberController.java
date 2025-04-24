@@ -54,6 +54,18 @@ public class MemberController {
         return "/member/join";
     }
 
+    //회원 - 아이디 찾기
+    @GetMapping("/findId")
+    public String findId() {
+        return "/member/findId";
+    }
+
+    //회원 - 아이디 찾기 결과
+    @GetMapping("/resultId")
+    public String resultId() {
+        return "/member/resultId";
+    }
+
 
     //회원 - 약관
     @GetMapping("/signUp")

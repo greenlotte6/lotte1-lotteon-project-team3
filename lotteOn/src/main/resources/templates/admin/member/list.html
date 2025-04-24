@@ -32,7 +32,7 @@
                 <div><span>HOME > 회원관리 > <p>회원목록</p></span></div>
             </div>
             <div class="shopArea">
-                <form th:action="@{/admin/member/list}" method="get" class="searchArea">
+                <form th:action="@{/admin/member/search}" method="get" class="searchArea">
                     <select name="type">
                         <option value="" th:selected="${type} == null">선택</option>
                         <option value="id" th:selected="${type} == 'id'">아이디</option>

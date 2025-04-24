@@ -9,7 +9,7 @@ server:
 spring:
   application:
     name: lotteOn
-    version: 0.0.4-SNAPSHOT
+    version: 0.0.5-SNAPSHOT
 
   thymeleaf:
     prefix: classpath:/templates

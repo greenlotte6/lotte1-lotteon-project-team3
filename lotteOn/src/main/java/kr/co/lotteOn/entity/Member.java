@@ -42,5 +42,6 @@ public class Member {
         if (this.rating == null) this.rating = "FAMILY";
         if (this.role == null) this.role = "MEMBER";
         if (this.status == null) this.status = "정상";
+        if (this.another == null) this.another = "없음";
     }
 }
