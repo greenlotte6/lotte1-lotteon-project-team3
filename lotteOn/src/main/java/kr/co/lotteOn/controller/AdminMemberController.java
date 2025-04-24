@@ -39,22 +39,17 @@ public class AdminMemberController {
     }
 
     //검색
-    @GetMapping("/admin/member/list")
-    public String list(@RequestParam(required = false) String type,
-                       @RequestParam(required = false) String keyword,
+    @GetMapping("/member/search")
+    public String search(@RequestParam("type") String type,
+                       @RequestParam("keyword") String keyword,
                        Model model) {
 
-        log.info("검색 요청: type={}, keyword={}", type, keyword);
         List<MemberDTO> memberList;
 
-        if (type != null && keyword != null && !type.trim().isEmpty() && !keyword.trim().isEmpty()) {
-            log.info("searchMembers() 실행");
+        if (type != null && keyword != null) {
             memberList = adminMemberService.searchMembers(type, keyword);
-            log.info("searchMembers() 결과: {}", memberList);
         } else {
-            log.info("findAll() 실행");
             memberList = adminMemberService.findAll();
-            log.info("findAll() 결과: {}", memberList);
         }
 
         model.addAttribute("memberList", memberList);
@@ -63,9 +58,6 @@ public class AdminMemberController {
 
         return "/admin/member/list";
     }
-
-
-
 
     //고객관리 - 포인트현황
     @GetMapping("/member/point")

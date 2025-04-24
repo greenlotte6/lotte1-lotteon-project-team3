@@ -1,0 +1,91 @@
+main {
+    height: 100%;
+}
+
+main > div > * {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.mainContainer {
+    margin-top: 50px;
+    margin-bottom: 110px;
+}
+
+.findIdWrapper {
+    width: 500px;
+}
+
+.findIdWrapper > h2 {
+    padding: 50px 0px 48px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+}
+
+.findIdContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.whatDoYouWant {
+    display: flex;
+}
+
+.whatDoYouWant > button {
+    width: 250px;
+    height: 50px;
+    border: 1px solid #eee;
+    background: white;
+}
+
+.iWant {
+    background: #E60012 !important;
+    border: none;
+    color: white;
+}
+
+.inputYourInfo {
+    width: 500px;
+}
+
+.inputYourInfo input {
+    width: 100%;
+    height: 50px;
+    padding-left: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.inputYourInfo input::placeholder {
+    font-size: 14px;
+    color: #afafaf;
+}
+
+.inputYourInfo p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.inputYourInfo div:not(:first-child) {
+    margin-top: 25px;
+}
+
+.bringMeResult {
+    margin-top: 50px;
+    width: 500px;
+    height: 50px;
+    background: #E60012;
+    color: white;
+    border: none;
+}
+
+.disable {
+    display: none;
+}
+
+.authenticate {
+    display: none;
+}
