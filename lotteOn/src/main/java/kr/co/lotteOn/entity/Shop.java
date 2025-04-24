@@ -1,8 +1,6 @@
 package kr.co.lotteOn.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,14 +15,23 @@ import lombok.NoArgsConstructor;
 public class Shop {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shopId;
+
     private String companyName;
     private String delegate;
     private String businessNo;
     private String communicationNo;
     private String shopHp;
+
     private String status;
     private String management;
+
+    @ManyToOne
+    @JoinColumn(name="sellerId")
+    private Seller seller;
+
 }
+
 
 
