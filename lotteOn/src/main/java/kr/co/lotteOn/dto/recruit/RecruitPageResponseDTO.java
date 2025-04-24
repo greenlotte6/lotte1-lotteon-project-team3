@@ -15,6 +15,8 @@ public class RecruitPageResponseDTO {
     private List<RecruitDTO> dtoList;
 
     private String cate;
+    private String experience;
+    private String employType;
     private int pg;
     private int size;
     private int total;
@@ -29,6 +31,8 @@ public class RecruitPageResponseDTO {
     @Builder
     public RecruitPageResponseDTO(RecruitPageRequestDTO pageRequestDTO, List<RecruitDTO> dtoList, int total) {
         this.cate = pageRequestDTO.getCate();
+        this.experience = pageRequestDTO.getExperience();
+        this.employType = pageRequestDTO.getEmployType();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();
         this.total = total;

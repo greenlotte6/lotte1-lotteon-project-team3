@@ -381,29 +381,57 @@ public class AdminCSService {
     }
 
     /*채용 - (검색)글 리스트 출력하기*/
+    public RecruitPageResponseDTO recruitSearchAll(RecruitPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("recruitNo");
+
+        Page<Recruit> pageRecruit = recruitRepository.searchAllForCate(pageRequestDTO, pageable);
+
+        List<RecruitDTO> recruitDTOList = pageRecruit
+                .getContent()
+                .stream()
+                .map(recruit -> {
+                    RecruitDTO recruitDTO = modelMapper.map(recruit, RecruitDTO.class);
+                    recruitDTO.setWriter(recruit.getWriter().getId());
+                    return recruitDTO;
+                }).toList();
+        int total = (int) pageRecruit.getTotalElements();
+
+        return RecruitPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(recruitDTOList)
+                .total(total)
+                .build();
+    }
 
 
     /*채용 - 글 작성하기*/
     public int recruitWrite(RecruitDTO recruitDTO){
+        // 1. 작성자 설정
         Member member = Member.builder()
                 .id(recruitDTO.getWriter())
                 .build();
 
+        // 2. DTO → Entity 변환
         Recruit recruit = modelMapper.map(recruitDTO, Recruit.class);
+
+        // 3. 작성자 설정
         recruit.setWriter(member);
 
+        // 4. 저장 (한 번만)
         Recruit savedRecruit = recruitRepository.save(recruit);
 
-        recruitRepository.save(recruit);
-
+        // 5. 리턴
         return savedRecruit.getRecruitNo();
     }
 
-    /*채용 - 글 수정하기(글찾기)*/
-
-    /*채용 - 글 수정하기*/
 
     /*채용 - 글 삭제하기*/
+    @Transactional
+    public void recruitDelete(RecruitDTO recruitDTO){
+        Recruit recruit = recruitRepository.findById(recruitDTO.getRecruitNo()).get();
+        recruitRepository.delete(recruit);
+    }
 
 
     /*****************************************채용 끝***********************************/

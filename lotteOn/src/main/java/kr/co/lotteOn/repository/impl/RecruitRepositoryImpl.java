@@ -1,8 +1,8 @@
 package kr.co.lotteOn.repository.impl;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
-import kr.co.lotteOn.entity.Faq;
 import kr.co.lotteOn.entity.QRecruit;
 import kr.co.lotteOn.entity.Recruit;
 import kr.co.lotteOn.repository.custom.RecruitRepositoryCustom;
@@ -40,6 +40,32 @@ public class RecruitRepositoryImpl implements RecruitRepositoryCustom {
 
     @Override
     public Page<Recruit> searchAllForCate(RecruitPageRequestDTO recruitPageRequestDTO, Pageable pageable) {
-        return null;
+
+        String searchType = recruitPageRequestDTO.getSearchType();
+        String keyword = recruitPageRequestDTO.getKeyword();
+
+        BooleanExpression expression = null;
+        if(searchType.equals("cate")){
+            expression = qRecruit.cate.contains(keyword);
+        }else if(searchType.equals("employType")){
+            expression = qRecruit.employType.contains(keyword);
+        }else if(searchType.equals("title")){
+            expression = qRecruit.title.contains(keyword);
+        }
+
+        List<Recruit>  recruitList = queryFactory
+                .select(qRecruit)
+                .from(qRecruit)
+                .where(expression)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qRecruit.recruitNo.desc())
+                .fetch();
+
+        long total = queryFactory.select(qRecruit.count()).from(qRecruit).fetchOne();
+
+
+
+        return new PageImpl<>(recruitList, pageable, total);
     }
 }

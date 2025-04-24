@@ -16,10 +16,13 @@ import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
 import kr.co.lotteOn.service.AdminCSService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -198,10 +201,6 @@ public class AdminCSController {
         return "/admin/cs/searchQnaList";
     }
 
-    //고객센터 - 문의하기 [리스트,글작성]
-
-    //고객센터 - 문의하기 [카테고리별 리스트, 글작성]
-
     //고객센터 - 문의하기 [수정]
     @PostMapping("/cs/qnaModify")
     public String qnaModify(@ModelAttribute QnaDTO qnaDTO){
@@ -216,8 +215,6 @@ public class AdminCSController {
     }
 
 
-    //고객센터 - 문의하기 [삭제]
-
     /* *********************************문의하기 끝*************************************/
 
 
@@ -226,6 +223,11 @@ public class AdminCSController {
     public String recruitList(Model model, RecruitPageRequestDTO pageRequestDTO) {
         RecruitPageResponseDTO pageResponseDTO = adminCSService.recruitFindAll(pageRequestDTO);
 
+        List<RecruitDTO> recruitList = pageResponseDTO.getDtoList();
+        for (RecruitDTO recruit : recruitList) {
+            recruit.setExperience(recruit.getExperienceYear());
+        }
+
         model.addAttribute("page", pageResponseDTO);
         model.addAttribute("recruit", pageResponseDTO.getDtoList());
 
@@ -233,24 +235,45 @@ public class AdminCSController {
     }
 
     //고객센터 - 채용정보 [카테고리별 리스트]
+    @GetMapping("/cs/recruitSearch")
+    public String recruitSearch(Model model, RecruitPageRequestDTO pageRequestDTO) {
+        RecruitPageResponseDTO pageResponseDTO = adminCSService.recruitSearchAll(pageRequestDTO);
+
+        List<RecruitDTO> recruitList = pageResponseDTO.getDtoList();
+        for (RecruitDTO recruit : recruitList) {
+            recruit.setExperience(recruit.getExperienceYear());
+        }
+        model.addAttribute("page", pageResponseDTO);
+
+        return "/admin/cs/searchRecruitList";
+    }
 
     //고객센터 - 채용정보 [리스트,글작성]
     @PostMapping("/cs/recruitList")
-    public String recruitWrite(RecruitDTO recruitDTO){
-        int no = adminCSService.recruitWrite(recruitDTO);
+    public String recruitWrite(@ModelAttribute RecruitDTO recruitDTO) {
+
+        adminCSService.recruitWrite(recruitDTO);
+
+        return "redirect:/admin/cs/recruitList";
+    }
+    //고객센터 - 채용정보 [리스트,글작성]
+    @PostMapping("/cs/recruitSearch")
+    public String recruitWriteSearch(@ModelAttribute RecruitDTO recruitDTO) {
+
+        adminCSService.recruitWrite(recruitDTO);
 
         return "redirect:/admin/cs/recruitList";
     }
 
-    //고객센터 - 채용정보 [카테고리별 리스트, 글작성]
-
-    //고객센터 - 채용정보 [수정]
-
     //고객센터 - 채용정보 [삭제]
+    @PostMapping("/cs/recruitDelete")
+    public String recruitDelete(@ModelAttribute RecruitDTO recruitDTO) {
+        adminCSService.recruitDelete(recruitDTO);
+        return "redirect:/admin/cs/recruitList";
+    }
 
 
     /* *********************************채용정보 끝*************************************/
-
 
 
 }

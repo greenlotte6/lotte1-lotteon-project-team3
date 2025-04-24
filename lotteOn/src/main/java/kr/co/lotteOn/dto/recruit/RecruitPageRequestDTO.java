@@ -26,6 +26,8 @@ public class RecruitPageRequestDTO {
     private String searchType;
     private String keyword;
     private String cate;
+    private String experience;
+    private String employType;
 
     //글목록 페이징 처리를 위한 Pageable 객체 생성 메서드
     public Pageable getPageable(String sort){
