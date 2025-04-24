@@ -1,11 +1,13 @@
 package kr.co.lotteOn.service;
 
+import jakarta.transaction.Transactional;
 import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final ModelMapper modelMapper;
+
+    @Lazy
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
@@ -30,6 +34,9 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-
+    @Transactional
+    public void updateVisitDate(String memberId) {
+        memberRepository.updateVisitDate(memberId);
+    }
 
 }

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // 모달 안 input에 값 채워넣기
             document.querySelector("#bannerModal input[name='id']").value = memberData.id;
             document.querySelector("#bannerModal input[name='name']").value = memberData.name;
-            document.querySelector("#bannerModal input[name='rating']").value = memberData.rating;
+            document.querySelector("#bannerModal select[name='rating']").value = memberData.rating;
             document.querySelector("#bannerModal input[name='email']").value = memberData.email;
             document.querySelector("#bannerModal input[name='hp']").value = memberData.hp;
             document.querySelector("#bannerModal .memberStatus").textContent = memberData.status;
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("#bannerModal input[name='addr2']").value = memberData.addr2;
             document.querySelector("#bannerModal input[name='another']").value = memberData.another;
             document.querySelector("#bannerModal .regDate").textContent = memberData.regdate;
+            document.querySelector("#bannerModal .visitDate").textContent = memberData.visitdate;
             console.log(memberData.another);
             // 성별 체크 (예시)
             const genderInputs = document.querySelectorAll(".gender");

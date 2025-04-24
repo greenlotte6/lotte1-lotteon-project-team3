@@ -35,6 +35,7 @@ public class Member {
     @CreationTimestamp
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
+    private LocalDateTime visitDate;
 
     @PrePersist //Default값 세팅
     public void prePersist() {

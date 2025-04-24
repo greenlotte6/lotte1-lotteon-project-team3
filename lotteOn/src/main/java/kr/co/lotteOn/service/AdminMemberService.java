@@ -3,7 +3,6 @@ package kr.co.lotteOn.service;
 import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.repository.MemberRepository;
-import kr.co.lotteOn.repository.custom.AdminMemberRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 public class AdminMemberService {
 
     private final MemberRepository memberRepository;
-    private final AdminMemberRepositoryCustom adminMemberRepository;
     private final ModelMapper modelMapper;
 
     public List<MemberDTO> findAll() {
@@ -67,13 +65,13 @@ public class AdminMemberService {
         List<Member> result = new ArrayList<>();
 
         if ("id".equals(type)) {
-            result = adminMemberRepository.findByIdContaining(keyword);
+            result = memberRepository.findByIdContaining(keyword);
         } else if ("name".equals(type)) {
-            result = adminMemberRepository.findByNameContaining(keyword);
+            result = memberRepository.findByNameContaining(keyword);
         } else if ("email".equals(type)) {
-            result = adminMemberRepository.findByEmailContaining(keyword);
+            result = memberRepository.findByEmailContaining(keyword);
         } else if ("hp".equals(type)) {
-            result = adminMemberRepository.findByHpContaining(keyword);
+            result = memberRepository.findByHpContaining(keyword);
         }
 
         return result.stream().map(m -> modelMapper.map(m, MemberDTO.class)).collect(Collectors.toList());

@@ -26,8 +26,12 @@ public class MemberDTO {
     private String another;
     private String regDate;
     private String leaveDate;
+    private String visitDate;
 
     public String getFormattedRegDate() {
         return regDate != null ? regDate.toString().substring(0, 10) : "";
+    }
+    public String getFormattedVisitDate() {
+        return visitDate != null ? visitDate.toString().substring(0, 10) : "";
     }
 }
