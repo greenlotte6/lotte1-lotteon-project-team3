@@ -16,7 +16,8 @@
     <script src="/script/postcode.js"></script>
     <script src="/script/banner.js"></script>
     <script src="/script/aside.js"></script>
-    <script src="/script/validation.js"></script>
+    <script src="/script/shopRegister.js"></script>
+
 </head>
 <body>
 <div id="container">
@@ -52,19 +53,21 @@
                         <th>운영</th>
                         <th>관리</th>
                     </tr>
+                    <th:block th:each="shop, iterStat : ${shops}">
                     <tr>
                         <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td>(주) 롯데온</td>
-                        <td>정상수</td>
-                        <td>112-12-12345</td>
-                        <td>2024-부산남구-04433</td>
-                        <td>010-1245-1234</td>
-                        <td>🟢</td>
+                        <td th:text="${iterStat.index+1}">1</td>
+                        <td th:text="${shop.companyName}">(주) 롯데온</td>
+                        <td th:text="${shop.delegate}">정상수</td>
+                        <td th:text="${shop.businessNo}">112-12-12345</td>
+                        <td th:text="${shop.communicationNo}">2024-부산남구-04433</td>
+                        <td th:text="${shop.shopHp}">010-1245-1234</td>
+                        <td></td>
                         <td>
                             <button type="submit">[ 중단 ]</button>
                         </td>
                     </tr>
+                    </th:block>
                 </table>
                 <div class="btnarea">
                     <button class="delbutton">선택삭제</button>
@@ -85,14 +88,14 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h3>상점 등록</h3>
-                <form>
+                <form th:action="@{/admin/shop/register}" method="post" onsubmit="return validateForm()">
                     <div class="modalTable">
                         <table class="fst">
                             <tr>
                                 <th>아이디</th>
                                 <td>
                                     <div>
-                                        <input type="text" id="sellerId" placeholder="아이디 입력">
+                                        <input type="text" name="shopId" id="shopId" placeholder="아이디 입력">
                                         <p class="idMsg">영문, 숫자 4 ~ 12 자 설정</p>
                                     </div>
                                 </td>
@@ -101,7 +104,7 @@
                                 <th>비밀번호</th>
                                 <td>
                                     <div>
-                                        <input type="password" id="sellerPw" placeholder="비밀번호 입력">
+                                        <input type="password" id="shopPw"  placeholder="비밀번호 입력">
                                         <p class="pwMsg">영문, 숫자, 특수문자 8 ~ 12자 설정</p>
                                     </div>
                                 </td>
@@ -109,7 +112,7 @@
                             <tr>
                                 <th>비밀번호 확인</th>
                                 <td>
-                                    <div><input type="password" id="sellerPw2" placeholder="비밀번호 재입력"></div>
+                                    <div><input type="password" id="shopPw2"  placeholder="비밀번호 재입력"></div>
                                 </td>
                             </tr>
                         </table>
@@ -117,21 +120,21 @@
                             <tr>
                                 <th>회사명</th>
                                 <td>
-                                    <div><input type="text" id="companyName" placeholder="회사명 입력 예) (주) 상호명"></div>
+                                    <div><input type="text" name="companyName" placeholder="회사명 입력 예) (주) 상호명"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>대표</th>
                                 <td>
-                                    <div><input type="text" id="delegate" placeholder="이름 입력"></div>
+                                    <div><input type="text" name="delegate" placeholder="이름 입력"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>사업자 등록번호</th>
                                 <td>
                                     <div>
-                                        <input type="text" id="bisNum" placeholder="사업자 등록번호 입력">
-                                        <p class="bisNumMsg"> - 포함 12자리 입력</p>
+                                        <input type="text" name="businessNo" placeholder="사업자 등록번호 입력">
+                                        <p class=""> - 포함 12자리 입력</p>
                                     </div>
                                 </td>
                             </tr>
@@ -139,7 +142,7 @@
                                 <th>통신 판매업 번호</th>
                                 <td>
                                     <div>
-                                        <input type="text" id="commNum" placeholder="통신 판매업 번호 입력">
+                                        <input type="text" name="communicationNo" placeholder="통신 판매업 번호 입력">
                                         <p> - 포함 12자리 입력</p>
                                     </div>
                                 </td>
@@ -147,7 +150,7 @@
                             <tr>
                                 <th>전화번호</th>
                                 <td>
-                                    <div><input type="text" id="hp" placeholder="전화번호 입력"></div>
+                                    <div><input type="text" name="shopHp" placeholder="전화번호 입력"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -165,6 +168,7 @@
                                 </td>
                             </tr>
                         </table>
+                        <input type="hidden" name="sellerId" value="${#authentication.name}">
                     </div>
                     <div class="modalbtn">
                         <button>등록하기</button>
