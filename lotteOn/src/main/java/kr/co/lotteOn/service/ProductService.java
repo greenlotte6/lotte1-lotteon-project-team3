@@ -14,6 +14,8 @@ import kr.co.lotteOn.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,11 +81,13 @@ public class ProductService {
         // 옵션 저장
         if (dto.getOptions() != null) {
             for (ProductOptionDTO opt : dto.getOptions()) {
-                ProductOption option = new ProductOption();
-                option.setOptionName(opt.getOptionName());
-                option.setOptionValue(opt.getOptionValue());
-                option.setProduct(saved);
-                productOptionRepository.save(option);
+                if (opt.getOptionName() != null && !opt.getOptionName().trim().isEmpty()) {
+                    ProductOption option = new ProductOption();
+                    option.setOptionName(opt.getOptionName());
+                    option.setOptionValue(opt.getOptionValue());
+                    option.setProduct(saved);
+                    productOptionRepository.save(option);
+                }
             }
         }
 
@@ -140,11 +144,40 @@ public class ProductService {
         }
         productRepository.save(product);
     }
+
     @Transactional(readOnly = true)
-    public ProductDTO getProductById(Long id) {
-        Product product = productRepository.findById(id)
+    public ProductDTO getProductByCode(String productCode) {
+        Product product = productRepository.findByProductCode(productCode)
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
         return ProductDTO.fromEntity(product);
     }
-}
 
+    public void deleteProduct(String productCode) {
+        Product product = productRepository.findByProductCode(productCode)
+                .orElseThrow(() -> new RuntimeException("상품 없음"));
+        productRepository.delete(product);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> searchProducts(String field, String keyword, Pageable pageable) {
+        Page<Product> products;
+
+        if (field == null || keyword == null || keyword.isBlank()) {
+            products = productRepository.findAll(pageable);
+        } else {
+            products = switch (field) {
+                case "name" -> productRepository.findByNameContaining(keyword, pageable);
+                case "productCode" -> productRepository.findByProductCodeContaining(keyword, pageable);
+                case "companyName" -> productRepository.findByCompanyNameContaining(keyword, pageable);
+                case "maker" -> productRepository.findByMakerContaining(keyword, pageable);
+                default -> productRepository.findAll(pageable);
+            };
+        }
+        /*
+        return products.stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+         */
+        return products.map(ProductDTO::fromEntity);
+    }
+}

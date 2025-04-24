@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -66,7 +67,24 @@ public class ProductDTO {
                 .imageDetail(product.getImageDetail())
                 .views(product.getViews())
                 .categoryId(product.getCategory() != null ? product.getCategory().getCategoryId() : null)
-                // options, notice는 필요시 추가
+                .options(
+                        product.getOptions().stream()
+                                .map(opt -> ProductOptionDTO.builder()
+                                        .optionName(opt.getOptionName())
+                                        .optionValue(opt.getOptionValue())
+                                        .build())
+                                .collect(Collectors.toList())
+                )
+                .notice(
+                        product.getNotice() != null ?
+                                ProductNoticeDTO.builder()
+                                        .prodStatus(product.getNotice().getProdStatus())
+                                        .vatYn(product.getNotice().getVatYn())
+                                        .receiptYn(product.getNotice().getReceiptYn())
+                                        .businessType(product.getNotice().getBusinessType())
+                                        .origin(product.getNotice().getOrigin())
+                                        .build() : null
+                )
                 .build();
     }
 }
