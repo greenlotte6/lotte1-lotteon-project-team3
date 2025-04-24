@@ -10,6 +10,9 @@ import kr.co.lotteOn.dto.notice.NoticePageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
+import kr.co.lotteOn.dto.recruit.RecruitDTO;
+import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
+import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
 import kr.co.lotteOn.service.AdminCSService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -204,14 +207,6 @@ public class AdminCSController {
     public String qnaModify(@ModelAttribute QnaDTO qnaDTO){
         String cate1Eng = qnaDTO.getCate1NameBack();
 
-        System.out.println("QnaDTO: " + qnaDTO);
-        System.out.println("QnaDTO: " + qnaDTO);
-        System.out.println("QnaDTO: " + qnaDTO);
-        System.out.println("QnaDTO: " + qnaDTO);
-        System.out.println("QnaDTO: " + qnaDTO);
-        System.out.println("QnaDTO: " + qnaDTO);
-
-
         //영어로 다시변경
         qnaDTO.setCate1(cate1Eng);
         
@@ -228,14 +223,24 @@ public class AdminCSController {
 
     //고객센터 - 채용정보 [리스트]
     @GetMapping("/cs/recruitList")
-    public String recruitList(){
+    public String recruitList(Model model, RecruitPageRequestDTO pageRequestDTO) {
+        RecruitPageResponseDTO pageResponseDTO = adminCSService.recruitFindAll(pageRequestDTO);
+
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("recruit", pageResponseDTO.getDtoList());
+
         return "/admin/cs/recruitList";
     }
-
 
     //고객센터 - 채용정보 [카테고리별 리스트]
 
     //고객센터 - 채용정보 [리스트,글작성]
+    @PostMapping("/cs/recruitList")
+    public String recruitWrite(RecruitDTO recruitDTO){
+        int no = adminCSService.recruitWrite(recruitDTO);
+
+        return "redirect:/admin/cs/recruitList";
+    }
 
     //고객센터 - 채용정보 [카테고리별 리스트, 글작성]
 

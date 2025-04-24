@@ -10,10 +10,9 @@ import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
 import kr.co.lotteOn.dto.recruit.RecruitDTO;
-import kr.co.lotteOn.entity.Faq;
-import kr.co.lotteOn.entity.Member;
-import kr.co.lotteOn.entity.Notice;
-import kr.co.lotteOn.entity.Qna;
+import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
+import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
+import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +34,7 @@ public class AdminCSService {
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
     private final QnaRepository qnaRepository;
-    //private final RecruitRepository recruitRepository;
+    private final RecruitRepository recruitRepository;
     private final NoticeRepository noticeRepository;
     private final FaqRepository faqRepository;
 
@@ -356,13 +355,48 @@ public class AdminCSService {
     /* ****************************************문의하기 끝***********************************/
 
     /*채용 - 글 리스트 출력하기*/
+    public RecruitPageResponseDTO recruitFindAll(RecruitPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("recruitNo");
+
+        Page<Recruit> pageRecruit = recruitRepository.searchAllForList(pageable);
+
+        List<RecruitDTO> recruitList = pageRecruit
+                .getContent()
+                .stream()
+                .map(notice -> {
+                    RecruitDTO noticeDTO = modelMapper.map(notice, RecruitDTO.class);
+                    noticeDTO.setWriter(notice.getWriter().getId());
+
+                    return noticeDTO;
+                }).toList();
+
+        int total = (int) pageRecruit.getTotalElements();
+
+        return RecruitPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(recruitList)
+                .total(total)
+                .build();
+    }
 
     /*채용 - (검색)글 리스트 출력하기*/
 
+
     /*채용 - 글 작성하기*/
     public int recruitWrite(RecruitDTO recruitDTO){
+        Member member = Member.builder()
+                .id(recruitDTO.getWriter())
+                .build();
 
-        return 0;
+        Recruit recruit = modelMapper.map(recruitDTO, Recruit.class);
+        recruit.setWriter(member);
+
+        Recruit savedRecruit = recruitRepository.save(recruit);
+
+        recruitRepository.save(recruit);
+
+        return savedRecruit.getRecruitNo();
     }
 
     /*채용 - 글 수정하기(글찾기)*/

@@ -11,7 +11,37 @@ main {
     margin: 0 auto;
     align-items: stretch; 
 }
+textarea {
+    width: 1000px;
+    margin-left: 30px;
+    min-height: 700px;
+    margin-bottom: 50px;
+    border: none;
+    resize: none;
+}
+/* 화면에서는 print-only 숨기고 textarea 보이기 */
+@media screen {
+    .print-only {
+        display: none;
+    }
+    textarea {
+        display: block;
+    }
+}
 
+/* 인쇄할 때는 textarea 숨기고 print-only 보이기 */
+@media print {
+    .print-only {
+        width: 80%;!important;
+        display: block !important;
+        white-space: pre-wrap !important;
+        font-family: inherit !important;
+        padding: 20px !important;
+    }
+    textarea {
+        display: none !important;
+    }
+}
 
 
 /*메인*/
@@ -70,9 +100,6 @@ main {
     border-radius: 15px;
     padding: 10px;
 }
-.tab_content div{
-    display: inline-block;
-}
 .tab_content h3 {
     padding: 10px 40px;
     font-size: 25px;
@@ -89,7 +116,6 @@ main {
 .tab_content td {
     padding: 20px 10px;
     width: 100%;
-    height: 200px;
     border-bottom: 3px solid #dfdfdf;
     overflow-y: auto;          /* 수직 스크롤 */
     display: block;            /* block으로 바꿔야 height 적용됨 */

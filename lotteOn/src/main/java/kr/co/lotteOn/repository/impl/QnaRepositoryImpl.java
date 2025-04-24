@@ -31,7 +31,6 @@ public class QnaRepositoryImpl implements QnaRepositoryCustom {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(qQna.qnaNo.desc())
-                .orderBy(qQna.qnaNo.desc())
                 .fetch();
 
         long total = queryFactory.select(qQna.count()).from(qQna).fetchOne();

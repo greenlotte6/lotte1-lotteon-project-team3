@@ -14,34 +14,6 @@
     <!--JavaScript-->
     <script src="/script/csNotice.js"></script>
     <script src="/script/aside.js"></script>
-    <style>
-        .submitbtn {
-            white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
-            overflow: hidden;            /* 넘치는 텍스트는 숨김 */
-            text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
-            text-align: left;            /* 텍스트 왼쪽 정렬 */
-            width: 200px;
-        }
-        .modifybtn, .deletebtn {
-            vertical-align: middle;
-        }
-        a.current {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px;
-            background-color: #dfdfdf;
-        }
-
-        a.num {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px;
-        }
-    </style>
 </head>
 <body>
 <div id="container">
@@ -72,23 +44,23 @@
                         <th>제목</th>
                         <th>조회</th>
                         <th>날짜</th>
-                        <th colspan="2">관리</th>
+                        <th colspan="2" style="padding-left: 0">관리</th>
                     </tr>
-                    <tr th:each="notice, i : ${page.dtoList}">
 
+                    <tr th:each="notice, i : ${page.dtoList}">
                         <td>[[${page.startNo - i.index}]]</td>
-                        <td>[[${notice.title}]]</td>
+                        <td>[[${notice.cate}]]</td>
                         <td>
                             <button type="submit"
                                     class="submitbtn"
                                     th:attr = "data-type=${notice.cate},
                                             data-title=${notice.title},
                                             data-content=${notice.content},
-                                            data-notice-no=${notice.noticeNo}">[[${notice.content}]]</button>
+                                            data-notice-no=${notice.noticeNo}">[[${notice.title}]]</button>
                         </td>
                         <td>[[${notice.views}]]</td>
                         <td>[[${notice.regDate}]]</td>
-                        <td>
+                        <td class="buttons">
                             <button type="button" class="modifybtn"
                                     th:attr =
                                             "data-type=${notice.cate},
@@ -97,11 +69,17 @@
                                             data-notice-no=${notice.noticeNo}"> 수정
                             </button>
                         </td>
-                        <td>
-                            <form th:action="@{/admin/cs/noticeDelete}" method="post">
+                        <td class="buttons">
+                            <form th:action="@{/admin/cs/noticeDelete}" method="post" onsubmit="return confirmDelete()">
                                 <button type="submit" class="deletebtn" style="font-size: 12px">삭제</button>
                                 <input type="hidden" name="noticeNo" th:value="${notice.noticeNo}">
                             </form>
+                            <script>
+                                function confirmDelete() {
+                                    // 삭제 확인 메시지
+                                    return confirm("삭제하시겠습니까?");
+                                }
+                            </script>
                         </td>
                     </tr>
                 </table>

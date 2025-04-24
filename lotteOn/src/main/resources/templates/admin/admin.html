@@ -100,68 +100,21 @@
                 <div class="notice">
                     <h3>공지사항</h3>
                     <table>
-                        <tr>
-                            <th>[ 안내 ]</th>
-                            <td>해외결제 사칭문자 주의</td>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 안내 ]</th>
-                            <td>로젠택배반품 / 교환수거지</td>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 안내 ]</th>
-                            <td>위치정보 이용약관 개정 공지</td>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 안내 ]</th>
-                            <td>구매회원 이용약관 개정</td>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 안내 ]</th>
-                            <td>
-                                씨티은행 시트템 점검에 따<br>
-                                ...
-                            </td>
-                            <th class="thDate">22.10.31</th>
+                        <tr th:each="notice : ${notices}">
+                            <td th:text="${notice.cate}">카테고리</td>
+                            <td th:text="${notice.title}">제목</td>
+                            <th class="thDate" th:text="${notice.regDate}">날짜</th>
                         </tr>
                     </table>
                 </div>
                 <div class="customerQnA">
                     <h3>고객문의</h3>
                     <table>
-                        <tr>
-                            <th>[ 가입 ]</th>
-                            <td>가입 문의내용</td>
-                            <th class="thDate">abc**</th>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 탈퇴 ]</th>
-                            <td>탈퇴 문의내용</td>
-                            <th class="thDate">abc**</th>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 회원정보 ]</th>
-                            <td>회원정보 문의내용</td>
-                            <th class="thDate">abc**</th>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 회원정보 ]</th>
-                            <td>회원정보 문의내용</td>
-                            <th class="thDate">abc**</th>
-                            <th class="thDate">22.10.31</th>
-                        </tr>
-                        <tr>
-                            <th>[ 회원정보 ]</th>
-                            <td>회원정보 문의내용</td>
-                            <th class="thDate">abc**</th>
-                            <th class="thDate">22.10.31</th>
+                        <tr th:each="qna : ${qnas}">
+                            <td th:text="${qna.cate1Name}">카테고리</td>
+                            <td th:text="${qna.title}">제목</td>
+                            <td class="thDate" th:text="${qna.writer}">작성자</td>
+                            <th class="thDate" th:text="${qna.regDate}">날짜</th>
                         </tr>
                     </table>
                 </div>

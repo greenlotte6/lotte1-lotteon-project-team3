@@ -109,7 +109,6 @@ h3 {
     width: 100%;
     height: auto;
     display: flex;
-    padding: 20px;
 }
 .lastFloor table {
     border-top: 2px solid #8a8a8a;
@@ -124,13 +123,36 @@ h3 {
     border-bottom: 1px solid rgba(220, 220, 220, 0.8);
 }
 .notice {
-    width: 48%;
+    width: 400px;
     height: auto;
+    margin-right: 30px;
+}
+.notice td {
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 함 */
+    overflow: hidden;    /* 텍스트가 넘칠 경우 숨기도록 함 */
+    text-overflow: ellipsis; /* 텍스트가 넘칠 경우 '...'을 붙이도록 함 */
+    max-width: 200px;    /* 최대 너비 설정 */
+    height: 50px;
+    font-size: 14px;
+}
+.notice th {
+    font-size: 12px;
 }
 
 .customerQnA {
-    width: 48%;
+    width: 400px;
     height: auto;
+}
+.customerQnA td {
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 함 */
+    overflow: hidden;    /* 텍스트가 넘칠 경우 숨기도록 함 */
+    text-overflow: ellipsis; /* 텍스트가 넘칠 경우 '...'을 붙이도록 함 */
+    max-width: 150px;    /* 최대 너비 설정 */
+    height: 50px;
+    font-size: 14px;
+}
+.customerQnA th {
+    font-size: 12px;
 }
 .thDate {
     font-weight: normal;
