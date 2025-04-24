@@ -69,6 +69,7 @@
                            data-addr1=${member.addr1},
                            data-addr2=${member.addr2},
                            data-another=${member.another},
+                           data-visitdate=${member.formattedVisitDate},
                            data-regdate=${member.formattedRegDate}">
                         <td th:text="${i.index + 1}"></td>
                         <td th:text="${member.id}" class="ellipsis"></td>
@@ -135,7 +136,16 @@
                             <tr>
                                 <th>등급</th>
                                 <td>
-                                    <div><input type="text" name="rating" placeholder="등급" readonly></div>
+                                    <div>
+                                        <select name="rating">
+                                            <option value="FAMILY">FAMILY</option>
+                                            <option value="BRONZE">BRONZE</option>
+                                            <option value="SILVER">SILVER</option>
+                                            <option value="GOLD">GOLD</option>
+                                            <option value="VIP">VIP</option>
+                                            <option value="VVIP">VVIP</option>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -177,7 +187,7 @@
                             <tr>
                                 <th>최근 로그인 날짜</th>
                                 <td>
-                                    <div>2025-04-10</div>
+                                    <div class="visitDate"></div>
                                 </td>
                             </tr>
                             <tr>

@@ -3,6 +3,7 @@ package kr.co.lotteOn.controller;
 import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.service.AdminMemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 @Controller
+@Slf4j
 public class AdminMemberController {
 
     private final AdminMemberService adminMemberService;
@@ -42,12 +44,17 @@ public class AdminMemberController {
                        @RequestParam(required = false) String keyword,
                        Model model) {
 
+        log.info("검색 요청: type={}, keyword={}", type, keyword);
         List<MemberDTO> memberList;
 
-        if (type != null && keyword != null && !type.isEmpty() && !keyword.isEmpty()) {
+        if (type != null && keyword != null && !type.trim().isEmpty() && !keyword.trim().isEmpty()) {
+            log.info("searchMembers() 실행");
             memberList = adminMemberService.searchMembers(type, keyword);
+            log.info("searchMembers() 결과: {}", memberList);
         } else {
+            log.info("findAll() 실행");
             memberList = adminMemberService.findAll();
+            log.info("findAll() 결과: {}", memberList);
         }
 
         model.addAttribute("memberList", memberList);
@@ -56,6 +63,7 @@ public class AdminMemberController {
 
         return "/admin/member/list";
     }
+
 
 
 
