@@ -132,6 +132,8 @@ table tr td {
 }
 .searchArea input {
     padding: 10px;
+    position: relative;
+    bottom: 2px;
 }
 .searchArea button {
     padding: 16px;

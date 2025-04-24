@@ -42,6 +42,7 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<ProductOption> options = new ArrayList<>();
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)

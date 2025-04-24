@@ -14,7 +14,7 @@
     <!--JavaScript-->
     <script src="/script/productList.js"></script>
     <script src="/script/aside.js"></script>
-    <script src="/script/productregister.js"></script>
+    <!--<script src="/script/productregister.js"></script>-->
 </head>
 <body>
 <div id="container">
@@ -27,20 +27,22 @@
                 <div><span>HOME > 상품관리 > <p>상품목록</p></span></div>
             </div>
             <div class="shopArea">
+                <form method="get" action="/admin/product/list"
                 <div class="searchArea">
-                    <select>
+                    <select name="searchField">
                         <option>선택</option>
-                        <option>상품명</option>
-                        <option>상품번호</option>
-                        <option>판매자</option>
-                        <option>제조사</option>
+                        <option value="name">상품명</option>
+                        <option value="productCode">상품번호</option>
+                        <option value="companyName">판매자</option>
+                        <option value="maker">제조사</option>
                     </select>
-                    <input type="text" placeholder="검색어 입력">
+                    <input type="text" name="searchKeyword" placeholder="검색어 입력">
                     <button type="submit">검색</button>
                 </div>
+                </form>
                 <table>
                     <tr>
-                        <th><input type="checkbox"></th>
+                        <th><input type="checkbox" id="checkAll"></th>
                         <th>사진</th>
                         <th>상품코드</th>
                         <th>상품명</th>
@@ -64,25 +66,46 @@
                         <td th:text="${product.companyName}"></td>
                         <td th:text="${product.views}"></td>
                         <td>
-                            <button type="submit">[ 삭제 ]</button>
+                            <button type="button" class="delete">[ 삭제 ]</button>
                             <br>
-                            <button type="submit" class="modbutton">[ 수정 ]</button>
+                            <button type="button" class="modbutton">[ 수정 ]</button>
                         </td>
                     </tr>
                 </table>
                 <div class="btnarea">
                     <button class="delbutton" type="submit">선택삭제</button>
+
                     <div class="pageBtn">
-                        <a href=""><img src="/images/back-double.png"></a>
-                        <a href=""><img src="/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="/images/right-single.png" class="single"></a>
-                        <a href=""><img src="/images/right-double.png"></a>
+                        <a th:if="${products.hasPrevious()}"
+                           th:href="@{|/admin/product/list?page=0&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
+                            <img src="/images/back-double.png">
+                        </a>
+
+                        <a th:if="${products.hasPrevious()}"
+                           th:href="@{|/admin/product/list?page=${products.number - 1}&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
+                            <img src="/images/back-single.png" class="single">
+                        </a>
+
+                        <a th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                           th:href="@{|/admin/product/list?page=${i}&searchField=${searchField}&searchKeyword=${searchKeyword}|}"
+                           th:text="${i + 1}"
+                           class="number"
+                           th:classappend="${i == products.number} ? 'active'"></a>
+
+                        <a th:if="${products.hasNext()}"
+                           th:href="@{|/admin/product/list?page=${products.number + 1}&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
+                            <img src="/images/right-single.png" class="single">
+                        </a>
+
+                        <a th:if="${products.hasNext()}"
+                           th:href="@{|/admin/product/list?page=${products.totalPages - 1}&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
+                            <img src="/images/right-double.png">
+                        </a>
                     </div>
-                    <button class="regbutton" type="submit">상품등록</button>
+
+                    <button class="regbutton" type="button">상품등록</button>
                 </div>
+
             </div>
         </div>
         <div id="bannerModal" class="modal">
@@ -305,6 +328,7 @@
                         <h3>기본 정보</h3>
                         <table class="sec">
                             <tr>
+                                <input type="hidden" name="id" value="상품의 id">
                                 <th>상품명</th>
                                 <td>
                                     <div>
