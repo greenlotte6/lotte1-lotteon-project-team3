@@ -54,6 +54,13 @@ main {
     border-spacing: 0;
     margin-top: 20px;
 }
+
+.main_notice h3 {
+    margin-top: 10px;
+}
+.main_notice span {
+    font-size: 25px;
+}
 td {
     height: 70px;
 }

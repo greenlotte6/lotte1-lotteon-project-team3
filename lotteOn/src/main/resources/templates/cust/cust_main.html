@@ -22,47 +22,23 @@
                 <section class="main_notice">
                     <h3>
                         공지사항
-                        <a href="#" class="more">
+                        <a th:href="@{/cust/cust_notice_main}" class="more">
                             <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
                         </a>
                     </h3>
                     <table>
-                        <tr>
-                            <td>[안내]</td>
-                            <td>해외결제사칭 문자주의</td>
+                        <tr th:each="notice : ${notices}">
+                            <td th:text="${notice.cate}" style="font-weight: bold; color: darkred">카테고리</td>
+                            <td><a th:href="@{/cust/cust_notice_view(noticeNo=${notice.noticeNo})}">[[${notice.title}]]</a></td>
                             <td></td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[안내]</td>
-                            <td>해외결제사칭 문자주의</td>
-                            <td></td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[안내]</td>
-                            <td>해외결제사칭 문자주의</td>
-                            <td></td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[안내]</td>
-                            <td>해외결제사칭 문자주의</td>
-                            <td></td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[안내]</td>
-                            <td>해외결제사칭 문자주의</td>
-                            <td></td>
-                            <td>22.10.31</td>
+                            <td th:text="${notice.regDate}">날짜</td>
                         </tr>
                     </table>
                 </section>
                 <section class="main_faq">
                     <h3>
                         자주묻는 질문
-                        <a href="#" class="more">
+                        <a th:href="@{/cust/cust_faq_user}" class="more">
                             <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
                         </a>
                     </h3>
@@ -70,7 +46,7 @@
                         <div>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a th:href="@{/cust/cust_faq_order}">
                                         <img src="/images/cs/credit-card.png" alt="주문 / 결제">
                                     </a>
                                 </div>
@@ -80,7 +56,7 @@
                         <div>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a th:href="@{/cust/cust_faq_refund}">
                                         <img src="/images/cs/refund-alt.png" alt="취소 / 반품 / 환불">
                                     </a>
                                 </div>
@@ -90,7 +66,7 @@
                         <div>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a th:href="@{/cust/cust_faq_safe}">
                                         <img src="/images/cs/selling.png" alt="안전결제">
                                     </a>
                                 </div>
@@ -100,7 +76,7 @@
                         <div>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a th:href="@{/cust/cust_faq_deliver}">
                                         <img src="/images/cs/shipping-fast.png" alt="배송">
                                     </a>
                                 </div>
@@ -110,7 +86,7 @@
                         <div>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a th:href="@{/cust/cust_faq_user}">
                                         <img src="/images/cs/user-unlock.png" alt="회원">
                                     </a>
                                 </div>
@@ -120,7 +96,7 @@
                         <div>
                             <div>
                                 <div>
-                                    <a href="#">
+                                    <a th:href="@{/cust/cust_faq_event}">
                                         <img src="/images/cs/ticket2.png" alt="쿠폰 / 이벤트">
                                     </a>
                                 </div>
@@ -132,40 +108,16 @@
                 <section class="question">
                     <h3>
                         문의하기
-                        <a href="#" class="more">
+                        <a th:href="@{/cust/cust_question_user}" class="more">
                             <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
                         </a>
                     </h3>
                     <table>
-                        <tr>
-                            <td>[회원]</td>
-                            <td>개인회원과 법인회원의 차이가 있나요?</td>
-                            <td>ID</td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[회원]</td>
-                            <td>개인회원과 법인회원의 차이가 있나요?</td>
-                            <td>ID</td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[회원]</td>
-                            <td>개인회원과 법인회원의 차이가 있나요?</td>
-                            <td>ID</td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[회원]</td>
-                            <td>개인회원과 법인회원의 차이가 있나요?</td>
-                            <td>ID</td>
-                            <td>22.10.31</td>
-                        </tr>
-                        <tr>
-                            <td>[회원]</td>
-                            <td>개인회원과 법인회원의 차이가 있나요?</td>
-                            <td>ID</td>
-                            <td>22.10.31</td>
+                        <tr th:each="qna : ${qnas}">
+                            <td th:text="${qna.cate1}" style="font-weight: bold; color: darkred">카테고리</td>
+                            <td th:text="${qna.title}">제목</td>
+                            <td th:text="${qna.writer}">작성자</td>
+                            <td th:text="${qna.regDate}">등록일</td>
                         </tr>
                     </table>
                 </section>

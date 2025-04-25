@@ -7,57 +7,69 @@
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/cust/cust_aside.css">
-    <link rel="stylesheet" href="/style/cust/cust_article.css">
+    <link rel="stylesheet" href="/style/cust/cust_question_main.css">
+    <script src="/script/aside.js"></script>
 </head>
 <body>
-    <th:block th:include="~{/common/_header.html}"/>
+    <th:block th:insert="~{/common/_header.html}"/>
 
     <main>
         <section class="content clearfix">
-            <th:block th:include="~{/cust/cust_aside.html}"/>
-            <script src="/script/aside.js"></script>
+            <th:block th:insert="~{/cust/cust_aside.html}"/>
     
             <div class="main_content">
-                <h1>공지사항</h1>
+                <h1>문의하기</h1>
                 <section class="main_notice">
-                    <h3>
-                        전체
+                    <h3 th:switch="${cate1}">
+                        <span th:case="'member'">회원 문의</span>
+                        <span th:case="'event'">쿠폰/이벤트 문의</span>
+                        <span th:case="'order'">주문/결제 문의</span>
+                        <span th:case="'deliver'">배송 문의</span>
+                        <span th:case="'refund'">취소/반품/교환 문의</span>
+                        <span th:case="'travel'">여행/숙박/항공 문의</span>
+                        <span th:case="'safe'">안전거래 문의</span>
                     </h3>
                     <table>
-                        <tr th:each="notice, i : ${page.dtoList}">
-                            <td style="font-weight: bold; color: darkred">[[${notice.cate}]]</td>
-                            <td><a th:href="@{/cust/cust_notice_view(noticeNo=${notice.noticeNo})}">[[${notice.title}]]</a></td>
-                            <td></td>
-                            <td>[[${notice.regDate}]]</td>
+
+                        <tr th:each="article, i : ${page.dtoList}">
+                            <td style="font-weight: bold; color: darkred">[[${article.cate2}]]</td>
+                            <td><a th:href="@{/cust/cust_question_view(qnaNo=${article.qnaNo})}">[[${article.title}]]</a></td>
+                            <td th:text="${article.status}">답변여부</td>
+                            <td th:text="${article.writer}">작성자</td>
+                            <td th:text="${article.regDate}">작성일</td>
                         </tr>
                     </table>
                 </section>
+                <div class="write">
+                    <a th:href="@{/cust/cust_question_write}">문의하기</a>
+                </div>
+
 
                 <div class="page">
                     <div class="pageBtn">
                         <th:block th:if="${page.end > 0}">
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.start-2})}" class="prev">
+                                <a th:href="@{/cust/cust_question(cate1=${cate1}, pg=${page.start - 2})}" class="prev">
                                     <img src="/images/back-double.png">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.start-1})}" class="prev">
+                                <a th:href="@{/cust/cust_question(cate1=${cate1}, pg=${page.start - 1})}" class="prev">
                                     <img src="/images/back-single.png" class="single">
                                 </a>
                             </th:block>
 
                             <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                <a th:href="@{/cust/cust_question(cate1=${cate1}, pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
                             </th:block>
 
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.end+1})}" class="next">
+                                <a th:href="@{/cust/cust_question(cate1=${cate1}, pg=${page.end+1})}" class="next">
                                     <img src="/images/right-single.png" class="single">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.end+2})}" class="next">
+                                <a th:href="@{/cust/cust_question(cate1=${cate1}, pg=${page.end+2})}" class="next">
                                     <img src="/images/right-double.png">
                                 </a>
                             </th:block>
@@ -91,7 +103,7 @@
         
     </main>
 
-    <th:block th:include="~{/common/_footer.html}"/>
+    <th:block th:insert="~{/common/_footer.html}"/>
 </body>
 
 </html>

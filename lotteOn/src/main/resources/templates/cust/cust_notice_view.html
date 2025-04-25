@@ -20,18 +20,24 @@
             <div class="main_content">
                 <h1>공지사항</h1>
                 <section class="main_notice">
-                    <h3>
-                        고객서비스
+                    <h3 th:switch="${notice.cate}">
+                        <span th:case="'고객서비스'">고객서비스 안내</span>
+                        <span th:case="'안전거래'">안전거래 안내</span>
+                        <span th:case="'이벤트당첨'">이벤트당첨 안내</span>
+                        <span th:case="'위해상품'">위해상품 안내</span>
                     </h3>
                     <table>
                         <tr>
-                            <td><input readonly type="text" placeholder="TITLE"></td>
+                            <td><input readonly name="cate" type="text" th:value="${notice.cate}"></td>
                         </tr>
                         <tr>
-                            <td><input readonly type="text" placeholder="DATE"/></td>
+                            <td><input readonly name="title" type="text" th:value="${notice.title}"></td>
                         </tr>
                         <tr>
-                            <td><textarea readonly name="content" id="content">CONTENT</textarea></td>
+                            <td><input readonly name="regDate" type="text" th:value="${notice.regDate}"></td>
+                        </tr>
+                        <tr>
+                            <td><textarea readonly name="content" id="content">[[${notice.content}]]</textarea></td>
                         </tr>
                     </table>
                     <div class="list_page">
