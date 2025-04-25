@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
         findTitle.innerText = "비밀번호 찾기";
     });
 
-    idConfirm.addEventListener("click", function () {
-        idConfirm.type = "submit";
-    });
-
-    passConfirm.addEventListener("click", function () {
-        passConfirm.type = "submit";
-    });
+    // idConfirm.addEventListener("click", function () {
+    //     idConfirm.type = "submit";
+    // });
+    //
+    // passConfirm.addEventListener("click", function () {
+    //     passConfirm.type = "submit";
+    // });
 });

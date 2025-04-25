@@ -66,10 +66,27 @@ public class MemberController {
         return "/member/resultId";
     }
 
+    //회원 - 이름 존재 여부
+    @GetMapping("/checkName/{name}")
+    public ResponseEntity<Map<String, Boolean>> checkName(@PathVariable String name) {
+        Map<String, Boolean> response = new HashMap<>();
+        boolean exists= memberService.existsByName(name);
+        response.put("exists", exists);
+        return ResponseEntity.ok(response);
+    }
+
+    //회원 - 이메일 존재 여부
+    @GetMapping("/checkEmail/{email}")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@PathVariable String email) {
+        Map<String, Boolean> response = new HashMap<>();
+        boolean exists= memberService.existsByEmail(email);
+        response.put("exists", exists);
+        return ResponseEntity.ok(response);
+    }
 
     //회원 - 약관
-    @GetMapping("/signUp")
     //동의약관
+    @GetMapping("/signUp")
     public String signUp(Model model) {
         TermsDTO termsDTO= termsService.findTerms();
 
