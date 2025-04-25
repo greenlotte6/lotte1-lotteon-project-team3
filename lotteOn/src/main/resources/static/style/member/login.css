@@ -1,155 +1,177 @@
-*{
-    box-sizing: border-box;
+main {
+    height: 100%;
+}
+
+main > div > * {
+    width: 420px;
     margin: 0 auto;
 }
-main {
-    width: 1140px;
-    height: 1043px;
+
+.mainWrapper {
+    margin-top: 50px;
+    margin-bottom: 110px;
 }
-a {
-    text-decoration: none;
-    color: black;
+
+.mainWrapper > h2 {
+    padding: 50px 0px 48px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
 }
-h2 span {
-    display: block;
-    padding-bottom: 5px;
-    font-size: 35px;
-    font-weight: 400;
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 70px;
 }
-.main_content{
-    margin: 0px 270px;
-    padding: 70px 0px;
+
+.selectUser {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
-.login_content {
+
+label {
+    font-size: 14px;
+}
+
+label > input {
+    margin-bottom: 0px;
+}
+
+.selectUser label {
+    display: flex;
+    align-items: center;
+    margin-right: 14px;
+}
+
+.selectUser input {
+    appearance: none;
+    border: 1px solid #ddd;
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+}
+
+.selectUser input:checked {
+    background-color: #E60012;
+    background-image: url("../../images/checkbox_on.svg");
+    background-position: center;
+    background-size: cover;
+    border: none;
+    box-sizing: border-box;
+}
+
+.inputContainer > input {
+    outline: none;
+    border: 1px solid #ddd;
+    height: 50px;
+    padding-left: 12px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+}
+
+.inputContainer > input::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+
+.loginBtn {
+    border: none;
+    background: #E60012;
+    color: white;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.loginBtn:hover {
+    transition: 0.3s;
+    background: #d40012;
+}
+
+.loginOption {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    margin-top: 10px;
 }
-.login_form{
-    margin-top: 40px;
-}
-.type_here{
-    height: 110px;
-}
-.type_here input {
-    width: 420px;
-    height: 50px;
-    border-radius: 5px;
-    border: none;
-    background-color: #f5f5f5;
-    font-size: 16px;
-    padding: 0 16px;
-}
-.submit_btn{
-    padding-top: 20px;
-    padding-left: 2px;
-    padding-bottom: 10px;
-}
-.submit_btn input {
-    width: 420px;
-    height: 50px;
-    background-color: #ef2a23;
-    color: #ffffff;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
 
+.loginOption > a {
+    color: #999;
+    font-size: 14px;
 }
-.ad_image {
-    width: 270px;
-    height: 352px;
-    margin-left: 50px;
-}
-img {
-    border-radius: 10px;
-}
-.auto_login{
-    height: 29px;
-}
-.auto_login .save_id {
-    width: 120px;
-    display: inline-block;
-}
-.auto_login .checkbox {
-    width: 18px;
-    height: 18px;
-    border: 1px solid #bfbfbf;
-    box-sizing: border-box;
-    padding: 0;
-    border-radius: 0;
+
+#saveId {
     appearance: none;
+    border: 1px solid #ddd;
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+    box-sizing: border-box;
 }
-input[type=checkbox] + label {
-    display: inline-block;
-    vertical-align: top;
-    line-height: 19px;
-    font-size: 15px;
-}
-.auto_login .find {
-    float: right;
-    font-size: 15px;
-    padding: 0 5px;
-}
-.auto_login .find a {
-    color: #999999;
-}
-.quick_signUp{
-    margin: 100px 0px 0px;
-    padding: 30px 0px;
-    border-top: 1px solid #dfdfdf;
-    height: 171px;
-    text-align: center;
-}
-.quick_signUp button {
-    display: inline-block;
-    margin: 10px 20px;
-    padding-top: 58px;
-    width: 50px;
-    font-size: 15px;
-    background-repeat: no-repeat;
-    background-size: 50px 50px;
-    white-space: nowrap;
+
+#saveId:checked {
+    background-image: url("../../images/checkbox_on.svg");
+    background-position: center;
+    background-color: #E60012;
+    background-size: cover;
     border: none;
-    background-color: transparent;
+    box-sizing: border-box;
 }
+
+.loginOption label {
+    display: flex;
+}
+
+.easyLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding-top: 50px;
+    padding-bottom: 70px;
+}
+
+.easyLogin p {
+    font-size: 18px;
+}
+
+.easyLoginBtn {
+    display: flex;
+    margin-top: 20px;
+}
+
+.easyLoginBtn div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.easyLoginBtn button {
+    margin: 10px 10px;
+    width: 80px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: white;
+    border: none;
+    padding-top: 60px;
+    font-size: 14px;
+}
+
+.registerBtn {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ddd;
+    background: white;
+}
+
 .kakao {
-    background-image: url(/images/icon_easy_kakao.svg);
+    background-image: url("../../images/icon_easy_kakao.svg");
 }
+
 .naver {
-    background-image: url(/images/icon_easy_naver.svg);
+    background-image: url("../../images/icon_easy_naver.svg");
 }
+
 .identification {
-    background-image: url(/images/icon_easy_phone.svg);
-}
-.signup{
-    text-align: center;
-    margin-top: 50px;
-}
-.signup a{
-    color: #999999;
-    font-size: 13px;
-}
-a.signup {
-    color: black;
-    font-weight: 500;
-}
-.signup {
-    border: 1px solid #bfbfbf;
-    width: 420px;
-    height: 54px;
-    padding: 12px 0;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-.signup span {
-    font-weight: 600;
-    color: black;
-}
-.other_signUp{
-    height: 45px;
-    text-align: center;
-}
-.other_signUp a{
-    color: #999999;
-    font-size: 13px;
+    background-image: url("../../images/icon_easy_phone.svg");
 }
