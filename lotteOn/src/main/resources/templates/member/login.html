@@ -1,86 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>롯데ON 로그인 : 롯데ON</title>
-        <link rel="stylesheet" href="/style/member/login.css">
-        <script>
-            function checkUserType() {
-                // 선택된 userType 값 확인
-                var userType = document.querySelector("select[name='userType']").value;
-                console.log("userType selected:", userType);  // 선택된 userType 값 로그로 확인
-            }
-        </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </head>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 
-    <body>
-        <main>
-            <div class="login_page">
-                <div class="main_content">
-                    <h2>
-                        <span>로그인</span>
-                    </h2>
-                    <div class="login_content">
-                        <div class="login_form">
-                            <form method="post" onsubmit="checkUserType()">
-                                <section class="type_here">
-                                    <table border="0">
-                                        <tr>
-                                            <td>
-                                                <select name="userType">
-                                                    <option value="member">일반회원</option>
-                                                    <option value="seller">판매자회원</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="id" placeholder="아이디 또는 이메일 아이디"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="password" name="password" placeholder="8~15자리 영문+숫자+특수문자 조합"></td>
-                                        </tr>
-                                    </table>
-                                </section>
-                                <div class="submit_btn">
-                                    <input type="submit" value="로그인하기" class="login_btn">
-                                </div>
-                            </form>
-                            <div class="auto_login">
-                                <div class="save_id">
-                                    <label>
-                                        <input type="checkbox" class="check_box">
-                                        아이디 저장
-                                    </label>
-                                </div>
-                                <div class="find">
-                                    <a th:href="@{/member/findId}">아이디/비밀번호 찾기</a>
-                                </div>
-                            </div>
-                            <div class="quick_signUp">
-                                <p>간편하게 쇼핑 계속하기</p>
-                                <div>
-                                    <div class="buttons">
-                                        <button type="button" class="kakao">카카오</button>
-                                        <button type="button" class="naver">네이버</button>
-                                        <button type="button" class="identification"><p style="margin-left: -7px">본인인증</p></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="signup" style="margin-top: 30px">
-                                <a th:href="@{/member/join}">가입하기</a>
-                            </div>
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
 
+    <!-- Script -->
+    <script src="/script/checkUser.js"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/style/member/login.css"/>
+    <link rel="stylesheet" href="/style/common/_header.css"/>
+    <link rel="stylesheet" href="/style/common/_footer.css"/>
+    <title>로그인 : 롯데ON</title>
+</head>
+<body>
+<div id="container">
+    <th:block th:include="/common/_header.html"/>
+    <main>
+        <div class="mainWrapper">
+            <h2>로그인</h2>
+            <div class="mainContainer">
+                <form method="post">
+                    <div class="inputContainer">
+                        <div class="selectUser">
+                            <label for="checkMember">
+                                <input type="checkbox" name="userType" id="checkMember" value="member">
+                                일반
+                            </label>
+                            <label for="checkSeller">
+                                <input type="checkbox" name="userType" id="checkSeller" value="seller">
+                                사업자
+                            </label>
                         </div>
-                        <div class="ad_image">
-                            <a th:href="@{/}">
-                                <img src="/images/real.jpg" alt="광고">
-                            </a>
+                        <input type="text" name="id" placeholder="아이디를 입력하세요">
+                        <input type="password" name="password" placeholder="8~15자리 영문+숫자+특수문자 조합">
+                        <button class="loginBtn">로그인하기</button>
+                        <div class="loginOption">
+                            <label for="saveId">
+                                <input type="checkbox" id="saveId">
+                                아이디 저장
+                            </label>
+                            <a th:href="@{/member/findId}">아이디/비밀번호 찾기</a>
+                        </div>
+                    </div>
+                </form>
+                <div class="easyLogin">
+                    <p>간편하게 쇼핑 계속하기</p>
+                    <div class="easyLoginBtn">
+                        <div>
+                            <button type="button" class="kakao">카카오</button>
+                        </div>
+                        <div>
+                            <button type="button" class="naver">네이버</button>
+                        </div>
+                        <div>
+                            <button type="button" class="identification">본인인증</button>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <a th:href="@{/member/join}">
+                        <button class="registerBtn">가입하기</button>
+                    </a>
+                </div>
             </div>
-        </main>
-    </body>
+        </div>
+    </main>
+    <th:block th:include="/common/_footer.html"/>
+</div>
+</body>
 </html>
