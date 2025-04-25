@@ -1,5 +1,6 @@
 package kr.co.lotteOn.controller;
 
+import jakarta.validation.Valid;
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.dto.TermsDTO;
 import kr.co.lotteOn.service.SellerService;
@@ -7,6 +8,7 @@ import kr.co.lotteOn.service.TermsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -43,7 +45,11 @@ public class MemberController {
         return "/member/register";
     }
     @PostMapping("/register")
-    public String register(MemberDTO memberDTO) {
+    public String register(@Valid @ModelAttribute MemberDTO memberDTO,
+                           BindingResult result) {
+        if (result.hasErrors()) {
+            return "/member/register";
+        }
         memberService.register(memberDTO);
         return "redirect:/member/login";
     }

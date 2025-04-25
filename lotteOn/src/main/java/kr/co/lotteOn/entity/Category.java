@@ -32,7 +32,7 @@ public class Category {
     private Category parent;
 
     @Builder.Default
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Category> children = new ArrayList<>();
 }

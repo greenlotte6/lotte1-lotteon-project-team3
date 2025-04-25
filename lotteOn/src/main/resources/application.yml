@@ -1,11 +1,10 @@
 logging:
   level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
     root: info
+    kr.co.lotteOn: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
+
 mybatis:
   mapper-locations: classpath:mappers/**/*.xml
 
@@ -13,6 +12,7 @@ server:
   port: 8081
   servlet:
     context-path: /
+
 spring:
   servlet:
     multipart:
@@ -42,7 +42,7 @@ spring:
 
   devtools:
     restart:
-      enabled: true
+      enabled: false
     livereload:
       enabled: true
 

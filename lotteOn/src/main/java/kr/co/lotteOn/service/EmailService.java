@@ -24,6 +24,7 @@ public class EmailService {
 
     public String sendEmail(String to, HttpSession session) {
         String authCode = String.valueOf((int)(Math.random() * 900000) + 100000);
+        String key = "authCode:" + to.toLowerCase();
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
@@ -31,13 +32,25 @@ public class EmailService {
         message.setText("인증코드 : " + authCode);
         mailSender.send(message);
 
-        session.setAttribute("authCode:" + to, authCode);
+        session.setAttribute(key, authCode);
+        log.info("이메일 발송: {}, 코드: {}, 세션키: {}", to, authCode, key);
+        log.info("세션 ID (발송 시): {}", session.getId());
+        System.out.println(to);
+        System.out.println(authCode);
+        System.out.println(key);
+        System.out.println(session.getId());
         return authCode;
     }
 
-    public boolean verifyCode(String email, String inputCode, HttpSession session) {
-        String savedCode = (String) session.getAttribute("authCode:" + email);
-        return savedCode != null && savedCode.equals(inputCode);
+    public boolean verifyCode(String code, String email, HttpSession session) {
+        String key = "authCode:" + email.toLowerCase();
+        String savedCode = (String) session.getAttribute(key);
+        log.info("인증 요청 - 입력 코드: {}, 저장 코드: {}, 키: {}", code, savedCode, key);
+        log.info("세션 ID (검증 시): {}", session.getId());
+        System.out.println(code);
+        System.out.println(savedCode);
+        System.out.println(key);
+        return savedCode != null && savedCode.equals(code);
     }
 
 }
