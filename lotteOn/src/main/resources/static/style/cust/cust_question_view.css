@@ -47,10 +47,6 @@ main {
     width: 100%;
     border-spacing: 0;
 }
-.main_notice table tr:last-child td {
-    border-top: 1px solid #dfdfdf;
-    border-bottom: none;
-}
 .main_content table input{
     border: none;
     width: 90%;
@@ -65,10 +61,10 @@ main {
     /* 기타 스타일 */
     width: 90%;
     min-height: 600px;
-    padding: 10px;
     box-sizing: border-box;
     cursor: default;
     font-size: 18px;
+    padding-top: 10px;
 }
 .main_notice span {
     margin-left: -10px;
@@ -100,6 +96,7 @@ textarea:focus {
 }
 .answer_wait p{
     text-align: center;
+    padding: 50px;
 }
 
 .answer {

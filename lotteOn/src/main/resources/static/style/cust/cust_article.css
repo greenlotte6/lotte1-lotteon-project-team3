@@ -12,6 +12,10 @@ main {
     align-items: stretch; 
 }
 
+td{
+    height: 70px;
+}
+
 /*사이드바*/
 .content > .sidebar {
     width: 210px;
@@ -37,10 +41,9 @@ aside .item .dropdown {
     transition: max-height 0.3s ease;
     width: 100%;
 }
-aside .item:hover .dropdown {
-    max-height: 500px; /* 충분히 넉넉한 높이 */
+aside .item .dropdown.open {
+    max-height: 500px;
 }
-
 .dropdown a {
     box-sizing: border-box;
     display: block;
@@ -157,12 +160,15 @@ aside .item:hover .dropdown {
 }
 .main_content table {
     border-top: 3px solid #333333;
-    margin: 0 auto;
+    margin: 20px auto 0;
     width: 100%;
-    height: 1000px;
+    min-height: 100px;
     letter-spacing: 2px;
     border-spacing: 0;
-    margin-top: 20px;
+}
+
+.main_notice h3 {
+    margin-top: 10px;
 }
 .page {
     margin-top: 50px;
@@ -172,7 +178,45 @@ aside .item:hover .dropdown {
 .num{
     padding: 3px 8px;
     font-size: 17px;
-    font-weight: 500;
+}
+.pageBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top: 9px;
+    margin: 0 auto;
+}
+.pageBtn {
+    font-size: 17px;
+    width: 24px;
+    height: 32px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    top: 3px;
+}
+.pageBtn .single {
+    width: 15px;
+    height: 15px;
+}
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 5px 10px;
 }
 
 .smart_link div img {

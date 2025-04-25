@@ -75,9 +75,11 @@ main {
     margin-left: -10px;
     font-size: 18px;
 }
+.main_notice .list_page {
+    margin-top: 20px;
+}
 .list_page {
     background-color: #6d6c6c;
-    margin-top: 20px;
     width: 100px;
     padding: 15px;
     float: right;
@@ -89,6 +91,13 @@ main {
     color: white;
     font-weight: 300;
     margin-bottom: 20px;
+}
+.list_page input {
+    all: unset;
+    color: white;
+    padding: 0 15px;
+    font-weight: 300;
+    font-size: 18px;
 }
 input:focus,
 textarea:focus {

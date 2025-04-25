@@ -15,8 +15,7 @@ main {
 /*메인*/
 .main_content {
     float: right;
-    margin-top: 60px;
-    margin-left: 20px;
+    margin: 60px 0 30px 20px;
 }
 
 .main_content h1 {
@@ -37,11 +36,15 @@ main {
     font-size: 25px;
     padding: 5.3px 0;
 }
+.main_notice span {
+    font-size: 25px;
+    margin-top: 10px;
+}
+
 .main_content table {
     border-top: 3px solid #333333;
     border-bottom: 1px solid #333333;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
     width: 100%;
     border-spacing: 0;
 }
@@ -57,6 +60,7 @@ main {
     width: 90%;
     height: 50px;
     cursor: default;
+    padding-left: 10px;
 }
 .main_content table textarea{
     border: none;

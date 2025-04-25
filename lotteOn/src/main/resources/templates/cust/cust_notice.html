@@ -6,29 +6,27 @@
     <title>고객센터 메인</title>
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
-    <link rel="stylesheet" href="/style/cust/cust_aside.css">
     <link rel="stylesheet" href="/style/cust/cust_article.css">
+    <link rel="stylesheet" href="/style/cust/cust_aside.css">
+    <script src="/script/aside.js"></script>
 </head>
 <body>
-    <th:block th:include="~{/common/_header.html}"/>
+    <th:block th:insert="~{/common/_header.html}"/>
 
     <main>
         <section class="content clearfix">
-            <th:block th:include="~{/cust/cust_aside.html}"/>
-            <script src="/script/aside.js"></script>
+            <th:block th:insert="~{/cust/cust_aside.html}"/>
     
             <div class="main_content">
                 <h1>공지사항</h1>
                 <section class="main_notice">
-                    <h3>
-                        전체
-                    </h3>
+                    <h3 th:text="${cate}"></h3>
                     <table>
-                        <tr th:each="notice, i : ${page.dtoList}">
-                            <td style="font-weight: bold; color: darkred">[[${notice.cate}]]</td>
-                            <td><a th:href="@{/cust/cust_notice_view(noticeNo=${notice.noticeNo})}">[[${notice.title}]]</a></td>
+                        <tr th:each="article, i : ${page.dtoList}">
+                            <td th:text="${article.cate}" style="font-weight: bold; color: darkred">카테고리</td>
+                            <td><a th:href="@{/cust/cust_notice_view(noticeNo=${article.noticeNo})}">[[${article.title}]]</a></td>
                             <td></td>
-                            <td>[[${notice.regDate}]]</td>
+                            <td th:text="${article.regDate}">작성일</td>
                         </tr>
                     </table>
                 </section>
@@ -37,27 +35,27 @@
                     <div class="pageBtn">
                         <th:block th:if="${page.end > 0}">
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.start-2})}" class="prev">
+                                <a th:href="@{/cust/cust_notice(cate=${cate}, pg=${page.start - 2})}" class="prev">
                                     <img src="/images/back-double.png">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.start-1})}" class="prev">
+                                <a th:href="@{/cust/cust_notice(cate=${cate}, pg=${page.start - 1})}" class="prev">
                                     <img src="/images/back-single.png" class="single">
                                 </a>
                             </th:block>
 
                             <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                <a th:href="@{/cust/cust_notice(cate=${cate}, pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
                             </th:block>
 
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.end+1})}" class="next">
+                                <a th:href="@{/cust/cust_notice(cate=${cate}, pg=${page.end+1})}" class="next">
                                     <img src="/images/right-single.png" class="single">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/cust/cust_notice_main(pg=${page.end+2})}" class="next">
+                                <a th:href="@{/cust/cust_notice(cate=${cate}, pg=${page.end+2})}" class="next">
                                     <img src="/images/right-double.png">
                                 </a>
                             </th:block>
@@ -91,7 +89,7 @@
         
     </main>
 
-    <th:block th:include="~{/common/_footer.html}"/>
+    <th:block th:insert="~{/common/_footer.html}"/>
 </body>
 
 </html>
