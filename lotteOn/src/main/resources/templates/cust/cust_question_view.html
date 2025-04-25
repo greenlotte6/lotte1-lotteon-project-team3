@@ -83,6 +83,10 @@
                 <!-- 답변 대기 중일 때 -->
                 <section class="answer_wait" th:if="${qna.comment == null}">
                     <p>답변 대기중입니다.</p>
+
+                    <div class="list_page" style="background-color: #979797; ">
+                        <a th:href="@{/cust/cust_question(cate1=member)}">목록</a>
+                    </div>
                 </section>
 
                 <!-- 답변이 있을 때 -->
@@ -94,9 +98,15 @@
                         <div class="content">
                             <p th:text="${qna.comment}">답변내용</p>
                         </div>
+
+                        <div class="list_page" style="background-color: #979797; margin-top: 130px">
+                            <a th:href="@{/cust/cust_question(cate1=member)}">목록</a>
+                        </div>
                     </div>
                 </section>
-        
+            </div>
+
+        </section>
     </main>
 
     <th:block th:include="~{/common/_footer.html}"/>

@@ -1,5 +1,8 @@
 package kr.co.lotteOn.controller;
 
+import kr.co.lotteOn.dto.faq.FaqDTO;
+import kr.co.lotteOn.dto.faq.FaqPageRequestDTO;
+import kr.co.lotteOn.dto.faq.FaqPageResponseDTO;
 import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.notice.NoticePageRequestDTO;
 import kr.co.lotteOn.dto.notice.NoticePageResponseDTO;
@@ -89,7 +92,15 @@ public class CustController {
 
     //자주묻는질문 - 배송
     @GetMapping("/cust_faq_deliver")
-    public String faq_deliver(){
+    public String faq_deliver(Model model, FaqPageRequestDTO pageRequestDTO){
+        String cate1 = "delivery";
+
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        model.addAttribute("faq", pageResponseDTO.getDtoList());
+        model.addAttribute("page", pageResponseDTO);
+
+
         return "/cust/cust_faq_deliver";
     }
     //자주묻는질문 - 쿠폰/이벤트
@@ -118,9 +129,9 @@ public class CustController {
         return "/cust/cust_faq_travel";
     }
     //자주묻는질문 - 회원
-    @GetMapping("/cust_faq_user")
+    @GetMapping("/cust_faq")
     public String faq_user(){
-        return "/cust/cust_faq_user";
+      return "/cust/cust_faq_user";
     }
     //자주묻는질문 - 글보기
     @GetMapping("/cust_faq_view")
@@ -129,37 +140,8 @@ public class CustController {
     }
     /* ***************************자주묻는질문 끝*************************** */
 
-    //문의하기 - 배송
-    @GetMapping("/cust_question_deliver")
-    public String question_deliver(){
-        return "/cust/cust_question_deliver";
-    }
-    //문의하기 - 쿠폰/이벤트
-    @GetMapping("/cust_question_event")
-    public String question_event(){
-        return "/cust/cust_question_event";
-    }
-    //문의하기 - 주문/결제
-    @GetMapping("/cust_question_order")
-    public String question_order(){
-        return "/cust/cust_question_order";
-    }
-    //문의하기 - 취소/반품/교환
-    @GetMapping("/cust_question_refund")
-    public String question_refund(){
-        return "/cust/cust_question_refund";
-    }
-    //문의하기 - 안전거래
-    @GetMapping("/cust_question_safe")
-    public String question_safe(){
-        return "/cust/cust_question_safe";
-    }
-    //문의하기 - 여행/숙박/항공
-    @GetMapping("/cust_question_travel")
-    public String question_travel(){
-        return "/cust/cust_question_travel";
-    }
-    //문의하기 - 회원
+
+    //문의하기 - 리스트
     @GetMapping("/cust_question")
     public String question_user(Model model, QnaPageRequestDTO pageRequestDTO, @RequestParam(name = "cate1", required = true) String cate1) {
         QnaPageResponseDTO pageResponseDTO = custService.qnaFindAllByCate1(pageRequestDTO, cate1);

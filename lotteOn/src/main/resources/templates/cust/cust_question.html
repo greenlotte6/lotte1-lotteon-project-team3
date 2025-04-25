@@ -34,7 +34,7 @@
                         <tr th:each="article, i : ${page.dtoList}">
                             <td style="font-weight: bold; color: darkred">[[${article.cate2}]]</td>
                             <td><a th:href="@{/cust/cust_question_view(qnaNo=${article.qnaNo})}">[[${article.title}]]</a></td>
-                            <td th:text="${article.status}">답변여부</td>
+                            <td th:text="${#strings.isEmpty(article.comment) ? '답변대기중' : '답변완료'}">답변여부</td>
                             <td th:text="${article.writer}">작성자</td>
                             <td th:text="${article.regDate}">작성일</td>
                         </tr>

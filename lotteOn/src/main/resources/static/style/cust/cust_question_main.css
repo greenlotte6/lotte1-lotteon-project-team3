@@ -50,7 +50,6 @@ main {
     margin: 0 auto;
     width: 100%;
     height: auto;
-    letter-spacing: 2px;
     border-spacing: 0;
     margin-top: 20px;
 }
@@ -91,6 +90,23 @@ td {
     padding: 3px 8px;
     font-size: 17px;
     font-weight: 500;
+}
+
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
 }
 
 .onetoone div{

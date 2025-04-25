@@ -4,7 +4,7 @@
     const category2 = document.getElementById("sub");
 
     const subCategories = {
-    user: ["가입", "탈퇴", "회원정보", "로그인"],
+    member: ["가입", "탈퇴", "회원정보", "로그인"],
     event: ["쿠폰/할인혜택", "포인트", "제휴", "이벤트"],
     order: ["상품", "결제", "구매내역", "영수증/증빙"],
     deliver: ["배송상태/기간", "배송정보확인/변경", "해외배송", "당일배송", "해외직구"],
