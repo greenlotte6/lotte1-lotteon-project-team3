@@ -1,11 +1,15 @@
 package kr.co.lotteOn.service;
 
+import kr.co.lotteOn.dto.faq.FaqDTO;
+import kr.co.lotteOn.dto.faq.FaqPageRequestDTO;
+import kr.co.lotteOn.dto.faq.FaqPageResponseDTO;
 import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.notice.NoticePageRequestDTO;
 import kr.co.lotteOn.dto.notice.NoticePageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
+import kr.co.lotteOn.entity.Faq;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Notice;
 import kr.co.lotteOn.entity.Qna;
@@ -74,6 +78,8 @@ public class CustService {
         
     }
 
+    /* **************************공지사항 끝******************************/
+
     //문의하기 - 글보기
     public QnaDTO findQnaById(int qnaNo){
         Optional<Qna> optQna = qnaRepository.findById(qnaNo);
@@ -130,6 +136,42 @@ public class CustService {
 
         return savedQna.getQnaNo();
     }
+
+    /* **************************문의하기 끝******************************/
+
+    public FaqPageResponseDTO faqFindAllByCate1(FaqPageRequestDTO pageRequestDTO, String cate1){
+        Pageable pageable = pageRequestDTO.getPageable("faqNo");
+        Page<Faq> pageFaq = faqRepository.findAllByCate1(cate1, pageable);
+
+        List<FaqDTO> faqList = pageFaq
+                .getContent()
+                .stream()
+                .map(faq -> {
+                    FaqDTO faqDTO = modelMapper.map(faq, FaqDTO.class);
+                    faqDTO.setCate1(faq.getCate1());
+                    faqDTO.setWriter(faq.getWriter().getId());
+                    return faqDTO;
+                }).toList();
+
+        int total = (int) pageFaq.getTotalElements();
+
+        return FaqPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(faqList)
+                .total(total)
+                .build();
+
+    }
+
+
+
+
+
+
+
+
+    /* **************************자주묻는질문 끝******************************/
 
 
 }

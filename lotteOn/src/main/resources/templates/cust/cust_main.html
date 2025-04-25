@@ -115,7 +115,7 @@
                     <table>
                         <tr th:each="qna : ${qnas}">
                             <td th:text="${qna.cate1}" style="font-weight: bold; color: darkred">카테고리</td>
-                            <td th:text="${qna.title}">제목</td>
+                            <td><a th:href="@{/cust/cust_question_view(qnaNo=${qna.qnaNo})}">[[${qna.title}]]</a></td>
                             <td th:text="${qna.writer}">작성자</td>
                             <td th:text="${qna.regDate}">등록일</td>
                         </tr>
