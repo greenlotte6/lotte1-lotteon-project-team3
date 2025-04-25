@@ -38,6 +38,15 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    //이름 존재 여부 확인
+    public boolean existsByName(String name) {
+        return memberRepository.existsByName(name);
+    }
+    //이메일 존재 여부 확인
+    public boolean existsByEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
     @Transactional
     public void updateVisitDate(String memberId) {
         memberRepository.updateVisitDate(memberId);
