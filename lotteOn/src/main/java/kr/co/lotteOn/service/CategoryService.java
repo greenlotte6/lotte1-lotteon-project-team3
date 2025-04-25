@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,36 +31,87 @@ public class CategoryService {
     }
 
     /**
-     * 카테고리 저장 (전체 삭제 후 재삽입 방식)
+     * 카테고리 저장 (병합 방식: 삭제 X)
      */
     @Transactional
     public void saveAll(List<CategoryDTO> dtos) {
-        System.out.println("💾 저장할 카테고리 수: " + dtos.size());
-        categoryRepository.deleteAll();
+        log.info("💾 카테고리 저장 요청 수: {}", dtos.size());
+
+        List<Category> existing = categoryRepository.findAllWithChildren();
+        Map<Long, Category> existingMap = existing.stream()
+                .filter(c -> c.getCategoryId() != null)
+                .collect(Collectors.toMap(Category::getCategoryId, c -> c));
+
+        Set<Long> updatedIds = new HashSet<>();
 
         for (CategoryDTO parentDto : dtos) {
-            Category parent = Category.builder()
-                    .name(parentDto.getName())
-                    .depth(1)
-                    .sortOrder(0)
-                    .useYN("Y")
-                    .build();
-            System.out.println("▶ 저장할 1차: " + parent.getName());
+            // parent 매핑
+            Category parent = Optional.ofNullable(parentDto.getCategoryId())
+                    .map(existingMap::get)
+                    .orElseGet(() -> existing.stream()
+                            .filter(c -> c.getDepth() == 1 && c.getName().equals(parentDto.getName()))
+                            .findFirst()
+                            .orElse(Category.builder()
+                                    .depth(1)
+                                    .useYN("Y")
+                                    .children(new ArrayList<>())
+                                    .build()));
+
+            parent.setName(parentDto.getName());
+            parent.setSortOrder(parentDto.getSortOrder());
+            parent.setUseYN("Y");
+
+            // 자식 처리
+            List<Category> oldChildren = parent.getChildren() != null ? parent.getChildren() : new ArrayList<>();
+            List<Category> newChildren = new ArrayList<>();
+            Set<String> incomingChildNames = new HashSet<>();
 
             if (parentDto.getChildren() != null) {
                 for (CategoryDTO childDto : parentDto.getChildren()) {
-                    Category child = Category.builder()
-                            .name(childDto.getName())
-                            .depth(2)
-                            .sortOrder(0)
-                            .useYN("Y")
-                            .parent(parent)
-                            .build();
-                    parent.getChildren().add(child);
-                    System.out.println("  - 2차 추가: " + child.getName());
+                    Category child = oldChildren.stream()
+                            .filter(c -> c.getName().equals(childDto.getName()))
+                            .findFirst()
+                            .orElse(Category.builder()
+                                    .depth(2)
+                                    .useYN("Y")
+                                    .parent(parent)
+                                    .build());
+
+                    child.setName(childDto.getName());
+                    child.setSortOrder(childDto.getSortOrder());
+                    child.setUseYN("Y");
+
+                    newChildren.add(child);
+                    incomingChildNames.add(child.getName());
+
+                    if (child.getCategoryId() != null) {
+                        updatedIds.add(child.getCategoryId());
+                    }
                 }
             }
-            categoryRepository.save(parent); // Cascade 옵션으로 children도 같이 저장
+
+            // 기존 자식 중에서 누락된 건 useYN = 'N'
+            for (Category oldChild : oldChildren) {
+                if (!incomingChildNames.contains(oldChild.getName())) {
+                    oldChild.setUseYN("N");
+                    newChildren.add(oldChild);
+                }
+            }
+
+            parent.setChildren(newChildren);
+            Category savedParent = categoryRepository.save(parent);
+
+            if (savedParent.getCategoryId() != null) {
+                updatedIds.add(savedParent.getCategoryId());
+            }
+        }
+
+        // 기존 부모 중 누락된 것들 useYN = 'N'
+        for (Category cat : existing) {
+            if (!updatedIds.contains(cat.getCategoryId())) {
+                cat.setUseYN("N");
+                categoryRepository.save(cat);
+            }
         }
     }
 
@@ -83,3 +134,4 @@ public class CategoryService {
         return dto;
     }
 }
+
