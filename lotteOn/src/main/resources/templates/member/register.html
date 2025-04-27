@@ -2,109 +2,256 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>일반 회원가입</title>
+
     <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
+
+    <!-- Style -->
     <link rel="stylesheet" href="/style/member/register.css">
 
-    <!--주소js-->
+    <!-- Script -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/script/postcode.js"></script>
     <script src="/script/membervalidation.js"></script>
+    <script src="/script/validation.js"></script>
+    <script src="/script/changeForm.js"></script>
+
+    <title>회원가입 : 롯데ON</title>
 </head>
 <body>
-<div id="container">
-    <header>
-    </header>
+<div id="wrapper">
     <main>
-        <div class="mainLogo">
-            <a th:href="@{/}">
-                <img src="/images/logo_lotte-on.png">
-            </a>
-        </div>
-        <div class="sellerRegMain">
-            <article>
-                <h4>일반 회원가입</h4>
-            </article>
-            <!-- 아이디,비밀번호 테이블 -->
-            <form th:action="@{/member/register}" method="post">
-            <div class="fsttable">
-                <table>
-                    <tr>
-                        <th>아이디</th>
-                        <td>
-                            <input type="text" name="id" id="id" placeholder="아이디 입력">
-                            <p class="idMsg">영문, 숫자 4 ~ 12 자 설정</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td>
-                            <input type="password" id="password" name="password" placeholder="비밀번호 입력">
-                            <p class="pwMsg">영문, 숫자, 특수문자 8 ~ 12자 설정</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호 확인</th>
-                        <td><input type="password" id="password2" placeholder="비밀번호 재입력"></td>
-                    </tr>
-                </table>
+        <div class="mainWrapper">
+            <div>
+                <a th:href="@{/}">
+                    <img src="/images/logo_lotte-on.png" alt="로고" class="logo">
+                </a>
+                <h2>회원가입</h2>
             </div>
-            <!--기타 정보 입력-->
-            <div class="sectable">
-                <table>
-                    <tr>
-                        <th>이름</th>
-                        <td><input type="text" name="name" placeholder="이름 입력"></td>
-                    </tr>
-                    <tr>
-                        <th>성별</th>
-                        <td><input type="text" name="gender" placeholder="성별 입력"></td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>
-                            <input type="email" id="email" name="email" placeholder="이메일 입력">
-                            <button class="btn_email" type="button" onclick="sendEmail()">이메일 인증</button>
-                        </td>
-                    </tr>
-                    <tr id="emailCodeRow" style="display:none;">
-                        <th>인증코드</th>
-                        <td>
-                            <input type="text" id="emailCodeInput">
-                            <button type="button" class="accept" onclick="verifyEmailCode()">확인</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>휴대폰</th>
-                        <td>
-                            <input type="text" name="hp" placeholder="휴대폰 입력">
-                            <button type="button" class="btn_tel">휴대폰 인증</button>
-                        </td>
-                    <tr>
-                        <th>주소</th>
-                        <td class="address">
-                            <input type="text" id="postcode" name="zip" placeholder="우편번호 검색 클릭" onclick="execDaumpostcode()"><br>
-                            <input type="text" id="address" name="addr1" placeholder="기본주소 검색"><br>
+            <div class="mainContainer">
+                <div class="whoareyou">
+                    <button type="button" class="iamGeneral iam">일반회원</button>
+                    <button type="button" class="iamSeller">개인사업자</button>
+                </div>
+                <form th:action="@{/member/register}" method="post" class="generalForm Form">
+                    <div class="general">
+                        <div>
+                            <div class="paragraph">
+                                <p>아이디</p>
+                                <p class="idMsg msgs"></p>
+                            </div>
+                            <input type="text" name="id" id="id" placeholder="아이디 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>비밀번호</p>
+                                <p class="pwMsg msgs"></p>
+                            </div>
+                            <input type="password" name="password" id="password" placeholder="비밀번호 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>비밀번호 확인</p>
+                                <p class="pw2Msg msgs"></p>
+                            </div>
+                            <input type="password" id="password2" placeholder="비밀번호 재입력" required>
+                        </div>
+                        <div>
+                            <p>이름</p>
+                            <input type="text" name="name" placeholder="이름 입력" required>
+                        </div>
+                        <div>
+                            <p>성별</p>
+                            <div class="whatisyourgender">
+                                <label for="male">
+                                    <input type="radio" name="gender" id="male" value="남">남
+                                </label>
+                                <label for="female">
+                                    <input type="radio" name="gender" id="female" value="여">여
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>이메일</p>
+                                <p class="emailMsg msgs"></p>
+                            </div>
+                            <div class="emailBox mailBox">
+                                <input type="email" name="email" id="email" placeholder="이메일 입력" required>
+                                <button type="button" id="sendEmailBtn" onclick="sendEmail()" disabled>인증번호 요청</button>
+                            </div>
+                            <div class="emailBox codeBox">
+                                <input type="text" id="emailCodeInput" placeholder="인증코드 입력" required>
+                                <button type="button" onclick="verifyEmailCode()">확인</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>휴대폰</p>
+                                <p class="hpMsg msgs"></p>
+                            </div>
+                            <input type="text" name="hp" id="hp" placeholder="휴대폰 입력" required>
+                        </div>
+                        <div class="addressBox">
+                            <p>주소</p>
+                            <input type="text" id="postcode" name="zip" placeholder="우편번호 검색" onclick="generalDaumpostcode()" readonly><br>
+                            <input type="text" id="address" name="addr1" placeholder="기본주소 검색" readonly>
                             <input type="text" id="address2" name="addr2" placeholder="상세주소 입력">
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                        <div class="termsBox">
+                            <p>약관동의</p>
+                            <div>
+                                <label class="checkAll">
+                                    <input type="checkbox" name="all" class="termsCheck all1">
+                                    전체동의
+                                </label>
+                            </div>
+                            <div class="hr"></div>
+                            <div class="termsCheckBox">
+                                <div class="terms">
+                                    <input type="checkbox" name="one" class="termsCheck check1" required>
+                                    <span class="required">[필수]</span>
+                                    <a href="#">이용약관</a>
+                                </div>
+                                <div class="terms">
+                                    <input type="checkbox" name="two" class="termsCheck check1" required>
+                                    <span class="required">[필수]</span>
+                                    <a href="#">전자금융 이용약관</a>
+                                </div>
+                                <div class="terms">
+                                    <input type="checkbox" name="three" class="termsCheck check1" required>
+                                    <span class="required">[필수]</span>
+                                    <a href="#">개인정보 수집동의</a>
+                                </div>
+                                <div class="terms">
+                                    <input type="checkbox" name="four" class="termsCheck check1">
+                                    <span class="choice">[선택]</span>
+                                    <a href="#">위치정보 이용약관</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submitBox">
+                            <button type="submit" >가입하기</button>
+                        </div>
+                    </div>
+                </form>
+                <form th:action="@{/member/registerSeller}" method="post" class="sellerForm Form">
+                    <div class="seller">
+                        <div>
+                            <div class="paragraph">
+                                <p>아이디</p>
+                                <p class="sIdMsg msgs"></p>
+                            </div>
+                            <input type="text" name="sellerId" id="sellerId" placeholder="아이디 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>비밀번호</p>
+                                <p class="sPwMsg msgs"></p>
+                            </div>
+                            <input type="password" name="password" id="sellerPw" placeholder="비밀번호 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>비밀번호 확인</p>
+                                <p class="sPw2Msg msgs"></p>
+                            </div>
+                            <input type="password" name="password2" id="sellerPw2" placeholder="비밀번호 재입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>회사명</p>
+                                <p class="sCompanyMsg msgs"></p>
+                            </div>
+                            <input type="text" name="companyName" id="companyName" placeholder="회사명 입력" required>
+                        </div>
+                        <div>
+                            <p>이름(대표자명)</p>
+                            <input type="text" name="delegate" placeholder="이름 입력">
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>사업자 등록번호</p>
+                                <p class="sBusinessMsg msgs"></p>
+                            </div>
+                            <input type="text" name="businessNo" id="businessNo" placeholder="사업자 등록번호 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>통신판매업 번호</p>
+                                <p class="sCommunicationMsg msgs"></p>
+                            </div>
+                            <input type="text" name="communicationNo" id="communicationNo" placeholder="통신판매업 번호 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>전화번호</p>
+                                <p class="sHpMsg msgs"></p>
+                            </div>
+                            <input type="text" name="hp" id="sHp" placeholder="전화번호 입력" required>
+                        </div>
+                        <div>
+                            <div class="paragraph">
+                                <p>팩스</p>
+                                <p class="sFaxMsg msgs"></p>
+                            </div>
+                            <input type="text" name="fax" id="fax" placeholder="팩스 입력" required>
+                        </div>
+                        <div class="addressBox">
+                            <p>주소</p>
+                            <input type="text" id="sellerPostcode" name="zip" placeholder="우편번호 검색" onclick="sellerDaumpostcode()" readonly><br>
+                            <input type="text" id="sellerAddress" name="addr1" placeholder="기본주소 검색" readonly>
+                            <input type="text" id="sellerAddress2" name="addr2" placeholder="상세주소 입력">
+                        </div>
+                        <div class="termsBox">
+                            <p>약관동의</p>
+                            <div>
+                                <label class="checkAll">
+                                    <input type="checkbox" name="all" class="termsCheck all2">
+                                    전체동의
+                                </label>
+                            </div>
+                            <div class="hr"></div>
+                            <div class="termsCheckBox">
+                                <div class="terms">
+                                    <input type="checkbox" name="one" class="termsCheck check2" required>
+                                    <span class="required">[필수]</span>
+                                    <a href="#">이용약관</a>
+                                </div>
+                                <div class="terms">
+                                    <input type="checkbox" name="two" class="termsCheck check2" required>
+                                    <span class="required">[필수]</span>
+                                    <a href="#">전자금융 이용약관</a>
+                                </div>
+                                <div class="terms">
+                                    <input type="checkbox" name="three" class="termsCheck check2" required>
+                                    <span class="required">[필수]</span>
+                                    <a href="#">개인정보 수집동의</a>
+                                </div>
+                                <div class="terms">
+                                    <input type="checkbox" name="four" class="termsCheck check2">
+                                    <span class="choice">[선택]</span>
+                                    <a href="#">위치정보 이용약관</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submitBox">
+                            <button type="submit">가입하기</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="btnarea">
-                    <button type="submit">회원가입</button>
-            </div>
-            </form>
         </div>
     </main>
-    <footer>
-    </footer>
 </div>
 <script>
     function sendEmail() {
         const email = document.getElementById("email").value;
+        const sendEmailBtn = document.getElementById("sendEmailBtn");
+
         fetch("/member/email/send", {
             method: "POST",
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -112,13 +259,16 @@
         })
             .then(() => {
                 alert("이메일로 인증코드가 발송되었습니다.");
-                document.getElementById("emailCodeRow").style.display = "table-row";
+                document.querySelector(".codeBox").style.display = "flex";
+                sendEmailBtn.disabled = true;
+                sendEmailBtn.style.cursor = 'not-allowed';
             });
     }
 
     function verifyEmailCode() {
         const email = document.getElementById("email").value;
         const code = document.getElementById("emailCodeInput").value;
+        const emailMsg = document.querySelector('.emailMsg');
 
         fetch("/member/email/verify", {
             method: "POST",
@@ -129,9 +279,11 @@
             .then(res => res.json())
             .then(success => {
                 if (success) {
-                    alert("이메일 인증 완료");
+                    emailMsg.innerText = '이메일이 인증되었습니다';
+                    emailMsg.style.color = 'green';
                 } else {
-                    alert("인증코드가 틀렸습니다.");
+                    emailMsg.innerText = '인증코드가 일치하지 않습니다';
+                    emailMsg.style.color = '#E60012';
                 }
             });
     }
