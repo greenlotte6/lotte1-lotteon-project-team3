@@ -1,114 +1,41 @@
-/*
-document.addEventListener('DOMContentLoaded', function () {
-
-    const reUid = /^[a-z]+[a-z0-9]{3,11}$/; //4~12자
-    const rePass = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,12}$/;
-
-    let isIdOk = false;
-    let isPwOk = false;
-
-    const id = document.getElementById('id');
-    const password = document.getElementById('password');
-    const password2 = document.getElementById('password2');
-    const idMsg = document.querySelector('.idMsg');
-    const pwMsg = document.querySelector('.pwMsg');
-
-    let idTimeout = null;
-
-//아이디 실시간 유효성검사 및 중복체크
-    id.addEventListener('input', () => {
-        clearTimeout(idTimeout); //이전 타이머 제거
-        idTimeout = setTimeout(checkSellerId, 300);
-    });
-
-    async function checkSellerId() {
-        const value = id.value;
-
-        if (!reUid.test(value)) {
-            idMsg.innerText = '아이디는 영문으로 시작하는 4~12자여야 합니다.';
-            idMsg.style.color = 'red';
-            isIdOk = false;
-            return;
-        }
-        try {
-            const response = await fetch(`/member/check-member-id/${value}`);
-            const data = await response.json();
-
-            if (data.exists) {
-                idMsg.innerText = '이미 사용중인 아이디입니다.';
-                idMsg.style.color = 'red';
-                isIdOk = false;
-            } else {
-                idMsg.innerText = '사용 가능한 아이디입니다.';
-                idMsg.style.color = 'green';
-                isIdOk = true;
-            }
-        } catch (err) {
-            idMsg.innerText = '서버 오류';
-            idMsg.style.color = 'red';
-            isIdOk = false;
-        }
-    }
-
-//비밀번호 유효성 검사
-    password2.addEventListener('keyup', () => {
-        const pw1 = password.value;
-        const pw2 = password2.value;
-
-        if (!rePass.test(pw1)) {
-            pwMsg.innerText = '비밀번호는 영문+숫자+특수문자 포함 8~12자여야 합니다.';
-            pwMsg.style.color = 'red';
-            isPwOk = false;
-            return;
-        }
-
-        if (pw1 !== pw2) {
-            pwMsg.innerText = '비밀번호가 일치하지 않습니다.';
-            pwMsg.style.color = 'red';
-            isPwOk = false;
-        } else {
-            pwMsg.innerText = '사용 가능한 비밀번호입니다.';
-            pwMsg.style.color = 'green';
-            isPwOk = true;
-        }
-    });
-//회원가입 전송 시 유효성 검사
-    document.querySelector('form').addEventListener('submit', function (e) {
-        if (!isIdOk || !isPwOk || !reUid.test(id.value) || !rePass.test(password.value)){
-            e.preventDefault();
-            alert('입력값을 확인해주세요.');
-        }
-    });
-});
- */
-
 document.addEventListener('DOMContentLoaded', function () {
 
     const reUid = /^[a-z]+[a-z0-9]{3,11}$/;
     const rePass = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,12}$/;
+    const reEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     let isIdOk = false;
     let isPwOk = false;
+    let isEmailOk = false;
+    let isHpOk = false;
 
     const id = document.getElementById('id');
     const password = document.getElementById('password');
     const password2 = document.getElementById('password2');
+    const email = document.getElementById('email');
+    const hp = document.getElementById('hp');
+
     const idMsg = document.querySelector('.idMsg');
     const pwMsg = document.querySelector('.pwMsg');
+    const pw2Msg = document.querySelector('.pw2Msg');
+    const emailMsg = document.querySelector('.emailMsg');
+    const hpMsg = document.querySelector('.hpMsg');
 
     let idTimeout = null;
+    let emailTimeout = null;
+    let hpTimeout = null;
 
     id.addEventListener('input', () => {
         clearTimeout(idTimeout);
-        idTimeout = setTimeout(checkSellerId, 300);
+        idTimeout = setTimeout(checkId, 300);
     });
 
-    async function checkSellerId() {
+    async function checkId() {
         const value = id.value;
 
         if (!reUid.test(value)) {
-            idMsg.innerText = '아이디는 영문으로 시작하는 4~12자여야 합니다.';
-            idMsg.style.color = 'red';
+            idMsg.innerText = '아이디는 영문으로 시작하는 4~12자여야 합니다';
+            idMsg.style.color = '#E60012';
             isIdOk = false;
             return;
         }
@@ -118,45 +45,133 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
 
             if (data.exists) {
-                idMsg.innerText = '이미 사용중인 아이디입니다.';
-                idMsg.style.color = 'red';
+                idMsg.innerText = '이미 사용중인 아이디입니다';
+                idMsg.style.color = '#E60012';
                 isIdOk = false;
             } else {
-                idMsg.innerText = '사용 가능한 아이디입니다.';
-                idMsg.style.color = 'green';
+                idMsg.innerText = '';
                 isIdOk = true;
             }
         } catch (err) {
             idMsg.innerText = '서버 오류';
-            idMsg.style.color = 'red';
+            idMsg.style.color = '#E60012';
             isIdOk = false;
         }
     }
+
+    password.addEventListener('keyup', () => {
+        const pw1 = password.value;
+
+        if (!rePass.test(pw1)) {
+            pwMsg.innerText = '비밀번호는 영문+숫자+특수문자 포함 8~12자여야 합니다';
+            pwMsg.style.color = '#E60012';
+            isPwOk = false;
+            return;
+        } else {
+            pwMsg.innerText = '';
+        }
+
+    });
 
     password2.addEventListener('keyup', () => {
         const pw1 = password.value;
         const pw2 = password2.value;
 
-        if (!rePass.test(pw1)) {
-            pwMsg.innerText = '비밀번호는 영문+숫자+특수문자 포함 8~12자여야 합니다.';
-            pwMsg.style.color = 'red';
-            isPwOk = false;
-            return;
-        }
-
         if (pw1 !== pw2) {
-            pwMsg.innerText = '비밀번호가 일치하지 않습니다.';
-            pwMsg.style.color = 'red';
+            pw2Msg.innerText = '비밀번호가 일치하지 않습니다';
+            pw2Msg.style.color = '#E60012';
             isPwOk = false;
         } else {
-            pwMsg.innerText = '사용 가능한 비밀번호입니다.';
-            pwMsg.style.color = 'green';
+            pw2Msg.innerText = '';
             isPwOk = true;
         }
     });
 
+    email.addEventListener('input', () => {
+        clearTimeout(emailTimeout);
+        emailTimeout = setTimeout(checkEmail, 300);
+    });
+
+    async function checkEmail() {
+        const value = email.value;
+        const sendEmailBtn = document.getElementById("sendEmailBtn");
+
+        if (!reEmail.test(value)) {
+            emailMsg.innerText = '이메일 형식에 맞지 않습니다';
+            emailMsg.style.color = '#E60012';
+            sendEmailBtn.disabled = true;
+            sendEmailBtn.style.cursor = 'not-allowed';
+            isEmailOk = false;
+            return;
+        }
+
+        try {
+            const response = await fetch(`/member/checkEmail/${value}`);
+            const data = await response.json();
+
+            if (data.exists) {
+                emailMsg.innerText = '이미 사용중인 이메일입니다';
+                emailMsg.style.color = '#E60012';
+                sendEmailBtn.disabled = true;
+                sendEmailBtn.style.cursor = 'not-allowed';
+                isEmailOk = false;
+            } else {
+                emailMsg.innerText = '';
+                sendEmailBtn.disabled = false;
+                sendEmailBtn.style.cursor = 'pointer';
+                isEmailOk = true;
+            }
+        } catch (err) {
+            emailMsg.innerText = '서버 오류';
+            emailMsg.style.color = '#E60012';
+            sendEmailBtn.style.cursor = 'not-allowed';
+            isEmailOk = false;
+        }
+    }
+
+    hp.addEventListener('input', () => {
+        clearTimeout(hpTimeout);
+        hpTimeout = setTimeout(checkHp, 300);
+    });
+
+    async function checkHp() {
+        const value = hp.value;
+
+        try {
+            const response = await fetch(`/member/checkHp/${value}`);
+            const data = await response.json();
+
+            if (data.exists) {
+                hpMsg.innerText = '이미 사용중인 휴대폰 번호입니다';
+                hpMsg.style.color = '#E60012';
+                isHpOk = false;
+            } else {
+                hpMsg.innerText = '';
+                isHpOk = true;
+            }
+        } catch (err) {
+            hpMsg.innerText = '서버 오류';
+            hpMsg.style.color = '#E60012';
+            isHpOk = false;
+        }
+    }
+
+    hp.addEventListener('input', function(e) {
+        let number = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+
+        let phone = '';
+        if (number.length < 4) {
+            phone = number;
+        } else if (number.length < 8) {
+            phone = number.slice(0, 3) + '-' + number.slice(3);
+        } else {
+            phone = number.slice(0, 3) + '-' + number.slice(3, 7) + '-' + number.slice(7, 11);
+        }
+        e.target.value = phone;
+    });
+
     document.querySelector('form').addEventListener('submit', function (e) {
-        if (!isIdOk || !isPwOk || !reUid.test(id.value) || !rePass.test(password.value)) {
+        if (!isIdOk || !isPwOk || !isEmailOk || !isHpOk || !reUid.test(id.value) || !rePass.test(password.value)) {
             e.preventDefault();
             alert('입력값을 확인해주세요.');
         }

@@ -24,6 +24,26 @@ public class SellerService {
         return sellerRepository.existsBySellerId(sellerId);
     }
 
+    public boolean isCompanyNameExist(String companyName) {
+        return sellerRepository.existsByCompanyName(companyName);
+    }
+
+    public boolean isBusinessNoExist(String businessNo) {
+        return sellerRepository.existsByBusinessNo(businessNo);
+    }
+
+    public boolean isCommunicationNoExist(String communicationNo) {
+        return sellerRepository.existsByCommunicationNo(communicationNo);
+    }
+
+    public boolean isSHpExist(String hp) {
+        return sellerRepository.existsByHp(hp);
+    }
+
+    public boolean isFaxExist(String fax) {
+        return sellerRepository.existsByFax(fax);
+    }
+
     //판매자 등록
     public void register(SellerDTO sellerDTO) {
         //비밀번호 암호화

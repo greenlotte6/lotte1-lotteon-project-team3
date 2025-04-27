@@ -1,198 +1,248 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: "Pretendard Variable", Pretendard, sans-serif;
-    font-size: 16px;
-    color: #333;
-}
-
-a {
-    text-decoration: none;
-}
-
-ul,
-li {
-    list-style: none;
-}
-
 body {
-    min-width: 1200px;
-    height: 150vh;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
+
+main {
+    height: 100%;
+}
+
+main > div > * {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 80px 0;
+}
+
+.mainWrapper > div > h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+}
+
+.logo {
+    margin-bottom: 30px;
+    width: max-content;
+}
+
+.whoareyou {
+    display: flex;
+}
+
+.whoareyou > button {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+.iam {
+    background-color: #E60012 !important;
+    color: white;
+    border: none;
+}
+
+.Form {
+    margin-top: 30px;
+}
+
+.paragraph {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.msgs {
+    font-size: 12px !important;
+}
+
+.general p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.general input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    padding-left: 12px;
+    outline: none;
+}
+
+.whatisyourgender {
+    display: flex;
+    height: 50px;
+}
+
+.whatisyourgender label {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+.whatisyourgender input {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.whatisyourgender input:checked {
+    background-image: url("../../images/checkbox_on.svg");
+    background-color: #E60012;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+.emailBox {
+    display: flex;
+    gap: 8px;
+}
+
+.emailBox:nth-of-type(1) {
+    margin-bottom: 8px;
+}
+
+.codeBox {
+    display: none;
+    margin-top: 8px;
+}
+
+.mailBox button {
+    width: 140px;
+}
+
+.codeBox button {
+    width: 80px;
+}
+
+.emailBox button {
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+.addressBox input:not(:last-child) {
+    margin-bottom: 8px;
+}
+
+.submitBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.submitBox button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #E60012;
+    color: white;
+}
+
+.sellerForm {
+    display: none;
+}
+
+.seller p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.seller input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    padding-left: 12px;
+    outline: none;
+}
+
+.termsBox {
+    margin-top: 24px;
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+}
+
+.terms a {
+    font-size: 14px;
+    color: #444;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.terms span {
+    font-size: 14px;
+    margin-right: 6px;
+}
+
+.required {
+    color: #E60012;
+    font-weight: 500;
+}
+
+.choice {
+    color: #999 !important;
+    font-weight: 500;
+}
+
+.termsCheck {
+    appearance: none;
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 8px;
+    margin-top: 6px;
+}
+
+.termsCheck:checked {
+    background-image: url("../../images/checkbox_on.svg");
+    background-color: #E60012;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+.checkAll {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #111;
+}
+
+.termsCheckBox {
+    padding-left: 16px;
+}
+
+.hr {
+    border-bottom: 1px solid #ddd;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
 button {
-    all: unset;
     cursor: pointer;
 }
 
-/* --------------------- header --------------------- */
-/* --------------------- header --------------------- */
-/* --------------------- main --------------------- */
-
-#container {
-    margin: 0 auto;
-    width: 1200px;
-    height: auto;
-    box-sizing: border-box;
-    padding: 100px;
-}
-.mainLogo {
-    text-align: center;
-}
-.sellerRegMain {
-    width: 1000px;
-    height: auto;
-    margin: 0 auto;
-}
-article {
-    padding: 10px 0;
-    border-bottom: 2px solid #E60012;
-    margin-bottom: 10px;
-}
-.sellerRegMain h4 {
-    font-size: 25px;
-    font-weight: bold;
+input:-webkit-autofill {
+    background-color: #fff !important;
+    color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
-.fsttable {
-    width: 100%;
-    height: auto;
-    margin-bottom: 20px;
+#sendEmailBtn {
+    cursor: not-allowed;
 }
-.fsttable table {
-    border-top: 1px solid #999;
-    border-bottom: 1px solid #999;
-    width: 100%;
-    height: auto;
-    border-collapse: collapse;
-}
-.fsttable table th {
-    width: 160px;
-    height: 65px;
-    background-color: rgba(228, 228, 228, 0.31);
-}
-.fsttable table td {
-    padding: 10px;
-    display: flex;
-    border-bottom: 1px solid #eee;
-}
-.fsttable table tr:last-child td {
-    border-bottom: none;
-}
-.fsttable table td p {
-    margin-left: 15px;
-    position: relative;
-    top: 10px;
-}
-.fsttable table input {
-    padding: 10px;
-    border: 2px solid #ddd;
-}
-
-.sectable {
-    width: 100%;
-    height: auto;
-    margin-bottom: 40px;
-}
-.sectable table {
-    border-top: 1px solid #999;
-    border-bottom: 1px solid #999;
-    width: 100%;
-    height: auto;
-    border-collapse: collapse;
-}
-.sectable table th {
-    width: 160px;
-    height: 65px;
-    background-color: rgba(228, 228, 228, 0.31);
-}
-.sectable table td {
-    padding: 15px;
-    display: flex;
-    border-bottom: 1px solid #eee;
-    align-items: center;  /* 수직 정렬 */
-
-}
-.sectable table tr:last-child td {
-    border-bottom: none;
-}
-.sectable table td p {
-    margin-left: 15px;
-    position: relative;
-    top: 10px;
-}
-.sectable table td input {
-    padding: 10px;
-    border: 2px solid #ddd;
-
-}
-.accept {
-    position: relative;
-    top: 14px;
-    margin-left: 10px;
-}
-
-.sectable table td button {
-    width: 150px;  /* 버튼 너비 설정 */
-    height: 35px;  /* 버튼 높이 설정 */
-    background-color: #E60012;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    padding: 0;
-
-}
-
-.btn_email{
-    position: relative;
-    top: 13px;
-    left: 13px;
-    background-color: #558ed5 !important;
-    color: white;
-}
-
-.btn_tel{
-    position: relative;
-    top: 13px;
-    left: 13px;
-    background-color: #558ed5 !important;
-    color: white;
-}
-
-.address {
-    flex-direction: column;
-
-}
-.address input:nth-of-type(1) {
-    width: 210px;
-    height: 20px;
-    position: relative;
-    right: 290px;
-}
-.address input {
-    width: 410px;
-    height: 20px;
-    position: relative;
-    right: 190px;
-}
-.btnarea {
-    text-align: center;
-
-}
-button {
-    background-color: #E60012;
-    color: white;
-    width: 210px;
-    height: 20px;
-    text-align: center;
-    padding: 20px 0;
-    margin-bottom: 30px;
-    border-radius: 5px;
-}
-
-
-
-/* --------------------- main --------------------- */
