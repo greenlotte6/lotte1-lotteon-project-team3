@@ -44,6 +44,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Product saveProduct(ProductDTO dto) {
         Product product = new Product();
         product.setName(dto.getName());
@@ -126,6 +127,11 @@ public class ProductService {
         product.setViews(0);
         // 기존 옵션, 공지 제거 후 다시 세팅
         product.getOptions().clear();
+        
+        if (product.getNotice() != null) {
+            productNoticeRepository.delete(product.getNotice()); //기존 Notice 삭제
+            product.setNotice(null); //연결 끊기
+        }
         productDTO.getOptions().forEach(optDto -> {
             ProductOption option = ProductOption.builder()
                     .optionName(optDto.getOptionName())
@@ -151,13 +157,13 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO getProductByCode(String productCode) {
-        Product product = productRepository.findByProductCode(productCode)
+        Product product = productRepository.findWithCategoryByProductCode(productCode)
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
         return ProductDTO.fromEntity(product);
     }
 
     public void deleteProduct(String productCode) {
-        Product product = productRepository.findByProductCode(productCode)
+        Product product = productRepository.findWithCategoryByProductCode(productCode)
                 .orElseThrow(() -> new RuntimeException("상품 없음"));
         productRepository.delete(product);
     }
@@ -177,5 +183,25 @@ public class ProductService {
             };
         }
         return products.map(ProductDTO::fromEntity);
+    }
+    /*
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProductsByParentCategoryId(Long parentCategoryId) {
+        List<Category> subCategories = categoryRepository.findByParent_CategoryId(parentCategoryId);
+        List<Long> subCategoryIds = subCategories.stream()
+                .map(Category::getCategoryId)
+                .toList();
+        List<Product> products = productRepository.findByCategory_CategoryIdIn(subCategoryIds);
+        return products.stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+     */
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProductsByCategoryId(Long categoryId) {
+        List<Product> products = productRepository.findByCategory_CategoryId(categoryId);
+        return products.stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

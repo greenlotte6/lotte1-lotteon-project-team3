@@ -396,6 +396,42 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="productItem" th:each="product : ${products}">
+                        <div class="items">
+                            <a th:href="@{'/product/view/' + ${product.productCode}}">
+                                <img th:src="@{'/images/' + ${product.imageList}}" alt="상품">
+                            </a>
+                            <div class="descWrap">
+                                <a th:href="@{'/product/view/' + ${product.productCode}}" class="text">
+                                    <span class="bold" th:text="${product.companyName}"></span>
+                                    <span th:text="${product.name}"></span>
+                                </a>
+                                <div class="priceInfo">
+                                    <p class="discount" th:text="${product.discount + '%'}"></p>
+                                    <div class="price">
+                                        <!-- 할인 적용된 가격 -->
+                                        <p th:text="${#numbers.formatInteger((product.price * (100 - product.discount)) / 100, 3, 'COMMA')}"></p>
+                                        <span>원</span>
+                                    </div>
+                                    <div class="totalPrice">
+                                        <!-- 원래 가격 -->
+                                        <del>
+                                            <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
+                                            <span>원</span>
+                                        </del>
+                                    </div>
+                                </div>
+                                <div class="review">
+                                    <span class="starGrade"></span>
+                                    <span class="rating">4.8</span>
+                                    <div class="v-l"></div>
+                                    <span class="reviewInfo">리뷰</span>
+                                    <span class="reviewCount" th:text="${product.views}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
                     <div class="productItem">
                         <div class="items">
                             <a href="#">
@@ -867,6 +903,7 @@
                             </div>
                         </div>
                     </div>
+                    -->
                 </div>
             </div>
         </main>
