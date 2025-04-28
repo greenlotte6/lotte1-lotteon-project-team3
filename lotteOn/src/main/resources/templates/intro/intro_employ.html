@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회사소개 채용</title>
     <link rel="stylesheet" href="/style/intro/intro_employ.css">
-
+    <style>
+        .searchArea select{
+            height: 40px;
+            margin-bottom: 50px;
+        }
+        input[type="text"] {
+            height: 40px;
+            width: 250px;
+        }
+        input[type="submit"] {
+            height: 41px;
+            width: 60px;
+        }
+    </style>
 </head>
 <body>
-    <th:block th:include="/intro/_header.html"/>
+<th:block th:insert="~{/intro/_header.html}"/>
 
     <main>
         <div class="title">
@@ -23,71 +36,30 @@
         </div>
         <section class="list">
             <nav>
-                <form class="job_filter" onsubmit="handleSearch(event)">
-                    <select name="selection1">
-                        <option value="all1">전체 직군</option>
-                        <option value="IT">IT</option>
-                        <option value="UX">UX</option>
-                        <option value="marcketing">마케팅</option>
-                        <option value="sales">영업</option>
-                    </select>
-                    <select name="selection2">
-                        <option value="all1">전체 소속</option>
-                    </select>
-                    <select name="selection3">
-                        <option value="all1">전체 고용 형태</option>
-                        <option value="IT">정규직</option>
-                        <option value="UX">계약직</option>
-                        <option value="marcketing">인턴</option>
-                        <option value="sales">아르바이트</option>
-                        <option value="sales">프리랜스</option>
-                        <option value="sales">파견직</option>
-                        <option value="sales">일용직</option>
-                        <option value="sales">교육생</option>
-                    </select>
-                    <div class="search">
-                        <input type="text" name="keyword" placeholder="키워드 검색">
-                    </div>
-                </form>
+                <div class="searchArea">
+                    <form th:action="@{/intro/recruitSearch}">
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="cate">채용부서</option>
+                            <option value="employType">채용형태</option>
+                            <option value="title">제목</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <input type="submit" value="검색">
+                    </form>
+                </div>
             </nav>
-            <script>
-                function handleSearch(event) {
-                event.preventDefault(); // 폼 제출로 인한 새로고침 방지
-
-                const form = event.target;
-                const keyword = form.keyword.value.trim();
-
-                // 예: 키워드 출력
-                console.log('검색어:', keyword);
-
-                // 여기서 실제 검색 로직을 실행하면 됩니다
-
-                }  
-            </script>
 
             <section class="job_list">
-                <div class="job_item">
-                    <div class="job-info">
-                        <h3>가맹점 PAYMENT서비스 제휴 마케팅</h3>
-                        <p>마케팅 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
+                <div>
+                    <div class="job_item">
+                        <div class="job-info">
+                            <h3>가맹점 PAYMENT서비스 제휴 마케팅</h3>
+                            <p>마케팅 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
+                        </div>
+                        <div class="job_tag">상시 채용</div>
                     </div>
-                    <div class="job_tag">상시 채용</div>
                 </div>
-                <div class="job_item">
-                    <div class="job-info">
-                        <h3>키즈 온라인 MD</h3>
-                        <p>영업 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
-                    </div>
-                    <div class="job_tag">상시 채용</div>
-                </div>
-                <div class="job_item">
-                    <div class="job-info">
-                        <h3>가맹점 PAYMENT서비스 제휴 마케팅</h3>
-                        <p>마케팅 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
-                    </div>
-                    <div class="job_tag closed">채용 마감</div>
-                </div>
-
             </section>
                             
 
@@ -101,7 +73,7 @@
         </section>
     </main>
 
-    <th:block th:include="/intro/_footer.html"/>
+<th:block th:insert="~{/intro/_footer.html}"/>
     
 </body>
 </html>

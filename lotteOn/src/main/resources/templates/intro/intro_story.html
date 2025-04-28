@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회사소개 소식과이야기</title>
     <link rel="stylesheet" href="/style/intro/intro_story.css">
+    <style>
+        .image {
+            width: 100%;    /* 필요에 따라 조절 */
+            height: 200px;  /* 원하는 높이 설정 */
+            overflow: hidden;
+        }
+
+        .fit-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;      /* 비율 유지하면서 div에 꽉 채움 */
+            object-position: top;   /* 이미지를 div의 '위쪽'부터 채움 */
+        }
+    </style>
 </head>
 <body>
-    <th:block th:include="/intro/_header.html"/>
+<th:block th:insert="~{/intro/_header.html}"/>
 
     <main>
         <div class="title">
@@ -20,370 +34,140 @@
                 <li data-target="culture"><a href="#">기업문화</a></li>
                 <li data-target="interview"><a href="#">인터뷰</a></li>
                 <li data-target="recruit"><a href="#">채용</a></li>
-                <li data-target="lotteon"><a href="#">롯데ON</a></li>
+                <li data-target="lotteOn"><a href="#">롯데ON</a></li>
                 <li data-target="press"><a href="#">보도자료</a></li>
                 <li data-target="esg"><a href="#">ESG</a></li>
             </ul>
         </section>
         <section class="content">
             <div class="tab_content" id="all">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/move.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>NEW-START Day!</h2>
-                        <p>롯데ON이 새로운 공간에서 새롭게 출발합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/move.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>NEW-START Day!</h2>
-                        <p>롯데ON이 새로운 공간에서 새롭게 출발합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/move.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>NEW-START Day!</h2>
-                        <p>롯데ON이 새로운 공간에서 새롭게 출발합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/blog.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데ON 기술블로그 오픈</h2>
-                        <p>롯데ON을 만들어 가는 기술을 이야기합니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/blog.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데ON 기술블로그 오픈</h2>
-                        <p>롯데ON을 만들어 가는 기술을 이야기합니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/blog.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데ON 기술블로그 오픈</h2>
-                        <p>롯데ON을 만들어 가는 기술을 이야기합니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/banner1.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 IT개발 채용연계형 교육생을 모집합니다!</h2>
-                        <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/banner1.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 IT개발 채용연계형 교육생을 모집합니다!</h2>
-                        <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/banner1.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 IT개발 채용연계형 교육생을 모집합니다!</h2>
-                        <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/security.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 개인정보 중장기 목표</h2>
-                        <p>롯데쇼핑e커머스 정보보호정책 공유</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/security.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 개인정보 중장기 목표</h2>
-                        <p>롯데쇼핑e커머스 정보보호정책 공유</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/security.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 개인정보 중장기 목표</h2>
-                        <p>롯데쇼핑e커머스 정보보호정책 공유</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/july.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데 계열사 단독 혜택으로 똘똘 뭉친 롯데온 '월간 롯데'!</h2>
-                        <p>여름 휴가 준비는 '롯데'가 책임진다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/july.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데 계열사 단독 혜택으로 똘똘 뭉친 롯데온 '월간 롯데'!</h2>
-                        <p>여름 휴가 준비는 '롯데'가 책임진다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/july.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데 계열사 단독 혜택으로 똘똘 뭉친 롯데온 '월간 롯데'!</h2>
-                        <p>여름 휴가 준비는 '롯데'가 책임진다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/photo2.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>지속가능경영보고서</h2>
-                        <p>롯데쇼핑은 맨녀 경제,환경,사회,지배구조 부문에 대한 성과와 지속가능경영의 방향성을 담은 지속가능경영보고서를 발간 및 공개하고 있습니다.</p>
-                    </div>
-                </div>                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/photo2.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>지속가능경영보고서</h2>
-                        <p>롯데쇼핑은 맨녀 경제,환경,사회,지배구조 부문에 대한 성과와 지속가능경영의 방향성을 담은 지속가능경영보고서를 발간 및 공개하고 있습니다.</p>
-                    </div>
-                </div>                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/photo2.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>지속가능경영보고서</h2>
-                        <p>롯데쇼핑은 맨녀 경제,환경,사회,지배구조 부문에 대한 성과와 지속가능경영의 방향성을 담은 지속가능경영보고서를 발간 및 공개하고 있습니다.</p>
+                <div th:each="story : ${story}">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            
             <!-- 전체 끝 -->
+
             <div class="tab_content" id="culture" style="display: none;">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/IMG_6347-1024x768.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>말복 이벤트&Floor Meeting</h2>
-                        <p>8월 말복 이벤트&Floor Meeting 현장을 만나보아요</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/move.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>NEW-START Day!</h2>
-                        <p>롯데ON이 새로운 공간에서 새롭게 출발합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/blog.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데ON 기술블로그 오픈</h2>
-                        <p>롯데ON을 만들어 가는 기술을 이야기합니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/notitle1.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데e커머스 인턴 수료식</h2>
-                        <p>롯데 e커머스 인턴들의 3개월 간의 여정!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/missionboarding.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>IT/UX부문의 특별한 온보딩, Mission-Boarding을 소개합니다!</h2>
-                        <p>롯데 e커머스 IT/UX부문의 특별한 온보딩 두 번째, Pre-boarding을 소개합니다!</p>
+                <div th:each="story : ${story}" th:if="${story.cate} == 'culture'">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- 문화 끝 -->
 
             <div class="tab_content" id="interview" style="display: none;">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/why.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데e커머스 사람들 시리즈1</h2>
-                        <p>데이터는 거들뿐, 근본은 문제 해결이죠!</p>
+                <div th:each="story : ${story}" th:if="${story.cate} == 'interview'">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- 인터뷰 끝 -->
 
             <div class="tab_content" id="recruit" style="display: none;">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/001.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데e커머스에는 교복처럼 입는 옷이 있다?!</h2>
-                        <p>블라인드, 잡플래닛 등 인터넷 속 이야기들에 대해 가감없이 솔직하게 현직자가 직접 대답해 드립니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/notitle3.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데e커머스 채용이 궁금해요!</h2>
-                        <p>채용 담당자가 알려주는 롯데e커머스 채용 활용서</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/recruit.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데ON에서 쇼핑 좀 해 본 인재를 찾습니다!</h2>
-                        <p>롯데ON과 함께 성장하고 싶다면!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/banner1.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 IT개발 채용연계형 교육생을 모집합니다!</h2>
-                        <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/image1.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>메타버스 채용설명회에 초대합니다!</h2>
-                        <p>
-                            롯데e커머스 채용이 궁금하다면?<br>
-                            메타버스에서 만나요!
-                        </p>
+                <div th:each="story : ${story}" th:if="${story.cate} == 'recruit'">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- 채용 끝 -->
 
-            <div class="tab_content" id="lotteon" style="display: none;">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/security.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>2025년 개인정보 중장기 목표</h2>
-                        <p>롯데쇼핑e커머스 정보보호정책 공유</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/pc_onpt2005_01.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>지구를 위한 이로온 캠페인!</h2>
-                        <p>ESG 경영?! 어렵지 않아요. 롯데ON에 참여하여 200년 후 지구를 생각하세요.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/package-1511683_960_720.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>도심 속의 마이크로풀필먼트</h2>
-                        <p>퇴근길에 주문한 과일이, 바로 배송 된다구?!</p>
+            <div class="tab_content" id="lotteOn" style="display: none;">
+                <div th:each="story : ${story}" th:if="${story.cate} == 'lotteOn'">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- 롯데 끝 -->
 
             <div class="tab_content" id="press" style="display: none;">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/galaxywatch.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데온, '갤럭시워치 FE 골프패키지' 선착순 한정 판매</h2>
-                        <p>롯데온이 18일 '갤럭시워치 FE 골프패키지' 출시를 기념해 300명의 고객에게만 선착순</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/july.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>롯데 계열사 단독 혜택으로 똘똘 뭉친 롯데온 '월간 롯데'!</h2>
-                        <p>여름 휴가 준비는 '롯데'가 책임진다!</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/make-up.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>단독 뷰티 브랜드 '쿼터노트'로 2030 뷰티 팬(Fan) 잡는다!</h2>
-                        <p>이색 콘셉트로 SNS 뒤흔든 '쿼터노트'!</p>
+                <div th:each="story : ${story}" th:if="${story.cate} == 'press'">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- 보도자료 끝 -->
 
             <div class="tab_content" id="esg" style="display: none;">
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/privacy.png" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>[ESG활동] 롯데e커머스 개인 정보보호 활동</h2>
-                        <p>안심하고 지속적으로 이용할 수 있는 라이프스타일 플랫폼 구축</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <img src="/images/STORY/photo2.jpg" alt="">
-                    </div>
-                    <div class="article">
-                        <h2>지속가능경영보고서</h2>
-                        <p>롯데쇼핑은 맨녀 경제,환경,사회,지배구조 부문에 대한 성과와 지속가능경영의 방향성을 담은 지속가능경영보고서를 발간 및 공개하고 있습니다.</p>
+                <div th:each="story : ${story}" th:if="${story.cate} == 'esg'">
+                    <div class="card">
+                        <div class="image">
+                            <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+                        </div>
+                        <div class="article">
+                            <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}">
+                                <h2>[[${story.title}]]</h2>
+                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 280px">
+                                    [[${story.content}]]
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -413,7 +197,7 @@
         </script>
     </main>
 
-    <th:block th:include="/intro/_footer.html"/>
+<th:block th:insert="~{/intro/_footer.html}"/>
     
 </body>
 </html>

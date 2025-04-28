@@ -75,19 +75,6 @@ header {
     gap: 10px;
     margin-bottom: 30px;
 }
-.search {
-    display: inline-block;
-}
-.search input {
-    padding: 8px 35px 8px 10px; /* 아이콘 들어갈 공간 확보 */
-    background: url('../../images/search.svg') no-repeat right 10px center;
-    background-size: 16px 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    height: 42px;
-    font-size: 14px;
-    outline: none;
-}
 
 .job_filter select,
 .job_filter input {

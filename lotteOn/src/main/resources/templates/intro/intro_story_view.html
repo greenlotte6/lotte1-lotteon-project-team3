@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회사소개 소식과 이야기 blog</title>
+    <link rel="stylesheet" href="/style/intro/intro_story.css">
+    <style>
+        .imageMain {
+            width: 1000px;
+            height: 500px
+        }
+
+        .fit-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;      /* 비율 유지하면서 div에 꽉 채움 */
+            object-position: 50% 25%;   /* 이미지를 div의 '위쪽'부터 채움 */
+        }
+        .content {
+            margin-top: 30px;
+            letter-spacing: 2px;
+        }
+        .view {
+            padding: 70px;
+        }
+
+    </style>
+</head>
+<body>
+<th:block th:insert="~{/intro/_header.html}"/>
+
+<main>
+    <div class="imageMain">
+        <img th:src="@{'/images/STORY/' + ${story.imageMain}}" alt="이미지" class="fit-image">
+    </div>
+    <section class="view">
+        <h1 class="title">[[${story.title}]]</h1>
+        <p class="content">[[${story.content}]]</p>
+
+
+    </section>
+
+
+
+</main>
+
+<th:block th:insert="~{/intro/_footer.html}"/>
+
+</body>
+</html>

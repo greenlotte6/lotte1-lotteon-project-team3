@@ -28,7 +28,7 @@
     
 </head>
 <body>
-    <th:block th:include="/intro/_header.html"/>
+    <th:block th:insert="~{/intro/_header.html}"/>
 
     <main>
         <section class="main_image">
@@ -117,44 +117,19 @@
         </section>
         <section class="development">
             <h2>롯데ON은 이렇게 성장해가고 있어요.</h2>
-            <section class="article">
-                <span>2024.07</span>
-                <div>
-                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
-                    <a href="#" class="button">
-                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
-                    </a>
-                </div>
-            </section>
-            <section class="article">
-                <span>2024.07</span>
-                <div>
-                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
-                    <a href="#" class="button">
-                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
-                    </a>
-                </div>
-            </section>
-            <section class="article">
-                <span>2024.07</span>
-                <div>
-                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
-                    <a href="#" class="button">
-                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
-                    </a>
-                </div>
-            </section>
-            <section class="article">
-                <span>2024.07</span>
-                <div>
-                    <p>AI 기반 개인화추천형 광고 솔루션 '스마트매출업' 론칭!</p>
-                    <a href="#" class="button">
-                        <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
-                    </a>
-                </div>
-            </section>
+            <div th:each="story : ${stories}">
+                <section class="article">
+                    <span>[[${story.regDate}]]</span>
+                    <div>
+                        <p>[[${story.title}]]</p>
+                        <a th:href="@{/intro/intro_story_view(storyNo=${story.storyNo})}" class="button">
+                            <img src="/images/home_news-link-1-pkaauh054e9yyxsro4jq3mqv1i3vp54qi4ialoc780.png" alt="">
+                        </a>
+                    </div>
+                </section>
+            </div>
         </section>
-        <section class="flowchart">
+        <section class="flowchart" style="margin-top: 100px">
             <h2>
                 국내 최초의 온라인 종합 쇼핑몰로 출발해<br>
                 쇼핑 경험의 변화를 이끌어내고 있어요.
@@ -168,6 +143,6 @@
         </section>
     </main>
 
-    <th:block th:include="/intro/_footer.html"/>
+    <th:block th:insert="~{/intro/_footer.html}"/>
 </body>
 </html>

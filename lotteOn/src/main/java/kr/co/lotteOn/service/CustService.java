@@ -20,11 +20,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -139,29 +143,56 @@ public class CustService {
 
     /* **************************문의하기 끝******************************/
 
-    public FaqPageResponseDTO faqFindAllByCate1(FaqPageRequestDTO pageRequestDTO, String cate1){
-        Pageable pageable = pageRequestDTO.getPageable("faqNo");
+    public FaqPageResponseDTO faqFindAllByCate1(FaqPageRequestDTO pageRequestDTO, String cate1) {
+        // 기존 Pageable을 그대로 사용하지 않고, 이 메소드 내에서 새로 설정
+        Pageable pageable = PageRequest.of(0, 1000, Sort.by("faqNo").descending());  // 1000개까지 한 번에 조회
+
+        // cate1에 해당하는 FAQ를 조회
         Page<Faq> pageFaq = faqRepository.findAllByCate1(cate1, pageable);
 
-        List<FaqDTO> faqList = pageFaq
-                .getContent()
+        // 조회된 FAQ 데이터를 DTO로 변환
+        List<FaqDTO> faqList = pageFaq.getContent()
                 .stream()
                 .map(faq -> {
                     FaqDTO faqDTO = modelMapper.map(faq, FaqDTO.class);
                     faqDTO.setCate1(faq.getCate1());
+                    faqDTO.setCate2(faq.getCate2());
                     faqDTO.setWriter(faq.getWriter().getId());
                     return faqDTO;
-                }).toList();
+                })
+                .toList();
 
+        // cate1/cate2 복합 키로 그룹화
+        Map<String, List<FaqDTO>> groupedByCate1AndCate2 = faqList.stream()
+                .collect(Collectors.groupingBy(faqDTO -> faqDTO.getCate1() + "/" + faqDTO.getCate2()));
+
+        // 총 데이터 개수 계산
         int total = (int) pageFaq.getTotalElements();
 
-        return FaqPageResponseDTO
-                .builder()
+        // FaqPageResponseDTO 빌더로 객체 생성
+        FaqPageResponseDTO responseDTO = FaqPageResponseDTO.builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(faqList)
                 .total(total)
                 .build();
 
+        // 그룹화된 데이터 추가 주입
+        responseDTO.setGroupedByCate2(groupedByCate1AndCate2);
+
+        return responseDTO;
+    }
+
+    public FaqDTO findFaqById(int faqNo) {
+        Optional<Faq> optFaq = faqRepository.findById(faqNo);
+        if(optFaq.isPresent()){
+            Faq faq = optFaq.get();
+            FaqDTO faqDTO = modelMapper.map(faq, FaqDTO.class);
+            faqDTO.setWriter(faq.getWriter().getId());
+
+            return faqDTO;
+        }
+
+        return null;
     }
 
 

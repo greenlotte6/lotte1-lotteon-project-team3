@@ -11,22 +11,36 @@
     <script src="/script/aside.js"></script>
 </head>
 <body>
-    <th:block th:include="~{/common/_header.html}"/>
+    <th:block th:insert="~{/common/_header.html}"/>
 
     <main>
         <section class="content clearfix">
             <!--사이드바-->
-            <th:block th:include="~{/cust/cust_aside.html}"/>
+            <th:block th:insert="~{/cust/cust_aside.html}"/>
              
             <!--메인-->
             <div class="main_content">
                 <h1>자주묻는 질문</h1>
                 <section class="faq">
-                    <h3 style="font-size: 30px; border-bottom: 1px solid #dedede; margin:10px 0 30px 0">쿠폰/이벤트</h3>
-                    <h3>쿠폰/할인혜택</h3>
+                    <h3 style="font-size: 30px; border-bottom: 1px solid #dedede; margin:10px 0 30px 0">취소/반품/교환</h3>
+                    <h3>반품신청/철회</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '쿠폰/할인혜택'}">
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '반품신청/철회'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
+                                <td></td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
+                            </tr>
+                        </table>
+                        <button class="toggleBtn">더보기▼</button>
+                    </section>
+                </section>
+                
+                <section class="faq">
+                    <h3>반품정보확인/변경</h3>
+                    <section class="notice_block">
+                        <table class="noticeTable">
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '반품정보확인/변경'}">
                                 <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
                                 <td th:text="${faq.regDate}">22.10.31</td>
@@ -36,10 +50,10 @@
                     </section>
                 </section>
                 <section class="faq">
-                    <h3>포인트</h3>
+                    <h3>교환AS신청/철회</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '포인트'}">
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '교환AS신청/철회'}">
                                 <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
                                 <td th:text="${faq.regDate}">22.10.31</td>
@@ -49,23 +63,36 @@
                     </section>
                 </section>
                 <section class="faq">
-                    <h3>제휴</h3>
+                    <h3>교환정보확인/변경</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '제휴'}">
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '교환정보확인/변경'}">
                                 <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
                                 <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
-                    </section> 
+                    </section>
                 </section>
                 <section class="faq">
-                    <h3>이벤트</h3> 
+                    <h3>취소신청/철회</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '이벤트'}">
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '취소신청/철회'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
+                                <td></td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
+                            </tr>
+                        </table>
+                        <button class="toggleBtn">더보기▼</button>
+                    </section>
+                </section>
+                <section class="faq">
+                    <h3>취소확인/환불정보</h3>
+                    <section class="notice_block">
+                        <table class="noticeTable">
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '취소확인/환불정보'}">
                                 <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
                                 <td th:text="${faq.regDate}">22.10.31</td>
@@ -80,7 +107,7 @@
     </main>
 
     <!--푸터-->
-    <th:block th:include="~{/common/_footer.html}"/>
+    <th:block th:insert="~{/common/_footer.html}"/>
 
     <script src="/script/cust_faq.js"></script>
 </body>
