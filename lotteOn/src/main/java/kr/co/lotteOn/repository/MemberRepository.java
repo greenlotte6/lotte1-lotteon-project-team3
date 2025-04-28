@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
@@ -20,8 +21,9 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Query("UPDATE Member m SET m.visitDate = CURRENT_TIMESTAMP WHERE m.id = :id")
     void updateVisitDate(@Param("id") String id);
 
-
     boolean existsById(String id);
     boolean existsByHp(String hp);
     boolean existsByEmail(String email);
+
+    Optional<Member> findByName(String name);
 }
