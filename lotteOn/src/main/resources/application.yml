@@ -32,7 +32,7 @@ spring:
             enable: true
   application:
     name: lotteOn
-    version: 0.0.6-SNAPSHOT
+    version: 0.0.7-SNAPSHOT
 
   thymeleaf:
     prefix: classpath:/templates
