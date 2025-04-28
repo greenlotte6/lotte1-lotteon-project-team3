@@ -146,7 +146,7 @@ label > input {
     align-items: center;
 }
 
-.easyLoginBtn button {
+.easyLoginBtn button:not(.google) {
     margin: 10px 10px;
     width: 80px;
     background-repeat: no-repeat;
@@ -172,6 +172,16 @@ label > input {
     background-image: url("../../images/icon_easy_naver.svg");
 }
 
-.identification {
-    background-image: url("../../images/icon_easy_phone.svg");
+.google {
+    position: relative;
+    margin: 10px 10px;
+    width: 80px;
+    background-image: url("../../images/google_icon.svg");
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: white;
+    background-size: cover;
+    padding-top: 60px;
+    font-size: 14px;
+    border: none;
 }

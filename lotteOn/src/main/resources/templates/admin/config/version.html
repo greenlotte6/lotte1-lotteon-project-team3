@@ -57,17 +57,18 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h3>버전등록</h3>
-                <form>
+                <form th:action="@{/admin/config/version}" method="post">
                     <table>
                         <tr>
                             <th>버전</th>
-                            <td><input type="text" placeholder="버전 입력" class="vtxt"></td>
+                            <td><input type="text" name="versionId" placeholder="버전 입력" class="vtxt"></td>
                         </tr>
                         <tr>
                             <th>변경내역</th>
-                            <td><input type="text" placeholder="변경내역 입력" class="txt"></td>
+                            <td><input type="text" name="versionContent" placeholder="변경내역 입력" class="txt"></td>
                         </tr>
                     </table>
+                    <input type="hidden" name="writer" id="writer" th:value="${username}">
                     <div class="modalbtn">
                         <button type="submit">등록하기</button>
                     </div>
