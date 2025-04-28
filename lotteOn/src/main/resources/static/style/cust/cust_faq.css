@@ -36,6 +36,13 @@ main {
     margin-bottom: 20px;
 }
 
+.noticeTable {
+    padding: 10px;
+}
+.noticeTable td:nth-child(1) {
+    width: 650px;
+}
+
 .main_content h3 {
     display: flex;
     justify-content: space-between; /* 좌우 정렬 */

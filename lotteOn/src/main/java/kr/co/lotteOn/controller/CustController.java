@@ -15,6 +15,7 @@ import kr.co.lotteOn.service.AdminLotteService;
 import kr.co.lotteOn.service.CustService;
 import kr.co.lotteOn.service.TermsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/cust")
 @Controller
@@ -65,7 +67,7 @@ public class CustController {
         return "/cust/cust_notice_main";
     }
 
-    //공지사항 - 고객서비스
+    //공지사항 - 카테고리별 리스트
     @GetMapping("/cust_notice")
     public String notice_service(Model model, NoticePageRequestDTO pageRequestDTO,@RequestParam(name = "cate", required = true) String cate){
         NoticePageResponseDTO pageResponseDTO = custService.noticeFindAllByCate(pageRequestDTO, cate);
@@ -89,53 +91,129 @@ public class CustController {
     }
 
     /* ***************************공지사항 끝*************************** */
-
-    //자주묻는질문 - 배송
+    // 자주 묻는 질문 - 배송
     @GetMapping("/cust_faq_deliver")
-    public String faq_deliver(Model model, FaqPageRequestDTO pageRequestDTO){
-        String cate1 = "delivery";
+    public String faq_deliver(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "delivery";  // cate1은 "delivery"로 고정
 
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
         FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
 
-        model.addAttribute("faq", pageResponseDTO.getDtoList());
-        model.addAttribute("page", pageResponseDTO);
-
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
 
         return "/cust/cust_faq_deliver";
     }
-    //자주묻는질문 - 쿠폰/이벤트
+
+
+    // 자주 묻는 질문 - 쿠폰/이벤트
     @GetMapping("/cust_faq_event")
-    public String faq_event(){
+    public String faq_event(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "event";  // cate1은 "event"로 고정
+
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
+
         return "/cust/cust_faq_event";
     }
-    //자주묻는질문 - 주문/결제
+
+    // 자주 묻는 질문 - 주문/결제
     @GetMapping("/cust_faq_order")
-    public String faq_order(){
+    public String faq_order(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "order";  // cate1은 "order_payment"로 고정
+
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
+
         return "/cust/cust_faq_order";
     }
-    //자주묻는질문 - 취소/반품/교환
-    @GetMapping("/cust_faq_refund")
-    public String faq_refund(){
-        return "/cust/cust_faq_refund";
+
+    // 자주 묻는 질문 - 취소/반품/교환
+    @GetMapping("/cust_faq_cancel")
+    public String faq_refund(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "cancel";  // cate1은 "cancel"로 고정
+
+        log.info("cate1 : {}", cate1);
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        log.info("pageResponseDTO : {}", pageResponseDTO);
+
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
+
+        return "/cust/cust_faq_cancel";
     }
-    //자주묻는질문 - 안전거래
+
+    // 자주 묻는 질문 - 안전거래
     @GetMapping("/cust_faq_safe")
-    public String faq_safe(){
+    public String faq_safe(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "safe";  // cate1은 "safe_transaction"로 고정
+
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
+
         return "/cust/cust_faq_safe";
     }
-    //자주묻는질문 - 여행/숙박/항공
+
+    // 자주 묻는 질문 - 여행/숙박/항공
     @GetMapping("/cust_faq_travel")
-    public String faq_travel(){
+    public String faq_travel(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "travel";  // cate1은 "travel_accommodation_flight"로 고정
+
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
+
         return "/cust/cust_faq_travel";
     }
-    //자주묻는질문 - 회원
-    @GetMapping("/cust_faq")
-    public String faq_user(){
-      return "/cust/cust_faq_user";
+
+    // 자주 묻는 질문 - 회원
+    @GetMapping("/cust_faq_member")
+    public String faq_user(Model model, FaqPageRequestDTO pageRequestDTO) {
+        String cate1 = "member";  // cate1은 "user"로 고정
+
+        // 서비스에서 cate2별로 그룹화된 FAQ 항목 가져오기
+        FaqPageResponseDTO pageResponseDTO = custService.faqFindAllByCate1(pageRequestDTO, cate1);
+
+        // 그룹화된 데이터를 모델에 전달
+        model.addAttribute("faq", pageResponseDTO.getDtoList());  // 전체 FAQ 리스트
+        model.addAttribute("groupedByCate2", pageResponseDTO.getGroupedByCate2());  // cate2별로 그룹화된 FAQ 데이터
+        model.addAttribute("page", pageResponseDTO);  // 페이징 처리 정보
+
+        return "/cust/cust_faq_member";
     }
+
     //자주묻는질문 - 글보기
     @GetMapping("/cust_faq_view")
-    public String faq_view(){
+    public String faq_view(@RequestParam int faqNo, Model model){
+        FaqDTO faqDTO = custService.findFaqById(faqNo);
+
+        model.addAttribute("faq", faqDTO);
+        model.addAttribute("cate1", faqDTO.getCate1());
         return "/cust/cust_faq_view";
     }
     /* ***************************자주묻는질문 끝*************************** */

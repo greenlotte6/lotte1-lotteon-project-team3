@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/cust/cust_aside.css">
     <link rel="stylesheet" href="/style/cust/cust_faq.css">
-
 </head>
 <body>
-    <th:block th:include="~{/common/_header.html}"/>
+    <th:block th:insert="~{/common/_header.html}"/>
 
     <main>
         <section class="content clearfix">
             <!--사이드바-->
-            <th:block th:include="~{/cust/cust_aside.html}"/>
+            <th:block th:insert="~{/cust/cust_aside.html}"/>
              
             <!--메인-->
             <div class="main_content">
@@ -26,44 +25,24 @@
                         <h3>배송상태/기간</h3>
                         <section class="notice_block">
                             <table class="noticeTable">
-                                <tr>
-                                    <td>[안내]</td>
-                                    <td>해외결제사칭 문자주의</td>
+                                <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '배송상태/기간'}">
+                                    <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                     <td></td>
-                                    <td>22.10.31</td>
+                                    <td th:text="${faq.regDate}">22.10.31</td>
                                 </tr>
                             </table>
                             <button class="toggleBtn">더보기▼</button>
                         </section>
                 </section>
-                
+
                 <section class="faq">
                     <h3>배송정보확인/변경</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '배송정보확인/변경'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -73,31 +52,11 @@
                     <h3>해외배송</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '해외배송'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-
                         </table>
                         <button class="toggleBtn">더보기▼</button>
                     </section>
@@ -106,29 +65,10 @@
                     <h3>당일배송</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${page.dtoList}" th:if="${faq.cate2 == '당일배송'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}">[[${faq.title}]]</a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}" style="width: 100px; padding-left: 10px">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -138,29 +78,10 @@
                     <h3>해외직구</h3> 
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${page.dtoList}" th:if="${faq.cate2 == '해외직구'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}">[[${faq.title}]]</a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}" style="width: 100px; padding-left: 10px">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -171,7 +92,7 @@
     </main>
 
     <!--푸터-->
-    <th:block th:include="~{/common/_footer.html}"/>
+    <th:block th:insert="~{/common/_footer.html}"/>
     <script src="/script/cust_faq.js"></script>
     <script src="/script/aside.js" defer></script>
 </body>

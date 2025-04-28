@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자-상품목록</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <!--Style-->
+    <link rel="stylesheet" href="/style/admin/product/list.css"/>
+    <link rel="stylesheet" href="/style/admin/header.css">
+    <link rel="stylesheet" href="/style/admin/footer.css">
+    <link rel="stylesheet" href="/style/admin/adminaside.css">
+    <link rel="stylesheet" href="/style/admin/cs/storylist.css">
+    <!--JavaScript-->
+    <script src="/script/storyList.js"></script>
+    <script src="/script/aside.js"></script>
+</head>
+<body>
+<div id="container">
+    <th:block th:insert="~{/admin/_adminHeader}"/>
+    <main>
+        <th:block th:insert="~{/admin/_adminAside}"/>
+        <div class="adminMain">
+            <div class="mainTop">
+                <h4>소식과 이야기</h4>
+                <div><span>HOME > 고객센터 > <p>소식과이야기</p></span></div>
+            </div>
+            <div class="shopArea">
+                <div class="searchArea">
+                    <form th:action="@{/admin/cs/listSearch}">
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="title">제목</option>
+                            <option value="cate">카테고리</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <input type="submit" value="검색" style="background-color: #3f97f6; color: white; height: 42.47px; border: none">
+                    </form>
+                </div>
+                <table>
+                    <tr>
+                        <th>카테고리</th>
+                        <th>사진</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>관리</th>
+                    </tr>
+                    <tr th:each="story : ${story}" >
+                        <td th:text="${story.cate}">카테고리</td>
+                        <td><img th:src="@{'/images/STORY/' + ${story.imageMain}}"></td>
+                        <td>
+                            <button type="submit"
+                                    class="submitbtn"
+                                    th:attr = "data-type=${story.cate},
+                                            data-title=${story.title},
+                                            data-content=${story.content},
+                                            data-story-no=${story.storyNo}">[[${story.title}]]</button>
+                        </td>
+                        <td>[[${story.writer}]]</td>
+                        <td>[[${story.regDate}]]</td>
+                        <td>
+                            <form th:action="@{/admin/cs/storyDelete}" method="post" onsubmit="return confirmDelete()">
+                                <button type="submit" class="deletebtn" style="font-size: 12px">삭제</button>
+                                <input type="hidden" name="storyNo" th:value="${story.storyNo}">
+                            </form>
+                            <script>
+                                function confirmDelete() {
+                                    // 삭제 확인 메시지
+                                    return confirm("삭제하시겠습니까?");
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+                <div class="btnarea">
+                    <div class="pageBtn">
+                        <th:block th:if="${page.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/cs/searchList(pg=${page.start-2})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/cs/searchList(pg=${page.start-1})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/admin/cs/searchList(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
+
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/cs/searchList(pg=${page.end+1})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/cs/searchList(pg=${page.end+2})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
+                        </th:block>
+                    </div>
+                    <button class="regbutton" type="button">글 등록</button>
+                </div>
+
+            </div>
+        </div>
+        <div id="subModal" class="submodal">
+            <div class="submodal-content">
+                <span class="close">&times;</span>
+                <h3>글 작성하기</h3>
+                <form method="post" enctype="multipart/form-data" id="storyWriteForm">
+                    <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
+                    <div class="modalTable">
+                        <table class="fst">
+                            <tr>
+                                <th>카테고리</th>
+                                <td>
+                                    <div>
+                                        <select name="cate" style="width: 200px">
+                                            <option value="">선택</option>
+                                            <option value="culture">기업문화</option>
+                                            <option value="interview">인터뷰</option>
+                                            <option value="recruit">채용</option>
+                                            <option value="lotteOn">롯데ON</option>
+                                            <option value="press">보도자료</option>
+                                            <option value="esg">ESG</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="sec">
+                            <tr>
+                                <th>글제목</th>
+                                <td>
+                                    <div>
+                                        <input type="text" name="title" placeholder="글제목 입력" style="border: none">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>글내용</th>
+                                <td>
+                                    <div>
+                                        <textarea name="content" placeholder="내용 입력"class="writearea"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>이미지</th>
+                                <td>
+                                    <div>
+                                        <input type="file" name="imageMainFile" placeholder="선택된 파일 없음" style="width: 400px; border: none">
+                                        <p>크기 190x190<br>글 메인에 출력 될 이미지 입니다.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modalbtn">
+                        <button type="submit">등록하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="bannerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>글 보기</h3>
+                <form>
+                    <div class="modalTable">
+                        <table class="fst">
+                            <tr>
+                                <th>글제목</th>
+                                <td id="modalType"></td>
+                            </tr>
+                            <tr>
+                                <th>글내용</th>
+                                <td id="modalTitle"></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td id="modalContent"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modalbtn">
+                        <button>목록</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <th:block th:insert="~{/admin/_adminFooter}"/>
+</div>
+</body>
+</html>

@@ -9,32 +9,6 @@
     <link rel="stylesheet" href="/style/cust/cust_aside.css">
     <link rel="stylesheet" href="/style/cust/cust_question_view.css">
     <script src="/script/aside.js"></script>
-     <style>
-         .main_notice span {
-             font-size: 25px;
-             margin: 10px 0 0 10px;
-         }
-         td {
-             border-bottom: 1px solid #dfdfdf;
-             padding-left: 10px;
-         }
-         th {
-             border-bottom: 1px solid #dfdfdf;
-             width: 100px;
-             border-right: 3px solid #dfdfdf;
-         }
-         .answer p {
-             padding: 10px;
-         }
-         .answer .content p {
-             font-size: 18px;
-             font-weight: 500;
-         }
-         .answer .title span {
-             color: darkred;
-             font-size: 20px;
-         }
-     </style>
 </head>
 
 <body>
@@ -52,7 +26,7 @@
                         <span th:case="'event'">쿠폰/이벤트 안내</span>
                         <span th:case="'order'">주문/결제 안내</span>
                         <span th:case="'deliver'">배송 안내</span>
-                        <span th:case="'refund'">취소/반품/교환 안내</span>
+                        <span th:case="'cancel'">취소/반품/교환 안내</span>
                         <span th:case="'travel'">여행/숙박/항공 안내</span>
                         <span th:case="'safe'">안전거래 안내</span>
                     </h3>

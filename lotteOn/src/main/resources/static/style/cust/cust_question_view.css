@@ -70,6 +70,30 @@ main {
     margin-left: -10px;
     font-size: 18px;
 }
+.main_notice span {
+    font-size: 25px;
+    margin: 10px 0 0 10px;
+}
+td {
+    border-bottom: 1px solid #dfdfdf;
+    padding-left: 10px;
+}
+th {
+    border-bottom: 1px solid #dfdfdf;
+    width: 100px;
+    border-right: 3px solid #dfdfdf;
+}
+.answer p {
+    padding: 10px;
+}
+.answer .content p {
+    font-size: 18px;
+    font-weight: 500;
+}
+.answer .title span {
+    color: darkred;
+    font-size: 20px;
+}
 .list_page {
     background-color: #6d6c6c;
     margin-top: 20px;

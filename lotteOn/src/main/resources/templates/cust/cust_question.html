@@ -25,18 +25,21 @@
                         <span th:case="'event'">쿠폰/이벤트 문의</span>
                         <span th:case="'order'">주문/결제 문의</span>
                         <span th:case="'deliver'">배송 문의</span>
-                        <span th:case="'refund'">취소/반품/교환 문의</span>
+                        <span th:case="'cancel'">취소/반품/교환 문의</span>
                         <span th:case="'travel'">여행/숙박/항공 문의</span>
                         <span th:case="'safe'">안전거래 문의</span>
                     </h3>
                     <table>
-
                         <tr th:each="article, i : ${page.dtoList}">
                             <td style="font-weight: bold; color: darkred">[[${article.cate2}]]</td>
                             <td><a th:href="@{/cust/cust_question_view(qnaNo=${article.qnaNo})}">[[${article.title}]]</a></td>
                             <td th:text="${#strings.isEmpty(article.comment) ? '답변대기중' : '답변완료'}">답변여부</td>
                             <td th:text="${article.writer}">작성자</td>
                             <td th:text="${article.regDate}">작성일</td>
+                        </tr>
+                        <!-- 자료가 없을 때 "문의사항이 없습니다" 출력 -->
+                        <tr th:unless="${page.dtoList != null and !page.dtoList.isEmpty()}">
+                            <td colspan="5" style="text-align: center; font-weight: bold; color: darkred;">문의사항이 없습니다.</td>
                         </tr>
                     </table>
                 </section>

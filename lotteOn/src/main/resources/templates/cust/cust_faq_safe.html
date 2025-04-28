@@ -20,70 +20,16 @@
              
             <!--메인-->
             <div class="main_content">
-                <h1>자주묻는 질문<span>안전거래</span></h1>
+                <h1>자주묻는 질문</h1>
                 <section class="faq">
+                    <h3 style="font-size: 30px; border-bottom: 1px solid #dedede; margin:10px 0 30px 0">안전거래</h3>
                     <h3>서비스 이용규칙 위반</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '서비스 이용규칙 위반'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -94,29 +40,10 @@
                     <h3>지식재산권 침해</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '지식재산권침해'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -126,31 +53,11 @@
                     <h3>법령 및 정책위반 상품</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '법령 및 정책위반 상품'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-
                         </table>
                         <button class="toggleBtn">더보기▼</button>
                     </section>
@@ -159,29 +66,10 @@
                     <h3>게시물정책위반</h3>
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '게시물 정책위반'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -191,29 +79,10 @@
                     <h3>직거래/외부거래유도</h3> 
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '직거래/외부거래유도'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -223,29 +92,10 @@
                     <h3>표시광고</h3> 
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '표시광고'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>
@@ -255,29 +105,10 @@
                     <h3>청소년위해상품/이미지</h3> 
                     <section class="notice_block">
                         <table class="noticeTable">
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
+                            <tr th:each="faq : ${faq}" th:if="${faq.cate2 == '청소년 위해상품/이미지'}">
+                                <td><a th:href="@{/cust/cust_faq_view(faqNo=${faq.faqNo})}" th:text="${faq.title}"></a></td>
                                 <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내]</td>
-                                <td>해외결제사칭 문자주의</td>
-                                <td></td>
-                                <td>22.10.31</td>
+                                <td th:text="${faq.regDate}">22.10.31</td>
                             </tr>
                         </table>
                         <button class="toggleBtn">더보기▼</button>

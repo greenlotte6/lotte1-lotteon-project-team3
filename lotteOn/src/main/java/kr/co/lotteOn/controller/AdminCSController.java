@@ -1,6 +1,7 @@
 package kr.co.lotteOn.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteOn.dto.story.StoryDTO;
 import kr.co.lotteOn.dto.faq.FaqDTO;
 import kr.co.lotteOn.dto.faq.FaqPageRequestDTO;
 import kr.co.lotteOn.dto.faq.FaqPageResponseDTO;
@@ -13,16 +14,15 @@ import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
 import kr.co.lotteOn.dto.recruit.RecruitDTO;
 import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
 import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
+import kr.co.lotteOn.dto.story.StoryPageRequestDTO;
+import kr.co.lotteOn.dto.story.StoryPageResponseDTO;
 import kr.co.lotteOn.service.AdminCSService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -274,6 +274,59 @@ public class AdminCSController {
 
 
     /* *********************************채용정보 끝*************************************/
+
+    //소식과이야기 - 리스트
+    @GetMapping("/cs/list")
+    public String storyList(Model model, StoryPageRequestDTO pageRequestDTO) {
+        StoryPageResponseDTO pageResponseDTO = adminCSService.storyFindAll(pageRequestDTO);
+        List<StoryDTO> storyList = pageResponseDTO.getDtoList();
+
+        for (StoryDTO story : storyList) {
+            story.setCate(story.getCateName());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("story", pageResponseDTO.getDtoList());
+
+        return "/admin/cs/list";
+    }
+
+    //소식과이야기 - (검색)리스트
+    @GetMapping("/cs/listSearch")
+    public String search(Model model, StoryPageRequestDTO pageRequestDTO) {
+        StoryPageResponseDTO pageResponseDTO = adminCSService.storyFindAll(pageRequestDTO);
+        List<StoryDTO> storyList = pageResponseDTO.getDtoList();
+        for (StoryDTO story : storyList) {
+            story.setCate(story.getCateName());
+        }
+        model.addAttribute("page", pageResponseDTO);
+
+        return "/admin/cs/searchList";
+    }
+
+
+    //소식과이야기 - 글작성
+    @PostMapping("/cs/list")
+    public String storyWrite(@ModelAttribute StoryDTO storyDTO) {
+        adminCSService.saveStory(storyDTO);
+
+        return "redirect:/admin/cs/list";
+    }
+    //소식과이야기 - (검색)글작성
+    @PostMapping("/cs/listSearch")
+    public String storyWriteInSearch(@ModelAttribute StoryDTO storyDTO) {
+        adminCSService.saveStory(storyDTO);
+
+        return "redirect:/admin/cs/list";
+    }
+
+
+    @PostMapping("/cs/storyDelete")
+    public String storyDelete(@ModelAttribute StoryDTO storyDTO){
+        adminCSService.storyDelete(storyDTO);
+
+        return "redirect:/admin/cs/list";
+    }
 
 
 }

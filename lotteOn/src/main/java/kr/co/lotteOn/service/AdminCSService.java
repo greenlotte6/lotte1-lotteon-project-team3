@@ -1,5 +1,6 @@
 package kr.co.lotteOn.service;
 
+import kr.co.lotteOn.dto.story.StoryDTO;
 import kr.co.lotteOn.dto.faq.FaqDTO;
 import kr.co.lotteOn.dto.faq.FaqPageRequestDTO;
 import kr.co.lotteOn.dto.faq.FaqPageResponseDTO;
@@ -12,6 +13,8 @@ import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
 import kr.co.lotteOn.dto.recruit.RecruitDTO;
 import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
 import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
+import kr.co.lotteOn.dto.story.StoryPageRequestDTO;
+import kr.co.lotteOn.dto.story.StoryPageResponseDTO;
 import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +39,7 @@ public class AdminCSService {
     private final RecruitRepository recruitRepository;
     private final NoticeRepository noticeRepository;
     private final FaqRepository faqRepository;
+    private final StoryRepository storyRepository;
 
     /*공지사항 - 글 리스트 출력하기*/
     public NoticePageResponseDTO noticeFindAll(NoticePageRequestDTO pageRequestDTO) {
@@ -279,7 +282,6 @@ public class AdminCSService {
         Pageable pageable = qnaPageRequestDTO.getPageable("qnaNo");
 
         Page<Qna> pageQna = qnaRepository.searchAllForList(pageable);
-        log.info("pageQna: {}", pageQna);
 
         List<QnaDTO> qnaList = pageQna
                 .getContent()
@@ -435,6 +437,83 @@ public class AdminCSService {
 
 
     /*****************************************채용 끝***********************************/
+
+    //소식과 이야기 - 글 출력하기
+    public StoryPageResponseDTO storyFindAll(StoryPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("storyNo");
+        Page<Story> pageStory = storyRepository.searchAllForList(pageable);
+
+        List<StoryDTO> storyList = pageStory
+                .getContent()
+                .stream()
+                .map(story -> {
+                    StoryDTO storyDTO = modelMapper.map(story, StoryDTO.class);
+
+                    storyDTO.setWriter(story.getWriter().getId());
+
+                    return storyDTO;
+                }).toList();
+
+        int total = (int) pageStory.getTotalElements();
+        return StoryPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(storyList)
+                .total(total)
+                .build();
+
+    }
+
+    //소식과 이야기 - (검색)리스트
+    public StoryPageResponseDTO storyFindAllByCate(StoryPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("storyNo");
+        Page<Story> pageStory = storyRepository.searchAllForCate(pageRequestDTO, pageable);
+
+        List<StoryDTO> storyList = pageStory
+                .getContent()
+                .stream()
+                .map(story -> {
+                    StoryDTO storyDTO = modelMapper.map(story, StoryDTO.class);
+                    storyDTO.setWriter(story.getWriter().getId());
+
+                    return storyDTO;
+                }).toList();
+        int total = (int) pageStory.getTotalElements();
+
+        return StoryPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(storyList)
+                .total(total)
+                .build();
+    }
+
+    //소식과 이야기 - 글 등록하기
+    public Story saveStory(StoryDTO storyDTO){
+
+        Member member = Member.builder()
+                .id(storyDTO.getWriter())
+                .build();
+
+        Story story = modelMapper.map(storyDTO, Story.class);
+        story.setWriter(member);
+
+        story.setImageMain(storyDTO.getImageMainFile().getOriginalFilename());
+
+        Story storySaved = storyRepository.save(story);
+
+        return storySaved;
+    }
+
+    //소식과 이야기 - 글 삭제하기
+    @Transactional
+    public void storyDelete(StoryDTO storyDTO){
+        Story story = storyRepository.findById(storyDTO.getStoryNo()).get();
+        storyRepository.delete(story);
+    }
+
+
+
 
 
 

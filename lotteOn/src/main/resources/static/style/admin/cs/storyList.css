@@ -1,0 +1,69 @@
+
+.searchArea input {
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+}
+textarea {
+    width: 650px;
+    min-height: 500px;
+    resize: none;
+    border: none;
+}
+.submitbtn {
+    white-space: nowrap;         /* 텍스트를 한 줄로 표시 */
+    overflow: hidden;            /* 넘치는 텍스트는 숨김 */
+    text-overflow: ellipsis;     /* 넘치는 텍스트가 있을 경우 '...'으로 표시 */
+    text-align: left;            /* 텍스트 왼쪽 정렬 */
+    width: 300px;
+    padding: 5px 0;
+}
+.deletebtn {
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    padding: 6px 12px;
+    height: auto;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+table {
+    border-top: none;
+    border-bottom: none;
+}
+table tr {
+    border-bottom: none;
+}
+table td {
+    border-bottom: 2px solid #dddddd;
+}
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+}
+.submodal table tr{
+    border-top: 1px solid #dfdfdf;
+}
+.btnarea .pageBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top: 9px;
+    margin: 0 auto;
+}

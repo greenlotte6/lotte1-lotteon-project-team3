@@ -21,17 +21,25 @@
             <div class="main_content">
                 <h1>자주묻는 질문</h1>
                 <section class="main_notice">
-                    <h3>회원</h3>
+                    <h3 th:switch="${faq.cate1}">
+                        <span th:case="'member'">회원 안내</span>
+                        <span th:case="'event'">쿠폰/이벤트 안내</span>
+                        <span th:case="'order'">주문/결제 안내</span>
+                        <span th:case="'cancel'">취소/반품/교환 안내</span>
+                        <span th:case="'delivery'">배송 안내</span>
+                        <span th:case="'travel'">여행/숙박/항공 안내</span>
+                        <span th:case="'safe'">안전거래 안내</span>
+                    </h3>
                     <table>
                         <tr>
-                            <td><input readonly type="text" placeholder="TITLE"></td>
+                            <td><input readonly type="text" th:value="${faq.title}"></td>
                         </tr>
                         <tr>
-                            <td><textarea readonly name="content" id="content" style="min-height: 400px;">CONTENT</textarea></td>
+                            <td><textarea readonly name="content" id="content" style="min-height: 400px;">[[${faq.content}]]</textarea></td>
                         </tr>
                     </table>
                     <div class="list_page">
-                        <a th:href="@{/cust/cust_faq_user}">목록</a>
+                        <a th:href="@{'/cust/cust_faq_' + ${faq.cate1}}">목록</a>
                     </div>
                     
                 </section>

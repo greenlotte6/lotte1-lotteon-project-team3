@@ -1,4 +1,4 @@
-package kr.co.lotteOn.dto.faq;
+package kr.co.lotteOn.dto.story;
 
 
 import lombok.AllArgsConstructor;
@@ -7,18 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FaqPageResponseDTO {
+public class StoryPageResponseDTO {
 
+    private List<StoryDTO> dtoList;
 
-    private List<FaqDTO> dtoList;
-
-    private String cate1;
-    private String cate2;
+    private String cate;
     private int pg;
     private int size;
     private int total;
@@ -30,18 +27,13 @@ public class FaqPageResponseDTO {
     private String searchType;
     private String keyword;
 
-    //추가필드
-    private Map<String, List<FaqDTO>> groupedByCate2;
-
     @Builder
-    public FaqPageResponseDTO(FaqPageRequestDTO pageRequestDTO, List<FaqDTO> dtoList, int total,  Map<String, List<FaqDTO>> groupedByCate2) {
-        this.cate1 = pageRequestDTO.getCate1();
-        this.cate2 = pageRequestDTO.getCate2();
+    public StoryPageResponseDTO(StoryPageRequestDTO pageRequestDTO, List<StoryDTO> dtoList, int total) {
+        this.cate = pageRequestDTO.getCate();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();
         this.total = total;
         this.dtoList = dtoList;
-        this.groupedByCate2 = groupedByCate2;
 
         //search
         this.searchType = pageRequestDTO.getSearchType();
@@ -57,6 +49,5 @@ public class FaqPageResponseDTO {
         this.next = total > this.end * this.size;
 
     }
-
 }
 
