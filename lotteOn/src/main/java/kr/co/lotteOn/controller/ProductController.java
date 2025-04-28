@@ -1,16 +1,33 @@
 package kr.co.lotteOn.controller;
 
+import kr.co.lotteOn.dto.ProductDTO;
+import kr.co.lotteOn.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RequestMapping("/product")
 @Controller
+@RequiredArgsConstructor
 public class ProductController {
+
+    private final ProductService productService;
 
     //상품 - 목록
     @GetMapping("/list")
-    public String list(){
+    public String productList(@RequestParam(name = "categoryId", required = false) Long categoryId, Model model) {
+        List<ProductDTO> products;
+        if (categoryId != null) {
+            products = productService.getProductsByCategoryId(categoryId);
+        }else {
+            products = productService.getAllProducts();
+        }
+        model.addAttribute("products", products);
         return "/product/list";
     }
 

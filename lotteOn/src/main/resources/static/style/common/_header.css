@@ -283,3 +283,21 @@ button {
     font-weight: 700;
     font-size: 18px;
 }
+
+
+
+
+
+.sub-category {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+    padding-left: 15px;
+}
+.sub-category li {
+    margin-top: 5px;
+}
+.sub-category a {
+    font-size: 14px;
+    color: #333;
+}

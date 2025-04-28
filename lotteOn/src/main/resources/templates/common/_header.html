@@ -35,21 +35,8 @@
                     <p class="burgerMenu icon2"></p>
                     <p>카테고리</p>
                     <div class="categories">
-                        <ul>
-                            <li><a th:href="@{/product/list}">뷰티</a></li>
-                            <li><a th:href="@{/product/list}">여성패션</a></li>
-                            <li><a th:href="@{/product/list}">남성패션</a></li>
-                            <li><a th:href="@{/product/list}">럭셔리</a></li>
-                            <li><a th:href="@{/product/list}">유아동</a></li>
-                            <li><a th:href="@{/product/list}">스포츠/레저</a></li>
-                            <li><a th:href="@{/product/list}">식품</a></li>
-                            <li><a th:href="@{/product/list}">생활건강</a></li>
-                            <li><a th:href="@{/product/list}">컴퓨터/게임/모바일</a></li>
-                            <li><a th:href="@{/product/list}">가전</a></li>
-                            <li><a th:href="@{/product/list}">가구/인테리어</a></li>
-                            <li><a th:href="@{/product/list}">자동차/공구</a></li>
-                            <li><a th:href="@{/product/list}">반려동물</a></li>
-                            <li><a th:href="@{/product/list}">취미/문구/도서</a></li>
+                        <ul id="dynamicCategoryList">
+                            <!-- 여기에 1차 카테고리 목록을 JS로 추가 -->
                         </ul>
                     </div>
                 </div>
@@ -68,4 +55,71 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryList = document.getElementById('dynamicCategoryList');
+
+            fetch('/api/categories')
+                .then(res => res.json())
+                .then(categories => {
+                    categories.forEach(cat => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                    <a href="#" class="first-category" data-children='${JSON.stringify(cat.children)}'>
+                        ${cat.name}
+                    </a>
+                `;
+                        categoryList.appendChild(li);
+                    });
+
+                    document.querySelectorAll('.first-category').forEach(firstCat => {
+                        firstCat.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const parentLi = firstCat.parentElement;
+                            const existingSubUl = parentLi.querySelector('.sub-category');
+
+                            if (existingSubUl) {
+                                // 닫기 (슬라이드 업)
+                                existingSubUl.style.height = existingSubUl.scrollHeight + 'px';
+                                requestAnimationFrame(() => {
+                                    existingSubUl.style.height = '0';
+                                });
+                                existingSubUl.addEventListener('transitionend', () => {
+                                    existingSubUl.remove();
+                                }, { once: true });
+                                return;
+                            }
+
+                            const childrenData = JSON.parse(firstCat.dataset.children || '[]');
+                            if (childrenData.length > 0) {
+                                const subUl = document.createElement('ul');
+                                subUl.classList.add('sub-category'); // 스타일 줄 때 사용
+                                childrenData.forEach(child => {
+                                    const subLi = document.createElement('li');
+                                    subLi.innerHTML = `
+                                <a href="/product/list?categoryId=${child.categoryId}">
+                                    ${child.name}
+                                </a>
+                            `;
+                                    subUl.appendChild(subLi);
+                                });
+                                parentLi.appendChild(subUl);
+
+                                // 열기 (슬라이드 다운)
+                                subUl.style.height = '0';
+                                requestAnimationFrame(() => {
+                                    subUl.style.height = subUl.scrollHeight + 'px';
+                                });
+                                subUl.addEventListener('transitionend', () => {
+                                    subUl.style.height = 'auto';
+                                }, { once: true });
+                            }
+                        });
+                    });
+                })
+                .catch(err => {
+                    console.error('카테고리 불러오기 실패:', err);
+                });
+        });
+    </script>
 </header>

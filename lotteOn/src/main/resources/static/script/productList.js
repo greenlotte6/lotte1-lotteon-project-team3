@@ -1,84 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 옵션 테이블 동적 추가
-    const setupOptionAdd = (tableId, btnId, counterStart = 1) => {
-        const table = document.getElementById(tableId);
-        const button = document.getElementById(btnId);
-        let count = counterStart;
 
-        button.addEventListener('click', () => {
-            count++;
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <th>옵션${count}</th>
-                <td><div><input type="text" name="options[${count}].optionName" placeholder="옵션${count} 입력"></div></td>
-                <th>옵션${count} 항목</th>
-                <td><div><input type="text" name="options[${count}].optionValue" placeholder="옵션${count} 항목 입력"></div></td>
-            `;
-            table.appendChild(newRow);
-        });
-    };
-
-    setupOptionAdd('optionTable', 'addOptionBtn');
-    setupOptionAdd('optionsecTable', 'addsecOptionBtn');
-
-    // 모달 제어 함수
-    /*
-    const setupModal = (openSelector, modalId, closeSelector) => {
-        const modal = document.getElementById(modalId);
-
-        document.querySelector(openSelector).addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
-
-        document.querySelector(closeSelector).addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    };
-     */
-    const setupModal = (openSelector, modalId, closeSelector) => {
-        const modal = document.getElementById(modalId);
-        const openBtn = document.querySelector(openSelector);
-        const closeBtn = document.querySelector(closeSelector);
-
-        if (!modal || !openBtn || !closeBtn) {
-            console.warn(`❗ Modal setup skipped: selector not found`, { openSelector, closeSelector, modalId });
-            return;
-        }
-
-        openBtn.addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
-
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    };
-
+    /* ✅ 등록 모달 열기 */
     setupModal('.regbutton', 'bannerModal', '.modal .close');
-    setupModal('.modbutton', 'subModal', '.submodal .close');
 
-    // 수정 모달 열기
+    /* ✅ 수정 모달 열기 */
     document.querySelectorAll('.modbutton').forEach(button => {
         button.addEventListener('click', () => {
             const tr = button.closest('tr');
             const productCode = tr.querySelector('td:nth-child(3)').innerText;
-            console.log("productCode:", productCode)
+            console.log("✅ 수정 productCode:", productCode);
 
             fetch(`/admin/product/edit/code/${productCode}`)
                 .then(res => res.json())
                 .then(product => {
+                    console.log('✅ 불러온 product:', product);
+
                     const modal = document.getElementById('subModal');
                     modal.style.display = 'block';
 
@@ -91,9 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelector('#subModal input[name="point"]').value = product.point;
                     document.querySelector('#subModal input[name="stock"]').value = product.stock;
                     document.querySelector('#subModal input[name="deliveryFee"]').value = product.deliveryFee;
-                    document.querySelector('#subModal input[name="imageListFile"]').value = product.imageListFile;
-                    document.querySelector('#subModal input[name="imageMainFile"]').value = product.imageMainFile;
-                    document.querySelector('#subModal input[name="imageDetailFile"]').value = product.imageDetailFile;
 
                     if (product.notice) {
                         document.querySelector('#subModal input[name="notice.prodStatus"]').value = product.notice.prodStatus;
@@ -103,45 +36,69 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.querySelector('#subModal input[name="notice.origin"]').value = product.notice.origin;
                     }
 
+                    // 옵션 세팅
                     const table = document.getElementById('optionsecTable');
                     table.innerHTML = '';
 
                     if (!product.options || product.options.length === 0) {
-                        // 기본 1줄
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                                            <th>옵션1</th>
-                                            <td><div><input type="text" name="options[0].optionName" placeholder="옵션1 입력"></div></td>
-                                            <th>옵션1 항목</th>
-                                            <td><div><input type="text" name="options[0].optionValue" placeholder="옵션1 항목 입력"></div></td>
-                                        `;
+                            <th>옵션1</th>
+                            <td><div><input type="text" name="options[0].optionName" placeholder="옵션1 입력"></div></td>
+                            <th>옵션1 항목</th>
+                            <td><div><input type="text" name="options[0].optionValue" placeholder="옵션1 항목 입력"></div></td>
+                        `;
                         table.appendChild(row);
                     } else {
                         product.options.forEach((opt, i) => {
-                            console.log("product:", product); // ← 먼저 찍어봐
-                            console.log("product.options:", product.options); // ← 이게 undefined인지 확인
                             const row = document.createElement('tr');
                             row.innerHTML = `
-            <th>옵션${i + 1}</th>
-            <td><div><input type="text" name="options[${i}].optionName" value="${opt.optionName}" placeholder="옵션${i + 1} 입력"></div></td>
-            <th>옵션${i + 1} 항목</th>
-            <td><div><input type="text" name="options[${i}].optionValue" value="${opt.optionValue}" placeholder="옵션${i + 1} 항목 입력"></div></td>
-        `;
+                                <th>옵션${i + 1}</th>
+                                <td><div><input type="text" name="options[${i}].optionName" value="${opt.optionName}" placeholder="옵션${i + 1} 입력"></div></td>
+                                <th>옵션${i + 1} 항목</th>
+                                <td><div><input type="text" name="options[${i}].optionValue" value="${opt.optionValue}" placeholder="옵션${i + 1} 항목 입력"></div></td>
+                            `;
                             table.appendChild(row);
                         });
                     }
+
+                    // 카테고리 세팅
+                    setTimeout(() => {
+                        const firstSelect = document.getElementById('category3');
+                        const secondSelect = document.getElementById('category4');
+
+                        const allFirstOptions = firstSelect.options;
+                        for (let i = 0; i < allFirstOptions.length; i++) {
+                            const opt = allFirstOptions[i];
+                            const children = JSON.parse(opt.dataset.children || '[]');
+                            const findChild = children.find(child => child.categoryId == product.categoryId);
+
+                            if (findChild) {
+                                firstSelect.selectedIndex = i;
+                                secondSelect.innerHTML = '<option>2차 분류 선택</option>';
+                                children.forEach(child => {
+                                    const option = document.createElement('option');
+                                    option.value = child.categoryId;
+                                    option.textContent = child.name;
+                                    secondSelect.appendChild(option);
+                                });
+                                secondSelect.value = product.categoryId;
+                                break;
+                            }
+                        }
+                    }, 300);
                 });
         });
     });
+
+    /* ✅ 삭제 버튼 */
     document.querySelectorAll('.delete').forEach(button => {
         button.addEventListener('click', () => {
             const tr = button.closest('tr');
             const productCode = tr.querySelector('td:nth-child(3)').innerText;
 
             if (confirm("정말 삭제하시겠습니까?")) {
-                fetch(`/admin/product/delete/${productCode}`, {
-                    method: 'DELETE'
-                })
+                fetch(`/admin/product/delete/${productCode}`, { method: 'DELETE' })
                     .then(res => {
                         if (res.ok) {
                             alert('삭제되었습니다.');
@@ -155,52 +112,77 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert('삭제 중 오류 발생');
                     });
             }
-        })
+        });
     });
-    //전체 선택 체크박스 처리
+
+    /* ✅ 체크박스 전체선택 */
     const checkAll = document.querySelector('th input[type="checkbox"]');
     const checkboxes = document.querySelectorAll('td input[type="checkbox"]');
 
     checkAll.addEventListener('change', () => {
         checkboxes.forEach(cb => cb.checked = checkAll.checked);
     });
-    //선택삭제 버튼 처리
+
+    /* ✅ 선택삭제 버튼 */
     document.querySelector('.delbutton').addEventListener('click', () => {
         const selectedRows = [];
 
         checkboxes.forEach(cb => {
-           if (cb.checked) {
-               const tr = cb.closest('tr');
-               const productCode = tr.querySelector('td:nth-child(3)').innerText;
-               selectedRows.push({tr, productCode});
-           }
+            if (cb.checked) {
+                const tr = cb.closest('tr');
+                const productCode = tr.querySelector('td:nth-child(3)').innerText;
+                selectedRows.push({ tr, productCode });
+            }
         });
+
         if (selectedRows.length === 0) {
             alert("삭제할 상품을 선택해주세요.");
-            return
+            return;
         }
-        if (!confirm("정말 선택한 상품을 삭제하시겠습니까?")) return
+        if (!confirm("정말 선택한 상품을 삭제하시겠습니까?")) return;
 
-        selectedRows.forEach(({tr, productCode }) => {
-            fetch(`/admin/product/delete/${productCode}`, {
-                method: 'DELETE'
-            })
+        selectedRows.forEach(({ tr, productCode }) => {
+            fetch(`/admin/product/delete/${productCode}`, { method: 'DELETE' })
                 .then(res => {
                     if (res.ok) {
                         tr.remove();
-                    }else {
+                    } else {
                         alert(`상품 ${productCode} 삭제 실패`);
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    alert(`상품 ${productCode} 삭제 중 오류 발생`)
+                    alert(`상품 ${productCode} 삭제 중 오류 발생`);
                 });
         });
     });
 
+    /* ✅ 옵션 추가 버튼 */
+    const setupOptionAdd = (tableId, btnId) => {
+        const table = document.getElementById(tableId);
+        const button = document.getElementById(btnId);
+        let count = table.querySelectorAll('tr').length;
 
-    // 카테고리 드롭다운 함수
+        button.addEventListener('click', () => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <th>옵션${count + 1}</th>
+                <td><div><input type="text" name="options[${count}].optionName" placeholder="옵션${count + 1} 입력"></div></td>
+                <th>옵션${count + 1} 항목</th>
+                <td><div><input type="text" name="options[${count}].optionValue" placeholder="옵션${count + 1} 항목 입력"></div></td>
+            `;
+            table.appendChild(newRow);
+            count++;
+        });
+    };
+
+    setupOptionAdd('optionTable', 'addOptionBtn');
+    setupOptionAdd('optionsecTable', 'addsecOptionBtn');
+
+    setupModal('.regbutton', 'bannerModal', '.modal .close');   // 등록 모달
+    setupModal('.modbutton', 'subModal', '.submodal .close');   // 수정 모달
+
+    /* ✅ 카테고리 드롭다운 */
     const setupCategoryDropdown = (firstSelector, secondSelector) => {
         const firstSelect = document.querySelector(firstSelector);
         const secondSelect = document.querySelector(secondSelector);
@@ -230,6 +212,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    setupCategoryDropdown('#category1', '#category2');
-    setupCategoryDropdown('#category3', '#category4');
+    setupCategoryDropdown('#category1', '#category2'); // 등록
+    setupCategoryDropdown('#category3', '#category4'); // 수정
 });
+
+/* ✅ 모달 열고 닫는 함수 */
+function setupModal(openSelector, modalId, closeSelector) {
+    document.querySelectorAll(openSelector).forEach(openBtn => {
+        const modal = document.getElementById(modalId);
+        const closeBtn = modal.querySelector(closeSelector);
+
+        if (!modal || !openBtn || !closeBtn) {
+            console.warn(`❗ Modal setup skipped: selector not found`, { openSelector, closeSelector, modalId });
+            return;
+        }
+
+        openBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+}
