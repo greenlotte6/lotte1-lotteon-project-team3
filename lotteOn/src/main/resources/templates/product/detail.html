@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
 
     <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
 
-    
+
     <!-- Favicon -->
     <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
-    
+
     <!-- Script -->
     <script src="/script/search.js"></script>
     <script src="/script/chooseOption.js"></script>
     <script src="/script/count.js"></script>
     <script src="/script/topFixed.js"></script>
-
+    <script src="/script/detail.js"></script>
     <!-- Style -->
     <link rel="stylesheet" href="/style/product/detail.css"/>
     <link rel="stylesheet" href="/style/common/_header.css"/>
@@ -23,176 +24,156 @@
     <title>롯데ON</title>
 </head>
 <body>
-    <div id="container">
-        <th:block th:include="/common/_header.html"/>
-        <main>
-            <div class="mainContainer">
-                <div class="detailContainer">
-                    <div class="productImage">
-                        <img src="/images/554X554.jpg" alt="상품">
+<div id="container">
+    <th:block th:include="/common/_header.html"/>
+    <main>
+        <div class="mainContainer">
+            <div class="detailContainer">
+                <div class="productImage">
+                    <img th:src="@{'/images/' + ${product.imageList}}" alt="상품">
+                </div>
+                <div class="productInfo">
+                    <div>
+                        <p class="no" th:text="${product.productCode}"></p>
+                        <h2 class="title" th:text="${product.name}"></h2>
+                        <p class="desc" th:text="${product.description}"></p>
                     </div>
-                    <div class="productInfo">
-                        <div>
-                            <p class="no">100021058</p>
-                            <h2 class="title">통밀먹인 오겹살 1kg+1kg 구이용</h2>
-                            <p class="desc">프랑스산 오겹살</p>
+                    <div>
+                        <div class="priceInfo">
+                            <p class="discount" th:text="${product.discount + '%'}"></p>
+                            <p class="price"
+                               th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100, 3, 'COMMA')}"></p>
+                            <span class="won">원</span>
                         </div>
-                        <div>
-                            <div class="priceInfo">
-                                <p class="discount">10%</p>
-                                <p class="price">21,420</p>
-                                <span class="won">원</span>
-                            </div>
-                            <del class="realPrice">
-                                <p>23,800</p>
-                                <p>원</p>
-                            </del>
-                        </div>
-                        <div class="adBanner">
-                            <a href="#">
-                                <img src="/images/adBanner.jpg" alt="광고 배너">
-                            </a>
-                        </div>
-                        <div class="chooseProduct">
-                            <p>상품 선택</p>
-                            <div class="chooseOption">
-                                <p class="chooseBtn">상품을 선택해주세요</p>
-                                <div class="options">
-                                    <ul>
-                                        <li>
-                                            <p>통밀먹인 오겹살 1kg+1kg 구이용</p>
-                                            <div class="optionPrice">
-                                                <del>23,800원</del>
-                                                <p>21,420원</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <p>통밀먹인 오겹살 2kg+2kg 구이용</p>
-                                            <div class="optionPrice">
-                                                <del>23,800원</del>
-                                                <p>21,420원</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <p>통밀먹인 오겹살 3kg+3kg 구이용</p>
-                                            <div class="optionPrice">
-                                                <del>23,800원</del>
-                                                <p>21,420원</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="selectedOptions">
-                                    <div class="selectedOption">
-                                        <p>통밀먹인 오겹살 1kg+1kg 구이용</p>
-                                        <button>
-                                            <img src="/images/cancel.svg" alt="삭제 버튼">
-                                        </button>
-                                    </div>
-                                    <div class="selectedOption">
-                                        <div class="control">
-                                            <button class="minus"></button>
-                                            <div class="count">1</div>
-                                            <button class="plus"></button>
-                                        </div>
-                                        <div class="optionPrice multi">
-                                            <del>23,800원</del>
-                                            <p>21,420원</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="totalPriceBox">
-                            <p>총 상품금액: </p>
-                            <p class="totalPrice">21,420</p>
+                        <del class="realPrice">
+                            <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
                             <p>원</p>
+                        </del>
+                    </div>
+                    <div class="adBanner">
+                        <a href="#">
+                            <img src="/images/adBanner.jpg" alt="광고 배너">
+                        </a>
+                    </div>
+                    <!--optionValue에서 ,로 구분은 dto에서 실행함.-->
+                    <div class="chooseProduct">
+                        <p>상품 선택</p>
+                        <div class="chooseOption">
+                            <th:block th:each="option : ${product.options}">
+                                <div class="optionGroup">
+                                    <label th:text="${option.optionName}"></label>
+                                    <select class="option-select" th:data-name="${option.optionName}">
+                                        <option value="">선택하세요</option>
+                                        <th:block th:each="value : ${option.optionValues}">
+                                            <option th:value="${value}" th:text="${value}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </th:block>
                         </div>
-                        <div class="btnContainer">
-                            <button class="like"></button>
-                            <button class="addCart" onclick="location.href='/product/cart'">장바구니 담기</button>
-                            <button class="purchase" onclick="location.href='/product/payment'">바로 구매하기</button>
+                        <div class="selectedOptions"></div>
+                    </div>
+                    <div class="totalPriceBox">
+                        <div class="countControl">
+                            <p>총 수량:
+                                <button class="minus">-</button>
+                                <span class="totalCount">1</span>
+                                <button class="plus">+</button> 개
+                            </p>
                         </div>
+                        <p>총 상품금액:
+                            <span class="totalPrice"
+                                  th:attr="data-baseprice=${product.price * (100 - product.discount) / 100}"
+                                  th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100, 3, 'COMMA')}">
+                            </span>원
+                        </p>
+                    </div>
+                    <div class="btnContainer">
+                        <button class="like"></button>
+                        <button class="addCart" onclick="location.href='/product/cart'">장바구니 담기</button>
+                        <button class="purchase" onclick="location.href='/product/payment'">바로 구매하기</button>
                     </div>
                 </div>
-                <div class="descBtn fixed mr-tb">
-                    <ul>
-                        <li><a href="#" class="productDescBtn">상품설명</a></li>
-                        <li><a href="#detailInfo" class="detailInfoBtn">상세정보</a></li>
-                        <li><a href="#review" class="reviewBtn">후기<span class="reviewCount">(1,004)</span></a></li>
-                    </ul>
-                </div>
-                <div class="substitution"></div>
-                <div class="descImg" id="detailInfo">
-                    <img src="/images/prodDescImg.jpg" alt="">
-                </div>
-                <div class="reviewContainer" id="review">
-                    <h2>상품 후기</h2>
-                    <p class="reviewTotal">총 1,004개</p>
-                    <div class="commentList">
-                        <div class="comment">
-                            <div class="writerBox">
-                                <p class="writer">소고기</p>
-                                <div class="ratingBox">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <span class="score">5</span>
-                                </div>
-                            </div>
-                            <div class="contentBox">
-                                <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
-                                <p class="content">아, 맛있습니다. 좋네요.</p>
-                                <p class="commentDate">2025.04.16</p>
+            </div>
+            <div class="descBtn fixed mr-tb">
+                <ul>
+                    <li><a href="#" class="productDescBtn">상품설명</a></li>
+                    <li><a href="#detailInfo" class="detailInfoBtn">상세정보</a></li>
+                    <li><a href="#review" class="reviewBtn">후기<span class="reviewCount">(1,004)</span></a></li>
+                </ul>
+            </div>
+            <div class="substitution"></div>
+            <div class="descImg" id="detailInfo">
+                <img src="/images/prodDescImg.jpg" alt="">
+            </div>
+            <div class="reviewContainer" id="review">
+                <h2>상품 후기</h2>
+                <p class="reviewTotal">총 1,004개</p>
+                <div class="commentList">
+                    <div class="comment">
+                        <div class="writerBox">
+                            <p class="writer">소고기</p>
+                            <div class="ratingBox">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <span class="score">5</span>
                             </div>
                         </div>
-                        <div class="comment">
-                            <div class="writerBox">
-                                <p class="writer">닭고기</p>
-                                <div class="ratingBox">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <span class="score">5</span>
-                                </div>
-                            </div>
-                            <div class="contentBox">
-                                <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
-                                <p class="content">이게 맞나 싶을 정도로 맛있네요 ㅎㅎ</p>
-                                <p class="commentDate">2025.04.16</p>
+                        <div class="contentBox">
+                            <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
+                            <p class="content">아, 맛있습니다. 좋네요.</p>
+                            <p class="commentDate">2025.04.16</p>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="writerBox">
+                            <p class="writer">닭고기</p>
+                            <div class="ratingBox">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <span class="score">5</span>
                             </div>
                         </div>
-                        <div class="comment">
-                            <div class="writerBox">
-                                <p class="writer">양고기</p>
-                                <div class="ratingBox">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <img src="/images/icon_star_full.svg" alt="">
-                                    <span class="score">5</span>
-                                </div>
-                            </div>
-                            <div class="contentBox">
-                                <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
-                                <p class="content">솔직히 말하면, 이 오겹살은 그냥 고기가 아닙니다. 고기의 탈을 쓴 예술작품이에요. 고기 한 점 입에 넣는 순간, 제 미각이 "이게 진짜 인생이구나"라고 깨달았어요. 마치 삼겹살의 왕족을 초대해서 만찬을 즐긴 기분?
-                                    지글지글 익어가는 소리에 정신이 몽롱해지고, 고소한 기름향에 눈물이 핑 돕니다. 씹을수록 퍼지는 감칠맛은 마치 고기가 "사랑해"라고 속삭이는 것 같았어요. 진짜로요. 거짓말 아니라 고기한테 설렜어요.
-                                    게다가 육즙이 터지는 그 순간… 제가 왜 이 세상에 태어났는지 알겠더라구요. 이 오겹살을 먹기 위해서였습니다.</p>
-                                <p class="commentDate">2025.04.16</p>
+                        <div class="contentBox">
+                            <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
+                            <p class="content">이게 맞나 싶을 정도로 맛있네요 ㅎㅎ</p>
+                            <p class="commentDate">2025.04.16</p>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="writerBox">
+                            <p class="writer">양고기</p>
+                            <div class="ratingBox">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <img src="/images/icon_star_full.svg" alt="">
+                                <span class="score">5</span>
                             </div>
                         </div>
-                        <div class="paging">
-                            <button class="prev btn"></button>
-                            <a href="#" class="pageNum thisPage">1</a>
-                            <a href="#" class="pageNum">2</a>
-                            <a href="#" class="pageNum">3</a>
-                            <button class="next btn"></button>
+                        <div class="contentBox">
+                            <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
+                            <p class="content">솔직히 말하면, 이 오겹살은 그냥 고기가 아닙니다. 고기의 탈을 쓴 예술작품이에요. 고기 한 점 입에 넣는 순간, 제 미각이 "이게
+                                진짜 인생이구나"라고 깨달았어요. 마치 삼겹살의 왕족을 초대해서 만찬을 즐긴 기분?
+                                지글지글 익어가는 소리에 정신이 몽롱해지고, 고소한 기름향에 눈물이 핑 돕니다. 씹을수록 퍼지는 감칠맛은 마치 고기가 "사랑해"라고 속삭이는 것 같았어요.
+                                진짜로요. 거짓말 아니라 고기한테 설렜어요.
+                                게다가 육즙이 터지는 그 순간… 제가 왜 이 세상에 태어났는지 알겠더라구요. 이 오겹살을 먹기 위해서였습니다.</p>
+                            <p class="commentDate">2025.04.16</p>
                         </div>
+                    </div>
+                    <div class="paging">
+                        <button class="prev btn"></button>
+                        <a href="#" class="pageNum thisPage">1</a>
+                        <a href="#" class="pageNum">2</a>
+                        <a href="#" class="pageNum">3</a>
+                        <button class="next btn"></button>
                     </div>
                 </div>
             </div>

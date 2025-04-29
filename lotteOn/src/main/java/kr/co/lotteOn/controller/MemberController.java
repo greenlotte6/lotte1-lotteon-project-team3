@@ -2,8 +2,10 @@ package kr.co.lotteOn.controller;
 
 import jakarta.validation.Valid;
 import kr.co.lotteOn.dto.SellerDTO;
+import kr.co.lotteOn.dto.ShopDTO;
 import kr.co.lotteOn.dto.TermsDTO;
 import kr.co.lotteOn.service.SellerService;
+import kr.co.lotteOn.service.ShopService;
 import kr.co.lotteOn.service.TermsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,7 @@ public class MemberController {
     private final SellerService sellerService;
     private final MemberService memberService;
     private final TermsService termsService;
+    private final ShopService shopService;
 
     //회원 - 로그인
     @GetMapping("/login")
@@ -95,6 +98,8 @@ public class MemberController {
         sellerService.register(sellerDTO);
         return "redirect:/member/login";
     }
+
+
 
     //판매자 아이디 중복 체크
     @GetMapping("/check-id/{sellerId}")

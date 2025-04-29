@@ -71,6 +71,41 @@ header {
 .list {
     padding-bottom: 100px;
 }
+.searchArea select{
+    height: 40px;
+    margin-bottom: 50px;
+}
+input[type="text"] {
+    height: 40px;
+    width: 250px;
+}
+input[type="submit"] {
+    height: 41px;
+    width: 60px;
+}
+.pageBtn {
+    display: block;
+    margin: 10px 400px;
+    text-align: center;
+}
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px 15px;
+    background-color: #dfdfdf;
+    color: #333333;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px 15px;
+    color: #333333;
+}
 .job_filter {
     gap: 10px;
     margin-bottom: 30px;

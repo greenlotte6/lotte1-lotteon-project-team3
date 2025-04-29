@@ -398,11 +398,11 @@
                     </div>
                     <div class="productItem" th:each="product : ${products}">
                         <div class="items">
-                            <a th:href="@{'/product/view/' + ${product.productCode}}">
+                            <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
                                 <img th:src="@{'/images/' + ${product.imageList}}" alt="상품">
                             </a>
                             <div class="descWrap">
-                                <a th:href="@{'/product/view/' + ${product.productCode}}" class="text">
+                                <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}" class="text">
                                     <span class="bold" th:text="${product.companyName}"></span>
                                     <span th:text="${product.name}"></span>
                                 </a>

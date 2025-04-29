@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/style/admin/footer.css">
     <link rel="stylesheet" href="/style/admin/adminaside.css">
     <!--JavaScript-->
-    <script src="/script/orderList.js"></script>
+    <script src="/script/issuedList.js"></script>
     <script src="/script/aside.js"></script>
 </head>
 <body>
@@ -26,19 +26,21 @@
                 <div><span>HOME > 쿠폰관리 > <p>쿠폰발급현황</p></span></div>
             </div>
             <div class="shopArea">
-                <div class="searchArea">
-                    <select>
-                        <option>선택</option>
-                        <option>주문번호</option>
-                        <option>주문자</option>
-                        <option>주문자명</option>
-                    </select>
-                    <input type="text" placeholder="검색어 입력">
-                    <button type="submit">검색</button>
-                </div>
+                <form th:action="@{/admin/coupon/issuedSearch}">
+                    <div class="searchArea">
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="couponCode">쿠폰번호</option>
+                            <option value="couponType">쿠폰종류</option>
+                            <option value="couponName">쿠폰명</option>
+                            <option value="memberId">사용자</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <input type="submit" value="검색" style="border: 1px solid #3f97f6 ; background-color: #3f97f6; color: white">
+                    </div>
+                </form>
                 <table>
                     <tr>
-                        <th>발급번호</th>
                         <th>쿠폰번호</th>
                         <th>쿠폰종류</th>
                         <th>쿠폰명</th>
@@ -47,33 +49,77 @@
                         <th>사용일</th>
                         <th>관리</th>
                     </tr>
-                    <tr>
+                    <tr th:each="coupons, i : ${coupons}">
                         <td>
-                            <button type="submit" class="orderinfo">10101010101</button>
+                            <button type="submit" class="orderinfo"
+                                    th:attr = "data-type=${coupons.couponType},
+                                    data-title=${coupons.couponName},
+                                    data-content=${coupons.etc},
+                                    data-company=${coupons.companyName},
+                                    data-benefit=${coupons.benefit},
+                                    data-startDate=${coupons.startDate},
+                                    data-endDate=${coupons.endDate},
+                                    data-issuedNo=${coupons.benefit},
+                                    data-status=${coupons.status},
+                                    data-member=${coupons.memberId},
+                                    data-couponCode=${coupons.issuedNo}">
+                                [[${coupons.couponCode}]]
+                            </button>
                         </td>
-                        <td>12121212121</td>
-                        <td>배송비 무료</td>
-                        <td>10월 한달 감사 쿠폰</td>
-                        <td>abc123</td>
-                        <td>미사용</td>
+                        <td>[[${coupons.couponType}]]</td>
+                        <td>[[${coupons.couponName}]]</td>
+                        <td>[[${coupons.memberId}]]</td>
                         <td>
-                            2025-04-17<br>
-                            10:06:12
+                            <span th:if="${coupons.status == '사용 불가'}" style="font-size: 12px; font-weight: bold; color: gray">
+                                사용 불가
+                            </span>
+                            <span th:if="${coupons.status == '미사용'} and ${coupons.endDate >= #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: green">
+                                미사용
+                            </span>
+                            <span th:if="${coupons.status == '미사용'} and ${coupons.endDate < #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: darkred">
+                                기간 만료
+                            </span>
                         </td>
                         <td>
-                            <button type="submit" class="couponbtn">[ 종료 ]</button>
+                            [[${coupons.useDate}]]
+                        </td>
+                        <td>
+                            <form method="post" th:action="@{/admin/coupon/endIssued}" th:object="${coupons}">
+                                <input type="hidden" name="issuedNo" th:value="${coupons.issuedNo}" />
+                                <button type="submit" class="couponbtn" style="font-size: 12px">종료</button>
+                            </form>
                         </td>
                     </tr>
                 </table>
                 <div class="btnarea">
                     <div class="pageBtn">
-                        <a href=""><img src="/images/back-double.png"></a>
-                        <a href=""><img src="/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="/images/right-single.png" class="single"></a>
-                        <a href=""><img src="/images/right-double.png"></a>
+                        <th:block th:if="${page.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/coupon/issued(pg=${page.start-2})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/coupon/issued(pg=${page.start-1})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/admin/coupon/issued(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
+
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/coupon/issued(pg=${page.end+1})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/coupon/issued(pg=${page.end+2})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -91,46 +137,45 @@
                             <table>
                                 <tr>
                                     <th>쿠폰번호</th>
-                                    <td>10101010101</td>
+                                    <td id="modalCouponCode">10101010101</td>
+                                </tr>
+                                <tr>
                                     <th>발급처</th>
-                                    <td>(주)그린샵</td>
+                                    <td id="modalCompany">(주)그린샵</td>
                                 </tr>
                                 <tr>
                                     <th>발급번호</th>
-                                    <td>10101010101</td>
+                                    <td id="modalIssuedNo">10101010101</td>
+                                </tr>
+                                <tr>
                                     <th>사용여부</th>
-                                    <td>미사용</td>
+                                    <td id="modalStatus">미사용</td>
                                 </tr>
                                 <tr>
                                     <th>쿠폰종류</th>
-                                    <td>개별상품 할인</td>
+                                    <td id="modalType">개별상품 할인</td>
+                                </tr>
+                                <tr>
                                     <th>발급대상</th>
-                                    <td>abc123</td>
+                                    <td id="modalMember">abc123</td>
                                 </tr>
                                 <tr>
                                     <th>쿠폰명</th>
-                                    <td>10월 한달 감사 쿠폰 이벤트</td>
+                                    <td id="modalTitle">10월 한달 감사 쿠폰 이벤트</td>
                                 </tr>
                                 <tr>
                                     <th>혜택</th>
-                                    <td>배송비 무료</td>
+                                    <td id="modalBenefit">배송비 무료</td>
                                 </tr>
                                 <tr>
                                     <th>사용기간</th>
                                     <td>
-                                        2025-04-16~2025-04-17
+                                        <span id="modalStartDate"></span>~<span id="modalEndDate"></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>유의사항</th>
-                                    <td>
-                                        빨리써라 그냥<br>
-                                        빨리써라 그냥<br>
-                                        빨리써라 그냥<br>
-                                        빨리써라 그냥<br>
-                                        빨리써라 그냥<br>
-                                        빨리써라 그냥<br>
-                                        빨리써라 그냥
+                                    <td id="modalContent">
                                     </td>
                                 </tr>
                             </table>

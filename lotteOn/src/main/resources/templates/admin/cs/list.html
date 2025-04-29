@@ -29,13 +29,15 @@
             <div class="shopArea">
                 <div class="searchArea">
                     <form th:action="@{/admin/cs/listSearch}">
-                        <select name="searchType">
-                            <option>선택</option>
-                            <option value="title">제목</option>
-                            <option value="cate">카테고리</option>
+                        <select name="cate" onchange="this.form.submit()">
+                            <option value="" disabled selected>선택</option>
+                            <option value="culture">기업문화</option>
+                            <option value="interview">인터뷰</option>
+                            <option value="recruit">채용</option>
+                            <option value="lotteOn">롯데ON</option>
+                            <option value="press">보도자료</option>
+                            <option value="esg">ESG</option>
                         </select>
-                        <input type="text" name="keyword" placeholder="검색어 입력">
-                        <input type="submit" value="검색" style="background-color: #3f97f6; color: white; height: 42.47px; border: none">
                     </form>
                 </div>
                 <table>

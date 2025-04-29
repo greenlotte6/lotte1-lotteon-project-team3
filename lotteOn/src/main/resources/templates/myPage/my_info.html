@@ -70,74 +70,74 @@
                 <div class="ad">
                     <div>광고</div>
                 </div>
-                <table class="info">
-                    <tr>
-                        <th>사용자 ID</th>
-                        <td>
-                            <input readonly type="text" name="id" placeholder="ID"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td>
-                            <button class="modify_pw">비밀번호 수정</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td>
-                            <input readonly type="text" name="name" placeholder="이름 입력"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>생년월일</th>
-                        <td>
-                            <input readonly type="text" name="birth" placeholder="1983년 05월 03일">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>
-                            <div>
-                                <input type="text" name="email" placeholder="chhak0503">@
-                                <input type="text" name="email2" >
-                                <select id="email3">
-                                    <option value="">직접입력▼</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                </select>
-                                <a href="#" class="info_btn1">수정하기</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>휴대폰</th>
-                        <td>
-                            <input type="text" name="hp" placeholder="010">-
-                            <input type="text" name="hp" placeholder="8440">-
-                            <input type="text" name="hp" placeholder="7231">
-                            <a href="#" class="info_btn2">수정하기</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td>
-                            <div class="info_addr">
-                                <input type="text"  id="zip" name="zip" placeholder="우편번호">
-                                <button type="button" class="post info_btn3">주소검색</button>
-                                <input type="text"  id="addr1" name="addr1" placeholder="기본주소검색">
-                                <input type="text"  id="addr2" name="addr2" placeholder="상세주소입력">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>탈퇴</th>
-                        <td>
-                            <button class="leave">탈퇴하기</button>
-                        </td>
-                    </tr>
-                </table>
-                <button type="button" class="end_btn">수정하기</button>
+                <form action="/my_info" method="post">
+                    <table class="info">
+                        <tr>
+                            <th>사용자 ID</th>
+                            <td>
+                                <input readonly type="text" name="id" th:value="${member.id}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td>
+                                <button class="modify_pw">비밀번호 수정</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td>
+                                <input readonly type="text" name="name"  th:value="${member.name}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>생년월일</th>
+                            <td>
+                                <input readonly type="text" name="birth" placeholder="1983년 05월 03일">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>성별</th>
+                            <td>
+                                <input readonly type="text" name="birth" th:value="${member.gender}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>
+                                <div>
+                                    <input type="text" name="email" th:value="${member.email}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>휴대폰</th>
+                            <td>
+                                <input type="text" name="hp" th:value="${member.hp}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td>
+                                <div class="info_addr">
+                                    <input type="text"  id="zip" name="zip" th:value="${member.zip}">
+                                    <button type="button" class="post info_btn3">주소검색</button>
+                                    <input type="text"  id="addr1" name="addr1" th:value="${member.addr1}">
+                                    <input type="text"  id="addr2" name="addr2" th:value="${member.addr2}">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>탈퇴</th>
+                            <td>
+                                <button class="leave">탈퇴하기</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="button" class="end_btn">수정하기</button>
+
+                </form>
+
             </section>
         </div>
     </main>

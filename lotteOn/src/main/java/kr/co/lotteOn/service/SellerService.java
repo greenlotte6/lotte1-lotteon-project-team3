@@ -3,12 +3,14 @@ package kr.co.lotteOn.service;
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.entity.Seller;
 import kr.co.lotteOn.repository.SellerRepository;
+import kr.co.lotteOn.repository.SellerProjection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -57,5 +59,7 @@ public class SellerService {
         sellerRepository.save(seller);
     }
 
-
+    public List<SellerProjection> getSellerList(){
+        return sellerRepository.findAllBy();
+    }
 }

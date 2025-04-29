@@ -6,18 +6,7 @@
     <title>회사소개 채용</title>
     <link rel="stylesheet" href="/style/intro/intro_employ.css">
     <style>
-        .searchArea select{
-            height: 40px;
-            margin-bottom: 50px;
-        }
-        input[type="text"] {
-            height: 40px;
-            width: 250px;
-        }
-        input[type="submit"] {
-            height: 41px;
-            width: 60px;
-        }
+
     </style>
 </head>
 <body>
@@ -51,25 +40,48 @@
             </nav>
 
             <section class="job_list">
-                <div>
+                <div th:each="recruit, i : ${page.dtoList}">
                     <div class="job_item">
                         <div class="job-info">
-                            <h3>가맹점 PAYMENT서비스 제휴 마케팅</h3>
-                            <p>마케팅 | 경력 4 ~ 12년 | 정규직 | 롯데e커머스 삼성오피스</p>
+                            <h3 th:text="${recruit.title}"></h3>
+                            <p>[[${recruit.cate}]]&nbsp;&nbsp;|&nbsp;&nbsp;[[${recruit.experience}]]&nbsp;&nbsp;|&nbsp;&nbsp;[[${recruit.employType}]]</p>
                         </div>
-                        <div class="job_tag">상시 채용</div>
+                        <div class="job_tag">
+                            <span th:if="${recruit.endDate >= #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 14px; color: #3366cc; font-weight: bold">모집중</span>
+                            <span th:if="${recruit.endDate < #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 14px; color: red; font-weight: bold">마감</span>
+                        </div>
                     </div>
                 </div>
-            </section>
-                            
+                <div class="pageBtn">
+                    <th:block th:if="${page.end > 0}">
+                        <th:block th:if="${page.prev}">
+                            <a th:href="@{/intro/intro_employ(pg=${page.start-2})}" class="prev">
+                                <img src="/images/back-double.png">
+                            </a>
+                        </th:block>
+                        <th:block th:if="${page.prev}">
+                            <a th:href="@{/intro/intro_employ(pg=${page.start-1})}" class="prev">
+                                <img src="/images/back-single.png" class="single">
+                            </a>
+                        </th:block>
 
-            <div class="page">
-                    <a class="prev">◁</a>
-                    <a class="num">1</a>
-                    <a class="num">2</a>
-                    <a class="next">▷</a>
-            </div>
-            
+                        <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                            <a th:href="@{/intro/intro_employ(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        </th:block>
+
+                        <th:block th:if="${page.next}">
+                            <a th:href="@{/intro/intro_employ(pg=${page.end+1})}" class="next">
+                                <img src="/images/right-single.png" class="single">
+                            </a>
+                        </th:block>
+                        <th:block th:if="${page.next}">
+                            <a th:href="@{/intro/intro_employ(pg=${page.end+2})}" class="next">
+                                <img src="/images/right-double.png">
+                            </a>
+                        </th:block>
+                    </th:block>
+                </div>
+            </section>
         </section>
     </main>
 

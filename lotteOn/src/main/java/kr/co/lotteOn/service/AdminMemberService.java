@@ -1,17 +1,31 @@
 package kr.co.lotteOn.service;
 
+import com.querydsl.core.Tuple;
+import jakarta.transaction.Transactional;
+import kr.co.lotteOn.dto.coupon.CouponDTO;
 import kr.co.lotteOn.dto.MemberDTO;
+import kr.co.lotteOn.dto.coupon.CouponPageRequestDTO;
+import kr.co.lotteOn.dto.coupon.CouponPageResponseDTO;
+import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
+import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
+import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.entity.Coupon;
+import kr.co.lotteOn.entity.IssuedCoupon;
 import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.repository.CouponRepository;
+import kr.co.lotteOn.repository.IssuedCouponRepository;
 import kr.co.lotteOn.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -20,7 +34,9 @@ import java.util.stream.Collectors;
 public class AdminMemberService {
 
     private final MemberRepository memberRepository;
+    private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
+    private final IssuedCouponRepository issuedCouponRepository;
 
     public List<MemberDTO> findAll() {
         List<Member> list = memberRepository.findAll();
@@ -77,4 +93,218 @@ public class AdminMemberService {
 
         return result.stream().map(m -> modelMapper.map(m, MemberDTO.class)).collect(Collectors.toList());
     }
+
+    /* ******************회원관리 끝******************************/
+
+
+    private String generateCouponCode(String couponType, int benefit) {
+        String prefix;
+
+        switch (couponType.toLowerCase()) {
+            case "each":
+                prefix = "DIS" + benefit + "-PERCENT";
+                break;
+            case "order":
+                prefix = "DIS" + benefit + "-AMOUNT";
+                break;
+            case "free":
+                prefix = "FREESHIP";
+                break;
+            default:
+                prefix = "GENERIC";
+        }
+
+        String random = UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        return prefix + "-" + random;
+    }
+
+    //쿠폰목록 - 등록
+    public int registerCoupon(CouponDTO couponDTO){
+
+        //benefit에서 숫자 추출
+        int benefitValue = 0;
+        // free 타입이 아닐 때만 숫자 추출
+        if (!"free".equalsIgnoreCase(couponDTO.getCouponType())) {
+            benefitValue = couponDTO.extractNumber();
+        }
+
+        Coupon coupon = modelMapper.map(couponDTO, Coupon.class);
+        String generatedCode = generateCouponCode(couponDTO.getCouponType(), benefitValue);
+        coupon.setCouponCode(generatedCode);
+
+        Coupon savedCoupon = couponRepository.save(coupon);
+
+        return savedCoupon.getIssuedNo();
+
+    }
+
+    //쿠폰목록 - 출력(리스트)
+    public CouponPageResponseDTO couponFindAll(CouponPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("issuedNo");
+        Page<Coupon> pageCoupons = couponRepository.findAll(pageable);
+
+        List<CouponDTO> couponList = pageCoupons
+                .getContent()
+                .stream()
+                .map(coupon -> modelMapper.map(coupon, CouponDTO.class)).toList();
+
+        int total = (int) pageCoupons.getTotalElements();
+
+        return CouponPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(couponList)
+                .total(total)
+                .build();
+
+    }
+
+    //쿠폰목록 - 출력(검색)
+    public CouponPageResponseDTO couponSearchAll(CouponPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("issuedNo");
+        Page<Tuple> pageCoupons = couponRepository.searchCoupons(pageRequestDTO, pageable);
+
+        List<CouponDTO> couponDTOList = pageCoupons.getContent().stream().map(tuple -> {
+            Coupon coupon = tuple.get(0, Coupon.class);
+            String companyName = tuple.get(1, String.class);
+
+            CouponDTO couponDTO = modelMapper.map(coupon, CouponDTO.class);
+            couponDTO.setCompanyName(companyName);
+
+            return couponDTO;
+        }).toList();
+
+        int total = (int) pageCoupons.getTotalElements();
+
+        return CouponPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(couponDTOList)
+                .total(total)
+                .build();
+    }
+
+
+    //쿠폰목록 - 조회(번호)
+    public CouponDTO couponFindById(String couponCode) {
+        Optional<Coupon> optCoupon = couponRepository.findByCouponCode(couponCode);
+        if (optCoupon.isPresent()) {
+            Coupon coupon = optCoupon.get();
+            CouponDTO couponDTO = modelMapper.map(coupon, CouponDTO.class);
+            return couponDTO;
+        }
+
+        return null;
+    }
+
+    //쿠폰목록 - 종료
+    @Transactional
+    public void endCoupon(String couponCode) {
+        Optional<Coupon> coupon = couponRepository.findByCouponCode(couponCode);
+        if (coupon.isPresent()) {
+            Coupon coupon1 = coupon.get();
+            coupon1.setStatus("발급 종료");
+        }
+    }
+
+    //쿠폰발급현황 - 출력
+    public IssuedCouponPageResponseDTO issuedCouponFindAll(IssuedCouponPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("issuedNo");
+        Page<Tuple> pageIssuedCoupons = issuedCouponRepository.findAllForList(pageable);
+
+        List<IssuedCouponDTO> issuedCouponDTOList = pageIssuedCoupons
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    IssuedCoupon issuedCoupon = tuple.get(0, IssuedCoupon.class);
+                    Coupon coupon = tuple.get(1, Coupon.class);
+                    String memberId = tuple.get(2, String.class);
+
+
+                    IssuedCouponDTO issuedCouponDTO = modelMapper.map(issuedCoupon, IssuedCouponDTO.class);
+                    issuedCouponDTO.setCouponCode(coupon.getCouponCode());
+                    issuedCouponDTO.setCouponType(coupon.getCouponType());
+                    issuedCouponDTO.setCouponName(coupon.getCouponName());
+                    issuedCouponDTO.setBenefit(coupon.getBenefit());
+                    issuedCouponDTO.setCompanyName(coupon.getCompanyName());
+                    issuedCouponDTO.setStartDate(coupon.getStartDate());
+                    issuedCouponDTO.setEndDate(coupon.getEndDate());
+                    issuedCouponDTO.setEtc(coupon.getEtc());
+
+                    issuedCouponDTO.setMemberId(memberId);
+
+                    return issuedCouponDTO;
+
+
+                }).toList();
+
+        int total = (int) pageIssuedCoupons.getTotalElements();
+
+        return IssuedCouponPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(issuedCouponDTOList)
+                .total(total)
+                .build();
+
+    }
+
+
+    //쿠폰발급현황 - 출력(검색)
+    public IssuedCouponPageResponseDTO issuedCouponSearchAll(IssuedCouponPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("issuedNo");
+        Page<Tuple> pageIssuedCoupons = issuedCouponRepository.searchAll(pageRequestDTO, pageable);
+
+        List<IssuedCouponDTO> issuedCouponDTOList = pageIssuedCoupons
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    IssuedCoupon issuedCoupon = tuple.get(0, IssuedCoupon.class);
+                    Coupon coupon = tuple.get(1, Coupon.class);
+                    String memberId = tuple.get(2, String.class);
+
+
+                    IssuedCouponDTO issuedCouponDTO = modelMapper.map(issuedCoupon, IssuedCouponDTO.class);
+                    issuedCouponDTO.setCouponCode(coupon.getCouponCode());
+                    issuedCouponDTO.setCouponType(coupon.getCouponType());
+                    issuedCouponDTO.setCouponName(coupon.getCouponName());
+                    issuedCouponDTO.setBenefit(coupon.getBenefit());
+                    issuedCouponDTO.setCompanyName(coupon.getCompanyName());
+                    issuedCouponDTO.setStartDate(coupon.getStartDate());
+                    issuedCouponDTO.setEndDate(coupon.getEndDate());
+                    issuedCouponDTO.setEtc(coupon.getEtc());
+
+                    issuedCouponDTO.setMemberId(memberId);
+
+                    return issuedCouponDTO;
+
+
+                }).toList();
+
+        int total = (int) pageIssuedCoupons.getTotalElements();
+
+        return IssuedCouponPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(issuedCouponDTOList)
+                .total(total)
+                .build();
+
+    }
+
+
+    //쿠폰발급현황 - 조회
+
+
+    //쿠폰발급현황 - 종료
+    @Transactional
+    public void endIssuedCoupon(int issuedNo) {
+        Optional<IssuedCoupon> optIssuedCoupon = issuedCouponRepository.findById(issuedNo);
+        if (optIssuedCoupon.isPresent()) {
+            IssuedCoupon issuedCoupon = optIssuedCoupon.get();
+            issuedCoupon.setStatus("사용 불가");
+        }
+    }
+
+    /* ******************쿠폰관리 끝******************************/
 }

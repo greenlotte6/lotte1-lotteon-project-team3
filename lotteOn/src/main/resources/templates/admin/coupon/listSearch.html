@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자-쿠폰목록</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <!--Style-->
+    <link rel="stylesheet" href="/style/admin/coupon/list.css"/>
+    <link rel="stylesheet" href="/style/admin/header.css">
+    <link rel="stylesheet" href="/style/admin/footer.css">
+    <link rel="stylesheet" href="/style/admin/adminaside.css">
+    <!--JavaScript-->
+    <script src="/script/couponList.js"></script>
+    <script src="/script/aside.js"></script>
+</head>
+<body>
+<div id="container">
+    <th:block th:include="/admin/_adminHeader"/>
+    <main>
+        <th:block th:include="/admin/_adminAside"/>
+        <div class="adminMain">
+            <div class="mainTop">
+                <h4>쿠폰목록</h4>
+                <div><span>HOME > 쿠폰관리 > <p>쿠폰목록</p></span></div>
+            </div>
+            <div class="shopArea">
+                <form th:action="@{/admin/coupon/listSearch}">
+                    <div class="searchArea" name="searchType">
+                        <select>
+                            <option>선택</option>
+                            <option value="couponType">쿠폰종류</option>
+                            <option value="couponName">쿠폰명</option>
+                            <option value="companyName">발급자</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <input type="submit" value="검색" style="border: 1px solid #3f97f6 ; background-color: #3f97f6; color: white">
+                    </div>
+                </form>
+
+                <table>
+                    <tr>
+                        <th style="width: 80px">쿠폰번호</th>
+                        <th style="width: 100px">쿠폰종류</th>
+                        <th style="width: 90px">쿠폰명</th>
+                        <th style="width: 100px">혜택</th>
+                        <th>사용기간</th>
+                        <th>발급자</th>
+                        <th>발급수</th>
+                        <th>사용수</th>
+                        <th>상태</th>
+                        <th>발급일</th>
+                        <th style="padding-right: 5px;">관리</th>
+                    </tr>
+                    <tr th:each="coupons, i:${coupons}">
+                        <td>
+                            <button type="submit" class="orderinfo"
+                            th:attr = "data-type=${coupons.couponType},
+                                    data-title=${coupons.couponName},
+                                    data-content=${coupons.etc},
+                                    data-company=${coupons.companyName},
+                                    data-benefit=${coupons.benefit},
+                                    data-startDate=${coupons.startDate},
+                                    data-endDate=${coupons.endDate},
+                                    data-couponCode=${coupons.couponCode}">
+                                [[${coupons.couponCode}]]
+                            </button>
+                        </td>
+                        <td>[[${coupons.couponType}]]</td>
+                        <td>[[${coupons.couponName}]]</td>
+                        <td>[[${coupons.benefit}]]</td>
+                        <td>
+                            [[${coupons.startDate}]] <br>
+                            ~[[${coupons.endDate}]]
+                        </td>
+                        <td>[[${coupons.companyName}]]</td>
+                        <td>[[${coupons.issueCount}]]</td>
+                        <td>[[${coupons.useCount}]]</td>
+                        <td>
+                            <span th:if="${coupons.status == '발급 종료'}" style="font-size: 12px; font-weight: bold; color: gray">
+                                발급 종료
+                            </span>
+                            <span th:if="${coupons.status == '발급중'} and ${coupons.endDate >= #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: green">
+                                미사용
+                            </span>
+                            <span th:if="${coupons.status == '발급중'} and ${coupons.endDate < #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: darkred">
+                                기간 만료
+                            </span>
+                        </td>
+                        <td>[[${coupons.issuedDate}]]</td>
+                        <td>
+                            <form method="post" th:action="@{/admin/coupon/endCoupon}" th:object="${coupons}">
+                                <input type="hidden" name="couponCode" th:value="${coupons.couponCode}" />
+                                <button type="submit" class="couponbtn" style="font-size: 12px">종료</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+                <div class="btnarea">
+                    <div class="pageBtn">
+                        <th:block th:if="${page.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.start-2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.start-1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${num}, searchType=${page.searchType}, keyword=${page.keyword})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
+
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.end+1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.end+2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
+                        </th:block>
+                    </div>
+                    <button type="submit" class="submitbtn">쿠폰등록</button>
+                </div>
+            </div>
+        </div>
+        <div id="bannerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modaltop">
+                    <h3>쿠폰정보</h3>
+                </div>
+                <form>
+                    <div class="modalTable">
+                        <div class="info">
+                            <table>
+                                <tr>
+                                    <th>쿠폰번호</th>
+                                    <td id="modalCouponCode"></td>
+                                </tr>
+                                <tr>
+                                    <th>발급처</th>
+                                    <td id="modalCompany"></td>
+                                </tr>
+                                <tr>
+                                    <th>쿠폰종류</th>
+                                    <td id="modalType"></td>
+                                </tr>
+                                <tr>
+                                    <th>쿠폰명</th>
+                                    <td id="modalTitle"></td>
+                                </tr>
+                                <tr>
+                                    <th>혜택</th>
+                                    <td id="modalBenefit"></td>
+                                </tr>
+                                <tr>
+                                    <th>사용기간</th>
+                                    <td>
+                                        <span id="modalStartDate"></span>&nbsp;~&nbsp;<span id="modalEndDate"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>유의사항</th>
+                                    <td id="modalContent"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="subModal" class="submodal">
+            <div class="submodal-content">
+                <span class="close">&times;</span>
+                <div class="modaltop">
+                    <h3>쿠폰등록</h3>
+                </div>
+                <form method="post" enctype="multipart/form-data" id="couponRegister">
+                    <div class="modalTable">
+                        <table>
+                            <tr style="border-top: 1px solid #dfdfdf">
+                                <th>발급처</th>
+                                <td>
+                                    <div>
+                                        <input type="text" name="companyName" placeholder="발급처 입력">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>쿠폰종류</th>
+                                <td>
+                                    <div>
+                                        <select name="couponType" id="couponType">
+                                            <option>쿠폰종류 선택</option>
+                                            <option value="each">개별상품 할인</option>
+                                            <option value="order">주문상품 할인</option>
+                                            <option value="free">배송비 무료</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>쿠폰명</th>
+                                <td>
+                                    <div>
+                                        <input type="text" name="couponName" placeholder="쿠폰명 입력">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>발급수</th>
+                                <td>
+                                    <div>
+                                        <input type="number" name="issueCount" placeholder="발급수 입력">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>혜택</th>
+                                <td>
+                                    <div class="checkboxwrap" id="benefit">
+                                        <label><input type="checkbox" name="benefit" value="1000원 할인">1,000원 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="2000원 할인">2,000원 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="3000원 할인">3,000원 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="4000원 할인">4,000원 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="5000원 할인">5,000원 할인</label>
+                                        <br>
+                                        <label><input type="checkbox" name="benefit" value="10% 할인">10% 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="20% 할인">20% 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="30% 할인">30% 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="40% 할인">40% 할인</label>
+                                        <label><input type="checkbox" name="benefit" value="50% 할인">50% 할인</label>
+                                        <br>
+                                        <label><input type="checkbox" name="benefit" value="100% 배송비 무료">100% 배송비 무료</label>
+                                        <label><input type="checkbox" name="benefit" value="50% 배송비 무료">50% 배송비 무료</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>사용기간</th>
+                                <td>
+                                    <div class="datewrap">
+                                        <label>
+                                            <input name="startDate" id="startDate" type="date" class="date">
+                                            ~
+                                            <input name="endDate" id="endDate" type="date" class="date">
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>유의사항</th>
+                                <td>
+                                    <div>
+                                        <textarea name="etc" class="subinfo"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modalbtn">
+                        <button type="submit">등록하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <th:block th:include="/admin/_adminFooter"/>
+</div>
+</body>
+</html>

@@ -16,6 +16,8 @@ main > div > * {
 
 .productImage > img {
     border-radius: 15px;
+    width: 540px;
+    height: 100%;
 }
 
 .no {
@@ -97,6 +99,8 @@ main > div > * {
 .chooseProduct > p {
     width: 128px;
     font-size: 14px;
+    position: relative;
+    bottom: 17px;
 }
 
 .chooseOption {
@@ -180,8 +184,10 @@ main > div > * {
 
 .selectedOptions {
     padding: 11px 10px 11px 15px;
-    border: 1px solid #eee;
     margin-top: 5px;
+    width: 100px;
+    position: relative;
+    bottom: 18px;
 }
 
 .selectedOption {
@@ -224,6 +230,8 @@ main > div > * {
     background-color: transparent;
     background-image: url("../../images/minus.svg");
     vertical-align: top;
+    position: relative;
+    bottom: 4px;
 }
 
 .plus {
@@ -236,6 +244,8 @@ main > div > * {
     background-color: transparent;
     background-image: url("../../images/plus.svg");
     vertical-align: top;
+    position: relative;
+    bottom: 4px;
 }
 
 .totalPriceBox {
@@ -473,4 +483,17 @@ main > div > * {
 
 .next {
     background-image: url("../../images/pagingNext.svg");
+}
+
+.option-select {
+    width: 300px;
+    height: 40px;
+    position: relative;
+    bottom: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.optionGroup {
+    display: flex;
+    justify-content: space-between;
 }
