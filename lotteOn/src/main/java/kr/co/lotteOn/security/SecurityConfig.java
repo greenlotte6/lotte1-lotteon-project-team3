@@ -49,6 +49,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/","/member/login","/member/logout","/admin/admin").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/shop/list").permitAll()  // <- 상점 등록 처리하는 POST
+                .requestMatchers("/admin/shop/list").permitAll() //상점 등록
                 .requestMatchers("/Community/write**").authenticated()
                 .requestMatchers("/Community/modify**").authenticated()
                 .anyRequest().permitAll()
