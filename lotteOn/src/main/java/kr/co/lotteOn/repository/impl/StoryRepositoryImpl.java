@@ -42,16 +42,13 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom {
 
     @Override
     public Page<Story> searchAllForCate(StoryPageRequestDTO storyPageRequestDTO, Pageable pageable) {
+        String cate = storyPageRequestDTO.getCate();
 
-        String searchType = storyPageRequestDTO.getSearchType();
-        String keyword = storyPageRequestDTO.getKeyword();
+        BooleanExpression expression = qStory.storyNo.isNotNull(); // 기본 always true
 
-        BooleanExpression expression = null;
-
-        if(searchType.equals("title")){
-            expression = qStory.title.contains(keyword);
-        }else if(searchType.equals("cate")){
-            expression = qStory.cate.contains(keyword);
+        // cate가 null이 아니고, 공백이 아닌 경우
+        if (cate != null && !cate.isEmpty()) {
+            expression = qStory.cate.eq(cate); // equals()로 정확히 일치하는 값만 찾기
         }
 
         List<Story> storyList = queryFactory
@@ -63,7 +60,20 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom {
                 .orderBy(qStory.storyNo.desc())
                 .fetch();
 
-        long total = queryFactory.select(qStory.count()).from(qStory).fetchOne();
+        String sql = queryFactory
+                .select(qStory)
+                .from(qStory)
+                .where(expression)
+                .toString();  // 쿼리 출력
+
+        System.out.println("Generated SQL: " + sql);
+        System.out.println("Generated SQL: " + sql);
+        System.out.println("Generated SQL: " + sql);
+        System.out.println("Generated SQL: " + sql);
+        System.out.println("Generated SQL: " + sql);
+        System.out.println("Generated SQL: " + sql);
+
+        long total = queryFactory.select(qStory.count()).from(qStory).where(expression).fetchOne();
 
         return new PageImpl<>(storyList, pageable, total);
     }

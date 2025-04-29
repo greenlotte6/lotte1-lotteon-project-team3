@@ -1,11 +1,14 @@
 package kr.co.lotteOn.service;
 
+import kr.co.lotteOn.dto.recruit.RecruitDTO;
 import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
 import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
 import kr.co.lotteOn.dto.story.StoryDTO;
 import kr.co.lotteOn.dto.story.StoryPageRequestDTO;
 import kr.co.lotteOn.dto.story.StoryPageResponseDTO;
+import kr.co.lotteOn.entity.Recruit;
 import kr.co.lotteOn.entity.Story;
+import kr.co.lotteOn.repository.RecruitRepository;
 import kr.co.lotteOn.repository.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,7 @@ import java.util.Optional;
 public class IntroService {
     private final ModelMapper modelMapper;
     private final StoryRepository storyRepository;
+    private final RecruitRepository recruitRepository;
 
     //회사소개 HOME - 글 출력하기(5개)
     public List<StoryDTO> findAllStoriesByLimit5(){
@@ -111,8 +115,64 @@ public class IntroService {
     public RecruitPageResponseDTO recruitFindAll(RecruitPageRequestDTO pageRequestDTO){
         Pageable pageable = pageRequestDTO.getPageable("recruitNo");
 
-        return null;
+        Page<Recruit> pageRecruit = recruitRepository.searchAllForList(pageable);
+        List<RecruitDTO> recruitDTOList = pageRecruit
+                .getContent()
+                .stream()
+                .map(recruit -> {
+                    RecruitDTO recruitDTO = modelMapper.map(recruit, RecruitDTO.class);
+                    recruitDTO.setCate(recruit.getCate());
+                    recruitDTO.setWriter(recruit.getWriter().getId());
+                    return recruitDTO;
+                }).toList();
+        int total = (int) pageRecruit.getTotalElements();
+
+        return RecruitPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(recruitDTOList)
+                .total(total)
+                .build();
+    }
+
+    public RecruitPageResponseDTO recruitFindAllByCate(RecruitPageRequestDTO pageRequestDTO){
+        Pageable pageable = pageRequestDTO.getPageable("recruitNo");
+
+        Page<Recruit> pageRecruit = recruitRepository.searchAllForCate(pageRequestDTO,pageable);
+
+        List<RecruitDTO> recruitList = pageRecruit
+                .getContent()
+                .stream()
+                .map(recruit -> {
+                    RecruitDTO recruitDTO = modelMapper.map(recruit, RecruitDTO.class);
+
+                    recruitDTO.setWriter(recruit.getWriter().getId());
+                    return recruitDTO;
+                }).toList();
+
+        int total = (int) pageRecruit.getTotalElements();
+
+        return RecruitPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(recruitList)
+                .total(total)
+                .build();
+
     }
 
     //채용하기 - 뷰
+
+    public RecruitDTO findRecruitById(int recruitNo){
+        Optional<Recruit> optRecruit = recruitRepository.findById(recruitNo);
+        if (optRecruit.isPresent()) {
+            Recruit recruit = optRecruit.get();
+            RecruitDTO recruitDTO = modelMapper.map(recruit, RecruitDTO.class);
+            recruitDTO.setCate(recruit.getCate());
+            recruitDTO.setWriter(recruit.getWriter().getId());
+
+            return recruitDTO;
+        }
+        return null;
+    }
 }

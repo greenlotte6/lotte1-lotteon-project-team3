@@ -214,6 +214,12 @@ public class AdminCSController {
         return "redirect:/admin/cs/qnaList";
     }
 
+    //고객센터 - 문의하기 [삭제]
+    @PostMapping("/cs/qnaDelete")
+    public String qnaDelete(@ModelAttribute QnaDTO qnaDTO){
+        adminCSService.qnaDelete(qnaDTO);
+        return "redirect:/admin/cs/qnaList";
+    }
 
     /* *********************************문의하기 끝*************************************/
 
@@ -294,11 +300,17 @@ public class AdminCSController {
     //소식과이야기 - (검색)리스트
     @GetMapping("/cs/listSearch")
     public String search(Model model, StoryPageRequestDTO pageRequestDTO) {
-        StoryPageResponseDTO pageResponseDTO = adminCSService.storyFindAll(pageRequestDTO);
+
+        log.info("pageRequestDTO:{}", pageRequestDTO);
+
+        StoryPageResponseDTO pageResponseDTO = adminCSService.storySearchAll(pageRequestDTO);
         List<StoryDTO> storyList = pageResponseDTO.getDtoList();
         for (StoryDTO story : storyList) {
             story.setCate(story.getCateName());
         }
+
+
+        log.info("pageResponseDTO:{}", pageResponseDTO);
         model.addAttribute("page", pageResponseDTO);
 
         return "/admin/cs/searchList";

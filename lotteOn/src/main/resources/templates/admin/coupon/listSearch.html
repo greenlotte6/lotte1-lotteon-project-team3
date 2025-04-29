@@ -27,8 +27,8 @@
             </div>
             <div class="shopArea">
                 <form th:action="@{/admin/coupon/listSearch}">
-                    <div class="searchArea">
-                        <select name="searchType">
+                    <div class="searchArea" name="searchType">
+                        <select>
                             <option>선택</option>
                             <option value="couponType">쿠폰종류</option>
                             <option value="couponName">쿠폰명</option>
@@ -53,7 +53,7 @@
                         <th>발급일</th>
                         <th style="padding-right: 5px;">관리</th>
                     </tr>
-                    <tr th:each="coupons, i : ${coupons}">
+                    <tr th:each="coupons, i:${coupons}">
                         <td>
                             <button type="submit" class="orderinfo"
                             th:attr = "data-type=${coupons.couponType},
@@ -101,27 +101,27 @@
                     <div class="pageBtn">
                         <th:block th:if="${page.end > 0}">
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/admin/coupon/list(pg=${page.start-2})}" class="prev">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.start-2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
                                     <img src="/images/back-double.png">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/admin/coupon/list(pg=${page.start-1})}" class="prev">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.start-1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
                                     <img src="/images/back-single.png" class="single">
                                 </a>
                             </th:block>
 
                             <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                                <a th:href="@{/admin/coupon/list(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                <a th:href="@{/admin/coupon/listSearch(pg=${num}, searchType=${page.searchType}, keyword=${page.keyword})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
                             </th:block>
 
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/admin/coupon/list(pg=${page.end+1})}" class="next">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.end+1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
                                     <img src="/images/right-single.png" class="single">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/admin/coupon/list(pg=${page.end+2})}" class="next">
+                                <a th:href="@{/admin/coupon/listSearch(pg=${page.end+2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
                                     <img src="/images/right-double.png">
                                 </a>
                             </th:block>

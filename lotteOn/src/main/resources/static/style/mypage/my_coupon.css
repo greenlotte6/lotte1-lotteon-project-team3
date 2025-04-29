@@ -112,19 +112,16 @@ li {
     bottom: 16.50px;
 }
 
-.main_container .div_section .left_section .sidebar{
-    height: 1000px;
-    width: 500px;
+.main_container .div_section .left_section .sidebar {
+    height: 692px;
+    width: 160px;
     display: block;
     position: relative;
     border-right: 1px solid #9b9a9c;
-    margin-left: 20px;
 }
 .sidebar ul li{
     padding: 6px 0;
-    margin: 6px 0;
-    margin-left: 21px;
-    margin-top: 10px;
+    margin: 10px 0 6px 0;
 
 }
 

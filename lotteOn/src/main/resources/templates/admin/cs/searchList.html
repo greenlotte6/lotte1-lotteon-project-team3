@@ -29,13 +29,15 @@
             <div class="shopArea">
                 <div class="searchArea">
                     <form th:action="@{/admin/cs/listSearch}">
-                        <select name="searchType">
-                            <option>선택</option>
-                            <option value="title">제목</option>
-                            <option value="cate">카테고리</option>
+                        <select name="cate" onchange="this.form.submit()">
+                            <option value="" disabled selected>선택</option>
+                            <option value="culture">기업문화</option>
+                            <option value="interview">인터뷰</option>
+                            <option value="recruit">채용</option>
+                            <option value="lotteOn">롯데ON</option>
+                            <option value="press">보도자료</option>
+                            <option value="esg">ESG</option>
                         </select>
-                        <input type="text" name="keyword" placeholder="검색어 입력">
-                        <input type="submit" value="검색" style="background-color: #3f97f6; color: white; height: 42.47px; border: none">
                     </form>
                 </div>
                 <table>
@@ -47,16 +49,11 @@
                         <th>작성일</th>
                         <th>관리</th>
                     </tr>
-                    <tr th:each="story : ${story}" >
+                    <tr th:each="story : ${page.dtoList}" >
                         <td th:text="${story.cate}">카테고리</td>
                         <td><img th:src="@{'/images/STORY/' + ${story.imageMain}}"></td>
                         <td>
-                            <button type="submit"
-                                    class="submitbtn"
-                                    th:attr = "data-type=${story.cate},
-                                            data-title=${story.title},
-                                            data-content=${story.content},
-                                            data-story-no=${story.storyNo}">[[${story.title}]]</button>
+                            <button>[[${story.title}]]</button>
                         </td>
                         <td>[[${story.writer}]]</td>
                         <td>[[${story.regDate}]]</td>
@@ -78,27 +75,27 @@
                     <div class="pageBtn">
                         <th:block th:if="${page.end > 0}">
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/admin/cs/searchList(pg=${page.start-2})}" class="prev">
+                                <a th:href="@{/admin/cs/listSearch(pg=${page.start-2}, cate=${page.cate})}" class="prev">
                                     <img src="/images/back-double.png">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.prev}">
-                                <a th:href="@{/admin/cs/searchList(pg=${page.start-1})}" class="prev">
+                                <a th:href="@{/admin/cs/listSearch(pg=${page.start-1}, cate=${page.cate})}" class="prev">
                                     <img src="/images/back-single.png" class="single">
                                 </a>
                             </th:block>
 
                             <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                                <a th:href="@{/admin/cs/searchList(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                <a th:href="@{/admin/cs/listSearch(pg=${num}, cate=${page.cate})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
                             </th:block>
 
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/admin/cs/searchList(pg=${page.end+1})}" class="next">
+                                <a th:href="@{/admin/cs/listSearch(pg=${page.end+1}, cate=${page.cate})}" class="next">
                                     <img src="/images/right-single.png" class="single">
                                 </a>
                             </th:block>
                             <th:block th:if="${page.next}">
-                                <a th:href="@{/admin/cs/searchList(pg=${page.end+2})}" class="next">
+                                <a th:href="@{/admin/cs/listSearch(pg=${page.end+2}, cate=${page.cate})}" class="next">
                                     <img src="/images/right-double.png">
                                 </a>
                             </th:block>
@@ -164,33 +161,6 @@
                     </div>
                     <div class="modalbtn">
                         <button type="submit">등록하기</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div id="bannerModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3>글 보기</h3>
-                <form>
-                    <div class="modalTable">
-                        <table class="fst">
-                            <tr>
-                                <th>글제목</th>
-                                <td id="modalType"></td>
-                            </tr>
-                            <tr>
-                                <th>글내용</th>
-                                <td id="modalTitle"></td>
-                            </tr>
-                            <tr>
-                                <th>내용</th>
-                                <td id="modalContent"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modalbtn">
-                        <button>목록</button>
                     </div>
                 </form>
             </div>
