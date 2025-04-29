@@ -67,6 +67,12 @@ public class MemberController {
     public String resultId() {
         return "/member/resultId";
     }
+    
+    //회원 - 비밀번호 찾기 결과
+    @GetMapping("/resultPass")
+    public String resultPass() {
+        return "/member/resultPass";
+    }
 
     //회원 - 휴대폰 존재 여부
     @GetMapping("/checkHp/{hp}")

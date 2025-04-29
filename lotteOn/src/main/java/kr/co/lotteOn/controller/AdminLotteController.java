@@ -90,18 +90,10 @@ public class AdminLotteController {
 
     }
 
-    //환경설정 - 버전관리
-    @GetMapping("/config/version")
-    public String version(){
-        return "/admin/config/version";
-    }
-
     //환경설정 - 카테고리 관리
     @GetMapping("/config/category")
     public String category() {
         return "/admin/config/category";
     }
-
-
 
 }

@@ -64,7 +64,7 @@
         
     </main>
 
-<th:block th:insert="~{/common/_footer.html}"/>
+<th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 </body>
 
 <script src="/script/cust_question_write.js"></script>

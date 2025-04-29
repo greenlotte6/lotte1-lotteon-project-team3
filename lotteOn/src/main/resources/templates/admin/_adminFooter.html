@@ -1,7 +1,7 @@
-<footer>
+<footer th:fragment="footerFragment(versionId)">
     <div class="footerArea">
         <div>
-            <p>Copyright ©LotteON.co.kr All rights reserved.LotteON ADMINSTRATOR Version 1.1.1.1</p>
+            <p>Copyright ©LotteON.co.kr All rights reserved.LotteON ADMINSTRATOR Version <span th:text="${versionId}" style="color: white"></span></p>
         </div>
     </div>
 </footer>

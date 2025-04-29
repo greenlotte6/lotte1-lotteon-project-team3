@@ -122,8 +122,7 @@
             </section>
         </section>
     </main>
-    <th:block th:include="/common/_footer.html"/>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
     <script src="/script/policy.js"></script>
 </body>
-
 </html>

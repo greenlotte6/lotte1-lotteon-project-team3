@@ -99,7 +99,7 @@
             </form>
         </div>
     </main>
-    <th:block th:include="~{/admin/_adminFooter}"/>
+    <th:block th:replace="/admin/_adminFooter.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
 </body>
 </html>
