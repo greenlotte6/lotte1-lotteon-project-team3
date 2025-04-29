@@ -33,7 +33,12 @@ public class ProductController {
 
     //상품 - 상세보기
     @GetMapping("/detail")
-    public String detail(){
+    public String detail(@RequestParam String productCode, Model model) {
+        ProductDTO product = productService.getProductByCode(productCode);
+        if (product == null) {
+            return "redirect:/product/list";
+        }
+        model.addAttribute("product", product);
         return "/product/detail";
     }
 
