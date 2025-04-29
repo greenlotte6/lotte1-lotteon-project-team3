@@ -1,0 +1,72 @@
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+main {
+    height: 100%;
+}
+
+main > div > * {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 160px;
+}
+
+.mainWrapper > div > h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 23.24px 0 0 0;
+    color: #111;
+}
+
+.mainWrapper > div > p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 8px;
+}
+
+.logo {
+    margin-bottom: 30px;
+    width: max-content;
+}
+
+.mainContainer {
+    margin-top: 20px;
+}
+
+.mainContainer table {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    padding: 14px 20px;
+}
+
+th {
+    color: #555;
+    font-weight: 400;
+    padding: 5px 0;
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.gotoLogin {
+    background-color: #E60012;
+    margin-top: 20px;
+}

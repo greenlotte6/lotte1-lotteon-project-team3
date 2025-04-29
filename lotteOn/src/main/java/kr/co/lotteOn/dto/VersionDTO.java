@@ -17,4 +17,8 @@ public class VersionDTO {
     private String versionContent;
     private String writer;
     private LocalDateTime regDate;
+
+    public String getFormattedRegDate() {
+        return regDate != null ? regDate.toString().substring(0, 10) : "";
+    }
 }

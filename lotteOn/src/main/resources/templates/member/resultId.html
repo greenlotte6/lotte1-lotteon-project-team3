@@ -2,9 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/style/member/resultId.css">
+
+    <!-- Script -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/script/postcode.js"></script>
+    <script src="/script/membervalidation.js"></script>
+    <script src="/script/validation.js"></script>
+    <script src="/script/changeForm.js"></script>
+
+    <title>회원가입 : 롯데ON</title>
 </head>
 <body>
+<div id="wrapper">
+    <main>
+        <div class="mainWrapper">
+            <div>
+                <a th:href="@{/}">
+                    <img src="/images/logo_lotte-on.png" alt="로고" class="logo">
+                </a>
+                <h2>아이디 찾기 결과</h2>
+                <p>아래의 회원정보를 확인해주세요.</p>
+            </div>
+            <div class="mainContainer">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td>고양이</td>
+                    </tr>
+                    <tr>
+                        <th>아이디</th>
+                        <td>kawaiiCat</td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td>kawaiiCat@gmail.com</td>
+                    </tr>
+                    <tr>
+                        <th>가입일자</th>
+                        <td>2025-04-29</td>
+                    </tr>
+                </table>
+                <a th:href="@{/member/login}">
+                    <button class="gotoLogin">로그인하기</button>
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function sendEmail() {
+        const email = document.getElementById("email").value;
+        const sendEmailBtn = document.getElementById("sendEmailBtn");
 
+        fetch("/member/email/send", {
+            method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({email})
+        })
+            .then(() => {
+                alert("이메일로 인증코드가 발송되었습니다.");
+                document.querySelector(".codeBox").style.display = "flex";
+                sendEmailBtn.disabled = true;
+                sendEmailBtn.style.cursor = 'not-allowed';
+            });
+    }
+
+    function verifyEmailCode() {
+        const email = document.getElementById("email").value;
+        const code = document.getElementById("emailCodeInput").value;
+        const emailMsg = document.querySelector('.emailMsg');
+
+        fetch("/member/email/verify", {
+            method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({email, code}),
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(success => {
+                if (success) {
+                    emailMsg.innerText = '이메일이 인증되었습니다';
+                    emailMsg.style.color = 'green';
+                } else {
+                    emailMsg.innerText = '인증코드가 일치하지 않습니다';
+                    emailMsg.style.color = '#E60012';
+                }
+            });
+    }
+</script>
 </body>
 </html>

@@ -9,11 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class VersionService {
 
     private final VersionRepository versionRepository;
@@ -40,5 +44,22 @@ public class VersionService {
 
         // 저장
         versionRepository.save(version);
+    }
+
+    public List<VersionDTO> getAllVersions() {
+        List<Version> list = versionRepository.findAllByOrderByRegDateDesc();
+        return list.stream()
+                .map(version -> modelMapper.map(version, VersionDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public String getLatestVersionId() {
+        return versionRepository.findTopByOrderByRegDateDesc()
+                .map(Version::getVersionId)
+                .orElse("N/A"); // 없을 경우 기본값
+    }
+
+    public void deleteVersionsByIds(List<String> versionIds) {
+            versionRepository.deleteByVersionIdIn(versionIds);  // 이 부분이 실제 DB에서 삭제하는 부분
     }
 }

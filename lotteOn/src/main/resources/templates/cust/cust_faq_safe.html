@@ -120,7 +120,7 @@
     </main>
 
     <!--푸터-->
-    <th:block th:include="~{/common/_footer.html}"/>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 
     <script src="/script/cust_faq.js"></script>
 </body>
