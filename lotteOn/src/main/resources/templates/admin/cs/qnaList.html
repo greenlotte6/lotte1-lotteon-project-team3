@@ -15,6 +15,16 @@
     <script src="/script/csQna.js"></script>
     <script src="/script/faq.js"></script>
     <script src="/script/aside.js"></script>
+    <style>
+        .deletebtn{
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 12px;
+            width: 30px;
+        }
+
+    </style>
 
 </head>
 <body>
@@ -53,7 +63,7 @@
                         <th>제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
-                        <th>관리</th>
+                        <th colspan="2" style="padding-left: 0">관리</th>
                         <th>상태</th>
                     </tr>
                     <tr th:each="qna, i : ${page.dtoList}">
@@ -81,8 +91,14 @@
                                             data-content=${qna.content},
                                             data-qna-no=${qna.qnaNo},
                                             data-writer = ${qna.writer},
-                                            data-comment = ${qna.comment}"> 답변하기
+                                            data-comment = ${qna.comment}"> 답변
                             </button>
+                        </td>
+                        <td class="buttons">
+                            <form th:action="@{/admin/cs/qnaDelete}" method="post" onsubmit="return confirmDelete()">
+                                <button type="submit" class="deletebtn" style="font-size: 12px">삭제</button>
+                                <input type="hidden" name="qnaNo" th:value="${qna.qnaNo}">
+                            </form>
                         </td>
                         <td>
                             <span th:if="${qna.comment == null}">검토중</span>

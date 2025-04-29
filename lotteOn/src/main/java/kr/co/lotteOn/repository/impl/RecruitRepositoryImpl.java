@@ -53,7 +53,7 @@ public class RecruitRepositoryImpl implements RecruitRepositoryCustom {
             expression = qRecruit.title.contains(keyword);
         }
 
-        List<Recruit>  recruitList = queryFactory
+        List<Recruit> recruitList = queryFactory
                 .select(qRecruit)
                 .from(qRecruit)
                 .where(expression)
@@ -62,7 +62,7 @@ public class RecruitRepositoryImpl implements RecruitRepositoryCustom {
                 .orderBy(qRecruit.recruitNo.desc())
                 .fetch();
 
-        long total = queryFactory.select(qRecruit.count()).from(qRecruit).fetchOne();
+        long total = queryFactory.select(qRecruit.count()).from(qRecruit).where(expression).fetchOne();
 
 
 

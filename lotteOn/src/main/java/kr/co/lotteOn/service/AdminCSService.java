@@ -354,6 +354,13 @@ public class AdminCSService {
         qnaRepository.save(qna);
     }
 
+    /*문의하기 - 글 삭제하기*/
+    @Transactional
+    public void qnaDelete(QnaDTO qnaDTO) {
+        Qna qna = qnaRepository.findById(qnaDTO.getQnaNo()).get();
+        qnaRepository.delete(qna);
+    }
+
     /* ****************************************문의하기 끝***********************************/
 
     /*채용 - 글 리스트 출력하기*/
@@ -465,7 +472,7 @@ public class AdminCSService {
     }
 
     //소식과 이야기 - (검색)리스트
-    public StoryPageResponseDTO storyFindAllByCate(StoryPageRequestDTO pageRequestDTO) {
+    public StoryPageResponseDTO storySearchAll(StoryPageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("storyNo");
         Page<Story> pageStory = storyRepository.searchAllForCate(pageRequestDTO, pageable);
 
@@ -511,10 +518,5 @@ public class AdminCSService {
         Story story = storyRepository.findById(storyDTO.getStoryNo()).get();
         storyRepository.delete(story);
     }
-
-
-
-
-
 
 }

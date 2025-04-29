@@ -1,5 +1,8 @@
 package kr.co.lotteOn.controller;
 
+import kr.co.lotteOn.dto.recruit.RecruitDTO;
+import kr.co.lotteOn.dto.recruit.RecruitPageRequestDTO;
+import kr.co.lotteOn.dto.recruit.RecruitPageResponseDTO;
 import kr.co.lotteOn.dto.story.StoryDTO;
 import kr.co.lotteOn.dto.story.StoryPageRequestDTO;
 import kr.co.lotteOn.dto.story.StoryPageResponseDTO;
@@ -39,9 +42,35 @@ public class IntroController {
     }
     //회사소개 - 채용
     @GetMapping("/intro_employ")
-    public String employ(){
+    public String employ(Model model, RecruitPageRequestDTO pageRequestDTO){
+        RecruitPageResponseDTO pageResponseDTO = introService.recruitFindAll(pageRequestDTO);
+
+        List<RecruitDTO> recruitList = pageResponseDTO.getDtoList();
+        for (RecruitDTO recruit : recruitList) {
+            recruit.setExperience(recruit.getExperienceYear());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("recruit", pageResponseDTO.getDtoList());
+
         return "/intro/intro_employ";
     }
+
+    //회사소개 - 채용(검색)
+    @GetMapping("/recruitSearch")
+    public String employSearch(Model model, RecruitPageRequestDTO pageRequestDTO){
+        RecruitPageResponseDTO pageResponseDTO = introService.recruitFindAllByCate(pageRequestDTO);
+
+        List<RecruitDTO> recruitList = pageResponseDTO.getDtoList();
+        for (RecruitDTO recruit : recruitList) {
+            recruit.setExperience(recruit.getExperienceYear());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+
+        return "/intro/intro_employ_search";
+    }
+
     //회사소개 - 미디어
     @GetMapping("/intro_media")
     public String media(){

@@ -58,26 +58,27 @@ h3 {
 table {
     width: 100%;
     height: auto;
-    border-top: 2px solid #dddddd;
-    border-bottom: 2px solid #dddddd;
+    border-top: none;
     border-collapse: collapse;
 }
 table tr {
-    border-bottom: 2px solid #dddddd;
+    border-bottom: none;
+}
+table tr td {
+    padding: 10px 5px;
+    text-align: center;
+    font-size: 12px;
+    height: 30px;
+    border-bottom: 1px solid #dfdfdf;
 }
 table tr th {
     height: 45px;
     background-color: #93b7d0;
     color: white;
+    font-size: 14px;
 }
 table tr th a {
     color: white;
-}
-table tr td {
-    padding: 10px;
-    text-align: center;
-    font-size: 12px;
-    height: 30px;
 }
 .btnarea {
     display: flex;
@@ -118,6 +119,44 @@ table tr td {
 .btnarea .pageBtn .single {
     width: 15px;
     height: 15px;
+}
+.couponbtn {
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    border-radius: 8px;
+    color: black;
+}
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+}
+.info table {
+    border-bottom: none;
+}
+.info table td {
+    border-bottom: none;
+    font-weight: 500;
+}
+.info span {
+    font-weight: bold;
+}
+.info table tr {
+    border-bottom: 1px solid #dfdfdf;
+}
+button.orderinfo {
+    line-height: 1.5;
 }
 .shopArea {
     padding: 10px;
@@ -203,6 +242,7 @@ tr td select option {
 }
 .modal table {
     margin-bottom: 20px;
+    border: 1px solid #dfdfdf;
 }
 .modal table th {
     width: 90px;
