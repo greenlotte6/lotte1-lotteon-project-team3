@@ -16,7 +16,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByProductCodeContaining(String keyword, Pageable pageable);
     Page<Product> findByCompanyNameContaining(String keyword, Pageable pageable);
     Page<Product> findAll(Pageable pageable);
-    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.productCode = :productCode")
+
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.category WHERE p.productCode = :productCode")
     Optional<Product> findWithCategoryByProductCode(@Param("productCode") String productCode);
+
     List<Product> findByCategory_CategoryId(Long categoryId);
 }

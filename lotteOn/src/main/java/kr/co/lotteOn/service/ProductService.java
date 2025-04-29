@@ -157,9 +157,9 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO getProductByCode(String productCode) {
-        Product product = productRepository.findWithCategoryByProductCode(productCode)
-                .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
-        return ProductDTO.fromEntity(product);
+        return productRepository.findWithCategoryByProductCode(productCode)
+                .map(ProductDTO::fromEntity)
+                .orElse(null);
     }
 
     public void deleteProduct(String productCode) {
@@ -184,19 +184,6 @@ public class ProductService {
         }
         return products.map(ProductDTO::fromEntity);
     }
-    /*
-    @Transactional(readOnly = true)
-    public List<ProductDTO> getProductsByParentCategoryId(Long parentCategoryId) {
-        List<Category> subCategories = categoryRepository.findByParent_CategoryId(parentCategoryId);
-        List<Long> subCategoryIds = subCategories.stream()
-                .map(Category::getCategoryId)
-                .toList();
-        List<Product> products = productRepository.findByCategory_CategoryIdIn(subCategoryIds);
-        return products.stream()
-                .map(ProductDTO::fromEntity)
-                .collect(Collectors.toList());
-    }
-     */
     @Transactional(readOnly = true)
     public List<ProductDTO> getProductsByCategoryId(Long categoryId) {
         List<Product> products = productRepository.findByCategory_CategoryId(categoryId);
