@@ -84,10 +84,13 @@ main > div > * {
     display: flex;
     padding-left: 30px;
     padding-top: 16px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .itemMain > a > img {
     border-radius: 6px;
+    width: 360px;
 }
 
 .itemSub {
@@ -97,6 +100,12 @@ main > div > * {
     margin-left: 16px;
     padding: 6px 0;
 
+}
+
+.itemPrice {
+    position: relative;
+    bottom: 10px;
+    left: 14px;
 }
 
 .remove {
