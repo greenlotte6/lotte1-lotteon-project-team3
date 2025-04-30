@@ -284,10 +284,6 @@ button {
     font-size: 18px;
 }
 
-
-
-
-
 .sub-category {
     overflow: hidden;
     height: 0;
@@ -300,4 +296,8 @@ button {
 .sub-category a {
     font-size: 14px;
     color: #333;
+}
+
+input {
+    font-size: 14px;
 }
