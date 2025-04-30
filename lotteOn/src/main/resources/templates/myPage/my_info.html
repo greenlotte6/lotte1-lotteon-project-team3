@@ -9,77 +9,29 @@
     <link rel="stylesheet" href="/style/common/_footer.css">
     <title>마이페이지 메인</title>
     <style>
-        input[name="email"]{
-            border: none;
-            width: 400px;
-            padding-left: 10px;
-        }
-        input[name="hp"]{
-            border: none;
-            width: 400px;
-            padding-left: 10px;
-        }
 
     </style>
 </head>
 <body>
 <div id="container">
-    <th:block th:include="/common/_header.html"/>
+    <th:block th:insert="~{/common/_header.html}"/>
     <main class="main_container">
 
         <div class="mypage-header">
             <div class="mypage-title">
                 <h2>나의쇼핑정보</h2>
             </div>
-            <div class="mypage-shortcuts">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <span class="label">주문</span>
-                            <span class="value">2</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label">쿠폰</span>
-                            <span class="value">1</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label">포인트</span>
-                            <span class="value">1,000</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label">문의</span>
-                            <span class="value">1</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <th:block th:insert="~{/myPage/_header.html}"/>
         </div>
 
         <div class="div_section">
-            <section class="left_section">
-                <aside class="sidebar">
-                    <ul>
-                        <li><a th:href="@{/myPage/my_order}">전체주문내역</a></li>
-                        <li><a th:href="@{/myPage/my_point}">포인트내역</a></li>
-                        <li><a th:href="@{/myPage/my_coupon}">쿠폰</a></li>
-                        <li><a th:href="@{/myPage/my_review}">나의리뷰</a></li>
-                        <li><a th:href="@{/myPage/my_qna}">문의하기</a></li>
-                        <li><a th:href="@{/myPage/my_info}">나의설정</a></li>
-                    </ul>
-                </aside>
-            </section>
+            <th:block th:insert="~{/myPage/_side.html}"/>
 
             <section class="right_section">
                 <div class="ad">
                     <div>광고</div>
                 </div>
-                <form action="/my_info" method="post">
+                <form th:action="@{/myPage/my_info}" method="post">
                     <table class="info">
                         <tr>
                             <th>사용자 ID</th>
@@ -90,13 +42,22 @@
                         <tr>
                             <th>비밀번호</th>
                             <td>
-                                <button class="modify_pw">비밀번호 수정</button>
+                                <button type="button" class="modify_pw">비밀번호 수정</button>
+                                <input type="password" name="password" class="pw_input" style="display:none;" placeholder="새 비밀번호 입력" />
                             </td>
                         </tr>
                         <tr>
                             <th>이름</th>
                             <td>
-                                <input readonly type="text" name="name"  th:value="${member.name}"/>
+                                <input type="text" name="name"  th:value="${member.name}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>구매 등급</th>
+                            <td>
+                                <span th:class="'rating-' + ${member.rating}">
+                                    <span th:text="${member.rating}">회원 등급</span>
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -108,7 +69,8 @@
                         <tr>
                             <th>성별</th>
                             <td>
-                                <input readonly type="text" name="birth" th:value="${member.gender}">
+                                <input type="text" name="birth" th:value="${member.gender}">
+                                <p style="padding: 5px 0 0 10px; font-size: 12px">남/여로 입력 해주세요</p>
                             </td>
                         </tr>
                         <tr>
@@ -136,17 +98,27 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th>탈퇴</th>
-                            <td>
-                                <button class="leave">탈퇴하기</button>
-                            </td>
-                        </tr>
                     </table>
-                    <button type="button" class="end_btn">수정하기</button>
-
+                    <script>
+                        document.querySelector(".modify_pw").addEventListener("click", function () {
+                            document.querySelector(".pw_input").style.display = "inline-block";
+                            this.style.display = "none"; // 버튼 숨김
+                        });
+                    </script>
+                    <button type="submit" class="end_btn">수정하기</button>
                 </form>
-
+                <div>
+                    <form th:action="@{/myPage/my_info/leave}" method="post" id="leaveForm">
+                        <button type="button" class="leave">탈퇴하기</button>
+                    </form>
+                </div>
+                <script>
+                    document.querySelector('.leave').addEventListener('click', function () {
+                        if (confirm('정말 탈퇴하시겠습니까?')) {
+                            document.getElementById('leaveForm').submit();
+                        }
+                    });
+                </script>
             </section>
         </div>
     </main>

@@ -28,6 +28,9 @@ public class QnaPageResponseDTO {
     private String searchType;
     private String keyword;
 
+    //mypage
+    private String writer;
+
     @Builder
     public QnaPageResponseDTO(QnaPageRequestDTO pageRequestDTO, List<QnaDTO> dtoList, int total) {
         this.cate1 = pageRequestDTO.getCate1();
@@ -36,6 +39,8 @@ public class QnaPageResponseDTO {
         this.size = pageRequestDTO.getSize();
         this.total = total;
         this.dtoList = dtoList;
+
+        this.writer = pageRequestDTO.getWriter();
 
         //search
         this.searchType = pageRequestDTO.getSearchType();

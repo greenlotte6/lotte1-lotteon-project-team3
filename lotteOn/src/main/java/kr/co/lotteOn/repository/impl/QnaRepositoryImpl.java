@@ -1,8 +1,11 @@
 package kr.co.lotteOn.repository.impl;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
+import kr.co.lotteOn.entity.QMember;
 import kr.co.lotteOn.entity.QQna;
 import kr.co.lotteOn.entity.Qna;
 import kr.co.lotteOn.repository.custom.QnaRepositoryCustom;
@@ -22,6 +25,7 @@ public class QnaRepositoryImpl implements QnaRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
     private final QQna qQna = QQna.qna;
+    private final QMember qMember = QMember.member;
 
     @Override
     public Page<Qna> searchAllForList(Pageable pageable) {
@@ -127,5 +131,28 @@ public class QnaRepositoryImpl implements QnaRepositoryCustom {
                 .fetchOne();
 
         return new PageImpl<>(qnaList, pageable, total);
+    }
+
+    @Override
+    public Page<Tuple> searchAllByWriter(QnaPageRequestDTO qnaPageRequestDTO, Pageable pageable) {
+        String writer = qnaPageRequestDTO.getWriter();
+
+        List<Tuple> tupleList = queryFactory
+                .select(qQna, qMember.id)
+                .from(qQna)
+                .join(qQna.writer, qMember)
+                .where(qQna.writer.id.eq(writer))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qQna.qnaNo.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qQna.count())
+                .from(qQna)
+                .where(qQna.writer.id.eq(writer))
+                .fetchOne();
+
+        return new PageImpl<>(tupleList, pageable, total);
     }
 }

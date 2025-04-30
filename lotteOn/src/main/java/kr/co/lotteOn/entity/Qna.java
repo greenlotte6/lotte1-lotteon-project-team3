@@ -28,6 +28,7 @@ public class Qna {
     private String views;       //조회수
     private String status;      //NULL
     private String comment;
+    private String channel;
 
     @CreationTimestamp
     private LocalDateTime regDate;     //등록날짜
