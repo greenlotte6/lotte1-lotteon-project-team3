@@ -250,7 +250,7 @@ main > div > * {
 
 .totalPriceBox {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
     padding-top: 30px;
 }
@@ -294,9 +294,12 @@ main > div > * {
     background-image: url("../../images/icon_fill_heart_red.svg");
 }
 
-.addCart {
+.addCart button {
+    width: 240px;
+    height: 56px;
     border: 1px solid #eee;
     background: white;
+    border-radius: 4px;
 }
 
 .purchase {

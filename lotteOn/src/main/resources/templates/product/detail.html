@@ -12,9 +12,9 @@
     <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
 
     <!-- Script -->
-    <script src="/script/search.js"></script>
-    <script src="/script/chooseOption.js"></script>
-    <script src="/script/count.js"></script>
+    <!--<script src="/script/search.js"></script>-->
+    <!--<script src="/script/chooseOption.js"></script>-->
+    <!--<script src="/script/count.js"></script>-->
     <script src="/script/topFixed.js"></script>
     <script src="/script/detail.js"></script>
     <!-- Style -->
@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/style/common/_footer.css"/>
     <title>롯데ON</title>
 </head>
+<!--th:attr="data-login=${isLogin}"-->
 <body>
 <div id="container">
     <th:block th:include="/common/_header.html"/>
@@ -78,7 +79,8 @@
                             <p>총 수량:
                                 <button class="minus">-</button>
                                 <span class="totalCount">1</span>
-                                <button class="plus">+</button> 개
+                                <button class="plus">+</button>
+                                개
                             </p>
                         </div>
                         <p>총 상품금액:
@@ -90,7 +92,11 @@
                     </div>
                     <div class="btnContainer">
                         <button class="like"></button>
-                        <button class="addCart" onclick="location.href='/product/cart'">장바구니 담기</button>
+                        <form id="cartForm" class="addCart" method="post" th:action="@{/product/addToCart}">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <input type="hidden" name="quantity" id="quantityInput" value="1">
+                            <button type="submit">장바구니 담기</button>
+                        </form>
                         <button class="purchase" onclick="location.href='/product/payment'">바로 구매하기</button>
                     </div>
                 </div>
@@ -177,8 +183,9 @@
                     </div>
                 </div>
             </div>
-        </main>
-        <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
-    </div>
+        </div>
+    </main>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
+</div>
 </body>
 </html>
