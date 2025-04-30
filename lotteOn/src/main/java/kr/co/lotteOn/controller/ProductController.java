@@ -42,12 +42,6 @@ public class ProductController {
         return "/product/detail";
     }
 
-    //상품 - 장바구니
-    @GetMapping("/cart")
-    public String cart(){
-        return "/product/cart";
-    }
-
     //상품 - 주문하기
     @GetMapping("/payment")
     public String payment(){

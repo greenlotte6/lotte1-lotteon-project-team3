@@ -8,15 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceSpan = document.querySelector('.totalPrice');
     const unitPrice = parseInt(priceSpan.dataset.baseprice);
 
+    const addCartBtn = document.querySelector('.addCart');
+    const productCode = document.querySelector('.no').textContent.trim();
+    const isLogin = document.body.dataset.login === 'true'; // body에 data-login 속성 필요
+
     let count = 1;
 
-    // 옵션 선택 이벤트
+    // 옵션 선택
     selects.forEach(select => {
         select.addEventListener('change', (e) => {
             const value = e.target.value;
             const name = e.target.dataset.name;
 
-            // 중복 방지
             if (!value || selectedContainer.querySelector(`[data-name="${name}"][data-value="${value}"]`)) return;
 
             const selected = document.createElement('div');
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 수량 조정
+    // 수량 조절
     plusBtn.addEventListener('click', () => {
         count++;
         updateTotal();
@@ -51,12 +54,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 총 금액, 수량 업데이트
     function updateTotal() {
         countSpan.textContent = count;
         priceSpan.textContent = (unitPrice * count).toLocaleString();
     }
 
-    // 초기 금액 세팅
+    // 장바구니 담기
+    addCartBtn.addEventListener('click', () => {
+        if (!isLogin) {
+            location.href = '/member/login';
+            return;
+        }
+
+        fetch('/product/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productCode, count })
+        })
+            .then(res => {
+                if (res.ok) {
+                    location.href = '/product/cart';
+                } else {
+                    alert('장바구니 담기에 실패했습니다.');
+                }
+            });
+    });
+
+    // 초기 총액 세팅
     updateTotal();
 });

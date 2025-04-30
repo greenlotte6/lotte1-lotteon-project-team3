@@ -3,6 +3,7 @@ package kr.co.lotteOn.security;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+        Member member = userDetails.getMember();
+
+        request.getSession().setAttribute("memberId", member.getId());
+
         String userType = request.getParameter("userType");
         request.getSession().setAttribute("userType", userType);
 
