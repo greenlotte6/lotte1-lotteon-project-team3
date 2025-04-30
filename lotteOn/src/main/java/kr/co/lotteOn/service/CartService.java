@@ -72,4 +72,11 @@ public class CartService {
                 .deliveryFee(p.getDeliveryFee())
                 .build();
     }
+
+    public void deleteCartItem(Long cartId) {
+        cartRepository.deleteById(cartId);
+    }
+    public void deleteCartItems(List<Long> cartIds) {
+        cartRepository.deleteAllById(cartIds);
+    }
 }

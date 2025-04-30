@@ -12,9 +12,13 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByMember_Id(String id);
+
     Optional<Cart> findByMember_IdAndProduct_Id(String memberId, Long productId);
+
     @Query("SELECT c FROM Cart c JOIN FETCH c.product WHERE c.member.id = :memberId")
     List<Cart> findWithProductByMemberId(@Param("memberId") String memberId);
+
     @Query("SELECT c FROM Cart c JOIN FETCH c.product WHERE c.id = :cartId")
     Optional<Cart> findWithProductById(@Param("cartId") Long cartId);
+
 }

@@ -54,7 +54,9 @@ public class CartController {
 
         int totalProductPrice = 0;
         int totalDiscount = 0;
-        int deliveryFee = 3000;
+        int deliveryFee = cartList.stream()
+                                    .mapToInt(CartDTO::getDeliveryFee)
+                                    .sum();
 
         for (CartDTO cart : cartList) {
             int itemPrice = cart.getPrice() * cart.getQuantity();
@@ -88,7 +90,12 @@ public class CartController {
 
         return Map.of(
                 "updatedQuantity", updated.getQuantity(),
-                "productTotalPrice", productTotalPrice
+                "productTotalPrice", productTotalPrice,
+                "price", updated.getPrice(),
+                "discount", updated.getDiscount(),
+                "deliveryFee", updated.getDeliveryFee()
         );
     }
+
+
 }
