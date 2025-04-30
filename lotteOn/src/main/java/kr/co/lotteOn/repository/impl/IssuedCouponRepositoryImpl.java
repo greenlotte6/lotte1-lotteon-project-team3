@@ -100,4 +100,32 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepositoryCustom 
 
         return new PageImpl<Tuple>(tupleList, pageable, total);
     }
+
+    @Override
+    public Page<Tuple> searchAllByMemberId(IssuedCouponPageRequestDTO pageRequestDTO, Pageable pageable) {
+        String memberId = pageRequestDTO.getMemberId();
+
+        List<Tuple> tupleList = queryFactory
+                .select(qIssuedCoupon, qCoupon, qMember.id)
+                .from(qIssuedCoupon)
+                .join(qCoupon)
+                .on(qIssuedCoupon.coupon.couponCode.eq(qCoupon.couponCode))
+                .join(qMember)
+                .on(qIssuedCoupon.member.id.eq(qMember.id))
+                .join(qSeller)
+                .on(qIssuedCoupon.coupon.companyName.eq(qSeller.companyName))
+                .where(qIssuedCoupon.member.id.eq(memberId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qIssuedCoupon.issuedNo.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qIssuedCoupon.count())
+                .from(qIssuedCoupon)
+                .where(qIssuedCoupon.member.id.eq(memberId))
+                .fetchOne();
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
 }

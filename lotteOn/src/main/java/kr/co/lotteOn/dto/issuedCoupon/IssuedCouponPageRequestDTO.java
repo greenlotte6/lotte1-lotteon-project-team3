@@ -27,6 +27,8 @@ public class IssuedCouponPageRequestDTO {
     private String keyword;
     private String cate;
 
+    private String memberId;
+
     //글목록 페이징 처리를 위한 Pageable 객체 생성 메서드
     public Pageable getPageable(String sort){
         return PageRequest.of(this.pg-1, this.size, Sort.by(sort).descending());

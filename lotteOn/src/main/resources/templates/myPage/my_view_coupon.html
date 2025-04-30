@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/mypage/my_qna.css">
-    <link rel="stylesheet" href="/style/mypage/my_qna_view.css">
-    <title>나의쇼핑정보 문의하기</title>
+    <title>나의쇼핑정보 쿠폰정보</title>
     <style>
-
+        .article th {
+            width: 150px;
+        }
     </style>
 </head>
 
@@ -32,36 +33,34 @@
                 <div class="ad">
                     <div>광고</div>
                 </div>
-                <h1>문의하기</h1>
+                <h1>쿠폰 정보</h1>
                 <table class="article">
                     <tr>
-                        <th>문의채널</th>
-                        <td>[[${qna.channel}]]</td>
-                        <th>상태</th>
-                        <td>[[${qna.status}]]</td>
+                        <th>쿠폰 코드</th>
+                        <td>[[${coupon.couponCode}]]</td>
                     </tr>
                     <tr>
-                        <th>문의유형</th>
-                        <td>[[${qna.cate2}]]</td>
-                        <th>작성일</th>
-                        <td colspan="3">[[${qna.regDate}]]</td>
+                        <th>쿠폰명</th>
+                        <td>[[${coupon.couponName}]]</td>
                     </tr>
                     <tr>
-                        <th>제목</th>
-                        <td colspan="3">[[${qna.title}]]</td>
+                        <th>쿠폰 종류</th>
+                        <td>[[${coupon.couponType}]]</td>
                     </tr>
                     <tr>
-                        <th>문의 내용</th>
-                        <td colspan="3">[[${qna.content}]]</td>
-                    </tr>
-                    <tr>
-                        <th>답변</th>
-                        <td colspan="3">
-                            <span th:if="${qna.comment != null}" th:text="${qna.comment}"></span>
-                            <span th:unless="${qna.comment != null}" style="font-weight: 600; font-size: 20px;">답변 대기중입니다</span>
+                        <th>사용날짜</th>
+                        <td>
+                            <span>[[${coupon.startDate}]]</span> ~
+                            <span>[[${coupon.endDate}]]</span>
                         </td>
                     </tr>
+                    <tr>
+                        <th>쿠폰 정보</th>
+                        <td>[[${coupon.etc}]]</td>
+                    </tr>
+
                 </table>
+
             </section>
         </div>
     </main>

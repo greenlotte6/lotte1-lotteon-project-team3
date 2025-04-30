@@ -9,28 +9,6 @@
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/mypage/my_qna.css">
     <title>나의쇼핑정보 문의하기</title>
-    <style>
-        a.current {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px 15px;
-            background-color: #dfdfdf;
-        }
-
-        a.num {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px 15px;
-        }
-        .pageBtn {
-            text-align: center;
-            margin-top: 30px;
-        }
-    </style>
 </head>
 
 <body>
@@ -65,7 +43,7 @@
                         <td th:text="${qna.channel}"></td>
                         <td th:text="${qna.cate2}"></td>
                         <td>
-                            <a th:href="@{/myPage/my_view}">[[${qna.title}]]</a>
+                            <a th:href="@{/myPage/my_view(qnaNo=${qna.qnaNo})}">[[${qna.title}]]</a>
                         </td>
                         <td th:text="${qna.regDate}"></td>
                         <td th:text="${qna.status}"></td>
