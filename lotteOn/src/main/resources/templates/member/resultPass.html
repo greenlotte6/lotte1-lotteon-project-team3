@@ -30,14 +30,14 @@
                 <a th:href="@{/}">
                     <img src="/images/logo_lotte-on.png" alt="로고" class="logo">
                 </a>
-                <h2>비밀번호 찾기 결과</h2>
+                <h2>비밀번호 찾기</h2>
                 <p>비밀번호를 변경해주세요.</p>
             </div>
             <div class="mainContainer">
                 <table>
                     <tr>
                         <th>아이디</th>
-                        <td>kawaiiCat</td>
+                        <td th:text="${member.id}"></td>
                     </tr>
                     <tr>
                         <th>새 비밀번호</th>

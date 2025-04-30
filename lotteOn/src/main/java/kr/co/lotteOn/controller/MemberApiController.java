@@ -4,15 +4,21 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import kr.co.lotteOn.dto.MemberDTO;
+import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.repository.MemberRepository;
 import kr.co.lotteOn.service.EmailService;
 import kr.co.lotteOn.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +28,7 @@ public class MemberApiController {
 
     private final EmailService emailService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/check-member-id/{id}")
     public Map<String, Boolean> checkId(@PathVariable String id) {
@@ -40,6 +47,18 @@ public class MemberApiController {
                                               @RequestParam String email,
                                               HttpSession session) {
         boolean result = emailService.verifyCode(code, email, session);
+        if (result) {
+            session.setAttribute("verifiedEmail", email);  // 세션에 저장
+        }
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/check-name-email")
+    public ResponseEntity<Map<String, Boolean>> checkNameEmail(@RequestBody Map<String, String> payload) {
+        String name = payload.get("name");
+        String email = payload.get("email");
+
+        boolean isValid = memberRepository.existsByNameAndEmail(name, email);
+        return ResponseEntity.ok(Collections.singletonMap("valid", isValid));
     }
 }

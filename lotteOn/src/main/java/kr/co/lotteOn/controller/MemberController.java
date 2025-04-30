@@ -1,9 +1,11 @@
 package kr.co.lotteOn.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.dto.ShopDTO;
 import kr.co.lotteOn.dto.TermsDTO;
+import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.service.SellerService;
 import kr.co.lotteOn.service.ShopService;
 import kr.co.lotteOn.service.TermsService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.service.MemberService;
@@ -23,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("/member")
 @Controller
@@ -64,13 +68,23 @@ public class MemberController {
 
     //회원 - 아이디 찾기 결과
     @GetMapping("/resultId")
-    public String resultId() {
+    public String resultId(@ModelAttribute("member") Member member, Model model) {
+        if (member == null) {
+            return "redirect:/error";
+        }
+
+        model.addAttribute("member", member); // 선택
         return "/member/resultId";
     }
     
     //회원 - 비밀번호 찾기 결과
     @GetMapping("/resultPass")
-    public String resultPass() {
+    public String resultPass(@ModelAttribute("member") Member member, Model model) {
+        if (member == null) {
+            return "redirect:/error";
+        }
+
+        model.addAttribute("member", member); // 선택
         return "/member/resultPass";
     }
 
@@ -148,6 +162,30 @@ public class MemberController {
         boolean exists = sellerService.isFaxExist(fax);
         response.put("exists", exists);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/resultId")
+    public String showResultId(HttpSession session, RedirectAttributes redirectAttributes) {
+        String email = (String) session.getAttribute("verifiedEmail");
+        if (email == null) {
+            return "redirect:/error";
+        }
+
+        Optional<Member> member = memberService.findByEmail(email);
+        redirectAttributes.addFlashAttribute("member", member.orElse(null));
+        return "redirect:/member/resultId";
+    }
+
+    @PostMapping("/resultPass")
+    public String showResultPass(HttpSession session) {
+        String email = (String) session.getAttribute("verifiedEmail");
+        if (email == null) {
+            return "redirect:/error";
+        }
+
+        Optional<Member> member = memberService.findByEmail(email);
+        session.setAttribute("member", member.orElse(null));
+        return "redirect:/member/resultPass";
     }
 
     /* **************************회원 끝*********************************** */

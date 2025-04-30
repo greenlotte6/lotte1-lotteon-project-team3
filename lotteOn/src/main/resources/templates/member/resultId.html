@@ -37,19 +37,19 @@
                 <table>
                     <tr>
                         <th>이름</th>
-                        <td>고양이</td>
+                        <td th:text="${member.name}"></td>
                     </tr>
                     <tr>
                         <th>아이디</th>
-                        <td>kawaiiCat</td>
+                        <td th:text="${member.id}"></td>
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>kawaiiCat@gmail.com</td>
+                        <td th:text="${member.email}"></td>
                     </tr>
                     <tr>
                         <th>가입일자</th>
-                        <td>2025-04-29</td>
+                        <td th:text="${member.regDate}"></td>
                     </tr>
                 </table>
                 <a th:href="@{/member/login}">
@@ -59,46 +59,5 @@
         </div>
     </main>
 </div>
-<script>
-    function sendEmail() {
-        const email = document.getElementById("email").value;
-        const sendEmailBtn = document.getElementById("sendEmailBtn");
-
-        fetch("/member/email/send", {
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: new URLSearchParams({email})
-        })
-            .then(() => {
-                alert("이메일로 인증코드가 발송되었습니다.");
-                document.querySelector(".codeBox").style.display = "flex";
-                sendEmailBtn.disabled = true;
-                sendEmailBtn.style.cursor = 'not-allowed';
-            });
-    }
-
-    function verifyEmailCode() {
-        const email = document.getElementById("email").value;
-        const code = document.getElementById("emailCodeInput").value;
-        const emailMsg = document.querySelector('.emailMsg');
-
-        fetch("/member/email/verify", {
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: new URLSearchParams({email, code}),
-            credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(success => {
-                if (success) {
-                    emailMsg.innerText = '이메일이 인증되었습니다';
-                    emailMsg.style.color = 'green';
-                } else {
-                    emailMsg.innerText = '인증코드가 일치하지 않습니다';
-                    emailMsg.style.color = '#E60012';
-                }
-            });
-    }
-</script>
 </body>
 </html>
