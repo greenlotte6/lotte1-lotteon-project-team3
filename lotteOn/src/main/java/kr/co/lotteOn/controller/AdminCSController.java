@@ -27,7 +27,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/admin/cs")
 @Controller
 public class AdminCSController {
 
@@ -37,7 +37,7 @@ public class AdminCSController {
     /*------------ 관리자 - 고객센터 ------------*/
 
     //고객센터 - 공지사항 [리스트]
-    @GetMapping("/cs/noticeList")
+    @GetMapping("/noticeList")
     public String noticeList(Model model, NoticePageRequestDTO pageRequestDTO) {
 
         //전체 글 조회 서비스 호출
@@ -50,7 +50,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 공지사항 [카테고리별 리스트]
-    @GetMapping("/cs/noticeSearch")
+    @GetMapping("/noticeSearch")
     public String search(Model model, NoticePageRequestDTO pageRequestDTO) {
 
         //카테고리별 글 조회
@@ -62,7 +62,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 공지사항 [리스트,글작성]
-    @PostMapping("/cs/noticeList")
+    @PostMapping("/noticeList")
     public String noticeWrite(NoticeDTO noticeDTO){
 
         //글 작성
@@ -72,7 +72,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 공지사항 [카테고리별 리스트, 글작성]
-    @PostMapping("/cs/noticeSearch")
+    @PostMapping("/noticeSearch")
     public String noticeWriteInSearch(NoticeDTO noticeDTO){
 
         //글 작성
@@ -82,7 +82,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 공지사항 [수정]
-    @PostMapping("/cs/noticeModify")
+    @PostMapping("/noticeModify")
     public String noticeModify(@ModelAttribute NoticeDTO noticeDTO){
 
         adminCSService.noticeModify(noticeDTO);
@@ -91,7 +91,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 공지사항 [삭제]
-    @PostMapping("/cs/noticeDelete")
+    @PostMapping("/noticeDelete")
     public String noticeDelete(@ModelAttribute NoticeDTO noticeDTO) {
         adminCSService.noticeDelete(noticeDTO);
 
@@ -102,7 +102,7 @@ public class AdminCSController {
 
 
     //고객센터 - 자주묻는질문 [리스트]
-    @GetMapping("/cs/faqList")
+    @GetMapping("/faqList")
     public String faqList(Model model, FaqPageRequestDTO pageRequestDTO) {
         FaqPageResponseDTO pageResponseDTO = adminCSService.faqFindAll(pageRequestDTO);
 
@@ -120,7 +120,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 자주묻는질문 [리스트,글작성]
-    @PostMapping("/cs/faqList")
+    @PostMapping("/faqList")
     public String faqWrite(FaqDTO faqDTO){
         int no = adminCSService.faqWrite(faqDTO);
 
@@ -128,7 +128,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 자주묻는질문 [카테고리별 리스트]
-    @GetMapping("/cs/faqSearch")
+    @GetMapping("/faqSearch")
     public String search(Model model, FaqPageRequestDTO pageRequestDTO) {
         FaqPageResponseDTO pageResponseDTO = adminCSService.faqFindAllByCate(pageRequestDTO);
 
@@ -147,7 +147,7 @@ public class AdminCSController {
     //고객센터 - 자주묻는질문 [카테고리별 리스트, 글작성]
 
     //고객센터 - 자주묻는질문 [수정]
-    @PostMapping("/cs/faqModify")
+    @PostMapping("/faqModify")
     public String faqModify(@ModelAttribute FaqDTO faqDTO){
 
         adminCSService.faqModify(faqDTO);
@@ -156,7 +156,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 자주묻는질문 [삭제]
-    @PostMapping("/cs/faqDelete")
+    @PostMapping("/faqDelete")
     public String noticeDelete(@ModelAttribute FaqDTO faqDTO){
 
         adminCSService.faqDelete(faqDTO);
@@ -169,7 +169,7 @@ public class AdminCSController {
 
 
     //고객센터 - 문의하기 [리스트]
-    @GetMapping("/cs/qnaList")
+    @GetMapping("/qnaList")
     public String qnaList(Model model, QnaPageRequestDTO pageRequestDTO) {
         QnaPageResponseDTO pageResponseDTO = adminCSService.qnaFindAll(pageRequestDTO);
 
@@ -187,7 +187,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 문의하기 [카테고리별 리스트]
-    @GetMapping("/cs/qnaSearch")
+    @GetMapping("/qnaSearch")
     public String search(Model model, QnaPageRequestDTO pageRequestDTO) {
         QnaPageResponseDTO pageResponseDTO = adminCSService.qnaFindAllByCate(pageRequestDTO);
         List<QnaDTO> qnaList = pageResponseDTO.getDtoList();
@@ -201,7 +201,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 문의하기 [수정]
-    @PostMapping("/cs/qnaModify")
+    @PostMapping("/qnaModify")
     public String qnaModify(@ModelAttribute QnaDTO qnaDTO){
         String cate1Eng = qnaDTO.getCate1NameBack();
 
@@ -214,7 +214,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 문의하기 [삭제]
-    @PostMapping("/cs/qnaDelete")
+    @PostMapping("/qnaDelete")
     public String qnaDelete(@ModelAttribute QnaDTO qnaDTO){
         adminCSService.qnaDelete(qnaDTO);
         return "redirect:/admin/cs/qnaList";
@@ -224,7 +224,7 @@ public class AdminCSController {
 
 
     //고객센터 - 채용정보 [리스트]
-    @GetMapping("/cs/recruitList")
+    @GetMapping("/recruitList")
     public String recruitList(Model model, RecruitPageRequestDTO pageRequestDTO) {
         RecruitPageResponseDTO pageResponseDTO = adminCSService.recruitFindAll(pageRequestDTO);
 
@@ -240,7 +240,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 채용정보 [카테고리별 리스트]
-    @GetMapping("/cs/recruitSearch")
+    @GetMapping("/recruitSearch")
     public String recruitSearch(Model model, RecruitPageRequestDTO pageRequestDTO) {
         RecruitPageResponseDTO pageResponseDTO = adminCSService.recruitSearchAll(pageRequestDTO);
 
@@ -254,7 +254,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 채용정보 [리스트,글작성]
-    @PostMapping("/cs/recruitList")
+    @PostMapping("/recruitList")
     public String recruitWrite(@ModelAttribute RecruitDTO recruitDTO) {
 
         adminCSService.recruitWrite(recruitDTO);
@@ -262,7 +262,7 @@ public class AdminCSController {
         return "redirect:/admin/cs/recruitList";
     }
     //고객센터 - 채용정보 [리스트,글작성]
-    @PostMapping("/cs/recruitSearch")
+    @PostMapping("/recruitSearch")
     public String recruitWriteSearch(@ModelAttribute RecruitDTO recruitDTO) {
 
         adminCSService.recruitWrite(recruitDTO);
@@ -271,7 +271,7 @@ public class AdminCSController {
     }
 
     //고객센터 - 채용정보 [삭제]
-    @PostMapping("/cs/recruitDelete")
+    @PostMapping("/recruitDelete")
     public String recruitDelete(@ModelAttribute RecruitDTO recruitDTO) {
         adminCSService.recruitDelete(recruitDTO);
         return "redirect:/admin/cs/recruitList";
@@ -281,7 +281,7 @@ public class AdminCSController {
     /* *********************************채용정보 끝*************************************/
 
     //소식과이야기 - 리스트
-    @GetMapping("/cs/list")
+    @GetMapping("/list")
     public String storyList(Model model, StoryPageRequestDTO pageRequestDTO) {
         StoryPageResponseDTO pageResponseDTO = adminCSService.storyFindAll(pageRequestDTO);
         List<StoryDTO> storyList = pageResponseDTO.getDtoList();
@@ -297,7 +297,7 @@ public class AdminCSController {
     }
 
     //소식과이야기 - (검색)리스트
-    @GetMapping("/cs/listSearch")
+    @GetMapping("/listSearch")
     public String search(Model model, StoryPageRequestDTO pageRequestDTO) {
 
         log.info("pageRequestDTO:{}", pageRequestDTO);
@@ -317,14 +317,14 @@ public class AdminCSController {
 
 
     //소식과이야기 - 글작성
-    @PostMapping("/cs/list")
+    @PostMapping("/list")
     public String storyWrite(@ModelAttribute StoryDTO storyDTO) {
         adminCSService.saveStory(storyDTO);
 
         return "redirect:/admin/cs/list";
     }
     //소식과이야기 - (검색)글작성
-    @PostMapping("/cs/listSearch")
+    @PostMapping("/listSearch")
     public String storyWriteInSearch(@ModelAttribute StoryDTO storyDTO) {
         adminCSService.saveStory(storyDTO);
 
@@ -332,7 +332,7 @@ public class AdminCSController {
     }
 
 
-    @PostMapping("/cs/storyDelete")
+    @PostMapping("/storyDelete")
     public String storyDelete(@ModelAttribute StoryDTO storyDTO){
         adminCSService.storyDelete(storyDTO);
 

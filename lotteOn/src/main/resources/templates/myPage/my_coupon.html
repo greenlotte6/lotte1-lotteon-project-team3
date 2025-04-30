@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/mypage/my_coupon.css">
     <title>나의쇼핑정보 쿠폰내역</title>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -20,50 +23,11 @@
             <div class="mypage-title">
                 <h2>나의쇼핑정보</h2>
             </div>
-            <div class="mypage-shortcuts">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <span class="label">주문</span>
-                            <span class="value">2</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label">쿠폰</span>
-                            <span class="value">1</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label">포인트</span>
-                            <span class="value">1,000</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label">문의</span>
-                            <span class="value">1</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <th:block th:insert="~{/myPage/_header.html}"/>
         </div>
 
         <div class="div_section">
-            <section class="left_section">
-                <aside class="sidebar">
-                    <ul>
-                        <li><a th:href="@{/myPage/my_order}">전체주문내역</a></li>
-                        <li><a th:href="@{/myPage/my_point}">포인트내역</a></li>
-                        <li><a th:href="@{/myPage/my_coupon}">쿠폰</a></li>
-                        <li><a th:href="@{/myPage/my_review}">나의리뷰</a></li>
-                        <li><a th:href="@{/myPage/my_qna}">문의하기</a></li>
-                        <li><a th:href="@{/myPage/my_info}">나의설정</a></li>
-                    </ul>
-                </aside>
-            </section>
-
+            <th:block th:insert="~{/myPage/_side.html}"/>
             <section class="right_section">
                 <div class="ad">
                     <div>광고</div>
@@ -76,44 +40,53 @@
                     <tr>
                         <th>쿠폰명</th>
                         <th>할인금액</th>
-                        <th>적용기준/제한조건</th>
                         <th>상태</th>
                         <th>유효기간</th>
                     </tr>
-                    <tr>
-                        <td>1만원 할인 중복쿠폰</td>
-                        <td>10,000원</td>
-                        <td>10,000원 이상 구매시</td>
-                        <td>사용가능</td>
-                        <td>~12/31</td>
+                    <tr th:each="coupon, i : ${coupons}">
+                        <td>
+                            <a th:href="@{/myPage/my_view_coupon(issuedNo=${coupon.issuedNo})}">[[${coupon.couponName}]]</a>
+                        </td>
+                        <td th:text="${coupon.benefit}"></td>
+                        <td>
+                            <span th:if="${coupon.status} == '미사용'">사용 가능</span>
+                            <span th:if="${coupon.status} != '미사용'">[[${coupon.status}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${coupon.startDate}]]</span> ~
+                            <span>[[${coupon.endDate}]]</span>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>1만원 할인 중복쿠폰</td>
-                        <td>10,000원</td>
-                        <td>10,000원 이상 구매시</td>
-                        <td>사용가능</td>
-                        <td>~12/31</td>
-                    </tr>
-                    <tr>
-                        <td>1만원 할인 중복쿠폰</td>
-                        <td>10,000원</td>
-                        <td>10,000원 이상 구매시</td>
-                        <td>사용가능</td>
-                        <td>~12/31</td>
-                    </tr>
-                    <tr>
-                        <td>1만원 할인 중복쿠폰</td>
-                        <td>10,000원</td>
-                        <td>10,000원 이상 구매시</td>
-                        <td>사용가능</td>
-                        <td>~12/31</td>
-                    </tr>
+
                 </table>
-                <div class="page">
-                    <a class="prev">◁</a>
-                    <a class="num">1</a>
-                    <a class="num">2</a>
-                    <a class="next">▷</a>
+                <div class="pageBtn">
+                    <th:block th:if="${page?.end > 0}">
+                        <th:block th:if="${page.prev}">
+                            <a th:href="@{/myPage/my_coupon(pg=${page.start-2})}" class="prev">
+                                <img src="/images/back-double.png">
+                            </a>
+                        </th:block>
+                        <th:block th:if="${page.prev}">
+                            <a th:href="@{/myPage/my_coupon(pg=${page.start-1})}" class="prev">
+                                <img src="/images/back-single.png" class="single">
+                            </a>
+                        </th:block>
+
+                        <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                            <a th:href="@{/myPage/my_coupon(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        </th:block>
+
+                        <th:block th:if="${page.next}">
+                            <a th:href="@{/myPage/my_coupon(pg=${page.end+1})}" class="next">
+                                <img src="/images/right-single.png" class="single">
+                            </a>
+                        </th:block>
+                        <th:block th:if="${page.next}">
+                            <a th:href="@{/myPage/my_coupon(pg=${page.end+2})}" class="next">
+                                <img src="/images/right-double.png">
+                            </a>
+                        </th:block>
+                    </th:block>
                 </div>
             </section>
         </div>

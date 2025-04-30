@@ -1,6 +1,10 @@
 package kr.co.lotteOn.controller;
 
 
+import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
+import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
+import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
 import kr.co.lotteOn.entity.Member;
@@ -55,8 +59,42 @@ public class MyPageController {
 
     //마이페이지 - 쿠폰
     @GetMapping("/my_coupon")
-    public String myCoupon() {
+    public String myCoupon(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
+                           IssuedCouponPageRequestDTO pageRequestDTO, @ModelAttribute Member member) {
+
+        Member currentMember = userDetails.getMember();
+
+        String loginId = currentMember.getId();
+
+        pageRequestDTO.setMemberId(loginId);
+
+        IssuedCouponPageResponseDTO pageResponseDTO = myPageService.getCouponByWriter(pageRequestDTO);
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("coupons", pageResponseDTO.getDtoList());
+
         return "/myPage/my_coupon";
+    }
+
+    //마이페이지 - 쿠폰 디테일
+    @GetMapping("/my_view_coupon")
+    public String myCouponView(Integer issuedNo, Model model) {
+        log.info("issuedNo:{}", issuedNo);
+        log.info("issuedNo:{}", issuedNo);
+        log.info("issuedNo:{}", issuedNo);
+        log.info("issuedNo:{}", issuedNo);
+        log.info("issuedNo:{}", issuedNo);
+        IssuedCouponDTO issuedCouponDTO = myPageService.findCouponById(issuedNo);
+
+
+        log.info("issuedCouponDTO:{}", issuedCouponDTO);
+        log.info("issuedCouponDTO:{}", issuedCouponDTO);
+        log.info("issuedCouponDTO:{}", issuedCouponDTO);
+        log.info("issuedCouponDTO:{}", issuedCouponDTO);
+        log.info("issuedCouponDTO:{}", issuedCouponDTO);
+
+        model.addAttribute("coupon", issuedCouponDTO);
+
+        return "/myPage/my_view_coupon";
     }
 
     //마이페이지 - 나의리뷰
@@ -65,9 +103,13 @@ public class MyPageController {
         return "/myPage/my_review";
     }
 
-    //마이페이지 - 나의리뷰
+    //마이페이지 - 문의하기 글 보기
     @GetMapping("/my_view")
-    public String myQnaView() {
+    public String myQnaView(Integer qnaNo, Model model) {
+        QnaDTO qnaDTO = myPageService.findById(qnaNo);
+
+        model.addAttribute("qna", qnaDTO);
+
         return "/myPage/my_view";
     }
 
@@ -75,12 +117,7 @@ public class MyPageController {
     @GetMapping("/my_qna")
     public String myQnaList(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
                             QnaPageRequestDTO pageRequestDTO, @ModelAttribute Member member) {
-
-//        QnaPageResponseDTO qnaPageResponseDTO = myPageService.getAll(pageRequestDTO);
-//        model.addAttribute("page", qnaPageResponseDTO);
-//        model.addAttribute("all", qnaPageResponseDTO.getDtoList());
-
-
+        
         log.debug("pageRequestDTO:{}", pageRequestDTO);
 
         //현재 접속한 사용자 정보

@@ -11,4 +11,6 @@ public interface IssuedCouponRepositoryCustom {
     public Page<Tuple> searchAll(IssuedCouponPageRequestDTO pageRequestDTO, Pageable pageable);
 
     public Page<Tuple> findAllForList(Pageable pageable);
+
+    public Page<Tuple> searchAllByMemberId(IssuedCouponPageRequestDTO pageRequestDTO, Pageable pageable);
 }

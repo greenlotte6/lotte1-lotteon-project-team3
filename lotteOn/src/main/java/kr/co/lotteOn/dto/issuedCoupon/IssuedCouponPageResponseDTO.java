@@ -28,6 +28,8 @@ public class IssuedCouponPageResponseDTO {
     private String searchType;
     private String keyword;
 
+    private String memberId;
+
     @Builder
     public IssuedCouponPageResponseDTO(IssuedCouponPageRequestDTO pageRequestDTO, List<IssuedCouponDTO> dtoList, int total) {
         this.cate = pageRequestDTO.getCate();
@@ -35,6 +37,7 @@ public class IssuedCouponPageResponseDTO {
         this.size = pageRequestDTO.getSize();
         this.total = total;
         this.dtoList = dtoList;
+        this.memberId = pageRequestDTO.getMemberId();
 
         //search
         this.searchType = pageRequestDTO.getSearchType();

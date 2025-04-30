@@ -7,5 +7,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CouponRepositoryCustom {
-    Page<Tuple> searchCoupons(CouponPageRequestDTO pageRequestDTO, Pageable pageable);
+    public Page<Tuple> searchCoupons(CouponPageRequestDTO pageRequestDTO, Pageable pageable);
 }
