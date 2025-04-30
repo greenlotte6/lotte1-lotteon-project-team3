@@ -180,7 +180,7 @@ label > input {
     background-repeat: no-repeat;
     background-position: top;
     background-color: white;
-    background-size: cover;
+    background-size: 44px 50px;
     padding-top: 60px;
     font-size: 14px;
     border: none;
