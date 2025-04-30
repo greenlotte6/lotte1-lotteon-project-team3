@@ -7,6 +7,7 @@
 }
 main{
     width: 1200px;
+    height: 1000px;
     margin: 0 auto;
 }
 
@@ -151,7 +152,7 @@ table {
 }
 
 .info tr{
-
+    height: 70px;
 }
 .info th:nth-child(1){
     background-color: #f2f2f2;
@@ -161,18 +162,6 @@ table {
 
 .info tr:nth-child(7) th:nth-child(1){
     background-color: #f2f2f2;
-    width: 153.75px;
-    height: 135.67px;
-}
-.info th:nth-child(8){
-    background-color: #f2f2f2;
-    width: 153.75px;
-    height: 51.31px;
-}
-
-.info td{
-    width: auto;
-    height: auto;
 }
 
 .info_addr{
@@ -200,19 +189,6 @@ input[name="name"] {
 }
 
 input[name="email"]{
-    border: 1.98px solid #bfbfbf;
-    width: 124.67px;
-    height: 29.88px;
-}
-
-
-input[name="email2"]{
-    border: 1.98px solid #bfbfbf;
-    width: 124.67px;
-    height: 29.88px;
-}
-
-#email3{
     border: 1.98px solid #bfbfbf;
     width: 124.67px;
     height: 29.88px;
@@ -264,15 +240,6 @@ input[name="email2"]{
     position: relative;
     line-height: 30px;
 }
-
-input[name="hp"]{
-    border: 1.98px solid #bfbfbf;
-    width: 79.31px;
-    height: 29.88px;
-    margin-left: 10px;
-    text-align: center;
-}
-
 
 input[name="birth"] {
     border: none;
