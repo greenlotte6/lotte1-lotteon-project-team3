@@ -11,11 +11,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/admin")
 @Controller
@@ -72,6 +75,23 @@ public class AdminStoreController {
         log.info("상점 등록이 완료 되었습니다.");
         return "redirect:/admin/shop/list";
     }
+
+    //상점 삭제 처리
+    @PostMapping("/shop/delete")
+    public String deleteShops(@RequestParam("sellerIds")String sellerIds) {
+        String[] ids = sellerIds.split(",");
+        for (String sellerId : ids) {
+            try {
+                log.info("Attempting to delete sellerId: {}", sellerId);
+                sellerService.deleteShopBySellerId(sellerId);
+            } catch (Exception e) {
+                log.error("invalid seller id: {}", sellerId);
+            }
+        }
+        log.info("선택된 상점들이 삭제되었습니다.");
+        return "redirect:/admin/shop/list";
+    }
+
 
 
 

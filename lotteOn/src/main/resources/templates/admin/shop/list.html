@@ -18,7 +18,7 @@
     <script src="/script/aside.js"></script>
     <script src="/script/shopValidation.js"></script>
     <script src="/script/status.js"></script>
-
+    <script src="/script/shopCheckbox.js"></script>
 </head>
 <body>
 <div id="container">
@@ -42,9 +42,15 @@
                     <input type="text" placeholder="검색어 입력">
                     <button type="submit">검색</button>
                 </div>
+                <div class="status-explain">
+                    <div class="dot-item"><div class="dot red"></div>운영 중지</div>
+                    <div class="dot-item"><div class="dot green"></div>운영중</div>
+                    <div class="dot-item"><div class="dot blue"></div>운영 준비</div>
+                </div>
                 <table>
+                    <form action="/admin/shop/delete" id="deleteForm" method="post">
                     <tr>
-                        <th><input type="checkbox"></th>
+                        <th><input type="checkbox" id="selectAll"></th>
                         <th>번호</th>
                         <th>상호명</th>
                         <th>대표</th>
@@ -56,16 +62,16 @@
                     </tr>
                     <th:block th:each="seller, iterStat : ${sellers}">
                     <tr>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" name="sellerIds" class="shopCheckbox" value="${sellerId}"></td>
                         <td th:text="${iterStat.index + 1}"></td>
                         <td th:text="${seller.companyName}"></td>
                         <td th:text="${seller.delegate}"></td>
                         <td th:text="${seller.businessNo}"></td>
                         <td th:text="${seller.communicationNo}"></td>
                         <td th:text="${seller.hp}"></td>
-                        <td><div class="status" id="status-2"></div></td>
+                        <td><div class="status-circle" data-status="0" style="background-color: blue;"></div></td>
                         <td>
-                            <button type="submit" id="button-2">[ 중단 ]</button>
+                            <button type="submit" class="manageBtn">[ 승인 ]</button>
                         </td>
                     </tr>
                     </th:block>
@@ -73,6 +79,7 @@
                 <div class="btnarea">
                     <button class="delbutton">선택삭제</button>
                     <div class="pageBtn">
+                        </form>
                         <a href=""><img src="/images/back-double.png"></a>
                         <a href=""><img src="/images/back-single.png" class="single"></a>
                         <a href="" class="number">1</a>

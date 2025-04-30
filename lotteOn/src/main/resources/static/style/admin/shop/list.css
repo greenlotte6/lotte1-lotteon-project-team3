@@ -124,7 +124,7 @@ table tr td {
     line-height: 10px;
 }
 .searchArea {
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
 }
 .searchArea select {
     padding: 10px;
@@ -220,3 +220,43 @@ table tr td {
     top: 10px;
 }
 /* --------------------- main --------------------- */
+
+.status-circle{
+    width: 12px; /* 동그라미 크기 조정 */
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.status-explain {
+    display: flex;         /* 가로 정렬 */
+    gap: 15px;             /* 항목 사이 간격 */
+    margin: 10px 0;        /* 위아래 여백 */
+    position: relative;
+    left: 580px;
+}
+
+.dot-item {
+    display: flex;         /* 내부 요소(점 + 글자) 가로 정렬 */
+    align-items: center;   /* 세로 정렬 가운데 */
+    gap: 5px;              /* 점과 글자 사이 간격 */
+    font-size: 14px;
+}
+
+.dot {
+    width: 10px;           /* 원 크기 */
+    height: 10px;
+    border-radius: 50%;    /* 원 모양 */
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+

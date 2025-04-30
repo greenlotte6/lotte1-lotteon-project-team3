@@ -1,5 +1,6 @@
 package kr.co.lotteOn.service;
 
+
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.entity.Seller;
 import kr.co.lotteOn.repository.SellerRepository;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -61,5 +63,17 @@ public class SellerService {
 
     public List<SellerProjection> getSellerList(){
         return sellerRepository.findAllBy();
+    }
+
+
+    @Transactional
+    public void deleteShopBySellerId(String sellerId) {
+        sellerRepository.deleteById(sellerId);
+        sellerRepository.flush();
+        if(!sellerRepository.existsBySellerId(sellerId)){
+        log.info("seller with id {} deleted successfully.", sellerId);
+        }else{
+            log.error("failed to delete seller with id {}", sellerId);
+        }
     }
 }
