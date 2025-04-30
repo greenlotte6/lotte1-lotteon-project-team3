@@ -23,6 +23,7 @@ public class QnaDTO {
     private String status;      //NULL
     private String writer;
     private String comment;
+    private String channel;
 
     //추가필드
     private MemberDTO member;

@@ -53,7 +53,9 @@ public class SecurityConfig {
                 .requestMatchers("/admin/shop/list").permitAll() //상점 등록
                 .requestMatchers("/Community/write**").authenticated()
                 .requestMatchers("/Community/modify**").authenticated()
+                .requestMatchers("/cust/cust_question_write").authenticated()
                 .requestMatchers("/product/cart", "/product/addToCart").authenticated()
+                .requestMatchers("/myPage/**").authenticated()
                 .anyRequest().permitAll()
         );
 

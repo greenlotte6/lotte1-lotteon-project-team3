@@ -27,6 +27,7 @@ public class QnaPageRequestDTO {
     private String keyword;
     private String cate1;
     private String cate2;
+    private String writer;
 
     //글목록 페이징 처리를 위한 Pageable 객체 생성 메서드
     public Pageable getPageable(String sort){

@@ -84,7 +84,6 @@ public class AdminCSController {
     //고객센터 - 공지사항 [수정]
     @PostMapping("/cs/noticeModify")
     public String noticeModify(@ModelAttribute NoticeDTO noticeDTO){
-        System.out.println("Received noticeNo: " + noticeDTO.getNoticeNo());
 
         adminCSService.noticeModify(noticeDTO);
 
