@@ -12,6 +12,7 @@
     <!-- Script -->
     <script src="/script/search.js"></script>
     <script src="/script/swapFindOption.js"></script>
+    <script src="/script/findMyInfo.js"></script>
 
     <!-- Style -->
     <link rel="stylesheet" href="/style/member/findId.css"/>
@@ -34,7 +35,7 @@
                     </div>
                 </div>
                 <div class="inputYourInfo openId">
-                    <form action="#">
+                    <form th:action="@{/member/resultId}" method="post" id="findIdForm" autocomplete="off">
                         <div>
                             <p>이름</p>
                             <input type="text" name="name" placeholder="이름을 입력해주세요">
@@ -47,11 +48,13 @@
                             <p>인증하기</p>
                             <input type="text" name="code" placeholder="인증코드를 입력해주세요">
                         </div>
-                        <button type="button" class="bringMeResult idConfirm">확인</button>
+                        <button type="button" class="bringMeCode idEmail" onclick="sendEmail(this)" disabled>인증번호 받기</button>
+                        <button type="button" class="bringMeResult idConfirm" onclick="verifyEmailCode(this)">확인</button>
+                        <button type="submit" class="nextPage" disabled>다음으로</button>
                     </form>
                 </div>
                 <div class="inputYourInfo disable openPass">
-                    <form action="#">
+                    <form th:action="@{/member/resultPass}" method="post" id="findPwForm" autocomplete="off">
                         <div>
                             <p>이름</p>
                             <input type="text" name="name" placeholder="이름을 입력해주세요">
@@ -64,7 +67,9 @@
                             <p>인증하기</p>
                             <input type="text" name="code" placeholder="인증코드를 입력해주세요">
                         </div>
-                        <button type="button" class="bringMeResult passConfirm">확인</button>
+                        <button type="button" class="bringMeCode passEmail" onclick="sendEmail(this)" disabled>인증번호 받기</button>
+                        <button type="button" class="bringMeResult passConfirm" onclick="verifyEmailCode(this)">확인</button>
+                        <button type="submit" class="nextPage" disabled>다음으로</button>
                     </form>
                 </div>
             </div>
@@ -72,5 +77,59 @@
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
+<script>
+    function sendEmail(button) {
+        const form = button.closest("form");
+        const emailInput = form.querySelector("input[name='email']");
+        const nameInput = form.querySelector("input[name='name']");
+        const email = emailInput.value;
+        const bringMeCode = form.querySelector(".bringMeCode");
+        const bringMeResult = form.querySelector(".bringMeResult");
+        const authenticate = form.querySelector(".authenticate");
+
+        fetch("/member/email/send", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email })
+        })
+            .then(() => {
+                authenticate.style.display = "block";
+                bringMeCode.style.display = "none";
+                bringMeResult.style.display = "block";
+                nameInput.readOnly = true;
+                emailInput.readOnly = true;
+                alert("이메일로 인증코드가 발송되었습니다.");
+            });
+    }
+
+    function verifyEmailCode(button) {
+        const form = button.closest("form");
+        const emailInput = form.querySelector("input[name='email']");
+        const codeInput = form.querySelector("input[name='code']");
+
+        const bringMeResult = form.querySelector(".bringMeResult");
+        const nextPage = form.querySelector(".nextPage");
+
+        const email = emailInput.value;
+        const code = codeInput.value;
+
+        fetch("/member/email/verify", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email, code }),
+        })
+            .then(res => res.json())
+            .then(success => {
+                if (success) {
+                    bringMeResult.style.display = "none";
+                    nextPage.style.display = "block";
+                    nextPage.disabled = false;
+                    alert('이메일이 인증되었습니다');
+                } else {
+                    alert('인증코드가 일치하지 않습니다');
+                }
+            });
+    }
+</script>
 </body>
 </html>

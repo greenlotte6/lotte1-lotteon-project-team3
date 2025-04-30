@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const findTitle = document.querySelector(".findTitle");
     const idConfirm = document.querySelector(".idConfirm");
     const passConfirm = document.querySelector(".passConfirm");
+    const findIdForm = document.querySelectorAll("#findIdForm input");
+    const findPwForm = document.querySelectorAll("#findPwForm input");
+    const bringMeCode = document.querySelectorAll('.bringMeCode');
+
 
     findIdBtn.addEventListener("click", function () {
         openId.classList.remove("disable");
@@ -15,6 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
         findPassBtn.classList.remove("iWant");
 
         findTitle.innerText = "아이디 찾기";
+
+        findPwForm.forEach(e => {
+           e.value = '';
+        });
+
+        bringMeCode.forEach(e => {
+            e.disabled = true;
+        });
     });
 
     findPassBtn.addEventListener("click", function () {
@@ -25,13 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
         findIdBtn.classList.remove("iWant");
 
         findTitle.innerText = "비밀번호 찾기";
-    });
 
-    // idConfirm.addEventListener("click", function () {
-    //     idConfirm.type = "submit";
-    // });
-    //
-    // passConfirm.addEventListener("click", function () {
-    //     passConfirm.type = "submit";
-    // });
+        findIdForm.forEach(e => {
+            e.value = '';
+        });
+
+        bringMeCode.forEach(e => {
+            e.disabled = true;
+        });
+    });
 });

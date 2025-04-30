@@ -26,7 +26,7 @@ main > div > * {
 .findIdContainer {
     display: flex;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 49.5px;
 }
 
 .whatDoYouWant {
@@ -74,7 +74,17 @@ main > div > * {
 }
 
 .bringMeResult {
-    margin-top: 50px;
+    margin-top: 49.5px;
+    width: 500px;
+    height: 50px;
+    background: #E60012;
+    color: white;
+    border: none;
+    display: none;
+}
+
+.bringMeCode {
+    margin-top: 49.5px;
     width: 500px;
     height: 50px;
     background: #E60012;
@@ -88,4 +98,21 @@ main > div > * {
 
 .authenticate {
     display: none;
+}
+
+.nextPage {
+    margin-top: 49.5px;
+    width: 500px;
+    height: 50px;
+    background: #E60012;
+    color: white;
+    border: none;
+    display: none;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background: white;
+    border: 1px solid #ddd;
+    color: #888;
 }
