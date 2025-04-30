@@ -14,13 +14,9 @@
     <link rel="stylesheet" href="/style/member/resultPass.css">
 
     <!-- Script -->
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="/script/postcode.js"></script>
-    <script src="/script/membervalidation.js"></script>
-    <script src="/script/validation.js"></script>
-    <script src="/script/changeForm.js"></script>
+    <script src="/script/passMatch.js"></script>
 
-    <title>회원가입 : 롯데ON</title>
+    <title>비밀번호 수정 : 롯데ON</title>
 </head>
 <body>
 <div id="wrapper">
@@ -34,34 +30,34 @@
                 <p>비밀번호를 변경해주세요.</p>
             </div>
             <div class="mainContainer">
-                <table>
-                    <tr>
-                        <th>아이디</th>
-                        <td th:text="${member.id}"></td>
-                    </tr>
-                    <tr>
-                        <th>새 비밀번호</th>
-                        <td>
+                <form th:action="@{/member/changePassword}" method="post" id="modifyPass">
+                    <div>
+                        <p>아이디</p>
+                        <input type="text" name="id" th:value="${member.id}" readonly class="resultId">
+                    </div>
+                    <div>
+                        <p>새 비밀번호</p>
+                        <div class="illusion">
                             <input type="password" name="password" placeholder="새 비밀번호 입력">
-                            <span class="pwdMsg msgs"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>새 비밀번호 확인</th>
-                        <td>
-                            <input type="password" placeholder="새 비밀번호 확인">
-                            <span class="pwdMsg2 msgs"></span>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnBox">
-                    <a href="#">
-                        <button class="cancelBtn">취소하기</button>
-                    </a>
-                    <a th:href="@{/member/login}">
-                        <button class="changeBtn">변경하기</button>
-                    </a>
-                </div>
+                            <p class="pwdMsg msgs"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>새 비밀번호 확인</p>
+                        <div class="illusion">
+                            <input type="password" name="confirmPassword" placeholder="새 비밀번호 확인">
+                            <p class="pwdMsg2 msgs"></p>
+                        </div>
+                    </div>
+                    <div class="btnBox">
+                        <a th:href="@{/member/login}">
+                            <button class="cancelBtn">취소하기</button>
+                        </a>
+                        <a th:href="@{/member/login}">
+                            <button type="submit" class="changeBtn" disabled>변경하기</button>
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
     </main>

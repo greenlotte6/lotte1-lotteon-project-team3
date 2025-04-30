@@ -58,4 +58,12 @@ public class MemberService {
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
+
+    public Optional<Member> findById(String id) {
+        return memberRepository.findById(id);
+    }
+
+    public Member save(Member member) {
+        return memberRepository.save(member);
+    }
 }

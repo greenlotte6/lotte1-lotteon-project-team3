@@ -61,4 +61,13 @@ public class MemberApiController {
         boolean isValid = memberRepository.existsByNameAndEmail(name, email);
         return ResponseEntity.ok(Collections.singletonMap("valid", isValid));
     }
+
+    @PostMapping("/check-id-email")
+    public ResponseEntity<Map<String, Boolean>> checkIdEmail(@RequestBody Map<String, String> payload) {
+        String id = payload.get("id");
+        String email = payload.get("email");
+
+        boolean isValid = memberRepository.existsByIdAndEmail(id, email);
+        return ResponseEntity.ok(Collections.singletonMap("valid", isValid));
+    }
 }

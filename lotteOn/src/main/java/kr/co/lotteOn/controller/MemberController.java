@@ -11,6 +11,7 @@ import kr.co.lotteOn.service.ShopService;
 import kr.co.lotteOn.service.TermsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,7 @@ public class MemberController {
     private final MemberService memberService;
     private final TermsService termsService;
     private final ShopService shopService;
+    private final PasswordEncoder passwordEncoder;
 
     //회원 - 로그인
     @GetMapping("/login")
@@ -179,16 +181,46 @@ public class MemberController {
     }
 
     @PostMapping("/resultPass")
-    public String showResultPass(HttpSession session) {
+    public String showResultPass(HttpSession session, RedirectAttributes redirectAttributes) {
         String email = (String) session.getAttribute("verifiedEmail");
         if (email == null) {
             return "redirect:/error";
         }
 
         Optional<Member> member = memberService.findByEmail(email);
-        session.setAttribute("member", member.orElse(null));
+        redirectAttributes.addFlashAttribute("member", member.orElse(null));
         return "redirect:/member/resultPass";
     }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam("password") String password,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 @RequestParam("id") String id,
+                                 Model model) {
+
+        // 비밀번호 확인
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+            return "/member/resultPass"; // 비밀번호 불일치 시 다시 결과 페이지로
+        }
+
+        // 비밀번호 암호화 처리
+        String encryptedPassword = passwordEncoder.encode(password); // 비밀번호 암호화
+
+        Optional<Member> memberOpt = memberService.findById(id);
+        if (memberOpt.isPresent()) {
+            Member member = memberOpt.get();
+            member.setPassword(encryptedPassword);
+            memberService.save(member); // 비밀번호 변경된 회원 저장
+
+            model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
+            return "redirect:/member/login"; // 비밀번호 변경 후 로그인 페이지로 리디렉션
+        } else {
+            model.addAttribute("error", "회원 정보를 찾을 수 없습니다.");
+            return "/member/resultPass"; // 회원 정보가 없으면 다시 결과 페이지로
+        }
+    }
+
 
     /* **************************회원 끝*********************************** */
 
