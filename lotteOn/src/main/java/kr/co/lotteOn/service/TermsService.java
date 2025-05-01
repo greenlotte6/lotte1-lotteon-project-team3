@@ -41,4 +41,18 @@ public class TermsService {
         termsRepository.save(terms);
     }
 
+    public String findTermsContentByType(String type) {
+        Terms terms = termsRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("약관 정보 없음"));
+
+        switch (type) {
+            case "buyer": return terms.getBuyer();
+            case "seller": return terms.getSeller();
+            case "trade": return terms.getTrade();
+            case "place": return terms.getPlace();
+            case "privacy": return terms.getPrivacy();
+            default: throw new IllegalArgumentException("유효하지 않은 약관 타입: " + type);
+        }
+    }
+
 }
