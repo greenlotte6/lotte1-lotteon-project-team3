@@ -18,7 +18,7 @@ public class CategoryPublicApiController {
 
     private final CategoryService categoryService;
 
-    // 🧩 카테고리 조회 (고객용)
+    // 카테고리 조회 (고객용)
     @GetMapping
     public List<CategoryDTO> getCategories() {
         return categoryService.getAllCategories();
