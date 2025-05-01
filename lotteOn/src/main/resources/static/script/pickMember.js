@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("#bannerModal input[name='email']").value = memberData.email;
             document.querySelector("#bannerModal input[name='hp']").value = memberData.hp;
             document.querySelector("#bannerModal .memberStatus").textContent = memberData.status;
+            document.querySelector("#bannerModal .birthDate").textContent = memberData.birthdate;
             document.querySelector("#bannerModal input[name='zip']").value = memberData.zip;
             document.querySelector("#bannerModal input[name='addr1']").value = memberData.addr1;
             document.querySelector("#bannerModal input[name='addr2']").value = memberData.addr2;

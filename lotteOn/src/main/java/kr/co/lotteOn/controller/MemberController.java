@@ -7,6 +7,8 @@ import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.service.SellerService;
 import kr.co.lotteOn.service.ShopService;
 import kr.co.lotteOn.service.TermsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +44,7 @@ public class MemberController {
     private final ShopService shopService;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession httpSession;
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     //회원 - 로그인
     @GetMapping("/login")
@@ -53,15 +57,60 @@ public class MemberController {
     public String view() {
         return "/member/register";
     }
+
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute MemberDTO memberDTO,
-                           BindingResult result) {
+                           BindingResult result,
+                           @RequestParam String rrnFront,
+                           @RequestParam String rrnBack) {
+
+        // 로그 추가
+        logger.info("회원가입 시도: rrnFront = {}, rrnBack = {}", rrnFront, rrnBack);
+
         if (result.hasErrors()) {
+            logger.error("입력 값 오류: {}", result.getAllErrors());
             return "/member/register";
         }
+
+        // 주민등록번호로 생년월일 및 성별 파싱
+        if (rrnFront.length() == 6 && rrnBack.length() == 1) {
+            String genderDigit = rrnBack;
+            logger.info("성별 확인: genderDigit = {}", genderDigit);
+
+            int yearPrefix = (genderDigit.equals("1") || genderDigit.equals("2")) ? 1900 :
+                    (genderDigit.equals("3") || genderDigit.equals("4")) ? 2000 : -1;
+
+            if (yearPrefix != -1) {
+                String birthYear = String.valueOf(yearPrefix + Integer.parseInt(rrnFront.substring(0, 2)));
+                String birthMonth = rrnFront.substring(2, 4);
+                String birthDay = rrnFront.substring(4, 6);
+
+                logger.info("생년월일 파싱: birthYear = {}, birthMonth = {}, birthDay = {}", birthYear, birthMonth, birthDay);
+
+                LocalDate birthDate = LocalDate.parse(birthYear + "-" + birthMonth + "-" + birthDay);
+                String gender = (genderDigit.equals("1") || genderDigit.equals("3")) ? "남" : "여";
+
+                memberDTO.setBirthDate(birthDate);
+                memberDTO.setGender(gender);
+
+                logger.info("생년월일 및 성별 설정: birthDate = {}, gender = {}", birthDate, gender);
+            } else {
+                logger.error("유효하지 않은 주민등록번호: {}", rrnFront + "-" + rrnBack);
+                result.rejectValue("gender", null, "유효하지 않은 주민등록번호입니다.");
+                return "/member/register";
+            }
+        } else {
+            logger.error("주민등록번호 형식 오류: rrnFront = {}, rrnBack = {}", rrnFront, rrnBack);
+            result.rejectValue("gender", null, "주민등록번호 형식이 잘못되었습니다.");
+            return "/member/register";
+        }
+
         memberService.register(memberDTO);
+        logger.info("회원가입 성공: memberDTO = {}", memberDTO);
         return "redirect:/member/login";
     }
+
+
 
     //회원 - 아이디 찾기
     @GetMapping("/findId")

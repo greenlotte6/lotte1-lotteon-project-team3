@@ -76,32 +76,22 @@ main > div > * {
     outline: none;
 }
 
-.whatisyourgender {
-    display: flex;
-    height: 50px;
-}
-
-.whatisyourgender label {
+.rrnInput {
     display: flex;
     align-items: center;
-    margin-right: 20px;
-    font-size: 14px;
+    gap: 8px;
 }
 
-.whatisyourgender input {
+input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
     appearance: none;
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
 }
 
-.whatisyourgender input:checked {
-    background-image: url("../../images/checkbox_on.svg");
-    background-color: #E60012;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: none;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .emailBox {
@@ -245,4 +235,26 @@ input:-webkit-autofill {
 
 #sendEmailBtn {
     cursor: not-allowed;
+}
+
+.juminText {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 14px 0 8px 0;
+}
+
+.juminText div {
+    display: flex;
+    align-items: center;
+}
+
+.juminText p {
+    margin: 0;
+}
+
+.juminText span {
+    font-size: 11px;
+    color: #bbb;
+    margin-left: 6px;
 }

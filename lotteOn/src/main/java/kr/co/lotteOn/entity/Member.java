@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,6 +23,7 @@ public class Member {
     private String password;
     private String name;
     private String gender;
+    private LocalDate birthDate;
     private String email;
     private String hp;
     private String rating;
