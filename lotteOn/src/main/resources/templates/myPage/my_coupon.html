@@ -43,9 +43,15 @@
                         <th>상태</th>
                         <th>유효기간</th>
                     </tr>
-                    <tr th:each="coupon, i : ${coupons}">
+                    <tr th:if="${#lists.isEmpty(coupons)}">
+                        <td colspan="4" style="text-align: center;">쿠폰이 없습니다</td>
+                    </tr>
+
+                    <tr th:each="coupon, i : ${coupons}" th:unless="${#lists.isEmpty(coupons)}">
                         <td>
-                            <a th:href="@{/myPage/my_view_coupon(issuedNo=${coupon.issuedNo})}">[[${coupon.couponName}]]</a>
+                            <a th:href="@{/myPage/my_view_coupon(issuedNo=${coupon.issuedNo})}">
+                                [[${coupon.couponName}]]
+                            </a>
                         </td>
                         <td th:text="${coupon.benefit}"></td>
                         <td>

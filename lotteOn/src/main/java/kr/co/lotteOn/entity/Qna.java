@@ -38,5 +38,18 @@ public class Qna {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="writer")
     private Member writer;
+
+    @PrePersist //Default값 세팅
+    public void prePersist() {
+        if (this.channel == null) this.channel = "고객센터";
+        if (this.status == null) this.status = "답변대기중";
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if (this.comment != null && !this.comment.trim().isEmpty()) {
+            this.status = "답변완료";
+        }
+    }
 }
 

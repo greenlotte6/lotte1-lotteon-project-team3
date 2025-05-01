@@ -16,4 +16,5 @@ public interface QnaRepository extends JpaRepository<Qna, Integer> , QnaReposito
 
     public Page<Qna> findAllByCate1(String cate1, Pageable pageable);
 
+    public List<Qna> findTop3ByWriterOrderByRegDateDesc(Member writer);
 }

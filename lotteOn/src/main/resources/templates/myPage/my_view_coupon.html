@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/mypage/my_qna.css">
+    <link rel="stylesheet" href="/style/mypage/my_coupon_view.css">
     <title>나의쇼핑정보 쿠폰정보</title>
     <style>
-        .article th {
-            width: 150px;
-        }
+
     </style>
 </head>
 
@@ -38,29 +37,30 @@
                     <tr>
                         <th>쿠폰 코드</th>
                         <td>[[${coupon.couponCode}]]</td>
-                    </tr>
-                    <tr>
-                        <th>쿠폰명</th>
-                        <td>[[${coupon.couponName}]]</td>
-                    </tr>
-                    <tr>
                         <th>쿠폰 종류</th>
                         <td>[[${coupon.couponType}]]</td>
                     </tr>
                     <tr>
+                        <th>쿠폰명</th>
+                        <td>[[${coupon.couponName}]]</td>
+                        <th>발급처</th>
+                        <td>[[${coupon.companyName}]]</td>
+                    </tr>
+                    <tr>
                         <th>사용날짜</th>
-                        <td>
+                        <td colspan="3">
                             <span>[[${coupon.startDate}]]</span> ~
                             <span>[[${coupon.endDate}]]</span>
                         </td>
                     </tr>
                     <tr>
                         <th>쿠폰 정보</th>
-                        <td>[[${coupon.etc}]]</td>
+                        <td colspan="3">[[${coupon.etc}]]</td>
                     </tr>
-
                 </table>
-
+                <div>
+                    <a th:href="@{/myPage/my_coupon}" type="button" class="list">목록</a>
+                </div>
             </section>
         </div>
     </main>

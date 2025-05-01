@@ -37,6 +37,11 @@ public class Member {
     private LocalDateTime leaveDate;
     private LocalDateTime visitDate;
 
+    // OAuth 인증 업체 정보
+    private String provider; // 소셜 로그인 제공자 (Naver, Google 등)
+    private String providerId;    // 소셜 로그인 제공자에서 제공하는 고유 ID
+
+
     @PrePersist //Default값 세팅
     public void prePersist() {
         if (this.rating == null) this.rating = "FAMILY";

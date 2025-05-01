@@ -2,17 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
-
     <link rel="stylesheet" href="/style/mypage/my_home.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
-
     <script src="/script/myHome.js"></script>
-
     <title>마이페이지 메인</title>
+    <style>
+        .article_title2 a{
+            float: right;
+            position: relative;
+            right: 50px;
+        }
+        .article_title3 a{
+            float: right;
+            position: relative;
+            right: 50px;
+        }
+        .article_title4 a{
+            float: right;
+            position: relative;
+            right: 50px;
+        }
+        .answered {
+            color: #2ecc71; /* 예쁜 그린톤 */
+        }
+    </style>
 </head>
 <body>
 
@@ -491,7 +507,7 @@
                 <article>
                     <div class="article_title">
                         <h3>최근 주문내역</h3>
-                        <a href="#">더보기 ></a>
+                        <a th:href="@{/myPage/my_order}">더보기 ></a>
                     </div>
                     <table class="table">
                         <thead>
@@ -549,7 +565,7 @@
                     </table>
                     <div class="article_title2">
                         <h3>포인트적립내역</h3>
-                        <p>더보기 ></p>
+                        <a th:href="@{/myPage/my_order}">더보기 ></a>
                     </div>
                     <table class="main_point">
                         <thead class="point_thead">
@@ -583,7 +599,7 @@
                     </table>
                     <div class="article_title3">
                         <h3>상품평</h3>
-                        <p>더보기 ></p>
+                        <a th:href="@{/myPage/my_review}">더보기 ></a>
                     </div>
                     <table class="table_product">
                         <thead>
@@ -653,8 +669,37 @@
                         </tbody>
                     </table>
                     <div class="article_title4">
-                        <h3>문의내역</h3>
-                        <p>더보기 ></p>
+                        <h3>고객센터</h3>
+                        <a th:href="@{/myPage/my_qna}">더보기 ></a>
+                    </div>
+                    <table class="table_inquiry">
+                        <thead>
+                        <tr>
+                            <th class="in_th1">번호</th>
+                            <th class="in_th2">문의채널</th>
+                            <th class="in_th3">문의유형</th>
+                            <th class="in_th4">제목</th>
+                            <th class="in_th5">작성일</th>
+                            <th class="in_th6">상태</th>
+                        </tr>
+                        <tbody>
+                            <tr class="in_tr1" th:each="qna : ${recentQna}">
+                               <td class="in_td1" th:text="${qna.qnaNo}"></td>
+                               <td class="in_td2" th:text="${qna.channel}"></td>
+                               <td class="in_td3" th:text="${qna.cate2}"></td>
+                               <td class="in_td4" th:text="${qna.title}"></td>
+                               <td class="in_td5" th:text="${qna.regDate}"></td>
+                                <td class="in_td6"
+                                    th:text="${qna.status}"
+                                    th:classappend="${qna.status == '답변완료'} ? ' answered' : ''">
+                                </td>
+                            </tr>
+                        </tbody>
+                        </thead>
+                    </table>
+                    <div class="article_title4">
+                        <h3>상품문의</h3>
+                        <a th:href="@{/myPage/my_qna}">더보기 ></a>
                     </div>
                     <table class="table_inquiry">
                         <thead>
