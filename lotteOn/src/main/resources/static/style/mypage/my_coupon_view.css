@@ -1,0 +1,23 @@
+.article th {
+    width: 150px;
+}
+.article td {
+    border-right: 1px solid #dfdfdf;
+    width: 200px;
+    letter-spacing: 1.5px;
+    text-align: left;
+    padding: 0 0 0 10px;
+}
+.article tr:nth-last-child(1) td{
+    height: 200px;
+    letter-spacing: 1.5px;
+    line-height: 2.5;
+}
+.list {
+    border: 1px solid #dfdfdf;
+    padding: 15px 15px 15px 25px;
+    width: 40px;
+    font-weight: 600;
+    float: right;
+    margin-top: 10px;
+}

@@ -43,6 +43,10 @@ public class MemberDTO {
     private String leaveDate;
     private String visitDate;
 
+    // OAuth 인증 업체 정보
+    private String provider; // 소셜 로그인 제공자 (Naver, Google 등)
+    private String providerId;    // 소셜 로그인 제공자에서 제공하는 고유 ID
+
     public String getFormattedRegDate() {
         return regDate != null ? regDate.toString().substring(0, 10) : "";
     }

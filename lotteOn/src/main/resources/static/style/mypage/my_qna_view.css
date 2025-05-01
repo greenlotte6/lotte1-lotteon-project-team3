@@ -29,3 +29,11 @@
     border-spacing: 0;
     text-align: center;
 }
+.list {
+    border: 1px solid #dfdfdf;
+    padding: 15px 15px 15px 25px;
+    width: 40px;
+    font-weight: 600;
+    float: right;
+    margin-top: 10px;
+}

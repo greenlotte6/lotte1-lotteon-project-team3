@@ -2,9 +2,7 @@ package kr.co.lotteOn.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import kr.co.lotteOn.dto.SellerDTO;
-import kr.co.lotteOn.dto.ShopDTO;
-import kr.co.lotteOn.dto.TermsDTO;
+import kr.co.lotteOn.dto.*;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.service.SellerService;
 import kr.co.lotteOn.service.ShopService;
@@ -17,12 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,12 +40,52 @@ public class MemberController {
     private final TermsService termsService;
     private final ShopService shopService;
     private final PasswordEncoder passwordEncoder;
+    private final HttpSession httpSession;
 
     //회원 - 로그인
     @GetMapping("/login")
     public String login() {
         return "/member/login";
     }
+
+    /*
+    //회원 - 추가 정보 입력
+    @GetMapping("/signup-extra")
+    public String showSignupExtraForm() {
+        return "/member/signup-extra"; // templates/signup-extra.html
+    }
+    @PostMapping("/signup-extra")
+    public String processSignupExtra(@RequestParam String hp,
+                                     @RequestParam String addr1,
+                                     @RequestParam String addr2,
+                                     @RequestParam String zip) {
+        // 세션에서 소셜 로그인 사용자 정보 꺼내기
+        SessionUserDTO sessionUser = (SessionUserDTO) httpSession.getAttribute("user");
+
+        if (sessionUser == null) {
+            return "redirect:/member/login";
+        }
+
+        // 최종 Member 객체 저장
+        Member member = Member.builder()
+                .email(sessionUser.getEmail())
+                .name(sessionUser.getName())
+                .hp(hp)
+                .addr1(addr1)
+                .addr2(addr2)
+                .zip(zip)
+                .regDate(LocalDateTime.now())  // regDate를 직접 설정
+                .build();
+
+        memberService.save(member);
+
+        // 세션에 저장된 임시 사용자 정보 제거
+        httpSession.removeAttribute("user");
+
+        return "redirect:/"; // 홈이나 마이페이지 등
+    }
+     */
+
 
     //회원 - 회원가입
     @GetMapping("/register")

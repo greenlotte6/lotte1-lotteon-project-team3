@@ -29,25 +29,27 @@
                 <table>
                     <tr>
                         <th>사이트 버전</th>
-                        <td>1.0.1-RELEASE</td>
+                        <td th:text="${selectedVersionId}"></td>
                     </tr>
                 </table>
             </div>
             <div class="site">
                 <h3>사이트</h3>
-                <table>
-                    <tr>
-                        <th>제목</th>
-                        <td><input type="text" placeholder="롯데 ON"></td>
-                    </tr>
-                    <tr>
-                        <th>부제</th>
-                        <td><input type="text" placeholder="더나은 쇼핑위한 선택"></td>
-                    </tr>
-                </table>
-                <div class="btnarea">
-                    <button type="submit">수정하기</button>
-                </div>
+                <form>
+                    <table>
+                        <tr>
+                            <th>제목</th>
+                            <td><input type="text" placeholder="롯데 ON"></td>
+                        </tr>
+                        <tr>
+                            <th>부제</th>
+                            <td><input type="text" placeholder="더나은 쇼핑위한 선택"></td>
+                        </tr>
+                    </table>
+                    <div class="btnarea">
+                        <button type="submit">수정하기</button>
+                    </div>
+                </form>
             </div>
             <div class="logo">
                 <h3>로고</h3>

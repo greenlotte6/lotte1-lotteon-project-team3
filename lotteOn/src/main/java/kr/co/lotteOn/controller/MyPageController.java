@@ -1,6 +1,8 @@
 package kr.co.lotteOn.controller;
 
 
+import kr.co.lotteOn.dto.MemberDTO;
+import kr.co.lotteOn.dto.coupon.CouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -42,7 +45,21 @@ public class MyPageController {
 
     //마이페이지 - 메인
     @GetMapping("/my_home")
-    public String myHome() {
+    public String myHome(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
+
+        // 1. 로그인한 회원의 ID 가져오기
+        String memberId = userDetails.getUsername();
+
+        // 2. MemberDTO 생성
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberId);
+
+        // 3. 최근 문의 3개 조회
+        List<QnaDTO> recentQnaTop3 = myPageService.findByMemberIdByLimit3(memberDTO);
+
+        // 4. 모델에 추가
+        model.addAttribute("recentQna", recentQnaTop3);
+
         return "/myPage/my_home";
     }
 
@@ -78,20 +95,7 @@ public class MyPageController {
     //마이페이지 - 쿠폰 디테일
     @GetMapping("/my_view_coupon")
     public String myCouponView(Integer issuedNo, Model model) {
-        log.info("issuedNo:{}", issuedNo);
-        log.info("issuedNo:{}", issuedNo);
-        log.info("issuedNo:{}", issuedNo);
-        log.info("issuedNo:{}", issuedNo);
-        log.info("issuedNo:{}", issuedNo);
         IssuedCouponDTO issuedCouponDTO = myPageService.findCouponById(issuedNo);
-
-
-        log.info("issuedCouponDTO:{}", issuedCouponDTO);
-        log.info("issuedCouponDTO:{}", issuedCouponDTO);
-        log.info("issuedCouponDTO:{}", issuedCouponDTO);
-        log.info("issuedCouponDTO:{}", issuedCouponDTO);
-        log.info("issuedCouponDTO:{}", issuedCouponDTO);
-
         model.addAttribute("coupon", issuedCouponDTO);
 
         return "/myPage/my_view_coupon";

@@ -155,6 +155,12 @@ li {
     border-bottom: 1px solid #dfdfdf;
 }
 
+.article td a {
+    text-underline-position: under;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
 .page {
     margin-top: 20px;
     margin-left: 50px;

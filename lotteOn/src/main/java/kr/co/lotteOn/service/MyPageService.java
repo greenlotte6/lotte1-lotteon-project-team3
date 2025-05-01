@@ -39,18 +39,6 @@ public class MyPageService {
     private final QnaRepository qnaRepository;
     private final CouponRepository couponRepository;
 
-    //정보 출력하기
-    public MemberDTO getMemberInfo(String memberId) {
-        Optional<Member> optMember = memberRepository.findById(memberId);
-
-        if (optMember.isPresent()) {
-            Member member = optMember.get();
-            return modelMapper.map(member, MemberDTO.class);
-        }
-
-        return null;
-    }
-
     //회원별 문의내역
     public QnaPageResponseDTO getQnaByWriter(QnaPageRequestDTO qnaPageRequestDTO) {
         Pageable pageable = qnaPageRequestDTO.getPageable("noticeNo");
@@ -140,15 +128,58 @@ public class MyPageService {
 
     //회원별 쿠폰내역 - 쿠폰 자세히보기
     public IssuedCouponDTO findCouponById(int issuedNo) {
-        Optional<IssuedCoupon> optCoupon = issuedCouponRepository.findById(issuedNo);
-        if (optCoupon.isPresent()) {
-            IssuedCoupon coupon = optCoupon.get();
+        Optional<IssuedCoupon> optIssuedCoupon = issuedCouponRepository.findById(issuedNo);
+        if (optIssuedCoupon.isPresent()) {
+            IssuedCoupon coupon = optIssuedCoupon.get();
 
-            IssuedCouponDTO couponDTO = modelMapper.map(coupon, IssuedCouponDTO.class);
+            // issuedCoupon에서 couponCode 꺼내기
+            String couponCode = coupon.getCoupon().getCouponCode();
 
-            return couponDTO;
+            // couponCode로 Coupon 엔티티 조회
+            Optional<Coupon> optCoupon = couponRepository.findByCouponCode(couponCode);
+            if (optCoupon.isPresent()) {
+                Coupon coupon1 = optCoupon.get();
+
+                // IssuedCoupon -> IssuedCouponDTO 변환
+                IssuedCouponDTO dto = modelMapper.map(coupon, IssuedCouponDTO.class);
+
+                dto.setCouponCode(coupon.getCoupon().getCouponCode());
+                dto.setCouponType(coupon.getCoupon().getCouponType());
+                dto.setCouponName(coupon.getCoupon().getCouponName());
+                dto.setBenefit(coupon.getCoupon().getBenefit());
+                dto.setStartDate(coupon.getCoupon().getStartDate());
+                dto.setEndDate(coupon.getCoupon().getEndDate());
+                dto.setEtc(coupon.getCoupon().getEtc());
+                dto.setCompanyName(coupon.getCoupon().getCompanyName());
+
+                return dto;
+            }
+
         }
         return null;
+    }
+
+    //마이페이지 메인 문의출력
+    public List<QnaDTO> findByMemberIdByLimit3(MemberDTO memberDTO) {
+        Member writer = Member
+                .builder()
+                .id(memberDTO.getId())
+                .build();
+
+        List<Qna> qna = qnaRepository.findTop3ByWriterOrderByRegDateDesc(writer);
+
+        List<QnaDTO> qnaDTOList = qna
+                .stream()
+                .map(qna1 -> {
+                    QnaDTO qnaDTO = modelMapper.map(qna1, QnaDTO.class);
+                    qnaDTO.setWriter(writer.getId());
+
+                    return qnaDTO;
+                })
+                .toList();
+
+        return qnaDTOList;
+
     }
 
 

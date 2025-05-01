@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>추가 정보 입력</title>
+    <!-- Script -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/script/postcode.js"></script>
+    <script src="/script/membervalidation.js"></script>
+    <script src="/script/validation.js"></script>
+    <!-- Style -->
+    <link rel="stylesheet" href="/style/member/register.css">
+</head>
+<body>
+    <h2>추가 정보 입력</h2>
+    <form th:action="@{/member/signup-extra}" method="post" class="generalForm Form">
+        <div>
+            <p>이름</p>
+            <input type="text" name="name" placeholder="이름 입력" required>
+        </div>
+        <div>
+            <p>성별</p>
+            <div class="whatisyourgender">
+                <label for="male">
+                    <input type="radio" name="gender" id="male" value="남">남
+                </label>
+                <label for="female">
+                    <input type="radio" name="gender" id="female" value="여">여
+                </label>
+            </div>
+        </div>
+        <div>
+            <div class="paragraph">
+                <p>휴대폰</p>
+                <p class="hpMsg msgs"></p>
+            </div>
+            <input type="text" name="hp" id="hp" placeholder="휴대폰 입력" required>
+        </div>
+        <div class="addressBox">
+            <p>주소</p>
+            <input type="text" id="postcode" name="zip" placeholder="우편번호 검색" onclick="generalDaumpostcode()" readonly><br>
+            <input type="text" id="address" name="addr1" placeholder="기본주소 검색" readonly>
+            <input type="text" id="address2" name="addr2" placeholder="상세주소 입력">
+        </div>
+        <div class="submitBox">
+            <button type="submit" >가입하기</button>
+        </div>
+    </form>
+</body>
+</html>

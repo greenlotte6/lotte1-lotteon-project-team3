@@ -1,5 +1,8 @@
 package kr.co.lotteOn.security;
 
+import jakarta.servlet.http.HttpSession;
+import kr.co.lotteOn.oauth2.OAuth2UserService;
+import kr.co.lotteOn.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,21 +10,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.io.IOException;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig {
 
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    private final OAuth2UserService oAuth2UserService;
+    private final MemberRepository memberRepository;
+    private final HttpSession httpSession;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -43,6 +45,31 @@ public class SecurityConfig {
                 //.logoutSuccessUrl("/member/login")
                 .logoutSuccessHandler(customLogoutSuccessHandler)
                 .invalidateHttpSession(true)
+        );
+
+        /*
+        // OAuth2 설정
+        // 주입받은 customOAuth2UserService를 바로 사용
+        http.oauth2Login(oauth -> oauth
+                .loginPage("/member/login") // 로그인 페이지 경로 설정
+                .userInfoEndpoint(info -> info
+                        .userService(customOAuth2UserService)
+                )
+                .failureHandler((request, response, exception) -> {
+                    if (exception.getMessage().contains("추가 정보 필요")) {
+                        response.sendRedirect("/member/signup-extra");
+                    } else {
+                        response.sendRedirect("/member/login?code=100");
+                    }
+                })
+        );
+
+         */
+
+        http
+                .oauth2Login(config -> config
+                .loginPage("/member/login")
+                .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
         );
 
         // 인가 설정
@@ -69,4 +96,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }
