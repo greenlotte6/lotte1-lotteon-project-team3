@@ -306,6 +306,9 @@ main > div > * {
     border: 1px solid #E60012;
     background: #E60012;
     color: white;
+    width: 240px;
+    height: 56px;
+    border-radius: 4px;
 }
 
 .btnContainer > button:not(:first-child) {

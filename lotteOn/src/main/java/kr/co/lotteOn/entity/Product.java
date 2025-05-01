@@ -34,6 +34,7 @@ public class Product {
     private String imageList;
     private String imageMain;
     private String imageDetail;
+    private String imageInfo;
 
     private int views;
 

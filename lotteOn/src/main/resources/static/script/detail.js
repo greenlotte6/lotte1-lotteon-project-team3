@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const selectedContainer = document.querySelector('.selectedOptions');
     const selects = document.querySelectorAll('.option-select');
-
+    const quantityInput = document.querySelector("#inputQuantity");
     const minusBtn = document.querySelector('.minus');
     const plusBtn = document.querySelector('.plus');
     const countSpan = document.querySelector('.totalCount');
@@ -39,6 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
             updateTotal();
         });
+    });
+    document.getElementById('cartForm').addEventListener('submit', function (e) {
+        const selects = document.querySelectorAll('.option-select');
+        let optionSummary = [];
+
+        for (let select of selects) {
+            const label = select.dataset.name;
+            const value = select.value;
+
+            if (!value) {
+                alert(label + ' 옵션을 선택하세요.');
+                e.preventDefault();
+                return;
+            }
+
+            optionSummary.push(label + ':' + value);
+        }
+
+        document.getElementById('selectedOption').value = optionSummary.join(', ');
     });
 
     // 수량 조절
@@ -84,4 +103,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 초기 총액 세팅
     updateTotal();
+    document.getElementById('orderForm').addEventListener('submit', function (e) {
+        const selects = document.querySelectorAll('.option-select');
+        let optionSummary = [];
+
+        for (let select of selects) {
+            const label = select.dataset.name;
+            const value = select.value;
+
+            if (!value) {
+                alert(label + ' 옵션을 선택하세요.');
+                e.preventDefault();
+                return;
+            }
+
+            optionSummary.push(`${label}:${value}`);
+        }
+
+        document.getElementById('optionInput').value = optionSummary.join(', ');
+        document.getElementById('inputQuantity').value = count;
+    });
 });

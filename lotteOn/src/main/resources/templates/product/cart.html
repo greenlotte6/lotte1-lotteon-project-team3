@@ -51,6 +51,7 @@
                                                 <img th:src="@{'/images/' + ${item.productImage}}" alt="상품사진">
                                             </a>
                                             <div class="itemSub">
+                                                <p class="itemOption" th:utext="${item.productOption}"></p>
                                                 <p class="itemPrice"
                                                    th:attr="data-price=${item.price},data-discount=${item.discount},data-quantity=${item.quantity},data-delivery=${item.deliveryFee}"
                                                    th:text="${#numbers.formatInteger(item.price * (100 - item.discount) / 100 * item.quantity, 3, 'COMMA')} + '원'">
@@ -73,8 +74,7 @@
                                     <h2>배송지</h2>
                                 </div>
                                 <div class="deliveryMain">
-                                    <p>부산시 부산진구 중앙대로 749번 범향빌딩 4층</p>
-                                    <button>변경</button>
+                                    <p th:text="${fullAddress}"></p>
                                 </div>
                             </div>
                             <div class="priceInfoBox">

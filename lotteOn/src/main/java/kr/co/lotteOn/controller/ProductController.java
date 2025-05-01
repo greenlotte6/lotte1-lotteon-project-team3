@@ -1,15 +1,22 @@
 package kr.co.lotteOn.controller;
 
 import kr.co.lotteOn.dto.ProductDTO;
+import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.entity.Product;
+import kr.co.lotteOn.security.MyUserDetails;
 import kr.co.lotteOn.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/product")
 @Controller
@@ -40,6 +47,29 @@ public class ProductController {
         }
         model.addAttribute("product", product);
         return "/product/detail";
+    }
+
+    @PostMapping("/payment")
+    public String paymentPage(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                            @RequestParam String productCode,
+                            @RequestParam int quantity,
+                            @RequestParam String option,
+                            Model model) {
+        if (myUserDetails == null) {
+            return "redirect:/member/login?redirect=/product/detail?productCode=" + productCode;
+        }
+        Member member = myUserDetails.getMember();
+        ProductDTO product = productService.getProductByCode(productCode);
+
+        Map<String, Object> item = new HashMap<>();
+        item.put("product", product);
+        item.put("quantity", quantity);
+        item.put("option", option);
+
+        model.addAttribute("items", List.of(item));
+        model.addAttribute("member", member);
+
+        return "/product/payment";
     }
 
     //상품 - 주문하기

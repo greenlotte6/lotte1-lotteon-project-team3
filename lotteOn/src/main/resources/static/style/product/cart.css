@@ -99,13 +99,13 @@ main > div > * {
     justify-content: space-between;
     margin-left: 16px;
     padding: 6px 0;
-
+    align-items: center;
 }
 
 .itemPrice {
     position: relative;
     bottom: 10px;
-    left: 14px;
+    left: 1px;
 }
 
 .remove {
@@ -135,6 +135,10 @@ main > div > * {
     width: 88px;
     padding: 0 1px;
     border-radius: 16px;
+    margin-top: 10px;
+}
+.itemOption {
+    margin-bottom: 8px;
 }
 
 .minus {

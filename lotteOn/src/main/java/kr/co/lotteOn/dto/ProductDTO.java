@@ -40,6 +40,7 @@ public class ProductDTO {
     private String imageList;
     private String imageMain;
     private String imageDetail;
+    private String imageInfo;
 
     private int views;
     private Long categoryId;
