@@ -46,14 +46,13 @@ public class MemberService {
         memberRepository.save(member);
 
         //회원가입 감사 포인트 DTO 생성
-        PointDTO pointDTO = modelMapper.map(memberDTO, PointDTO.class);
-        pointDTO.setMemberId(member.getId());
-        pointDTO.setGivePoint(pointDTO.getGivePoint()+1000);
-        pointDTO.setTotalPoint(1000);
-        pointDTO.setGiveDate(String.valueOf(LocalDateTime.now()));
-        pointDTO.setGiveComment("회원가입 감사 포인트");
+        Point point = new Point();
+        point.setMember(member); // 반드시 지정해야 함
+        point.setGiveContent("가입 축하 포인트");
+        point.setGiveDate(LocalDateTime.now());
+        point.setGivePoint(1000);
+        point.setTotalPoint(1000);
 
-        Point point = modelMapper.map(pointDTO, Point.class);
         pointRepository.save(point);
     }
 

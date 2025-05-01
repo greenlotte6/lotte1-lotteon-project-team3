@@ -27,13 +27,16 @@
             </div>
             <div class="shopArea">
                 <div class="searchArea">
-                    <select>
-                        <option>선택</option>
-                        <option>아이디</option>
-                        <option>이름</option>
-                    </select>
-                    <input type="text" placeholder="검색어 입력">
-                    <button type="submit">검색</button>
+                    <form th:action="@{/admin/member/pointSearch}">
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="memberId">아이디</option>
+                            <option value="name">이름</option>
+                            <option value="giveContent">지급내용</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <input type="submit" value="검색" style="border: 1px solid #3f97f6 ; background-color: #3f97f6; color: white">
+                    </form>
                 </div>
                 <table>
                     <tr>
@@ -45,17 +48,14 @@
                         <th>지급 내용</th>
                         <th>지급 날짜</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc123</td>
-                        <td>정상수</td>
-                        <td>1,000</td>
-                        <td>15,000</td>
-                        <td>구매확정 포인트 지급</td>
-                        <td>
-                            2025-04-16<br>
-                            13:10:11
-                        </td>
+                    <tr th:each="point, i : ${points}">
+                        <td>[[${point.pointNo}]]</td>
+                        <td>아이디</td>
+                        <td>이름</td>
+                        <td>[[${point.givePoint}]]</td>
+                        <td>[[${point.totalPoint}]]</td>
+                        <td>[[${point.giveContent}]]</td>
+                        <td>[[${point.giveDate}]]</td>
                     </tr>
                 </table>
                 <div class="btnarea">
