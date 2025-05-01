@@ -308,6 +308,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isSidOk || !isSpwOk || !isCompanyNameOk || !isBusinessNoOk || !isCommunicationNoOk || !isSHpOk || !isFaxOk || !reSid.test(sellerId.value) || !reSPass.test(sellerPw.value)){
             e.preventDefault();
             alert('입력값을 확인해주세요.');
+        } else {
+            alert('가입이 완료되었습니다.');
         }
     });
 });

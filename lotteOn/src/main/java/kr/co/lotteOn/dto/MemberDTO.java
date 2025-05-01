@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,8 +24,8 @@ public class MemberDTO {
     private String password;
     @NotBlank(message = "이름은 필수입니다.")
     private String name;
-    @NotBlank(message = "성별은 필수입니다.")
     private String gender;
+    private LocalDate birthDate;
     @NotBlank(message = "이메일은 필수입니다.")
     @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;

@@ -67,14 +67,16 @@
                             <input type="text" name="name" placeholder="이름 입력" required>
                         </div>
                         <div>
-                            <p>성별</p>
-                            <div class="whatisyourgender">
-                                <label for="male">
-                                    <input type="radio" name="gender" id="male" value="남">남
-                                </label>
-                                <label for="female">
-                                    <input type="radio" name="gender" id="female" value="여">여
-                                </label>
+                            <div class="juminText">
+                                <div>
+                                    <p>주민등록번호</p>
+                                    <span>(생년월일과 성별 확인을 위해 주민등록번호 뒤 1자리까지 받고 있습니다.)</span>
+                                </div>
+                                <p id="OX"></p>
+                            </div>
+                            <div class="rrnInput">
+                                <input type="number" id="rrnFront" name="rrnFront" placeholder="앞 6자리" required>
+                                <input type="number" id="rrnBack" name="rrnBack" placeholder="뒤 1자리" required>
                             </div>
                         </div>
                         <div>
@@ -260,7 +262,7 @@
             <button class="closeBtn"></button>
         </div>
         <div class="modalBody">
-            <textarea></textarea>
+            <textarea readonly></textarea>
         </div>
     </div>
 </div>
@@ -282,10 +284,17 @@
             });
     }
 
-    function verifyEmailCode() {
+    function verifyEmailCode(e) {
         const email = document.getElementById("email").value;
-        const code = document.getElementById("emailCodeInput").value;
+        const code = document.getElementById("emailCodeInput").value.trim();
         const emailMsg = document.querySelector('.emailMsg');
+
+        if (code === '') {
+            e.preventDefault();
+            emailMsg.innerText = '인증코드를 입력해주세요';
+            emailMsg.style.color = '#E60012';
+            return;
+        }
 
         fetch("/member/email/verify", {
             method: "POST",
@@ -299,9 +308,15 @@
                     emailMsg.innerText = '이메일이 인증되었습니다';
                     emailMsg.style.color = 'green';
                 } else {
+                    e.preventDefault();
                     emailMsg.innerText = '인증코드가 일치하지 않습니다';
                     emailMsg.style.color = '#E60012';
                 }
+            })
+            .catch(() => {
+                e.preventDefault();
+                emailMsg.innerText = '서버 오류로 인증에 실패했습니다';
+                emailMsg.style.color = '#E60012';
             });
     }
 </script>

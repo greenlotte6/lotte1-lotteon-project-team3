@@ -8,18 +8,22 @@ document.addEventListener('DOMContentLoaded', function () {
     let isPwOk = false;
     let isEmailOk = false;
     let isHpOk = false;
+    let isJuminOk = false;
 
     const id = document.getElementById('id');
     const password = document.getElementById('password');
     const password2 = document.getElementById('password2');
     const email = document.getElementById('email');
     const hp = document.getElementById('hp');
+    const rrnFrontInput = document.getElementById('rrnFront');
+    const rrnBackInput = document.getElementById('rrnBack');
 
     const idMsg = document.querySelector('.idMsg');
     const pwMsg = document.querySelector('.pwMsg');
     const pw2Msg = document.querySelector('.pw2Msg');
     const emailMsg = document.querySelector('.emailMsg');
     const hpMsg = document.querySelector('.hpMsg');
+    const OX = document.getElementById('OX');
 
     let idTimeout = null;
     let emailTimeout = null;
@@ -170,10 +174,67 @@ document.addEventListener('DOMContentLoaded', function () {
         e.target.value = phone;
     });
 
+    rrnFrontInput.addEventListener('input', function () {
+        let value = this.value;
+        if (value.length > 6) {
+            this.value = value.slice(0, 6);
+        }
+        validateRRN(rrnFrontInput.value, rrnBackInput.value);
+    });
+
+    rrnBackInput.addEventListener('input', function () {
+        let value = this.value;
+        if (value.length > 1) {
+            this.value = value.slice(0, 1);
+        }
+        validateRRN(rrnFrontInput.value, rrnBackInput.value);
+    });
+
+    function validateRRN(rrnFront, rrnBack) {
+        const rrnFrontRegex = /^\d{6}$/;
+        const rrnBackRegex = /^[1-4]$/;
+
+        OX.innerText = "❌";
+        isJuminOk = false;
+
+        if (!rrnFrontRegex.test(rrnFront) || !rrnBackRegex.test(rrnBack)) return;
+
+        const yy = parseInt(rrnFront.substring(0, 2), 10);
+        const mm = parseInt(rrnFront.substring(2, 4), 10);
+        const dd = parseInt(rrnFront.substring(4, 6), 10);
+
+        let fullYear;
+        if (rrnBack === "1" || rrnBack === "2") {
+            fullYear = 1900 + yy;
+        } else if (rrnBack === "3" || rrnBack === "4") {
+            fullYear = 2000 + yy;
+        } else {
+            return;
+        }
+
+        const isLeapYear = (fullYear % 4 === 0 && fullYear % 100 !== 0) || (fullYear % 400 === 0);
+        const daysInMonth = [31, isLeapYear ? 29 : 28, 31, 30, 31, 30,
+            31, 31, 30, 31, 30, 31];
+
+        if (mm < 1 || mm > 12) return;
+        if (dd < 1 || dd > daysInMonth[mm - 1]) return;
+
+        if ((fullYear >= 1926 && fullYear <= 1999 && (rrnBack === "1" || rrnBack === "2")) ||
+            (fullYear >= 2000 && fullYear <= 2025 && (rrnBack === "3" || rrnBack === "4"))) {
+            OX.innerText = "✅";
+            isJuminOk = true;
+        } else {
+            OX.innerText = "❌";
+            isJuminOk = false;
+        }
+    }
+
     document.querySelector(".generalForm").addEventListener('submit', function (e) {
-        if (!isIdOk || !isEmailOk || !isHpOk || !reUid.test(id.value) || !rePass.test(password.value) && !isPwOk) {
+        if (!isIdOk || !isEmailOk || !isHpOk || !isJuminOk || !reUid.test(id.value) || !rePass.test(password.value) && !isPwOk) {
             e.preventDefault();
             alert('입력값을 확인해주세요.');
+        } else {
+            alert('회원가입이 완료되었습니다.');
         }
     });
 });
