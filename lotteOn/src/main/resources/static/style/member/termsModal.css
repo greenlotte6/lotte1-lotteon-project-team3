@@ -1,0 +1,69 @@
+#modalControl {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+#termsModal {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background-color: white;
+}
+
+.modalHeader {
+    width: 100%;
+    height: 50px;
+    padding: 14px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.closeBtn {
+    background-image: url("../../images/closeBtn.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+    background-size: 14px 14px;
+    width: 14px;
+    height: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.modalBody {
+    width: 100%;
+    height: 500px;
+    padding: 0px 14px 14px 14px;
+    box-sizing: border-box;
+}
+
+.modalBody textarea {
+    width: inherit;
+    height: 485px;
+    resize: none;
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    color: #333;
+    text-align: justify;
+    box-sizing: border-box;
+    border: 1px solid #e7e7e7;
+}
