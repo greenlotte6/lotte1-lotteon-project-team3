@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.naming.Name;
 import java.time.LocalDateTime;
 
 @Data
@@ -30,4 +31,6 @@ public class Cart {
 
     private int quantity;
     private LocalDateTime addedDate = LocalDateTime.now();
+
+    private String productOption;
 }

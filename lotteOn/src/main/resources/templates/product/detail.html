@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="/style/common/_footer.css"/>
     <title>롯데ON</title>
 </head>
-<!--th:attr="data-login=${isLogin}"-->
 <body>
 <div id="container">
     <th:block th:include="/common/_header.html"/>
@@ -63,7 +62,7 @@
                             <th:block th:each="option : ${product.options}">
                                 <div class="optionGroup">
                                     <label th:text="${option.optionName}"></label>
-                                    <select class="option-select" th:data-name="${option.optionName}">
+                                    <select class="option-select" th:data-name="${option.optionName}" name="productOption">
                                         <option value="">선택하세요</option>
                                         <th:block th:each="value : ${option.optionValues}">
                                             <option th:value="${value}" th:text="${value}"></option>
@@ -95,9 +94,15 @@
                         <form id="cartForm" class="addCart" method="post" th:action="@{/product/addToCart}">
                             <input type="hidden" name="productId" th:value="${product.id}">
                             <input type="hidden" name="quantity" id="quantityInput" value="1">
+                            <input type="hidden" name="productOption" id="selectedOption">
                             <button type="submit">장바구니 담기</button>
                         </form>
-                        <button class="purchase" onclick="location.href='/product/payment'">바로 구매하기</button>
+                        <form id="orderForm" method="post" th:action="@{/product/payment}">
+                            <input type="hidden" name="productCode" th:value="${product.productCode}">
+                            <input type="hidden" name="quantity" id="inputQuantity" value="1">
+                            <input type="hidden" name="option" id="optionInput">
+                            <button type="submit" class="purchase">바로 구매하기</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -28,13 +28,14 @@ public class CartController {
     public String addToCart(@AuthenticationPrincipal MyUserDetails myUserDetails,
                             @RequestParam Long productId,
                             @RequestParam int quantity,
+                            @RequestParam String productOption,
                             RedirectAttributes redirectAttributes) {
         if (myUserDetails == null) {
             return "redirect:/member/login?redirect=/product/detail?productId=" + productId;
         }
 
         String memberId = myUserDetails.getMember().getId();
-        cartService.addToCart(memberId, productId, quantity);
+        cartService.addToCart(memberId, productId, quantity, productOption);
         return "redirect:/product/cart";
     }
 
@@ -51,6 +52,9 @@ public class CartController {
         String memberId = myUserDetails.getMember().getId();
         System.out.println("로그인된 Id" + memberId);
         List<CartDTO> cartList = cartService.getCartByMember(memberId);
+
+        String fullAddress = myUserDetails.getMember().getAddr1() + " " + myUserDetails.getMember().getAddr2();
+        model.addAttribute("fullAddress", fullAddress);
 
         int totalProductPrice = 0;
         int totalDiscount = 0;
@@ -72,6 +76,7 @@ public class CartController {
         model.addAttribute("totalDiscount", totalDiscount);
         model.addAttribute("deliveryFee", deliveryFee);
         model.addAttribute("totalOrderPrice", totalOrderPrice);
+
 
         return "/product/cart";
     }

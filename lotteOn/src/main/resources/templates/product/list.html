@@ -396,8 +396,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="productItem" th:each="product : ${products}">
-                        <div class="items">
+                    <div class="productItem" >
+                        <div class="items" th:each="product : ${products}">
                             <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
                                 <img th:src="@{'/images/' + ${product.imageList}}" alt="상품">
                             </a>
