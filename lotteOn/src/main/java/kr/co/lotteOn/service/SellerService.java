@@ -67,13 +67,18 @@ public class SellerService {
 
 
     @Transactional
-    public void deleteShopBySellerId(String sellerId) {
-        sellerRepository.deleteById(sellerId);
-        sellerRepository.flush();
-        if(!sellerRepository.existsBySellerId(sellerId)){
-        log.info("seller with id {} deleted successfully.", sellerId);
-        }else{
-            log.error("failed to delete seller with id {}", sellerId);
+    public void deleteShops(List<String> sellerIds) {
+        List<SellerProjection> sellers= sellerRepository.findBySellerIdIn(sellerIds);
+
+        for(SellerProjection seller: sellers){
+            String sellerId = seller.getSellerId();
+            try {
+                sellerRepository.deleteById(sellerId);
+                log.info("Seller with id {} deleted successfully. " + sellerId);
+            }catch (Exception e){
+                log.error("Failed to delete seller with id {}: {} ",sellerId, e.getMessage());
+            }
         }
+
     }
 }

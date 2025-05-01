@@ -9,6 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
             let currentStatus = parseInt(statusDiv.dataset.status);
             let nextStatus = (currentStatus + 1) % 3; // 0 → 1 → 2 → 0 순환
 
+            const shopId= button.closest("tr").querySelector(".shop-id").textContent;
+            const status = nextStatus.toString();
+
+            //서버에 폼 전송으로 업데이트 요청
+            updateStatusInDB(shopId, status);
+
             updateStatusUI(statusDiv, button, nextStatus);
         });
     });
@@ -27,4 +33,27 @@ function updateStatusUI(statusDiv, button, status) {
         statusDiv.style.backgroundColor = "red";
         button.textContent = "[ 재개 ]";
     }
+}
+
+function updateStatusInDB(shopId, status) {
+    const form= new FormData();
+    form.append('sellerId',sellerId);
+    form.append('status',status);
+
+    fetch('/admin/shop/update-shop-status',{
+        method: 'POST',
+        body: form
+
+    })
+        .then(response => response.json())
+        .then(data =>{
+            if (data.success){
+                console.log('DB 업데이트 성공');
+            }else{
+                console.log("DB 업데이트 실패");
+            }
+        })
+        .catch(error => {
+            console.log('에러 발생:',error);
+        });
 }
