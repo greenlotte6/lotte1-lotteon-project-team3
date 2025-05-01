@@ -6,6 +6,8 @@ import kr.co.lotteOn.dto.coupon.CouponPageRequestDTO;
 import kr.co.lotteOn.dto.coupon.CouponPageResponseDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.point.PointPageRequestDTO;
+import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.service.AdminMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +68,12 @@ public class AdminMemberController {
 
     //고객관리 - 포인트현황
     @GetMapping("/member/point")
-    public String memberPoint(){
+    public String memberPoint(Model model, PointPageRequestDTO pageRequestDTO) {
+        PointPageResponseDTO pointPageResponseDTO = adminMemberService.pointList(pageRequestDTO);
+
+        model.addAttribute("page", pointPageResponseDTO);
+        model.addAttribute("points", pointPageResponseDTO.getDtoList());
+
         return "/admin/member/point";
     }
 

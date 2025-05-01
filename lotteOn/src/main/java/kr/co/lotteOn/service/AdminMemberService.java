@@ -9,12 +9,17 @@ import kr.co.lotteOn.dto.coupon.CouponPageResponseDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.point.PointDTO;
+import kr.co.lotteOn.dto.point.PointPageRequestDTO;
+import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.entity.Coupon;
 import kr.co.lotteOn.entity.IssuedCoupon;
 import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.entity.Point;
 import kr.co.lotteOn.repository.CouponRepository;
 import kr.co.lotteOn.repository.IssuedCouponRepository;
 import kr.co.lotteOn.repository.MemberRepository;
+import kr.co.lotteOn.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -35,6 +40,7 @@ public class AdminMemberService {
 
     private final MemberRepository memberRepository;
     private final CouponRepository couponRepository;
+    private final PointRepository pointRepository;
     private final ModelMapper modelMapper;
     private final IssuedCouponRepository issuedCouponRepository;
 
@@ -96,6 +102,60 @@ public class AdminMemberService {
 
     /* ******************회원관리 끝******************************/
 
+    //포인트 적립내역 - 리스트
+    public PointPageResponseDTO pointList(PointPageRequestDTO pageRequestDTO){
+        Pageable pageable = pageRequestDTO.getPageable("pointNo");
+
+        Page<Point> pagePoints = pointRepository.findAll(pageable);
+
+        List<PointDTO> pointList = pagePoints
+                .getContent()
+                .stream()
+                .map(point -> modelMapper.map(point, PointDTO.class))
+                .toList();
+
+        int total = (int) pagePoints.getTotalElements();
+
+        return PointPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(pointList)
+                .total(total)
+                .build();
+
+    }
+
+    //포인트 적립내역 - 검색
+    public PointPageResponseDTO pointListSearch(PointPageRequestDTO pageRequestDTO){
+
+        Pageable pageable = pageRequestDTO.getPageable("pointNo");
+        Page<Tuple> pagePoints = pointRepository.searchPoint(pageRequestDTO, pageable);
+
+        List<PointDTO> pointDTOList = pagePoints
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Point point = tuple.get(0, Point.class);
+                    String name = tuple.get(1, String.class);
+
+                    PointDTO pointDTO = modelMapper.map(point, PointDTO.class);
+                    pointDTO.setName(name);
+
+                    return pointDTO;
+                }).toList();
+
+        int total = (int) pagePoints.getTotalElements();
+
+        return PointPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(pointDTOList)
+                .total(total)
+                .build();
+
+    }
+
+    /* ******************포인트관리 끝******************************/
 
     private String generateCouponCode(String couponType, int benefit) {
         String prefix;

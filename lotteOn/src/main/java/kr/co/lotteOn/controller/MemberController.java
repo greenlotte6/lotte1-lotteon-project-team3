@@ -48,45 +48,6 @@ public class MemberController {
         return "/member/login";
     }
 
-    /*
-    //회원 - 추가 정보 입력
-    @GetMapping("/signup-extra")
-    public String showSignupExtraForm() {
-        return "/member/signup-extra"; // templates/signup-extra.html
-    }
-    @PostMapping("/signup-extra")
-    public String processSignupExtra(@RequestParam String hp,
-                                     @RequestParam String addr1,
-                                     @RequestParam String addr2,
-                                     @RequestParam String zip) {
-        // 세션에서 소셜 로그인 사용자 정보 꺼내기
-        SessionUserDTO sessionUser = (SessionUserDTO) httpSession.getAttribute("user");
-
-        if (sessionUser == null) {
-            return "redirect:/member/login";
-        }
-
-        // 최종 Member 객체 저장
-        Member member = Member.builder()
-                .email(sessionUser.getEmail())
-                .name(sessionUser.getName())
-                .hp(hp)
-                .addr1(addr1)
-                .addr2(addr2)
-                .zip(zip)
-                .regDate(LocalDateTime.now())  // regDate를 직접 설정
-                .build();
-
-        memberService.save(member);
-
-        // 세션에 저장된 임시 사용자 정보 제거
-        httpSession.removeAttribute("user");
-
-        return "redirect:/"; // 홈이나 마이페이지 등
-    }
-     */
-
-
     //회원 - 회원가입
     @GetMapping("/register")
     public String view() {

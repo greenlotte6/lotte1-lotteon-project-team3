@@ -18,16 +18,16 @@ import java.time.LocalDateTime;
 public class Point {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pointNo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "memberId")
-    private Member memberId;
+    private Member member;
 
     private int givePoint;
     private int totalPoint;
-    private String giveComment;
+    private String giveContent;
 
     @CreationTimestamp
     private LocalDateTime giveDate;

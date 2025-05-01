@@ -18,10 +18,13 @@ public class PointDTO {
     private String memberId;
     private int givePoint;
     private int totalPoint;
-    private String giveComment;
+    private String giveContent;
     private String giveDate;
 
     private MemberDTO memberDTO;
+
+    //추가 컬럼
+    private String name;
 
 
     public String getGiveDate(){
