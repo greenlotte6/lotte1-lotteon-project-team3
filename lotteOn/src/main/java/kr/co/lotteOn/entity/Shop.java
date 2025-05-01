@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class Shop {
 
     @Id
-    private int shopId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer shopId;
 
     private String companyName;
     private String delegate;
@@ -25,6 +26,9 @@ public class Shop {
     private String status;
     private String management;
 
+    @ManyToOne
+    @JoinColumn(name= "sellerId")
+    private Seller seller;
 
 
 }

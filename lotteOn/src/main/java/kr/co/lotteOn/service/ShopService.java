@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,4 +36,14 @@ public class ShopService {
     }
 
 
+//    public boolean updateShopStatus(String shopId, String status) {
+//        Optional<Shop> optionalShop= shopRepository.findById(Integer.valueOf(shopId));
+//        if(optionalShop.isPresent()) {
+//            Shop shop = optionalShop.get();
+//            shop.setStatus(status);
+//            shopRepository.save(shop);
+//            return true;
+//        }
+//        return false;
+//    }
 }

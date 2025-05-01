@@ -20,6 +20,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    //삭제 버튼 클릭 시 처리
+    document.querySelector('.delbutton').addEventListener('click',function () {
+       const selectedIds = [];
+       document.querySelectorAll('.shopCheckbox:checked').forEach(cb =>{
+          selectedIds.push(cb.value);
+       });
+       //sellerIds 파라미터로 배열 값을 폼에 추가
+        const form= document.getElementById('deleteForm');
+        const sellerIdsInput= document.createElement('input');
+        sellerIdsInput.type= 'hidden';
+        sellerIdsInput.name='sellerIds';
+        sellerIdsInput.value=selectedIds.join(',');
+        form.appendChild(sellerIdsInput);
+
+        form.submit();
+    });
+
+    /*
     //선택삭제 버튼 클릭 시 선택된 체크박스의 값을 폼에 추가
     document.querySelector(".delbutton").addEventListener("click",(e)=>{
         const selectedIds = [...checkboxes]
@@ -30,6 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("삭제할 항목을 선택해주세요.");
             e.preventDefault();
         }else{
+            const confirmed = confirm("정말 삭제하시겠습니까?");
+            if (!confirmed){
+                e.preventDefault();
+                return;
+            }
             const form = document.getElementById("deleteForm");
             const input = document.createElement("input");
             input.type="hidden";
@@ -38,5 +61,5 @@ document.addEventListener("DOMContentLoaded", () => {
             form.appendChild(input);
         }
     });
-
+    */
 });

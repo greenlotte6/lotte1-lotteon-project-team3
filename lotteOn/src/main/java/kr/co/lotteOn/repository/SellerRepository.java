@@ -25,5 +25,6 @@ public interface SellerRepository extends JpaRepository<Seller, String> {
     List<SellerProjection> findAllBy();
 
 
-    void deleteById(String sellerId);
+    List<SellerProjection> findBySellerIdIn(List<String> sellerIds);
+
 }

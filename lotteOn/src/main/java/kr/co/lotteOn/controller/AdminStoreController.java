@@ -2,7 +2,9 @@ package kr.co.lotteOn.controller;
 
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.dto.ShopDTO;
+import kr.co.lotteOn.entity.Shop;
 import kr.co.lotteOn.repository.SellerProjection;
+import kr.co.lotteOn.repository.ShopRepository;
 import kr.co.lotteOn.service.SellerService;
 import kr.co.lotteOn.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +32,7 @@ public class AdminStoreController {
     private final ShopService shopService;
     private final ModelMapper modelMapper;
     private final SellerService sellerService;
+    private final ShopRepository shopRepository;
 
 
     /*------------ 관리자 - 상점관리 ------------*/
@@ -78,19 +83,35 @@ public class AdminStoreController {
 
     //상점 삭제 처리
     @PostMapping("/shop/delete")
-    public String deleteShops(@RequestParam("sellerIds")String sellerIds) {
-        String[] ids = sellerIds.split(",");
-        for (String sellerId : ids) {
-            try {
-                log.info("Attempting to delete sellerId: {}", sellerId);
-                sellerService.deleteShopBySellerId(sellerId);
-            } catch (Exception e) {
-                log.error("invalid seller id: {}", sellerId);
-            }
+    public String deleteShops(@RequestParam("sellerIds") String sellerIds){
+        String[] ids= sellerIds.split(",");
+        List<String> sellerIdList= Arrays.asList(ids);
+
+        try{
+            sellerService.deleteShops(sellerIdList);
+        }catch (Exception e){
+            log.error("Failed to delete some sellers: {}", e.getMessage());
+            return "redirect:/admin/shop/list?error=true";
         }
-        log.info("선택된 상점들이 삭제되었습니다.");
+        log.info("Selected shops have been deleted successfully.");
         return "redirect:/admin/shop/list";
     }
+
+//    @PostMapping("/shop/update-shop-status")
+//    @ResponseBody
+//    public Map<String, Object> updateShopStatus(@RequestParam String sellerId, @RequestParam String status){
+//        Map<String, Object> response = new HashMap<>();
+//
+//        Shop shop = shopRepository.findBySellerId(sellerId);
+//        if (shop == null) {
+//            shop.setStatus(status);
+//            shopRepository.save(shop);
+//            response.put("success", true);
+//        }else{
+//            response.put("success", false);
+//        }
+//        return response;
+//    }
 
 
 
