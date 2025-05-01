@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    const reUid = /^[a-z]+[a-z0-9]{3,11}$/; //4~12자
-    const rePass = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,12}$/;
+    const reSid = /^[a-z]+[a-z0-9]{3,11}$/; //4~12자
+    const reSPass = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,12}$/;
 
-    let isIdOk = false;
-    let isPwOk = false;
+    let isSidOk = false;
+    let isSpwOk = false;
     let isCompanyNameOk = false;
     let isBusinessNoOk = false;
     let isCommunicationNoOk = false;
@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', function () {
     async function checkSellerId() {
         const value = sellerId.value;
 
-        if (!reUid.test(value)) {
+        if (!reSid.test(value)) {
             sIdMsg.innerText = '아이디는 영문으로 시작하는 4~12자여야 합니다';
             sIdMsg.style.color = '#E60012';
-            isIdOk = false;
+            isSidOk = false;
             return;
         }
         try {
@@ -58,15 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.exists) {
                 sIdMsg.innerText = '이미 사용중인 아이디입니다';
                 sIdMsg.style.color = '#E60012';
-                isIdOk = false;
+                isSidOk = false;
             } else {
                 sIdMsg.innerText = '';
-                isIdOk = true;
+                isSidOk = true;
             }
         } catch (err) {
             sIdMsg.innerText = '서버 오류';
             sIdMsg.style.color = '#E60012';
-            isIdOk = false;
+            isSidOk = false;
         }
     }
 
@@ -74,10 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
     sellerPw.addEventListener('keyup', () => {
         const pw1 = sellerPw.value;
 
-        if (!rePass.test(pw1)) {
+        if (!reSPass.test(pw1)) {
             sPwMsg.innerText = '비밀번호는 영문+숫자+특수문자 포함 8~12자여야 합니다';
             sPwMsg.style.color = '#E60012';
-            isPwOk = false;
+            isSpwOk = false;
             return;
         } else {
             sPwMsg.innerText = '';
@@ -91,10 +91,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (pw1 !== pw2) {
             sPw2Msg.innerText = '비밀번호가 일치하지 않습니다.';
             sPw2Msg.style.color = '#E60012';
-            isPwOk = false;
+            isSpwOk = false;
         } else {
             sPw2Msg.innerText = '';
-            isPwOk = true;
+            isSpwOk = true;
         }
     });
 
@@ -304,8 +304,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     //회원가입 전송 시 유효성 검사
-    document.querySelector('form').addEventListener('submit', function (e) {
-        if (!isIdOk || !isPwOk || !isCompanyNameOk || !isBusinessNoOk || !isCommunicationNoOk || !isSHpOk || !isFaxOk || !reUid.test(sellerId.value) || !rePass.test(sellerPw.value)){
+    document.querySelector(".sellerForm").addEventListener('submit', function (e) {
+        if (!isSidOk || !isSpwOk || !isCompanyNameOk || !isBusinessNoOk || !isCommunicationNoOk || !isSHpOk || !isFaxOk || !reSid.test(sellerId.value) || !reSPass.test(sellerPw.value)){
             e.preventDefault();
             alert('입력값을 확인해주세요.');
         }

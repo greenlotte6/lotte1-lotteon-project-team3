@@ -170,8 +170,8 @@ document.addEventListener('DOMContentLoaded', function () {
         e.target.value = phone;
     });
 
-    document.querySelector('form').addEventListener('submit', function (e) {
-        if (!isIdOk || !isPwOk || !isEmailOk || !isHpOk || !reUid.test(id.value) || !rePass.test(password.value)) {
+    document.querySelector(".generalForm").addEventListener('submit', function (e) {
+        if (!isIdOk || !isEmailOk || !isHpOk || !reUid.test(id.value) || !rePass.test(password.value) && !isPwOk) {
             e.preventDefault();
             alert('입력값을 확인해주세요.');
         }
