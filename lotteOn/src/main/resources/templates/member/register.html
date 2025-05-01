@@ -118,22 +118,22 @@
                                 <div class="terms">
                                     <input type="checkbox" name="one" class="termsCheck check1" required>
                                     <span class="required">[필수]</span>
-                                    <a href="#">이용약관</a>
+                                    <a href="#" class="terms-link" data-type="buyer">이용약관</a>
                                 </div>
                                 <div class="terms">
                                     <input type="checkbox" name="two" class="termsCheck check1" required>
                                     <span class="required">[필수]</span>
-                                    <a href="#">전자금융 이용약관</a>
+                                    <a href="#" class="terms-link" data-type="trade">전자금융 이용약관</a>
                                 </div>
                                 <div class="terms">
                                     <input type="checkbox" name="three" class="termsCheck check1" required>
                                     <span class="required">[필수]</span>
-                                    <a href="#">개인정보 수집동의</a>
+                                    <a href="#" class="terms-link" data-type="privacy">개인정보 수집동의</a>
                                 </div>
                                 <div class="terms">
                                     <input type="checkbox" name="four" class="termsCheck check1">
                                     <span class="choice">[선택]</span>
-                                    <a href="#">위치정보 이용약관</a>
+                                    <a href="#" class="terms-link" data-type="place">위치정보 이용약관</a>
                                 </div>
                             </div>
                         </div>
@@ -225,22 +225,22 @@
                                 <div class="terms">
                                     <input type="checkbox" name="one" class="termsCheck check2" required>
                                     <span class="required">[필수]</span>
-                                    <a href="#" id="openModal">이용약관</a>
+                                    <a href="#" class="terms-link" data-type="seller">이용약관</a>
                                 </div>
                                 <div class="terms">
                                     <input type="checkbox" name="two" class="termsCheck check2" required>
                                     <span class="required">[필수]</span>
-                                    <a href="#">전자금융 이용약관</a>
+                                    <a href="#" class="terms-link" data-type="trade">전자금융 이용약관</a>
                                 </div>
                                 <div class="terms">
                                     <input type="checkbox" name="three" class="termsCheck check2" required>
                                     <span class="required">[필수]</span>
-                                    <a href="#">개인정보 수집동의</a>
+                                    <a href="#" class="terms-link" data-type="privacy">개인정보 수집동의</a>
                                 </div>
                                 <div class="terms">
                                     <input type="checkbox" name="four" class="termsCheck check2">
                                     <span class="choice">[선택]</span>
-                                    <a href="#">위치정보 이용약관</a>
+                                    <a href="#" class="terms-link" data-type="place">위치정보 이용약관</a>
                                 </div>
                             </div>
                         </div>
@@ -256,38 +256,11 @@
 <div id="modalControl">
     <div id="termsModal">
         <div class="modalHeader">
-            <p>이용약관</p>
+            <p class="termsTitle"></p>
             <button class="closeBtn"></button>
         </div>
         <div class="modalBody">
-            <textarea>
-                제1조 (목적)
-                본 약관은 롯데쇼핑㈜(이하 "회사"라 함)가 운영하는 사이트, 온라인 쇼핑몰 및 매장에서 제공하는 관련 서비스(모바일 및 인터넷 관련 서비스 포함, 이하 “서비스”라 함)를 이용함에 있어 회사와 회사의 서비스를 이용하는 자간의 권리 의무 및 책임 사항을 규정하는데 목적이 있습니다.
-
-                ※ [참고] 본 약관이 적용되는 사이트 및 매장 자세히 보기
-                (단, 제공 서비스에 따라 개별약관 동의가 필요할 수 있으며, 개별약관을 우선하여 적용합니다.)
-
-                제2조 (용어의 정의)
-                1. "사이트"란 회사가 컴퓨터, TV 및 휴대폰 등 정보통신 설비를 이용하여 상품 또는 용역(이하 “상품 등”이라 함)을 이용자에게 제공하기 위하여 설정한 가상의 영업장을 말합니다.
-                2. “매장”이란 회사가 상품 등을 이용자에게 제공하기 위해 운영하는 물리적 공간 또는 관련된 오프라인 영업장을 말합니다.
-                3. “이용자”란 사이트에 접속하거나 매장에 방문하여 본 약관에 따라 회사가 제공하는 서비스를 받는 자로서, (구매)회원, 판매회원 및 비회원을 포함한다.
-                1) “회원” 또는 “구매회원”이란 회사에서 제공하는 구매서비스를 이용할 수 있는 자로, 정회원, 간편가입회원 및 제휴회원을 의미합니다.
-                ① “정회원”이란 롯데멤버스㈜가 운영하는 L.POINT 회원 중 L.POINT Single Sign On 서비스를 통하여 본 약관에 동의하고 회사의 회원으로 가입한 자를 의미합니다. 이때 L.POINT 회원 및 Single Sign On 서비스의 정의는 롯데멤버스㈜의 L.POINT 이용 약관에 따릅니다. * 롯데멤버스 사이트 URL : http://www.lottemembers.com
-                ② “간편가입회원”이란 이메일 인증 또는 휴대전화번호 인증 또는 소셜서비스(네이버, 카카오 등)를 통해 사이트의 회원으로 가입하고, 회사가 제공하는 온라인 서비스를 이용할 수 있는 자를 의미합니다. 지원하는 소셜서비스 종류 등 세부 가입 방식은 각 사이트별 운영 정책에 따라 달라질 수 있습니다.
-                ③ “제휴회원”이란 회사가 제휴한 채널(사이트 등)에서 정한 조건과 방법에 따라 회사 또는 판매회원의 상품 등을 구입할 수 있는 자를 의미합니다. 단, 제휴회원에 대해서는 상품 등의 구입을 신청한 해당 제휴 채널의 정책을 우선하여 적용합니다.
-                2) “판매회원”이란 본 약관에 동의하고 별도의 인증절차를 거쳐 회사가 사이트에서 판매를 승인한 자를 말합니다. 단, 판매회원의 자격이나 승인 결정 기준은 회사의 사정에 따라 변경될 수 있습니다.
-                3) “비회원”이란 회사의 구매회원 또는 판매회원의 자격을 득하지 않고 회사의 서비스를 이용하는 자를 말합니다. 이때 회사는 비회원에게는 사이트 또는 매장별로 상품 등의 구입을 제한하거나 일부 서비스를 제공하지 않을 수 있으며, 비회원은 이에 대하여 이의를 제기할 수 없습니다.
-                4. “아이디(ID)”란 회원 식별과 회원의 서비스 이용을 위하여 회원이 선정하고 회사가 승인한 문자와 숫자 등의 조합을 말합니다.
-                5. “비밀번호(PASSWORD)”란 회원 본인 확인 및 회원의 개인정보, 거래정보의 보호를 위하여 회원 자신이 설정한 문자와 숫자 등의 조합을 말합니다.
-                6. “가격할인”이란 판매회원이 회사의 서비스를 통하여 상품 등을 판매할 때 특정 상품 등의 판매가격을 변경하여 할인하는 것을 말합니다.
-                7. “할인쿠폰”이란 명칭을 불문하고 구매회원이 사이트 또는 매장에서 상품 등의 구매시, 판매가격에서 표시된 금액 또는 비율만큼 할인을 적용한 가격을 기준으로 대금을 지급하고 상품 등을 공급받을 수 있는 온/오프라인 할인수단을 말합니다. 할인쿠폰은 회사 또는 판매회원이 임의 또는 협의하여 발급할 수 있으며, 판매회원이 명시적으로 발급의 중단을 요청한 경우에는 회사는 즉시 발급을 중단합니다. 할인쿠폰의 사용조건, 사용기간, 발급횟수 등은 할인쿠폰별로 상이하게 정할 수 있으며, 회사 또는 판매회원의 사정에 따라 쿠폰 발급은 임의로 중단될 수 있습니다.
-                8. “L.POINT(엘포인트)”란 L.POINT회원이 L.POINT 제휴사에서 적립 받거나 결제수단으로 사용할 수 있는 포인트로, 롯데멤버스㈜가 운영, 관리하는 포인트를 말합니다.
-                9. “운영자”란 “회사”가 제공하는 서비스의 전반적인 관리와 원활한 운영을 위하여 회사가 선정한 자를 말합니다.
-                10. “구매안전서비스”란 회사가 구매회원의 결제대금의 보호를 위하여 일정 기간 동안 결제대금을 예치하는 서비스를 말합니다.
-                11. “고객서비스센터”란 이용자의 서비스 이용과 관련한 문의를 처리하거나 이용자간의 분쟁을 합리적이고 원활하게 조정하기 위하여 회사가 설치 및 운영하는 기구를 말합니다.
-                12. “안전거래센터”란 회사 서비스 이용 중 거래의 안전과 관련하여 발생할 수 있는 제 문제를 조정하기 위한 기구를 말합니다.
-                13. 본 조에서 정의되지 않은 본 약관 상의 용어의 의미는 관련법령 및 일반적인 거래관행에 따릅니다.
-            </textarea>
+            <textarea></textarea>
         </div>
     </div>
 </div>

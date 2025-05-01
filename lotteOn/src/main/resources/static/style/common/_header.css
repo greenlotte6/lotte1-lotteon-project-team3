@@ -214,11 +214,6 @@ header > div > * {
     font-weight: 400;
 }
 
-.categories > ul li:hover {
-    transition: 0.3s;
-    background: rgba(238, 238, 238, 0.25);
-}
-
 .categories > ul li:hover > a {
     transition: 0.3s;
     color: #E60012;
@@ -288,13 +283,16 @@ button {
     overflow: hidden;
     height: 0;
     transition: height 0.3s ease;
-    padding-left: 15px;
 }
-.sub-category li {
-    margin-top: 5px;
+
+.sub-category li:first-child {
+    margin-top: 10px;
+}
+.sub-category li:last-child {
+    padding-bottom: 0px;
 }
 .sub-category a {
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
 }
 
