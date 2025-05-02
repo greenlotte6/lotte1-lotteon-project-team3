@@ -1,5 +1,7 @@
 package kr.co.lotteOn.repository;
 
+import java.util.List;
+
 public interface SellerProjection {
     String getSellerId();
     String getCompanyName();
@@ -7,4 +9,5 @@ public interface SellerProjection {
     String getBusinessNo();
     String getCommunicationNo();
     String getHp();
+
 }

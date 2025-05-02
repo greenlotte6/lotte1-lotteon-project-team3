@@ -10,6 +10,7 @@ import kr.co.lotteOn.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -39,15 +40,37 @@ public class AdminStoreController {
 
     //상점관리 - 상점목록
     @GetMapping("/shop/list")
-    public String shopList(Model model) {
+    public String shopList(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model){
 
-        List<SellerProjection> sellerProjectionList = sellerService.getSellerList();
+        int pageSize= 10;
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("regDate").descending());
 
-        model.addAttribute("sellers", sellerProjectionList);
+        Page<SellerProjection> sellerPage= sellerService.getSellerListPaged(pageable, type, keyword);
 
+        model.addAttribute("sellers", sellerPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sellerPage.getTotalPages());
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
 
         return "/admin/shop/list";
-    }
+
+        }
+
+
+//    public String shopList(Model model) {
+//
+//        List<SellerProjection> sellerProjectionList = sellerService.getSellerList();
+//
+//        model.addAttribute("sellers", sellerProjectionList);
+//
+//
+//        return "/admin/shop/list";
+
 
 
     // 상점 등록 처리
@@ -96,6 +119,11 @@ public class AdminStoreController {
         log.info("Selected shops have been deleted successfully.");
         return "redirect:/admin/shop/list";
     }
+
+
+
+
+
 
 //    @PostMapping("/shop/update-shop-status")
 //    @ResponseBody

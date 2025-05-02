@@ -3,6 +3,8 @@ package kr.co.lotteOn.repository;
 import jakarta.transaction.Transactional;
 import kr.co.lotteOn.entity.Seller;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +29,19 @@ public interface SellerRepository extends JpaRepository<Seller, String> {
 
     List<SellerProjection> findBySellerIdIn(List<String> sellerIds);
 
+    Page<SellerProjection> findAllBy(Pageable pageable);
+
+
+
+    @Query("SELECT s FROM Seller s WHERE "
+            + "(:type= 'companyName' AND s.companyName LIKE %:keyword%) OR "
+            + "(:type= 'delegate' AND s.delegate LIKE %:keyword%) OR "
+            + "(:type= 'businessNo' AND s.businessNo LIKE %:keyword%) OR "
+            + "(:type = 'hp' AND s.hp LIKE %:keyword%)")
+    Page<SellerProjection> findBySearch(@Param("type") String type,
+                                        @Param("keyword") String keyword,
+                                        Pageable pageable);
+
+    @Query("SELECT s FROM Seller s")
+    Page<SellerProjection> findAllProjections(Pageable pageable);
 }

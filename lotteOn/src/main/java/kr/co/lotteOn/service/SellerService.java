@@ -5,9 +5,12 @@ import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.entity.Seller;
 import kr.co.lotteOn.repository.SellerRepository;
 import kr.co.lotteOn.repository.SellerProjection;
+import kr.co.lotteOn.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,7 @@ public class SellerService {
     private final SellerRepository sellerRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final ShopRepository shopRepository;
 
     //아이디 존재 여부 확인
     public boolean existsBySellerId(String sellerId) {
@@ -66,8 +70,12 @@ public class SellerService {
     }
 
 
+    //삭제
     @Transactional
     public void deleteShops(List<String> sellerIds) {
+        //추가
+        shopRepository.deleteBySellerIds(sellerIds);
+
         List<SellerProjection> sellers= sellerRepository.findBySellerIdIn(sellerIds);
 
         for(SellerProjection seller: sellers){
@@ -81,4 +89,20 @@ public class SellerService {
         }
 
     }
+
+//    public Page<SellerProjection> getSellerListPaged(Pageable pageable) {
+//        return sellerRepository.findAllBy(pageable);
+//    }
+
+    //조회
+    public Page<SellerProjection> getSellerListPaged(Pageable pageable ,String type, String keyword) {
+        if (type != null && keyword != null && !type.isEmpty() && !keyword.isEmpty()) {
+            return sellerRepository.findBySearch(type, keyword, pageable);
+        }else{
+            return sellerRepository.findAllProjections(pageable);
+        }
+    }
+
+
+
 }
