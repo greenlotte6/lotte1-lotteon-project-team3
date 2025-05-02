@@ -7,10 +7,7 @@ import kr.co.lotteOn.entity.Category;
 import kr.co.lotteOn.entity.Product;
 import kr.co.lotteOn.entity.ProductNotice;
 import kr.co.lotteOn.entity.ProductOption;
-import kr.co.lotteOn.repository.CategoryRepository;
-import kr.co.lotteOn.repository.ProductNoticeRepository;
-import kr.co.lotteOn.repository.ProductOptionRepository;
-import kr.co.lotteOn.repository.ProductRepository;
+import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -35,6 +32,7 @@ public class ProductService {
     private final ProductNoticeRepository productNoticeRepository;
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
+    private final PointRepository pointRepository;
 
     @Transactional(readOnly = true)
     public List<ProductDTO> getAllProducts() {
@@ -191,4 +189,13 @@ public class ProductService {
                 .map(ProductDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    // 최신 포인트 내역 조회
+//    public int getLatestTotalPoint(String memberId) {
+//        // 최신 giveDate 기준으로 1개의 totalPoint 가져오기
+//        List<Integer> points = pointRepository.findLatestTotalPointByMemberId(memberId, PageRequest.of(0, 1));
+//
+//        // 리스트가 비어있으면 0 반환, 아니면 첫 번째 값을 반환
+//        return points.isEmpty() ? 0 : points.get(0);
+//    }
 }
