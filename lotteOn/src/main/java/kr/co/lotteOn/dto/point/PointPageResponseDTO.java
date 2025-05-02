@@ -29,6 +29,7 @@ public class PointPageResponseDTO {
 
     //mypage
     private String writer;
+    private String memberId;
 
     @Builder
     public PointPageResponseDTO(PointPageRequestDTO pageRequestDTO, List<PointDTO> dtoList, int total) {

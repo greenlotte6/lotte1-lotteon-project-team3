@@ -17,9 +17,9 @@
 </head>
 <body>
 <div id="container">
-    <th:block th:include="/admin/_adminHeader"/>
+    <th:block th:insert="~{/admin/_adminHeader}"/>
     <main>
-        <th:block th:include="/admin/_adminAside"/>
+        <th:block th:insert="~{/admin/_adminAside}"/>
         <div class="adminMain">
             <div class="mainTop">
                 <h4>쿠폰목록</h4>
@@ -38,7 +38,7 @@
                         <input type="submit" value="검색" style="border: 1px solid #3f97f6 ; background-color: #3f97f6; color: white">
                     </div>
                 </form>
-
+                <p style="font-weight: 600; margin-bottom: 10px"> 쿠폰 번호 클릭 시 상세보기 창 출력 </p>
                 <table>
                     <tr>
                         <th style="width: 80px">쿠폰번호</th>
@@ -53,48 +53,53 @@
                         <th>발급일</th>
                         <th style="padding-right: 5px;">관리</th>
                     </tr>
-                    <tr th:each="coupons, i:${coupons}">
+                    <tr th:each="coupon, i : ${coupons}" th:if="${#lists.size(coupons) > 0}">
                         <td>
                             <button type="submit" class="orderinfo"
-                            th:attr = "data-type=${coupons.couponType},
-                                    data-title=${coupons.couponName},
-                                    data-content=${coupons.etc},
-                                    data-company=${coupons.companyName},
-                                    data-benefit=${coupons.benefit},
-                                    data-startDate=${coupons.startDate},
-                                    data-endDate=${coupons.endDate},
-                                    data-couponCode=${coupons.couponCode}">
-                                [[${coupons.couponCode}]]
+                                    th:attr = "data-type=${coupon.couponType},
+                                data-title=${coupon.couponName},
+                                data-content=${coupon.etc},
+                                data-company=${coupon.companyName},
+                                data-benefit=${coupon.benefit},
+                                data-startDate=${coupon.startDate},
+                                data-endDate=${coupon.endDate},
+                                data-couponCode=${coupon.couponCode}">
+                                [[${coupon.couponCode}]]
                             </button>
                         </td>
-                        <td>[[${coupons.couponType}]]</td>
-                        <td>[[${coupons.couponName}]]</td>
-                        <td>[[${coupons.benefit}]]</td>
+                        <td>[[${coupon.couponType}]]</td>
+                        <td>[[${coupon.couponName}]]</td>
+                        <td>[[${coupon.benefit}]]</td>
                         <td>
-                            [[${coupons.startDate}]] <br>
-                            ~[[${coupons.endDate}]]
+                            [[${coupon.startDate}]] <br>
+                            ~[[${coupon.endDate}]]
                         </td>
-                        <td>[[${coupons.companyName}]]</td>
-                        <td>[[${coupons.issueCount}]]</td>
-                        <td>[[${coupons.useCount}]]</td>
+                        <td>[[${coupon.companyName}]]</td>
+                        <td>[[${coupon.issueCount}]]</td>
+                        <td>[[${coupon.useCount}]]</td>
                         <td>
-                            <span th:if="${coupons.status == '발급 종료'}" style="font-size: 12px; font-weight: bold; color: gray">
+                            <span th:if="${coupon.status == '발급 종료'}" style="font-size: 12px; font-weight: bold; color: gray">
                                 발급 종료
                             </span>
-                            <span th:if="${coupons.status == '발급중'} and ${coupons.endDate >= #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: green">
+                            <span th:if="${coupon.status != null and coupon.status == '발급중'} and ${coupon.endDate >= #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: green">
                                 미사용
                             </span>
-                            <span th:if="${coupons.status == '발급중'} and ${coupons.endDate < #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: darkred">
+                            <span th:if="${coupon.status != null and coupon.status == '발급중'} and ${coupon.endDate < #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 12px; font-weight: bold; color: darkred">
                                 기간 만료
                             </span>
                         </td>
-                        <td>[[${coupons.issuedDate}]]</td>
+                        <td>[[${coupon.issuedDate}]]</td>
                         <td>
-                            <form method="post" th:action="@{/admin/coupon/endCoupon}" th:object="${coupons}">
-                                <input type="hidden" name="couponCode" th:value="${coupons.couponCode}" />
+                            <form method="post" th:action="@{/admin/coupon/endCoupon}" th:object="${coupon}">
+                                <input type="hidden" name="couponCode" th:value="${coupon.couponCode}" />
                                 <button type="submit" class="couponbtn" style="font-size: 12px">종료</button>
                             </form>
                         </td>
+                    </tr>
+
+                    <!-- 검색 결과가 없을 경우 -->
+                    <tr th:if="${coupons != null and #lists.isEmpty(coupons)}">
+                        <td colspan="11">검색 결과가 없습니다.</td>
                     </tr>
                 </table>
                 <div class="btnarea">
@@ -273,7 +278,7 @@
             </div>
         </div>
     </main>
-    <th:block th:include="/admin/_adminFooter"/>
+    <th:block th:replace="/admin/_adminFooter.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
 </body>
 </html>

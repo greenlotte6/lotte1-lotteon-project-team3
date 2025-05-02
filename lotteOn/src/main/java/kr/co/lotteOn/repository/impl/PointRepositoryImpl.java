@@ -4,6 +4,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteOn.dto.point.PointPageRequestDTO;
+import kr.co.lotteOn.entity.Point;
 import kr.co.lotteOn.entity.QMember;
 import kr.co.lotteOn.entity.QPoint;
 import kr.co.lotteOn.repository.custom.PointRepositoryCustom;
@@ -59,5 +60,49 @@ public class PointRepositoryImpl implements PointRepositoryCustom {
                 .fetchOne();
 
         return new PageImpl<Tuple>(tupleList, pageable, total);
+    }
+
+    @Override
+    public Page<Tuple> findAllPoint(Pageable pageable) {
+        List<Tuple> tupleList = queryFactory
+                .select(qPoint, qMember.id, qMember.name)
+                .from(qPoint)
+                .join(qMember)
+                .on(qPoint.member.id.eq(qMember.id))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qPoint.pointNo.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qPoint.count())
+                .from(qPoint)
+                .fetchOne();
+
+        return new PageImpl<Tuple>(tupleList, pageable, total);
+    }
+
+    @Override
+    public Page<Tuple> findAllByMemberId(PointPageRequestDTO pageRequestDTO, Pageable pageable) {
+        String memberId = pageRequestDTO.getMemberId();
+
+        List<Tuple> tupleList = queryFactory
+                .select(qPoint, qMember.id)
+                .from(qPoint)
+                .join(qMember)
+                .on(qPoint.member.id.eq(qMember.id))
+                .where(qPoint.member.id.eq(memberId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qPoint.pointNo.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qPoint.count())
+                .from(qPoint)
+                .where(qPoint.member.id.eq(memberId))
+                .fetchOne();
+
+        return new PageImpl<>(tupleList, pageable, total);
     }
 }

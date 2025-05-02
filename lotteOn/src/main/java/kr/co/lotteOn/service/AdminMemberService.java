@@ -106,20 +106,29 @@ public class AdminMemberService {
     public PointPageResponseDTO pointList(PointPageRequestDTO pageRequestDTO){
         Pageable pageable = pageRequestDTO.getPageable("pointNo");
 
-        Page<Point> pagePoints = pointRepository.findAll(pageable);
+        Page<Tuple> pagePoints = pointRepository.findAllPoint(pageable);
 
-        List<PointDTO> pointList = pagePoints
+        List<PointDTO> pointDTOList = pagePoints
                 .getContent()
                 .stream()
-                .map(point -> modelMapper.map(point, PointDTO.class))
-                .toList();
+                .map(tuple -> {
+                    Point point = tuple.get(0, Point.class);
+                    String id = tuple.get(1, String.class);
+                    String name = tuple.get(2, String.class);
+
+                    PointDTO pointDTO = modelMapper.map(point, PointDTO.class);
+                    pointDTO.setMemberId(id);
+                    pointDTO.setName(name);
+
+                    return pointDTO;
+                }).toList();
 
         int total = (int) pagePoints.getTotalElements();
 
         return PointPageResponseDTO
                 .builder()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(pointList)
+                .dtoList(pointDTOList)
                 .total(total)
                 .build();
 

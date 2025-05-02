@@ -6,6 +6,8 @@ import kr.co.lotteOn.dto.coupon.CouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.point.PointPageRequestDTO;
+import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
@@ -70,7 +72,18 @@ public class MyPageController {
     }
     //마이페이지 - 포인트내역
     @GetMapping("/my_point")
-    public String myPoint() {
+    public String myPoint(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
+                          @ModelAttribute Member member, PointPageRequestDTO pageRequestDTO) {
+
+        Member currentMember = userDetails.getMember();
+        String loginId = currentMember.getId();
+
+        pageRequestDTO.setMemberId(loginId);
+
+        PointPageResponseDTO pageResponseDTO = myPageService.getPointByMemberId(pageRequestDTO);
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("point", pageResponseDTO.getDtoList());
+
         return "/myPage/my_point";
     }
 

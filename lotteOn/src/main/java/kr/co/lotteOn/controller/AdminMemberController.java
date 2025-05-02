@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -76,6 +77,16 @@ public class AdminMemberController {
 
         return "/admin/member/point";
     }
+    //고객관리 - 포인트현황
+    @GetMapping("/member/pointSearch")
+    public String memberPointSearch(Model model, PointPageRequestDTO pageRequestDTO) {
+        PointPageResponseDTO pointPageResponseDTO = adminMemberService.pointListSearch(pageRequestDTO);
+
+        model.addAttribute("page", pointPageResponseDTO);
+        model.addAttribute("point", pointPageResponseDTO.getDtoList());
+
+        return "/admin/member/pointSearch";
+    }
 
 
     /*------------ 관리자 - 쿠폰관리 ------------*/
@@ -92,15 +103,19 @@ public class AdminMemberController {
         return "/admin/coupon/list";
     }
 
-    //쿠폰관리 - 목록(검색)
     @GetMapping("/coupon/listSearch")
-    public String couponListSearch(CouponPageRequestDTO pageRequestDTO, Model model){
-        CouponPageResponseDTO pageResponseDTO = adminMemberService.couponSearchAll(pageRequestDTO);
-
-        model.addAttribute("page", pageResponseDTO);
-        model.addAttribute("coupons", pageResponseDTO.getDtoList());
-
-        return "/admin/coupon/listSearch";
+    public String couponListSearch(CouponPageRequestDTO pageRequestDTO, Model model) {
+        try {
+            CouponPageResponseDTO pageResponseDTO = adminMemberService.couponSearchAll(pageRequestDTO);
+            List<CouponDTO> couponList = pageResponseDTO.getDtoList();
+            model.addAttribute("page", pageResponseDTO);
+            model.addAttribute("coupons", couponList != null ? couponList : new ArrayList<>());
+            return "/admin/coupon/listSearch";
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그로 예외 확인
+            model.addAttribute("error", "쿠폰 목록을 불러오는 도중 오류가 발생했습니다.");
+            return "/admin/coupon/list"; // 별도의 에러 페이지 또는 기본 페이지로 리턴
+        }
     }
 
     //쿠폰관리 - 등록
