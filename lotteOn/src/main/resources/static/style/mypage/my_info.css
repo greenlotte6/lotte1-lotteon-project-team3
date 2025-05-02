@@ -239,7 +239,14 @@ input[name="email"]{
     line-height: 30px;
 }
 
-input[name="birth"] {
+input[name="birthDate"] {
+    border: none;
+    width: 124.67px;
+    height: 29.88px;
+    margin-top: 3px;
+    margin-left: 10px;
+}
+input[name="gender"] {
     border: none;
     width: 124.67px;
     height: 29.88px;

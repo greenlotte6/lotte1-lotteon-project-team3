@@ -63,14 +63,13 @@
                         <tr>
                             <th>생년월일</th>
                             <td>
-                                <input readonly type="text" name="birth" placeholder="1983년 05월 03일">
+                                <input readonly type="text" name="birthDate" th:value="${member.birthDate}">
                             </td>
                         </tr>
                         <tr>
                             <th>성별</th>
                             <td>
-                                <input type="text" name="birth" th:value="${member.gender}">
-                                <p style="padding: 5px 0 0 10px; font-size: 12px">남/여로 입력 해주세요</p>
+                                <input type="text" name="gender" readonly th:value="${member.gender}">
                             </td>
                         </tr>
                         <tr>

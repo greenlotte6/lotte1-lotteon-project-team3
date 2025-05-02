@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -30,6 +32,11 @@ public class IssuedCoupon {
     private Member member;
     
     private LocalDateTime useDate;
+
+    @CreationTimestamp
+    private LocalDateTime issuedDate;
+
+    private LocalDateTime expiredDate;
     private String status;
 
 

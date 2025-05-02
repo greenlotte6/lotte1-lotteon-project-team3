@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer>, CouponRepositoryCustom {
     public Optional<Coupon> findByCouponCode(String couponCode);
+
 }

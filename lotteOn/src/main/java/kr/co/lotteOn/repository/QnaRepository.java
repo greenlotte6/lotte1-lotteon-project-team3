@@ -1,5 +1,6 @@
 package kr.co.lotteOn.repository;
 
+import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Qna;
 import kr.co.lotteOn.repository.custom.QnaRepositoryCustom;
@@ -17,4 +18,6 @@ public interface QnaRepository extends JpaRepository<Qna, Integer> , QnaReposito
     public Page<Qna> findAllByCate1(String cate1, Pageable pageable);
 
     public List<Qna> findTop3ByWriterOrderByRegDateDesc(Member writer);
+
+    public int countByWriter_Id(String writerId);
 }

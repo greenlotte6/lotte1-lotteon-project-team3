@@ -3,6 +3,8 @@ package kr.co.lotteOn.dto.issuedCoupon;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+
 @Data
 @Slf4j
 @NoArgsConstructor
@@ -24,6 +26,8 @@ public class IssuedCouponDTO {
     private String etc;
     private String startDate;
     private String endDate;
+    private String issuedDate;
+    private String expiredDate;
 
     public IssuedCouponDTO(int issuedNo, String couponName, String benefit, String couponType) {
         this.issuedNo = issuedNo;
@@ -36,6 +40,22 @@ public class IssuedCouponDTO {
     public String getUseDate(){
         if(useDate != null){
             return useDate.substring(0,10);   // yyyy-mm-dd
+
+        }
+        return null;
+    }
+    //날짜 잘라내기
+    public String getIssuedDate(){
+        if(issuedDate != null){
+            return issuedDate.substring(0,10);   // yyyy-mm-dd
+
+        }
+        return null;
+    }
+    //날짜 잘라내기
+    public String getExpiredDate(){
+        if(expiredDate != null){
+            return expiredDate.substring(0,10);   // yyyy-mm-dd
 
         }
         return null;
