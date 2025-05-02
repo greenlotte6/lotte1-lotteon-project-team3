@@ -32,15 +32,17 @@
             </div>
             <div class="shopArea">
                 <div class="searchArea">
-                    <select>
-                        <option>선택</option>
-                        <option>상호명</option>
-                        <option>대표</option>
-                        <option>사업자등록번호</option>
-                        <option>연락처</option>
+                    <form th:action="@{/admin/shop/list}" method="get">
+                    <select name="type">
+                        <option value="">선택</option>
+                        <option value="companyName" th:selected="${type== 'companyName'}">상호명</option>
+                        <option value="delegate" th:selected="${type == 'delegate'}">대표</option>
+                        <option value="businessNo" th:selected="${type== 'businessNo'}">사업자등록번호</option>
+                        <option value="hp" th:selected="${type== 'hp'}">연락처</option>
                     </select>
-                    <input type="text" placeholder="검색어 입력">
+                    <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력">
                     <button type="submit">검색</button>
+                    </form>
                 </div>
                 <div class="status-explain">
                     <div class="dot-item"><div class="dot red"></div>운영 중지</div>
@@ -81,14 +83,23 @@
                 <div class="btnarea">
                     <button type="submit" class="delbutton">선택삭제</button>
                     <div class="pageBtn">
-                        <a href=""><img src="/images/back-double.png"></a>
-                        <a href=""><img src="/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="/images/right-single.png" class="single"></a>
-                        <a href=""><img src="/images/right-double.png"></a>
+                        <th:block th:if="${currentPage > 0}">
+                            <a th:href="@{'/admin/shop/list'(page=0)}"><img src="/images/back-double.png"></a>
+                            <a th:href="@{'/admin/shop/list'(page=${currentPage - 1})}"><img src="/images/back-single.png" class="single"></a>
+                        </th:block>
+
+                        <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a th:href="@{'/admin/shop/list'(page=${i})}" th:text="${i + 1}"
+                               th:class="${i == currentPage} ? 'number active' : 'number'"></a>
+                        </th:block>
+
+                        <th:block th:if="${currentPage < totalPages - 1}">
+                            <a th:href="@{'/admin/shop/list'(page=${currentPage + 1})}"><img src="/images/right-single.png" class="single"></a>
+                            <a th:href="@{'/admin/shop/list'(page=${totalPages - 1})}"><img src="/images/right-double.png"></a>
+                        </th:block>
                     </div>
+
+
                     <button class="regbutton" type="submit">상점등록</button>
                 </div>
             </div>
