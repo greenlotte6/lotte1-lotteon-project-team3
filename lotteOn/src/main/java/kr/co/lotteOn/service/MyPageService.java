@@ -8,13 +8,13 @@ import kr.co.lotteOn.dto.coupon.CouponPageResponseDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.point.PointDTO;
+import kr.co.lotteOn.dto.point.PointPageRequestDTO;
+import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
-import kr.co.lotteOn.entity.Coupon;
-import kr.co.lotteOn.entity.IssuedCoupon;
-import kr.co.lotteOn.entity.Member;
-import kr.co.lotteOn.entity.Qna;
+import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +38,7 @@ public class MyPageService {
     private final IssuedCouponRepository issuedCouponRepository;
     private final QnaRepository qnaRepository;
     private final CouponRepository couponRepository;
+    private final PointRepository pointRepository;
 
     //회원별 문의내역
     public QnaPageResponseDTO getQnaByWriter(QnaPageRequestDTO qnaPageRequestDTO) {
@@ -180,6 +181,33 @@ public class MyPageService {
 
         return qnaDTOList;
 
+    }
+
+    //회원별 포인트 적립내역 출력
+    public PointPageResponseDTO getPointByMemberId(PointPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("memberId");
+        Page<Tuple> pagePoint = pointRepository.findAllByMemberId(pageRequestDTO, pageable);
+
+        List<PointDTO> pointDTOList = pagePoint
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Point point = tuple.get(0, Point.class);
+                    String memberId = tuple.get(1, String.class);
+
+                    PointDTO pointDTO = modelMapper.map(point, PointDTO.class);
+                    pointDTO.setMemberId(memberId);
+
+                    return pointDTO;
+                }).collect(Collectors.toList());
+
+        int total = (int) pagePoint.getTotalElements();
+
+        return PointPageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(pointDTOList)
+                .total(total)
+                .build();
     }
 
 

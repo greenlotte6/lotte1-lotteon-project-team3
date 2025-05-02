@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
-
   <link rel="stylesheet" href="/style/mypage/my_point.css">
   <link rel="stylesheet" href="/style/common/_footer.css">
   <link rel="stylesheet" href="/style/common/_header.css">
-
   <title>마이페이지 포인트내역</title>
+  <style>
+
+  </style>
 </head>
 <body>
 <div id="container">
@@ -31,93 +32,66 @@
           <div class="article_title">
             <h3>전체 주문내역</h3>
           </div>
-          <table class="datetable">
-            <tr>
-              <th>기간별조회</th>
-              <td>
-                <select>
-                  <option>기간 선택</option>
-                  <option>1주일</option>
-                  <option>15일</option>
-                  <option>1개월</option>
-                </select>
-              </td>
-              <td>
-                <select>
-                  <option>기간 선택</option>
-                  <option>3월</option>
-                  <option>2월</option>
-                  <option>1월</option>
-                  <option>12월</option>
-                  <option>11월</option>
-                </select>
-              </td>
-              <td>
-                <input type="datetime-local"> ~ <input type="datetime-local" >
-              </td>
-              <td>
-                <button type="submit">[ 조회 ]</button>
-              </td>
-            </tr>
-          </table>
+          <div class="searchTab">
+            <p> 기간 지정 </p>
+            <input type="date"> ~ <input type="date" >
+            <button type="submit">조회</button>
+          </div>
            <table class="point-table">
              <thead>
-             <tr>
-               <th>날짜</th>
-               <th>구분</th>
-               <th>주문번호</th>
-               <th>적립금액</th>
-               <th>비고</th>
-               <th>유효기간</th>
-             </tr>
+               <tr>
+                 <th>날짜</th>
+                 <th>구분</th>
+                 <th>적립금액</th>
+                 <th>비고</th>
+               </tr>
              </thead>
              <tbody>
-             <tr>
-               <td>2022-12-13</td>
-               <td>적립</td>
-               <td>2022121001</td>
-               <td>340</td>
-               <td>상품 구매확정</td>
-               <td>2024-12-10</td>
-             </tr>
-             <tr>
-               <td class="td2_1">2022-12-13</td>
-               <td>적립</td>
-               <td class="td2_2">2022121001</td>
-               <td>340</td>
-               <td>상품 구매확정</td>
-               <td>2024-12-10</td>
-             </tr>
-             <tr>
-               <td>2022-12-13</td>
-               <td>적립</td>
-               <td>2022121001</td>
-               <td>340</td>
-               <td>상품 구매확정</td>
-               <td>2024-12-10</td>
-             </tr>
-             <tr>
-               <td>2022-12-13</td>
-               <td>적립</td>
-               <td>2022121001</td>
-               <td>340</td>
-               <td>상품 구매확정</td>
-               <td>2024-12-10</td>
-             </tr>
+               <tr th:if="${#lists.isEmpty(point)}">
+                 <td colspan="6" style="text-align: center;">포인트 내역이 없습니다</td>
+               </tr>
+
+               <tr th:each = "point, i : ${point}" th:unless="${#lists.isEmpty(point)}">
+                 <td th:text="${point.giveDate}">2022-12-13</td>
+                 <td th:text="${point.givePoint > 0} ? '적립' : '사용'"></td>
+                 <td th:text="${point.givePoint}">340</td>
+                 <td th:text="${point.giveContent}">상품 구매확정</td>
+               </tr>
              </tbody>
            </table>
 
           <div class="btnarea">
             <div class="pageBtn">
-              <a href=""><img src="../../static/images/back-double.png"></a>
-              <a href=""><img src="../../static/images/back-single.png" class="single"></a>
-              <a href="" class="number">1</a>
-              <a href="" class="number">2</a>
-              <a href="" class="number">3</a>
-              <a href=""><img src="../../static/images/right-single.png" class="single"></a>
-              <a href=""><img src="../../static/images/right-double.png"></a>
+              <th:block th:if="${page?.end > 0}">
+                <th:block th:if="${page.prev}">
+                  <a th:href="@{/myPage/my_point(pg=${page.start-2})}" class="prev">
+                    <img src="/images/back-double.png">
+                  </a>
+                </th:block>
+                <th:block th:if="${page.prev}">
+                  <a th:href="@{/myPage/my_point(pg=${page.start-1})}" class="prev">
+                    <img src="/images/back-single.png" class="single">
+                  </a>
+                </th:block>
+
+                <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                  <a th:href="@{/myPage/my_point(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                </th:block>
+
+                <th:block th:if="${page.next}">
+                  <a th:href="@{/myPage/my_point(pg=${page.end+1})}" class="next">
+                    <img src="/images/right-single.png" class="single">
+                  </a>
+                </th:block>
+                <th:block th:if="${page.next}">
+                  <a th:href="@{/myPage/my_point(pg=${page.end+2})}" class="next">
+                    <img src="/images/right-double.png">
+                  </a>
+                </th:block>
+              </th:block>
             </div>
           </div>
+        </article>
       </section>
     </div>
   </main>
