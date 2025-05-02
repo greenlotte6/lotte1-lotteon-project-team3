@@ -30,13 +30,14 @@
             const chooseBtn = document.querySelector('.chooseBtn');
             const optionsBox = document.querySelector('.chooseOption .options');
             const optionsList = document.querySelector('#couponList');
+            const issuedNoInput = document.querySelector('#issuedNo');
 
-            // 드롭다운 열기/닫기
+            // ✅ 드롭다운 열기/닫기 (클래스명 수정)
             chooseBtn.addEventListener('click', () => {
-                optionsBox.classList.toggle('active');
+                optionsBox.classList.toggle('open'); // ⬅ 여기가 핵심
             });
 
-            // 쿠폰 불러오기
+            // ✅ 쿠폰 불러오기
             fetch('/product/payment/coupons')
                 .then(res => res.json())
                 .then(coupons => {
@@ -51,8 +52,8 @@
                     coupons.forEach(coupon => {
                         const li = document.createElement('li');
                         li.innerHTML = `<p class="couponItem" data-issuedno="${coupon.issuedNo}">
-                        ${coupon.couponName} - ${coupon.benefit}
-                    </p>`;
+                    ${coupon.couponName} - ${coupon.benefit}
+                </p>`;
                         optionsList.appendChild(li);
                     });
                 })
@@ -60,16 +61,18 @@
                     console.error('❌ 쿠폰 불러오기 실패:', err);
                 });
 
-            // 쿠폰 클릭 시 텍스트 변경 + 콘솔 확인
+            // ✅ 쿠폰 클릭 시 텍스트 변경 + 값 저장
             optionsList.addEventListener('click', (e) => {
                 if (e.target.classList.contains('couponItem')) {
                     chooseBtn.textContent = e.target.textContent;
                     const issuedNo = e.target.getAttribute('data-issuedno');
+                    issuedNoInput.value = issuedNo;
+                    optionsBox.classList.remove('open');
                     console.log('👉 선택된 쿠폰 issuedNo:', issuedNo);
-                    optionsBox.classList.remove('active');
                 }
             });
         });
+
     </script>
 </head>
 <body>
@@ -191,6 +194,7 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="issuedNo" id="issuedNo">
                                     </div>
                                 </div>
                                 <h3 class="sectionTitle">결제수단</h3>
