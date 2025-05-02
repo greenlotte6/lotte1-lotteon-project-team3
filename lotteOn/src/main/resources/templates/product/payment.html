@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
 
     <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
 
     <!-- Favicon -->
     <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
-    
+
     <!-- Daum Address -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -16,7 +17,7 @@
     <script src="/script/search.js"></script>
     <script src="/script/daumPostCode.js"></script>
     <script src="/script/maxLength.js"></script>
-    <script src="/script/chooseOption.js"></script>
+    <!--<script src="/script/chooseOption.js"></script>-->
     <script src="/script/selectOne.js"></script>
 
     <!-- Style -->
@@ -24,181 +25,234 @@
     <link rel="stylesheet" href="/style/common/_header.css"/>
     <link rel="stylesheet" href="/style/common/_footer.css"/>
     <title>롯데ON</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const chooseBtn = document.querySelector('.chooseBtn');
+            const optionsBox = document.querySelector('.chooseOption .options');
+            const optionsList = document.querySelector('#couponList');
+
+            // 드롭다운 열기/닫기
+            chooseBtn.addEventListener('click', () => {
+                optionsBox.classList.toggle('active');
+            });
+
+            // 쿠폰 불러오기
+            fetch('/product/payment/coupons')
+                .then(res => res.json())
+                .then(coupons => {
+                    console.log('✅ 불러온 쿠폰:', coupons);
+                    optionsList.innerHTML = '';
+
+                    if (!coupons || coupons.length === 0) {
+                        optionsList.innerHTML = '<li><p class="couponItem" style="color: gray;">사용 가능한 쿠폰 없음</p></li>';
+                        return;
+                    }
+
+                    coupons.forEach(coupon => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<p class="couponItem" data-issuedno="${coupon.issuedNo}">
+                        ${coupon.couponName} - ${coupon.benefit}
+                    </p>`;
+                        optionsList.appendChild(li);
+                    });
+                })
+                .catch(err => {
+                    console.error('❌ 쿠폰 불러오기 실패:', err);
+                });
+
+            // 쿠폰 클릭 시 텍스트 변경 + 콘솔 확인
+            optionsList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('couponItem')) {
+                    chooseBtn.textContent = e.target.textContent;
+                    const issuedNo = e.target.getAttribute('data-issuedno');
+                    console.log('👉 선택된 쿠폰 issuedNo:', issuedNo);
+                    optionsBox.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <div id="container">
-        <th:block th:include="/common/_header.html"/>
-        <main>
-            <div class="mainContainer">
-                <div class="paymentWrapper">
-                    <h2>주문/결제</h2>
-                    <div class="paymentContainer">
-                        <h3 class="sectionTitle">주문상품</h3>
-                        <div class="productSectionWrapper">
-                            <div class="productSectionContainer">
-                                <div class="productSectionWrapper">
-                                    <div class="productSectionContainer">
-                                        <th:block th:each="item : ${items}">
-                                            <div class="productSection">
-                                                <img th:src="@{'/images/' + ${item.product.imageList}}" alt="상품사진">
-                                                <div class="productInfo">
-                                                    <p class="productTitle" th:text="${item.product.name}"></p>
-                                                    <p th:text="${item.option}"></p>
-                                                    <div class="productPrice">
-                                                        <span th:text="${#numbers.formatInteger(item.product.price * (100 - item.product.discount) / 100 * item.quantity, 3, 'COMMA')} + '원'"></span>
-                                                        <del th:text="${#numbers.formatInteger(item.product.price * item.quantity, 3, 'COMMA')} + '원'"></del>
-                                                        <div class="v-ll"></div>
-                                                        <span th:text="${item.quantity} + '개'"></span>
-                                                    </div>
+<div id="container">
+    <th:block th:include="/common/_header.html"/>
+    <main>
+        <div class="mainContainer">
+            <div class="paymentWrapper">
+                <h2>주문/결제</h2>
+                <div class="paymentContainer">
+                    <h3 class="sectionTitle">주문상품</h3>
+                    <div class="productSectionWrapper">
+                        <div class="productSectionContainer">
+                            <div class="productSectionWrapper">
+                                <div class="productSectionContainer">
+                                    <th:block th:each="item : ${items}">
+                                        <div class="productSection">
+                                            <img th:src="@{'/images/' + ${item.product.imageList}}" alt="상품사진">
+                                            <div class="productInfo">
+                                                <p class="productTitle" th:text="${item.product.name}"></p>
+                                                <p th:text="${item.option}"></p>
+                                                <div class="productPrice">
+                                                    <span th:text="${#numbers.formatInteger(item.product.price * (100 - item.product.discount) / 100 * item.quantity, 3, 'COMMA')} + '원'"></span>
+                                                    <del th:text="${#numbers.formatInteger(item.product.price * item.quantity, 3, 'COMMA')} + '원'"></del>
+                                                    <div class="v-ll"></div>
+                                                    <span th:text="${item.quantity} + '개'"></span>
                                                 </div>
                                             </div>
-                                        </th:block>
-                                    </div>
-                                </div>
-                                <!--
-                                <div class="productSection">
-                                    <img th:src="@{'/images/' + ${product.imageList}}" alt="상품사진">
-                                    <div class="productInfo">
-                                        <p class="productTitle" th:text="${product.name}"></p>
-                                        <p th:text="${option}"></p>
-                                        <div class="productPrice">
-                                            <span th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100 * quantity, 3, 'COMMA')} + '원'"></span>
-                                            <del th:text="${#numbers.formatInteger(product.price * quantity, 3, 'COMMA')} + '원'"></del>
-                                            <div class="v-ll"></div>
-                                            <span th:text="${quantity} + '개'"></span>
                                         </div>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <!--
+                            <div class="productSection">
+                                <img th:src="@{'/images/' + ${product.imageList}}" alt="상품사진">
+                                <div class="productInfo">
+                                    <p class="productTitle" th:text="${product.name}"></p>
+                                    <p th:text="${option}"></p>
+                                    <div class="productPrice">
+                                        <span th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100 * quantity, 3, 'COMMA')} + '원'"></span>
+                                        <del th:text="${#numbers.formatInteger(product.price * quantity, 3, 'COMMA')} + '원'"></del>
+                                        <div class="v-ll"></div>
+                                        <span th:text="${quantity} + '개'"></span>
                                     </div>
                                 </div>
-                                -->
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                    <form action="#" method="post">
+                        <h3 class="sectionTitle">주문자 정보</h3>
+                        <div class="sectionWrapper">
+                            <div class="section">
+                                <p>수령자</p>
+                                <input type="text" name="receiver" placeholder="수령자를 입력하세요" required>
+                            </div>
+                            <div class="section">
+                                <p>보내는 분</p>
+                                <input type="text" name="sender" th:value="${items[0].product.companyName}" readonly>
+                            </div>
+                            <div class="section">
+                                <p>휴대폰</p>
+                                <input type="text" name="hp" th:value="${member.hp}" readonly>
                             </div>
                         </div>
-                        <form action="#" method="post">
-                            <h3 class="sectionTitle">주문자 정보</h3>
-                            <div class="sectionWrapper">
-                                <div class="section">
-                                    <p>수령자</p>
-                                    <input type="text" name="receiver" placeholder="수령자를 입력하세요" required>
-                                </div>
-                                <div class="section">
-                                    <p>보내는 분</p>
-                                    <input type="text" name="sender" th:value="${items[0].product.companyName}" readonly>
-                                </div>
-                                <div class="section">
-                                    <p>휴대폰</p>
-                                    <input type="text" name="hp" th:value="${member.hp}" readonly>
-                                </div>
+                        <h3 class="sectionTitle">배송정보</h3>
+                        <div class="sectionWrapper">
+                            <div class="section">
+                                <p>우편번호</p>
+                                <input type="text" name="zip" th:value="${member.zip}" class="zip" id="postcode"
+                                       readonly>
+                                <button type="button" onclick="DaumPostcode()" class="findAddress">우편번호 찾기</button>
                             </div>
-                            <h3 class="sectionTitle">배송정보</h3>
-                            <div class="sectionWrapper">
-                                <div class="section">
-                                    <p>우편번호</p>
-                                    <input type="text" name="zip" th:value="${member.zip}" class="zip" id="postcode" readonly>
-                                    <button type="button" onclick="DaumPostcode()" class="findAddress">우편번호 찾기</button>
-                                </div>
-                                <div class="section">
-                                    <p>기본주소</p>
-                                    <input type="text" name="addr1" th:value="${member.addr1}" id="address" readonly>
-                                </div>
-                                <div class="section">
-                                    <p>상세주소</p>
-                                    <input type="text" name="addr2" th:value="${member.addr2}" id="detailAddress" placeholder="상세주소를 입력하세요" required>
-                                </div>
-                                <div class="section">
-                                    <p>기타</p>
-                                    <input type="text" name="other" class="other" placeholder="기타 내용을 작성해주세요 (최대 25자)" maxlength="25">
-                                </div>
+                            <div class="section">
+                                <p>기본주소</p>
+                                <input type="text" name="addr1" th:value="${member.addr1}" id="address" readonly>
                             </div>
-                        </form>
-                        <form action="#" method="post">
-                            <div class="AllContainer">
-                                <div class="leftContainer">
-                                    <h3 class="sectionTitle">쿠폰/포인트 사용</h3>
-                                    <div class="sectionWrapper">
-                                        <div class="section3">
-                                            <p>잔여 포인트</p>
-                                            <div class="remainPoint">
-                                                <p>10002</p>
-                                                <p>&nbsp;P</p>
+                            <div class="section">
+                                <p>상세주소</p>
+                                <input type="text" name="addr2" th:value="${member.addr2}" id="detailAddress"
+                                       placeholder="상세주소를 입력하세요" required>
+                            </div>
+                            <div class="section">
+                                <p>기타</p>
+                                <input type="text" name="other" class="other" placeholder="기타 내용을 작성해주세요 (최대 25자)"
+                                       maxlength="25">
+                            </div>
+                        </div>
+                    </form>
+                    <form action="/product/payment" method="post">
+                        <input type="hidden" name="productCode" th:value="${productCode}" />
+                        <input type="hidden" name="quantity" th:value="${quantity}" />
+                        <input type="hidden" name="option" th:value="${option}" />
+                        <div class="AllContainer">
+                            <div class="leftContainer">
+                                <h3 class="sectionTitle">쿠폰/포인트 사용</h3>
+                                <div class="sectionWrapper">
+                                    <div class="section3">
+                                        <p>잔여 포인트</p>
+                                        <div class="remainPoint">
+                                            <p>10002</p>
+                                            <p>&nbsp;P</p>
+                                        </div>
+                                    </div>
+                                    <div class="section3">
+                                        <p>포인트 사용</p>
+                                        <div>
+                                            <button type="button" class="usePointBtn">사용</button>
+                                            <input type="number" placeholder="0" class="point" min="0"></input>
+                                        </div>
+                                    </div>
+                                    <div class="section3">
+                                        <p>쿠폰 적용</p>
+                                        <div class="chooseOption">
+                                            <p class="chooseBtn">사용할 쿠폰</p>
+                                            <div class="options">
+                                                <ul id="couponList">
+                                                    <!-- JS로 li들 들어옴 -->
+                                                </ul>
                                             </div>
                                         </div>
-                                        <div class="section3">
-                                            <p>포인트 사용</p>
+                                    </div>
+                                </div>
+                                <h3 class="sectionTitle">결제수단</h3>
+                                <div class="sectionWrapper marginBottomZero">
+                                    <div class="paymentMethod">
+                                        <input type="checkbox" onclick="selectOne(this)" name="phone"
+                                               class="payment payment-phone">
+                                        <input type="checkbox" onclick="selectOne(this)" name="creditCard"
+                                               class="payment payment-creditCard">
+                                        <input type="checkbox" onclick="selectOne(this)" name="kakaopay"
+                                               class="payment payment-kakaoPay">
+                                        <input type="checkbox" onclick="selectOne(this)" name="tosspay"
+                                               class="payment payment-tossPay">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rightContainer">
+                                    <h3>총 결제금액</h3>
+                                    <div class="sectionWrapper2">
+                                        <div class="section4">
+                                            <p>총 상품금액</p>
                                             <div>
-                                                <button type="button" class="usePointBtn">사용</button>
-                                                <input type="number" placeholder="0" class="point" min="0"></input>
+                                                <p>42,840</p>
+                                                <p>&nbsp;원</p>
                                             </div>
                                         </div>
-                                        <div class="section3">
-                                            <p>쿠폰 적용</p>
-                                            <div class="chooseOption">
-                                                <p class="chooseBtn">사용가능 쿠폰 2장</p>
-                                                <div class="options">
-                                                    <ul>
-                                                        <li>
-                                                            <p>신규가입 5,000원 할인</p>
-                                                        </li>
-                                                        <li>
-                                                            <p>1,000원 할인</p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h3 class="sectionTitle">결제수단</h3>
-                                    <div class="sectionWrapper marginBottomZero">
-                                        <div class="paymentMethod">
-                                            <input type="checkbox" onclick="selectOne(this)" name="phone" class="payment payment-phone">
-                                            <input type="checkbox" onclick="selectOne(this)" name="creditCard" class="payment payment-creditCard">
-                                            <input type="checkbox" onclick="selectOne(this)" name="kakaopay" class="payment payment-kakaoPay">
-                                            <input type="checkbox" onclick="selectOne(this)" name="tosspay" class="payment payment-tossPay">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="rightContainer">
-                                        <h3>총 결제금액</h3>
-                                        <div class="sectionWrapper2">
-                                            <div class="section4">
-                                                <p>총 상품금액</p>
-                                                <div>
-                                                    <p>42,840</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>배송비</p>
-                                                <div>
-                                                    <p>0</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>할인금액</p>
-                                                <div>
-                                                    <p>0</p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="totalPrice">
+                                        <div class="section4">
+                                            <p>배송비</p>
                                             <div>
-                                                <p>총</p>
-                                                <p class="totalCount">2</p>
-                                                <p>건</p>
+                                                <p>0</p>
+                                                <p>&nbsp;원</p>
                                             </div>
-                                            <p class="themeColor">42,820</p>
+                                        </div>
+                                        <div class="section4">
+                                            <p>할인금액</p>
+                                            <div>
+                                                <p>0</p>
+                                                <p>&nbsp;원</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="payingBtn" onclick="location.href='/product/completeOrder'">결제하기</button> <!-- 기능 구현할 때 submit으로 변경 -->
+                                    <div class="totalPrice">
+                                        <div>
+                                            <p>총</p>
+                                            <p class="totalCount">2</p>
+                                            <p>건</p>
+                                        </div>
+                                        <p class="themeColor">42,820</p>
+                                    </div>
                                 </div>
+                                <button type="button" class="payingBtn"
+                                        onclick="location.href='/product/completeOrder'">결제하기
+                                </button> <!-- 기능 구현할 때 submit으로 변경 -->
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </main>
-        <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
-    </div>
+        </div>
+    </main>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
+</div>
 </body>
 </html>

@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 public class IssuedCouponDTO {
 
     private int issuedNo;
-
     private String couponCode;
     private String memberId;
     private String useDate;
@@ -26,6 +25,12 @@ public class IssuedCouponDTO {
     private String startDate;
     private String endDate;
 
+    public IssuedCouponDTO(int issuedNo, String couponName, String benefit, String couponType) {
+        this.issuedNo = issuedNo;
+        this.couponName = couponName;
+        this.benefit = benefit;
+        this.couponType = couponType;
+    }
 
     //날짜 잘라내기
     public String getUseDate(){
