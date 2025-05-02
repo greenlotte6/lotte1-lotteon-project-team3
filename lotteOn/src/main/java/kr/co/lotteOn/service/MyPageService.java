@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -208,6 +209,27 @@ public class MyPageService {
                 .dtoList(pointDTOList)
                 .total(total)
                 .build();
+    }
+
+    // Member의 id를 이용해 Qna 총 개수 조회
+    public int countQnaByWriter(String writerId) {
+        // Qna 게시글 개수 조회
+        return qnaRepository.countByWriter_Id(writerId);
+    }
+
+    // 최신 포인트 내역 조회
+    public int getLatestTotalPoint(String memberId) {
+        // 최신 giveDate 기준으로 1개의 totalPoint 가져오기
+        List<Integer> points = pointRepository.findLatestTotalPointByMemberId(memberId, PageRequest.of(0, 1));
+
+        // 리스트가 비어있으면 0 반환, 아니면 첫 번째 값을 반환
+        return points.isEmpty() ? 0 : points.get(0);
+    }
+
+    // 쿠폰 총 갯수 조회
+    public int countIssuedByMemberId(String memberId) {
+        // 쿠폰 개수 조회
+        return issuedCouponRepository.countByMember_Id(memberId);
     }
 
 
