@@ -94,9 +94,9 @@ table tr td {
 }
 .btnarea {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    position: relative;
+    margin-top: 12px;
 }
 .btnarea button {
     width: 100px;
@@ -109,11 +109,13 @@ table tr td {
 .btnarea .pageBtn {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    position: relative;
-    top: 9px;
-    left: 50%;
-    transform: translateX(-50%);
+    justify-content: center;
+    gap: 6px;
+}
+
+.btnarea .pageBtn a {
+    display: flex;
+    align-items: center;
 }
 .btnarea .pageBtn .number {
     font-size: 17px;
@@ -122,10 +124,23 @@ table tr td {
     text-align: center;
     justify-content: center;
     align-items: center;
-    gap: 5px;
-    position: relative;
-    top: 3px;
+    margin-right: 6px;
+    color: #000;
 }
+
+.btnarea .pageBtn .number:last-child {
+    margin-right: 0;
+}
+
+.number.active {
+    color: #999 !important;
+}
+
+.resumeBtn, .breakBtn {
+    width: 50px;
+    font-size: 12px;
+}
+
 .btnarea .pageBtn .single {
     width: 15px;
     height: 15px;
