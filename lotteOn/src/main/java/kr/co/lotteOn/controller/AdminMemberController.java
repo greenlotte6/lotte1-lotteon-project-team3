@@ -8,15 +8,16 @@ import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
 import kr.co.lotteOn.dto.point.PointPageRequestDTO;
 import kr.co.lotteOn.dto.point.PointPageResponseDTO;
+import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.repository.MemberRepository;
 import kr.co.lotteOn.service.AdminMemberService;
+import kr.co.lotteOn.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,14 +28,29 @@ import java.util.List;
 public class AdminMemberController {
 
     private final AdminMemberService adminMemberService;
+    private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     /*------------ 관리자 - 고객관리 ------------*/
 
     //고객관리 - 목록
     @GetMapping("/member/list")
-    public String memberList(Model model){
-        List<MemberDTO> memberList = adminMemberService.findAll();
-        model.addAttribute("memberList", memberList);
+    public String memberList(@RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size,
+                             Model model) {
+        Page<MemberDTO> memberPage = adminMemberService.findAll(page, size);
+
+        int pageGroupSize = 10;
+        int startPage = (page / pageGroupSize) * pageGroupSize;
+        int endPage = Math.min(startPage + pageGroupSize - 1, memberPage.getTotalPages() - 1);
+
+        model.addAttribute("memberList", memberPage.getContent());
+        model.addAttribute("memberPage", memberPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", memberPage.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "/admin/member/list";
     }
 
@@ -47,21 +63,32 @@ public class AdminMemberController {
 
     //검색
     @GetMapping("/member/search")
-    public String search(@RequestParam("type") String type,
-                       @RequestParam("keyword") String keyword,
-                       Model model) {
+    public String search(@RequestParam(value = "type", required = false) String type,
+                         @RequestParam(value = "keyword", required = false) String keyword,
+                         @RequestParam(value = "page", defaultValue = "0") int page,
+                         @RequestParam(value = "size", defaultValue = "10") int size,
+                         Model model) {
 
-        List<MemberDTO> memberList;
+        Page<MemberDTO> memberPage;
 
-        if (type != null && keyword != null) {
-            memberList = adminMemberService.searchMembers(type, keyword);
+        if (type != null && !type.isEmpty() && keyword != null && !keyword.isEmpty()) {
+            memberPage = adminMemberService.searchMembers(type, keyword, page, size);
         } else {
-            memberList = adminMemberService.findAll();
+            memberPage = adminMemberService.findAll(page, size);
         }
 
-        model.addAttribute("memberList", memberList);
+        int pageGroupSize = 10;
+        int startPage = (page / pageGroupSize) * pageGroupSize;
+        int endPage = Math.min(startPage + pageGroupSize - 1, memberPage.getTotalPages() - 1);
+
+        model.addAttribute("memberPage", memberPage);
+        model.addAttribute("memberList", memberPage.getContent());
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", memberPage.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "/admin/member/list";
     }
@@ -77,6 +104,17 @@ public class AdminMemberController {
         return "/admin/member/point";
     }
 
+    @PostMapping("/member/deactivate/{id}")
+    public String deactivateMember(@PathVariable String id) {
+        adminMemberService.updateMemberStatus(id, "중지");
+        return "redirect:/admin/member/list";
+    }
+
+    @PostMapping("/member/reactivate/{id}")
+    public String reactivateMember(@PathVariable String id) {
+        adminMemberService.updateMemberStatus(id, "정상");
+        return "redirect:/admin/member/list";
+    }
 
     /*------------ 관리자 - 쿠폰관리 ------------*/
 

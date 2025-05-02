@@ -2,6 +2,8 @@ package kr.co.lotteOn.repository;
 
 import kr.co.lotteOn.entity.Member;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,10 +14,10 @@ import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
-    List<Member> findByIdContaining(String keyword);
-    List<Member> findByNameContaining(String keyword);
-    List<Member> findByEmailContaining(String keyword);
-    List<Member> findByHpContaining(String keyword);
+    Page<Member> findByIdContaining(String keyword, Pageable pageable);
+    Page<Member> findByNameContaining(String keyword, Pageable pageable);
+    Page<Member> findByEmailContaining(String keyword, Pageable pageable);
+    Page<Member> findByHpContaining(String keyword, Pageable pageable);
 
     @Modifying
     @Query("UPDATE Member m SET m.visitDate = CURRENT_TIMESTAMP WHERE m.id = :id")

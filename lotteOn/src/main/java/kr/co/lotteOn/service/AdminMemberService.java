@@ -24,7 +24,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,11 +46,10 @@ public class AdminMemberService {
     private final ModelMapper modelMapper;
     private final IssuedCouponRepository issuedCouponRepository;
 
-    public List<MemberDTO> findAll() {
-        List<Member> list = memberRepository.findAll();
-        return list.stream()
-                .map(member -> modelMapper.map(member, MemberDTO.class))
-                .collect(Collectors.toList());
+    public Page<MemberDTO> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return memberRepository.findAll(pageable)
+                .map(member -> modelMapper.map(member, MemberDTO.class));
     }
 
     public MemberDTO findById(String id) {
@@ -84,20 +85,32 @@ public class AdminMemberService {
         return null;
     }
 
-    public List<MemberDTO> searchMembers(String type, String keyword) {
-        List<Member> result = new ArrayList<>();
+    public Page<MemberDTO> searchMembers(String type, String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        Page<Member> memberPage;
 
         if ("id".equals(type)) {
-            result = memberRepository.findByIdContaining(keyword);
+            memberPage = memberRepository.findByIdContaining(keyword, pageable);
         } else if ("name".equals(type)) {
-            result = memberRepository.findByNameContaining(keyword);
+            memberPage = memberRepository.findByNameContaining(keyword, pageable);
         } else if ("email".equals(type)) {
-            result = memberRepository.findByEmailContaining(keyword);
+            memberPage = memberRepository.findByEmailContaining(keyword, pageable);
         } else if ("hp".equals(type)) {
-            result = memberRepository.findByHpContaining(keyword);
+            memberPage = memberRepository.findByHpContaining(keyword, pageable);
+        } else {
+            memberPage = Page.empty(pageable); // 빈 페이지 처리
         }
 
-        return result.stream().map(m -> modelMapper.map(m, MemberDTO.class)).collect(Collectors.toList());
+        return memberPage.map(member -> modelMapper.map(member, MemberDTO.class));
+    }
+
+    public void updateMemberStatus(String memberId, String newStatus) {
+        Optional<Member> memberOpt = memberRepository.findById(memberId);
+        if (memberOpt.isPresent()) {
+            Member member = memberOpt.get();
+            member.setStatus(newStatus); // '중지'로 상태 변경
+            memberRepository.save(member); // 상태 변경 후 저장
+        }
     }
 
     /* ******************회원관리 끝******************************/

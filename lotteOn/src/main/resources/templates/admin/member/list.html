@@ -72,7 +72,7 @@
                            data-another=${member.another},
                            data-visitdate=${member.formattedVisitDate},
                            data-regdate=${member.formattedRegDate}">
-                        <td th:text="${i.index + 1}"></td>
+                        <td th:text="${currentPage * 10 + i.index + 1}"></td>
                         <td th:text="${member.id}" class="ellipsis"></td>
                         <td th:text="${member.name}"></td>
                         <td th:text="${member.gender}"></td>
@@ -84,19 +84,54 @@
                         <td th:text="${member.status}" class="memberStatus"></td>
                         <td>
                             <button type="submit" class="modify-btn">[ 수정 ]</button>
-                            <button type="submit">[ 중지 ]</button>
+                            <!-- 중지 상태일 때만 '재개' 버튼을 표시 -->
+                            <form th:action="@{/admin/member/reactivate/{id}(id=${member.id})}" method="post" th:if="${member.status == '중지'}">
+                                <button type="submit" class="resumeBtn" onclick="return confirm('다시 이 회원을 활성화하시겠습니까?')">[ 재개 ]</button>
+                            </form>
+
+                            <!-- 중지 상태일 때 '중지' 버튼 -->
+                            <form th:action="@{/admin/member/deactivate/{id}(id=${member.id})}" method="post" th:if="${member.status != '중지'}">
+                                <button type="submit" class="breakBtn" onclick="return confirm('정말로 이 회원을 중지하시겠습니까?')">[ 중지 ]</button>
+                            </form>
                         </td>
                     </tr>
                 </table>
                 <div class="btnarea">
                     <div class="pageBtn">
-                        <a href=""><img src="/images/back-double.png"></a>
-                        <a href=""><img src="/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="/images/right-single.png" class="single"></a>
-                        <a href=""><img src="/images/right-double.png"></a>
+                        <!-- 맨 처음 페이지로 이동 -->
+                        <a th:href="@{/admin/member/list(page=0, size=10)}">
+                            <img src="/images/back-double.png">
+                        </a>
+
+                        <!-- 이전 페이지로 이동 -->
+                        <a th:href="@{/admin/member/list(page=${currentPage - 1}, size=10)}"
+                           th:if="${currentPage > 0}">
+                            <img src="/images/back-single.png" class="single">
+                        </a>
+                        <a th:if="${currentPage == 0}">
+                            <img src="/images/back-single.png" class="single" style="opacity: 0.3; cursor: default;">
+                        </a>
+
+                        <!-- 페이지 번호 반복 -->
+                        <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                            <a th:href="@{/admin/member/list(page=${i}, size=10)}"
+                               th:classappend="${i == currentPage} ? 'number active' : 'number'"
+                               th:text="${i + 1}"></a>
+                        </span>
+
+                        <!-- 다음 페이지로 이동 -->
+                        <a th:href="@{/admin/member/list(page=${currentPage + 1}, size=10)}"
+                           th:if="${currentPage < totalPages - 1}">
+                            <img src="/images/right-single.png" class="single">
+                        </a>
+                        <a th:if="${currentPage >= totalPages - 1}">
+                            <img src="/images/right-single.png" class="single" style="opacity: 0.3; cursor: default;">
+                        </a>
+
+                        <!-- 마지막 페이지로 이동 -->
+                        <a th:href="@{/admin/member/list(page=${totalPages - 1}, size=10)}">
+                            <img src="/images/right-double.png">
+                        </a>
                     </div>
                 </div>
             </div>
