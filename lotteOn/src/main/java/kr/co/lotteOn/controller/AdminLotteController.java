@@ -3,6 +3,8 @@ package kr.co.lotteOn.controller;
 import kr.co.lotteOn.dto.TermsDTO;
 import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
+import kr.co.lotteOn.entity.Config;
+import kr.co.lotteOn.repository.ConfigRepository;
 import kr.co.lotteOn.service.AdminCSService;
 import kr.co.lotteOn.service.AdminLotteService;
 import kr.co.lotteOn.service.TermsService;
@@ -24,6 +26,7 @@ public class AdminLotteController {
     private final TermsService termsService;
     private final AdminCSService adminCSService;
     private final AdminLotteService adminLotteService;
+    private final ConfigRepository configRepository;
 
     //관리자 - 메인
     @GetMapping("/admin")
@@ -46,7 +49,9 @@ public class AdminLotteController {
 
     //환경설정 - 기본설정
     @GetMapping("/config/basic")
-    public String basic(){
+    public String basic(Model model) {
+        Config config = configRepository.findById(1).orElse(new Config());
+        model.addAttribute("config", config);
         return "/admin/config/basic";
     }
 

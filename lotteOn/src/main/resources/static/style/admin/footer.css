@@ -14,6 +14,12 @@ footer {
     box-sizing: border-box;
     align-items: center;
 }
+
+.footerArea div {
+    display: flex;
+    align-items: center;
+}
+
 .footerArea div p {
     color: white;
 }

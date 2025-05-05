@@ -238,9 +238,10 @@ del {
 }
 
 .productItem {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 60px;
+    display: grid;
+    grid-template-columns: 210px 210px 210px 210px 210px;
+    grid-template-rows: 300px;
+    gap: 37px;
 }
 
 .best10 {
@@ -254,10 +255,13 @@ del {
 
 .items {
     width: 210px;
+    overflow: hidden;
 }
 
 .items > a > img {
     width: 210px;
+    height: 210px;
+    object-fit: cover;
 }
 
 .descWrap {

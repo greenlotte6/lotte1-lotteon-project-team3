@@ -12,7 +12,7 @@
     <script src="/script/swiper.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
     <!-- Script -->
     <script src="/script/search.js"></script>
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/style/index.css"/>
     <link rel="stylesheet" href="/style/common/_header.css"/>
     <link rel="stylesheet" href="/style/common/_footer.css"/>
-    <title>롯데ON-3조</title>
+    <title th:text="${config.title + ' - ' + config.subTitle}"></title>
 </head>
 <body>
     <div id="container">
