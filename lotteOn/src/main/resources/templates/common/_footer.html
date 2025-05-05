@@ -30,18 +30,15 @@
         </div>
         <hr>
         <div class="companyInfo">
-            <img src="/images/lotteOn_footer_logo.png" alt="footerLogo">
+            <img th:src="@{'/images/config/' + ${config.footerLogo}}" alt="footerLogo">
             <div class="infoWrapper">
                 <div class="company">
-                    <h3>롯데쇼핑 주식회사</h3>
+                    <h3 th:text="${config.companyName}"></h3>
                     <ul>
-                        <li>대표이사 : 김사무엘상현, 신동빈, 정준호, 강성현</li>
-                        <li>주소 : 서울특별시 강남구 테헤란로 507 (삼성동, WeWork빌딩), 7층</li>
-                        <li>사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부)</li>
-                        <li>
-                            통신판매업 신고 : 2024-서울강남-04439&nbsp;
-                            <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=5298500774" class="anchorLine" target="_blank">사업자 정보 확인</a>
-                        </li>
+                        <li th:text="${'대표이사 : ' + config.ceoName}"></li>
+                        <li th:text="${'주소 : ' + config.addr1 + ' ' + config.addr2}"></li>
+                        <li th:text="${'사업자등록번호 : ' + config.businessNo + '(롯데쇼핑(주) e커머스사업부)'}"></li>
+                        <li th:text="${'통신판매업 신고 : ' + config.communicationNo}"></li>
                         <li>호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부</li>
                     </ul>
                     <h4>롯데쇼핑 e커머스 사업부 에스크로</h4>
@@ -54,10 +51,11 @@
                 <div class="customer">
                     <h3>고객센터</h3>
                     <div>
-                        <p>전화번호 : 1899-7000(유료)</p>
+                        <p th:text="${'업무시간 : ' + config.businessHours}"></p>
+                        <p th:text="${'전화번호 : ' + config.hp + '(유료)'}"></p>
                         <p>
                             E-mail :
-                            <a href="#">lotteon@lotte.net</a>
+                            <a href="#" th:text="${config.email}"></a>
                         </p>
                         <p>
                             <a href="#" class="anchorLine" target="_blank">분쟁해결기준</a>
@@ -81,7 +79,7 @@
                     </div>
                     <h3>전자금융거래 분쟁 담당</h3>
                     <div>
-                        <p>Tel : 1899-7001(유료)</p>
+                        <p th:text="${'Tel : ' + config.eft + '(유료)'}"></p>
                         <p>
                             E-mail :
                             <a href="#" class="anchorLine">lotteon@lotte.net</a>
@@ -121,7 +119,7 @@
     <hr>
     <div class="footerInfo">
         <p>롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체 책임을 지지 않습니다.</p>
-        <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
+        <p th:text="${config.copyright}"></p>
         <p>Version: <span>lotteOn</span>-<span th:text="${versionId}"></span></p>
     </div>
 </footer>
