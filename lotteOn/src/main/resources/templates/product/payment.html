@@ -19,61 +19,14 @@
     <script src="/script/maxLength.js"></script>
     <!--<script src="/script/chooseOption.js"></script>-->
     <script src="/script/selectOne.js"></script>
+    <script src="/script/payment.js"></script>
+
 
     <!-- Style -->
     <link rel="stylesheet" href="/style/product/payment.css"/>
     <link rel="stylesheet" href="/style/common/_header.css"/>
     <link rel="stylesheet" href="/style/common/_footer.css"/>
     <title>롯데ON</title>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const chooseBtn = document.querySelector('.chooseBtn');
-            const optionsBox = document.querySelector('.chooseOption .options');
-            const optionsList = document.querySelector('#couponList');
-            const issuedNoInput = document.querySelector('#issuedNo');
-
-            // ✅ 드롭다운 열기/닫기 (클래스명 수정)
-            chooseBtn.addEventListener('click', () => {
-                optionsBox.classList.toggle('open'); // ⬅ 여기가 핵심
-            });
-
-            // ✅ 쿠폰 불러오기
-            fetch('/product/payment/coupons')
-                .then(res => res.json())
-                .then(coupons => {
-                    console.log('✅ 불러온 쿠폰:', coupons);
-                    optionsList.innerHTML = '';
-
-                    if (!coupons || coupons.length === 0) {
-                        optionsList.innerHTML = '<li><p class="couponItem" style="color: gray;">사용 가능한 쿠폰 없음</p></li>';
-                        return;
-                    }
-
-                    coupons.forEach(coupon => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<p class="couponItem" data-issuedno="${coupon.issuedNo}">
-                    ${coupon.couponName} - ${coupon.benefit}
-                </p>`;
-                        optionsList.appendChild(li);
-                    });
-                })
-                .catch(err => {
-                    console.error('❌ 쿠폰 불러오기 실패:', err);
-                });
-
-            // ✅ 쿠폰 클릭 시 텍스트 변경 + 값 저장
-            optionsList.addEventListener('click', (e) => {
-                if (e.target.classList.contains('couponItem')) {
-                    chooseBtn.textContent = e.target.textContent;
-                    const issuedNo = e.target.getAttribute('data-issuedno');
-                    issuedNoInput.value = issuedNo;
-                    optionsBox.classList.remove('open');
-                    console.log('👉 선택된 쿠폰 issuedNo:', issuedNo);
-                }
-            });
-        });
-
-    </script>
 </head>
 <body>
 <div id="container">
@@ -105,21 +58,6 @@
                                     </th:block>
                                 </div>
                             </div>
-                            <!--
-                            <div class="productSection">
-                                <img th:src="@{'/images/' + ${product.imageList}}" alt="상품사진">
-                                <div class="productInfo">
-                                    <p class="productTitle" th:text="${product.name}"></p>
-                                    <p th:text="${option}"></p>
-                                    <div class="productPrice">
-                                        <span th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100 * quantity, 3, 'COMMA')} + '원'"></span>
-                                        <del th:text="${#numbers.formatInteger(product.price * quantity, 3, 'COMMA')} + '원'"></del>
-                                        <div class="v-ll"></div>
-                                        <span th:text="${quantity} + '개'"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            -->
                         </div>
                     </div>
                     <form action="#" method="post">
@@ -162,7 +100,6 @@
                             </div>
                         </div>
                     </form>
-                    <form action="/product/payment" method="post">
                         <input type="hidden" name="productCode" th:value="${productCode}" />
                         <input type="hidden" name="quantity" th:value="${quantity}" />
                         <input type="hidden" name="option" th:value="${option}" />
@@ -173,8 +110,8 @@
                                     <div class="section3">
                                         <p>잔여 포인트</p>
                                         <div class="remainPoint">
-                                            <p>10002</p>
-                                            <p>&nbsp;P</p>
+                                            <p th:text="'보유 포인트: ' + ${memberPoint} + 'P'"></p>
+                                            <p>&nbsp</p>
                                         </div>
                                     </div>
                                     <div class="section3">
@@ -218,21 +155,21 @@
                                         <div class="section4">
                                             <p>총 상품금액</p>
                                             <div>
-                                                <p>42,840</p>
+                                                <p class="productTotalAmount" th:text="${#numbers.formatInteger(originalTotal, 3, 'COMMA')}"></p>
                                                 <p>&nbsp;원</p>
                                             </div>
                                         </div>
                                         <div class="section4">
                                             <p>배송비</p>
                                             <div>
-                                                <p>0</p>
+                                                <p class="deliveryFee" th:text="${#numbers.formatInteger(deliveryFee, 3, 'COMMA')}"></p>
                                                 <p>&nbsp;원</p>
                                             </div>
                                         </div>
                                         <div class="section4">
                                             <p>할인금액</p>
                                             <div>
-                                                <p>0</p>
+                                                <p class="discountAmount" th:text="${#numbers.formatInteger(discountAmount, 3, 'COMMA')}"></p>
                                                 <p>&nbsp;원</p>
                                             </div>
                                         </div>
@@ -240,18 +177,20 @@
                                     <div class="totalPrice">
                                         <div>
                                             <p>총</p>
-                                            <p class="totalCount">2</p>
+                                            <p class="totalCount" th:text="${quantity}"></p>
                                             <p>건</p>
                                         </div>
-                                        <p class="themeColor">42,820</p>
+                                        <p class="themeColor" th:text="${#numbers.formatInteger(finalTotal, 3, 'COMMA')} + '원'"></p>
                                     </div>
+                                    <input type="hidden" id="originalTotal" th:value="${originalTotal}" />
+                                    <input type="hidden" id="discountedTotal" th:value="${discountedTotal}" />
                                 </div>
                                 <button type="button" class="payingBtn"
                                         onclick="location.href='/product/completeOrder'">결제하기
                                 </button> <!-- 기능 구현할 때 submit으로 변경 -->
                             </div>
                         </div>
-                    </form>
+<!--                    </form>-->
                 </div>
             </div>
         </div>
