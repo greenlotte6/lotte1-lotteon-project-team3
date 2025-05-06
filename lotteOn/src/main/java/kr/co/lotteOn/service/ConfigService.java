@@ -24,7 +24,7 @@ public class ConfigService {
     }
 
     public void updateSiteInfo(ConfigDTO dto) {
-        Config config = configRepository.findById(1).orElseThrow(); // 예시
+        Config config = configRepository.findById(1).orElseThrow();
         config.setTitle(dto.getTitle());
         config.setSubTitle(dto.getSubTitle());
         configRepository.save(config);
@@ -61,7 +61,7 @@ public class ConfigService {
     }
 
     public void updateCompanyInfo(ConfigDTO dto) {
-        Config config = configRepository.findById(1).orElseThrow(); // 예시
+        Config config = configRepository.findById(1).orElseThrow();
         config.setCompanyName(dto.getCompanyName());
         config.setCeoName(dto.getCeoName());
         config.setBusinessNo(dto.getBusinessNo());
@@ -72,7 +72,7 @@ public class ConfigService {
     }
 
     public void updateCustomerServiceInfo(ConfigDTO dto) {
-        Config config = configRepository.findById(1).orElseThrow(); // 예시
+        Config config = configRepository.findById(1).orElseThrow();
         config.setHp(dto.getHp());
         config.setBusinessHours(dto.getBusinessHours());
         config.setEmail(dto.getEmail());
@@ -81,7 +81,7 @@ public class ConfigService {
     }
 
     public void updateCopyright(ConfigDTO dto) {
-        Config config = configRepository.findById(1).orElseThrow(); // 예시
+        Config config = configRepository.findById(1).orElseThrow();
         config.setCopyright(dto.getCopyright());
         configRepository.save(config);
     }

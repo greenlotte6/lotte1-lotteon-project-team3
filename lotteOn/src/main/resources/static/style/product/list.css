@@ -16,10 +16,6 @@ main > div > * {
     overflow: hidden;
 }
 
-.swiper2 > div {
-    height: 320px;
-}
-
 .swiper-button-next, .swiper-button-prev {
     position: static;
     color: #888;
@@ -120,6 +116,9 @@ main > div > * {
 }
 
 .text {
+    display: flex;
+    column-gap: 6px;
+    flex-wrap: wrap;
     margin-top: 8px;
     font-size: 16px;
     color: #000;
@@ -167,6 +166,7 @@ main > div > * {
 .priceInfo {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     margin-top: 5px;
 }
 
@@ -203,7 +203,7 @@ main > div > * {
 
 .totalPrice {
     display: flex;
-    margin-top: 1px;
+    margin-top: 4px;
 }
 
 del {
@@ -220,7 +220,7 @@ del {
 
 .totalPrice > del > span {
     margin-left: 1px;
-    margin-top: 1px;
+    margin-top: 1.5px;
     font-size: 14px;
     font-weight: 400;
     color: #757575;
@@ -237,11 +237,17 @@ del {
     color: #333;
 }
 
+.swiper2 .productItem {
+    display: flex;
+    justify-content: space-between;
+}
+
 .productItem {
     display: grid;
     grid-template-columns: 210px 210px 210px 210px 210px;
-    grid-template-rows: 300px;
-    gap: 37px;
+    grid-template-rows: 380px;
+    column-gap: 37px;
+    row-gap: 10px;
 }
 
 .best10 {
@@ -265,7 +271,7 @@ del {
 }
 
 .descWrap {
-    padding-top: 16px;
+    padding-top: 10px;
 }
 
 .descWrap > * {
