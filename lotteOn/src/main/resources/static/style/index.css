@@ -1,3 +1,42 @@
+#mainTopBanner {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    transition: height 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+    height: 90px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#mainTopBanner.hide-banner {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+#mainTopBanner img {
+    width: 1200px;
+    height: 90px;
+    object-fit: cover;
+}
+
+
+.bannerClose {
+    position: absolute;
+    background-image: url("../images/closeBtn.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: inherit;
+    background-size: 12px 12px;
+    width: 12px;
+    height: 12px;
+    border: none;
+    cursor: pointer;
+    right: 10px;
+    top: 10px;
+}
+
 main > div > * {
     width: 1200px;
     margin: 0 auto;

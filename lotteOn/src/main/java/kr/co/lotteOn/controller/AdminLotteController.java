@@ -3,7 +3,9 @@ package kr.co.lotteOn.controller;
 import kr.co.lotteOn.dto.TermsDTO;
 import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
+import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
+import kr.co.lotteOn.repository.BannerRepository;
 import kr.co.lotteOn.repository.ConfigRepository;
 import kr.co.lotteOn.service.AdminCSService;
 import kr.co.lotteOn.service.AdminLotteService;
@@ -27,6 +29,7 @@ public class AdminLotteController {
     private final AdminCSService adminCSService;
     private final AdminLotteService adminLotteService;
     private final ConfigRepository configRepository;
+    private final BannerRepository bannerRepository;
 
     //관리자 - 메인
     @GetMapping("/admin")
@@ -57,7 +60,9 @@ public class AdminLotteController {
 
     //환경설정 - 배너관리
     @GetMapping("/config/banner")
-    public String banner(){
+    public String banner(Model model) {
+        List<Banner> banners = bannerRepository.findAll();
+        model.addAttribute("banners", banners);
         return "/admin/config/banner";
     }
     @GetMapping("/config/bannerLogin")

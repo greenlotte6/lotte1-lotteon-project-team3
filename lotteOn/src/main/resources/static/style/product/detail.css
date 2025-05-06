@@ -42,7 +42,7 @@ main > div > * {
 
 .priceInfo {
     display: flex;
-    padding-top: 20px;
+    margin-top: 8px;
 }
 
 .priceInfo > * {
@@ -69,7 +69,7 @@ main > div > * {
 .realPrice {
     display: flex;
     color: #B5B5B5;
-    margin-top: 8px;
+    padding-top: 20px;
 }
 
 .realPrice > p {

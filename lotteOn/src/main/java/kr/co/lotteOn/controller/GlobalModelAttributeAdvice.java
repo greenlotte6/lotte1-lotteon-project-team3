@@ -1,7 +1,9 @@
 package kr.co.lotteOn.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
+import kr.co.lotteOn.service.BannerService;
 import kr.co.lotteOn.service.ConfigService;
 import kr.co.lotteOn.service.VersionService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class GlobalModelAttributeAdvice {
 
     private final VersionService versionService;
     private final ConfigService configService;
+    private final BannerService bannerService;
 
     @ModelAttribute("selectedVersionId")
     public String addLatestVersionIdToModel() {
@@ -25,5 +28,10 @@ public class GlobalModelAttributeAdvice {
     @ModelAttribute("config")
     public Config config() {
         return configService.findById(1);
+    }
+
+    @ModelAttribute("mainTopBanner")
+    public Banner mainTopBanner() {
+        return bannerService.findByLocation("MAIN1");
     }
 }

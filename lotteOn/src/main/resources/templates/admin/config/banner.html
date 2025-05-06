@@ -51,104 +51,28 @@
                         <th>종료시간</th>
                         <th>관리</th>
                     </tr>
-                    <tr>
-                       <td><input type="checkbox"></td> 
-                       <td>1</td> 
-                       <td><img src="/images/browser.png"></td>
-                       <td>
-                           배너명<br>
-                           크기  1200x80<br>
-                           배경색  #000000<br>
-                           배너링크
-                       </td>
-                       <td>MAIN1</td>
-                       <td>2023/01/01</td>
-                       <td>2023/01/07</td>
-                       <td>13:00</td>
-                       <td>15:00</td>
-                       <td>
-                           <button type="submit">[ 활성 ]</button><br>
-                           <button type="submit">[ 비활성 ]</button>
-                       </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td><img src="/images/browser.png"></td>
+                    <tr th:each="banner, iterStat : ${banners}">
+                        <td><input type="checkbox" name="selectedIds" th:value="${banner.id}"></td>
+                        <td th:text="${iterStat.count}">1</td>
+                        <td><img th:src="@{${banner.imagePath}}" width="100"></td>
                         <td>
-                            배너명<br>
-                            크기  1200x80<br>
-                            배경색  #000000<br>
-                            배너링크
+                            <span th:text="${banner.name}"></span><br>
+                            크기 <span th:text="${banner.size}"></span><br>
+                            배경색 <span th:text="${banner.backgroundColor}"></span><br>
+                            <a th:href="${banner.link}">배너링크</a>
                         </td>
-                        <td>MAIN1</td>
-                        <td>2023/01/01</td>
-                        <td>2023/01/07</td>
-                        <td>13:00</td>
-                        <td>15:00</td>
+                        <td th:text="${banner.location}">MAIN1</td>
+                        <td th:text="${banner.startDate}"></td>
+                        <td th:text="${banner.endDate}"></td>
+                        <td th:text="${banner.startTime}"></td>
+                        <td th:text="${banner.endTime}"></td>
                         <td>
-                            <button type="submit">[ 활성 ]</button><br>
-                            <button type="submit">[ 비활성 ]</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td><img src="/images/browser.png"></td>
-                        <td>
-                            배너명<br>
-                            크기  1200x80<br>
-                            배경색  #000000<br>
-                            배너링크
-                        </td>
-                        <td>MAIN1</td>
-                        <td>2023/01/01</td>
-                        <td>2023/01/07</td>
-                        <td>13:00</td>
-                        <td>15:00</td>
-                        <td>
-                            <button type="submit">[ 활성 ]</button><br>
-                            <button type="submit">[ 비활성 ]</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td><img src="/images/browser.png"></td>
-                        <td>
-                            배너명<br>
-                            크기  1200x80<br>
-                            배경색  #000000<br>
-                            배너링크
-                        </td>
-                        <td>MAIN1</td>
-                        <td>2023/01/01</td>
-                        <td>2023/01/07</td>
-                        <td>13:00</td>
-                        <td>15:00</td>
-                        <td>
-                            <button type="submit">[ 활성 ]</button><br>
-                            <button type="submit">[ 비활성 ]</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td><img src="/images/browser.png"></td>
-                        <td>
-                            배너명<br>
-                            크기<br>1200x80<br>
-                            배경색<br>#000000<br>
-                            배너링크
-                        </td>
-                        <td>MAIN1</td>
-                        <td>2023/01/01</td>
-                        <td>2023/01/07</td>
-                        <td>13:00</td>
-                        <td>15:00</td>
-                        <td>
-                            <button type="submit">[ 활성 ]</button><br>
-                            <button type="submit">[ 비활성 ]</button>
+                            <form th:action="@{/banners/activate/{id}(id=${banner.id})}" method="post">
+                                <button type="submit" th:if="${!banner.active}">[ 활성 ]</button>
+                            </form>
+                            <form th:action="@{/banners/deactivate/{id}(id=${banner.id})}" method="post">
+                                <button type="submit" th:if="${banner.active}">[ 비활성 ]</button>
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -162,44 +86,44 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h3>배너 등록</h3>
-                <form>
-                    <table>
+                <form th:action="@{/admin/config/banners}" method="post" enctype="multipart/form-data">
+                <table>
                         <tr>
                             <th>배너이름</th>
-                            <td><input type="text" placeholder="배너명 입력" class="txt"></td>
+                            <td><input type="text" name="name" placeholder="배너명 입력" class="txt"></td>
                         </tr>
                         <tr>
                             <th>배너크기</th>
-                            <td><input type="text" placeholder="배너크기 입력" class="txt"></td>
+                            <td><input type="text" name="size" placeholder="배너크기 입력" class="txt"></td>
                         </tr>
                         <tr>
                             <th>배경색</th>
-                            <td><input type="text" placeholder="배너배경색 입력" class="txt"></td>
+                            <td><input type="text" name="backgroundColor" placeholder="배너배경색 입력" class="txt"></td>
                         </tr>
                         <tr>
                             <th>배너링크</th>
-                            <td><input type="text" placeholder="배너링크 입력" class="txt"></td>
+                            <td><input type="text" name="link" placeholder="배너링크 입력" class="txt"></td>
                         </tr>
                         <tr>
                             <th>배너위치</th>
                             <td>
-                                <select>
+                                <select name="location">
                                     <option>선택</option>
-                                    <option>몰라시발</option>
+                                    <option>MAIN1</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th>노출날짜</th>
-                            <td><input type="date"> ~ <input type="date"></td>
+                            <td><input type="date" name="startDate"> ~ <input type="date" name="endDate"></td>
                         </tr>
                         <tr>
                             <th>노출시간</th>
-                            <td><input type="time"> ~ <input type="time"></td>
+                            <td><input type="time" name="startTime"> ~ <input type="time" name="endTime"></td>
                         </tr>
                         <tr>
                             <th>배너파일</th>
-                            <td><input type="file" placeholder="선택된 파일 없음"></td>
+                            <td><input type="file" name="imageFile"></td>
                         </tr>
                     </table>
                     <div class="modalbtn">
