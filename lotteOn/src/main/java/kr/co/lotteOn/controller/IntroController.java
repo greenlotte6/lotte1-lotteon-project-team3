@@ -71,6 +71,18 @@ public class IntroController {
         return "/intro/intro_employ_search";
     }
 
+    //회사소개 - 채용(글보기)
+    @GetMapping("/intro_employ_view")
+    public String employView(@RequestParam int recruitNo, Model model){
+        RecruitDTO recruitDTO = introService.findRecruitById(recruitNo);
+
+        recruitDTO.setExperience(recruitDTO.getExperienceYear());
+
+        model.addAttribute("recruit", recruitDTO);
+
+        return "/intro/intro_employ_view";
+    }
+
     //회사소개 - 미디어
     @GetMapping("/intro_media")
     public String media(){

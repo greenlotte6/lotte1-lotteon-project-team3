@@ -40,10 +40,15 @@
             </nav>
 
             <section class="job_list">
+                <p style="margin-bottom: 20px; float: right">제목 클릭 시 자세히보기</p>
                 <div th:each="recruit, i : ${page.dtoList}">
                     <div class="job_item">
                         <div class="job-info">
-                            <h3 th:text="${recruit.title}"></h3>
+                            <h3>
+                                <a th:href="@{/intro/intro_employ_view(recruitNo=${recruit.recruitNo})}" style="text-decoration: none; color: inherit;">
+                                    [[${recruit.title}]]
+                                </a>
+                            </h3>
                             <p>[[${recruit.cate}]]&nbsp;&nbsp;|&nbsp;&nbsp;[[${recruit.experience}]]&nbsp;&nbsp;|&nbsp;&nbsp;[[${recruit.employType}]]</p>
                         </div>
                         <div class="job_tag">

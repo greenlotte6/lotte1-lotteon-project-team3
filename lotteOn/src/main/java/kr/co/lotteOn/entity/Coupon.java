@@ -47,4 +47,17 @@ public class Coupon {
         }
     }
 
+    public void increaseUseCount() {
+        if (this.useCount >= this.issueCount) {
+            throw new IllegalStateException("쿠폰 발급 수량을 초과했습니다.");
+        }
+
+        this.useCount++;
+
+        if (this.useCount == this.issueCount) {
+            this.status = "발급 종료";
+        }
+    }
+
+
 }

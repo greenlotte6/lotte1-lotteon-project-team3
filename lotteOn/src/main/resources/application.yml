@@ -20,6 +20,11 @@ server:
     context-path: /
 
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   servlet:
     multipart:
       location: uploads
@@ -78,7 +83,7 @@ spring:
           naver:
             client-id: ENC(ZD9s4Pr2Zb4cy3JCsWhFfXeQOsyODwqPCN2yR/q5WcQ=)
             client-secret: ENC(YqfbD3pIjAWfDjQPcDfGo+TC+KHNDX0t)
-            redirect-uri: http://lotteon.online/login/oauth2/code/naver
+            redirect-uri: https://lotteon.online/login/oauth2/code/naver
             scope:
               - name
               - email
@@ -90,14 +95,14 @@ spring:
           google:
             client-id: ENC(/lw+h+X+ONh9zuLC4MNheKL2Vnrl0dI12Jp2HdaQVYDFmTZoQpTS0cBinBtUv4bp2IVzpHLNWQOylax36zMvjXhxAIgeioSDQIcX9WLd11l0b4DYHidcEA==)
             client-secret: ENC(+FkZqfhR+MAxMOjYvrmiYYqMAE8f6DLc4PsVPWog6EKGBvQzqS+eU3M2GROC+VLZ)
-            redirect-uri: http://lotteon.online:8081/login/oauth2/code/google
+            redirect-uri: https://lotteon.online:8081/login/oauth2/code/google
             scope:
               - email
 
           kakao:
             client-id: ENC(oaAexC4IIJ14CHKf6UwU2hoTHyGqUPSqsi68MUyRA9vkEOVZ1UKiVA/BgRMvNV1V)
             client-secret:
-            redirect-uri: http://lotteon.online/login/oauth2/code/kakao
+            redirect-uri: https://lotteon.online/login/oauth2/code/kakao
             scope:
               - account_email
             authorization-grant-type: authorization_code

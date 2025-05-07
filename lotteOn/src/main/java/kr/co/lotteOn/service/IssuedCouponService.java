@@ -33,6 +33,20 @@ public class IssuedCouponService {
         Coupon coupon = couponRepository.findByCouponCode(couponCode)
                 .orElseThrow(() -> new RuntimeException("쿠폰이 존재하지 않습니다"));
 
+        // 발급 가능 여부 확인 및 useCount 증가
+        if (coupon.getUseCount() >= coupon.getIssueCount()) {
+            throw new IllegalStateException("쿠폰 발급 수량을 초과했습니다.");
+        }
+
+        coupon.setUseCount(coupon.getUseCount() + 1);
+
+        // 발급 수량이 다 찼으면 상태 변경
+        if (coupon.getUseCount() == coupon.getIssueCount()) {
+            coupon.setStatus("발급 종료");
+        }
+
+        couponRepository.save(coupon); // 변경사항 저장
+
         // 발급 내역 생성
         IssuedCoupon issuedCoupon = IssuedCoupon.builder()
                 .member(member) // 회원

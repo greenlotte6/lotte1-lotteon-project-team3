@@ -1,0 +1,88 @@
+main {
+    padding-bottom: 50px;
+}
+.view table{
+    width: 90%;
+    border-spacing: 0;
+    border-top: 4px solid #333;
+}
+.view table tr th:nth-child(1) {
+    border-left: none;
+}
+.view table tr td:nth-last-child(1){
+    border-right: none;
+}
+.view table tr:nth-child(4) td {
+    height: 400px;
+    vertical-align: top;
+}
+.view table tr:nth-child(2) td {
+    text-align: center;
+    border-right: none;
+}
+.view h3 {
+    margin: 0 0 30px 60px;
+    font-size: 25px;
+}
+.view table th {
+    border-right: none;
+}
+th, td {
+    border-right: 1px solid #dfdfdf;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    text-align: center;
+    height: 70px;
+}
+th {
+    font-size: 18px;
+    padding: 20px;
+}
+td {
+    padding: 20px 15px 15px 15px;
+    text-align: left;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+}
+.popup-content {
+    padding: 20px;
+    line-height: 3;
+}
+.popup-content span {
+    font-weight: bold;
+}
+.popup-content button {
+    float: right;
+    margin: 20px 0;
+    padding: 10px;
+    background: #333333;
+    color: white;
+    border: none;
+}
+.buttons {
+    float: right;
+    margin: 30px 60px 0 0;
+}
+.buttons a {
+    border: 1px solid #dfdfdf;
+    padding: 15px;
+    margin-left: 15px;
+    text-decoration: none;
+    color: white;
+    background: #333333;
+}
+span[name=status] {
+    float: right;
+    border: 1px solid #dfdfdf;
+    padding: 5px 20px;
+}
