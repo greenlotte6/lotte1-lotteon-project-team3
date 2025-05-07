@@ -1,18 +1,11 @@
 package kr.co.lotteOn.controller;
 
 import jakarta.validation.Valid;
-import kr.co.lotteOn.dto.OrderRequestDTO;
-import kr.co.lotteOn.dto.OrderResultDTO;
-import kr.co.lotteOn.dto.ProductDTO;
+import kr.co.lotteOn.dto.*;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
-import kr.co.lotteOn.entity.Member;
-import kr.co.lotteOn.entity.Point;
-import kr.co.lotteOn.entity.Product;
+import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.security.MyUserDetails;
-import kr.co.lotteOn.service.IssuedCouponService;
-import kr.co.lotteOn.service.OrderService;
-import kr.co.lotteOn.service.PointService;
-import kr.co.lotteOn.service.ProductService;
+import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,6 +27,7 @@ public class ProductController {
     private final IssuedCouponService issuedCouponService;
     private final PointService pointService;
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
     private void preparePaymentPage(Member member, ProductDTO product, int quantity, String option, Model model) {
         // 1. 상품 계산
@@ -134,18 +128,33 @@ public class ProductController {
     }
 
     //상품 - 주문완료
-    @GetMapping("/completeOrder")
-    public String completeOrder(){
+    @GetMapping("/completeOrder/{orderCode}")
+    public String showCompleteOrder(@PathVariable String orderCode, Model model) {
+        Order order = orderService.getOrderByCode(orderCode);
+        List<OrderItem> items = orderItemService.getItemsByOrderCode(orderCode);
+
+        OrderResultDTO dto = OrderResultDTO.fromEntity(order, items.get(0));
+
+        model.addAttribute("order", order);
+        model.addAttribute("items", items);
         return "/product/completeOrder";
     }
 
-    @PostMapping("completeOrder")
-    public String completeOrder(@ModelAttribute @Valid OrderRequestDTO requestDTO, Model model) {
-        OrderResultDTO resultDTO = orderService.createOrder(requestDTO);
+    @PostMapping("/completeOrder")
+    public String completeOrder(@ModelAttribute OrderRequestDTO orderRequestDTO,
+                                @ModelAttribute OrderItemListDTO itemListDTO,
+                                Model model) {
+        String orderCode = orderService.createOrder(orderRequestDTO, itemListDTO.getItems());
 
-        model.addAttribute("resultDTO", resultDTO);
+        orderItemService.saveOrderItems(orderCode, itemListDTO.getItems());
 
-        return "/product/completeOrder";
+        Order order = orderService.getOrderByCode(orderCode);
+        List<OrderItem> items = orderItemService.getItemsByOrderCode(orderCode);
+
+        model.addAttribute("order", order);
+        model.addAttribute("items", items);
+        return "redirect:/product/completeOrder/" + orderCode;
+
     }
 
 }
