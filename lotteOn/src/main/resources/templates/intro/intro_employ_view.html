@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사소개 채용</title>
+    <link rel="stylesheet" href="/style/intro/intro_employ.css">
+    <link rel="stylesheet" href="/style/intro/intro_employ_view.css">
+</head>
+<body>
+<th:block th:insert="~{/intro/_header.html}"/>
+
+    <main>
+        <div class="title">
+            <h2>Join to LOTTE ON</h2>
+            <h1>쇼핑을 새롭게, 세상을 이롭게 이끌</h1>
+            <h1>쇼핑 좀 해 본 인재를 모십니다!</h1>
+        </div>
+        <div class="subtitle">
+            <p>롯데ON은 안정성있고 혁신성있게 우리의 문화를 만들어가고 있어요.</p>
+            <p>구성원들은 수평적이고 자율적인 문화 속에서 개선을 넘어서 혁신적인 롯데ON만의 서비스를 만들어요.</p>
+            <p>롯데ON과 함께 굵은 점을 찍어가며 성장하실 분들을 기다립니다.</p>
+        </div>
+        <section class="view">
+            <h3>채용 정보</h3>
+            <table>
+                <tr>
+                    <th colspan="1">제목</th>
+                    <td colspan="5">[[${recruit.title}]]</td>
+                </tr>
+                <tr>
+                    <th>채용부서</th>
+                    <td>[[${recruit.cate}]]</td>
+
+                    <th>경력사항</th>
+                    <td>[[${recruit.experience}]]</td>
+
+                    <th>채용형태</th>
+                    <td>[[${recruit.employType}]]</td>
+                </tr>
+                <tr>
+                    <th colspan="1">채용기간</th>
+                    <td colspan="5">
+                        <span>[[${recruit.startDate}]]</span> ~ <span>[[${recruit.endDate}]]</span>
+                        <span name="status" th:if="${recruit.endDate >= #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 14px; color: green; font-weight: bold">모집중</span>
+                        <span name="status" th:if="${recruit.endDate < #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style="font-size: 14px; color: red; font-weight: bold">마감</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="1">내용</th>
+                    <td colspan="5">[[${recruit.etc}]]</td>
+                </tr>
+            </table>
+            <div class="buttons">
+                <a th:href="@{/intro/intro_employ}">
+                    목록
+                </a>
+                <a href="#" onclick="showPopup(); return false;">지원하기</a>
+            </div>
+            <!-- 숨겨진 팝업 -->
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <p><span>채용부서: </span>[[${recruit.cate}]]</p>
+                    <p><span>연락처: </span>051-1234-1234</p>
+                    <p><span>e-mail: </span>lotteRecruit@lotte.com</p>
+                    <p><span>담당자: </span>신채용</p>
+                    <button onclick="closePopup()">닫기</button>
+                </div>
+            </div>
+            <script>
+                function showPopup() {
+                    document.getElementById("popup").style.display = "block";
+                }
+
+                function closePopup() {
+                    document.getElementById("popup").style.display = "none";
+                }
+            </script>
+        </section>
+    </main>
+
+<th:block th:insert="~{/intro/_footer.html}"/>
+    
+</body>
+</html>
