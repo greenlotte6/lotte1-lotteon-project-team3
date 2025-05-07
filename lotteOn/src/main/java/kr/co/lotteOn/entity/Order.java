@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String orderCode;
 
     @ManyToOne(fetch = FetchType.LAZY)

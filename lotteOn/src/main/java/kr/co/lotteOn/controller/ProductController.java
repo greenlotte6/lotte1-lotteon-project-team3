@@ -1,11 +1,17 @@
 package kr.co.lotteOn.controller;
 
+import jakarta.validation.Valid;
+import kr.co.lotteOn.dto.OrderRequestDTO;
+import kr.co.lotteOn.dto.OrderResultDTO;
 import kr.co.lotteOn.dto.ProductDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.entity.Point;
 import kr.co.lotteOn.entity.Product;
 import kr.co.lotteOn.security.MyUserDetails;
 import kr.co.lotteOn.service.IssuedCouponService;
+import kr.co.lotteOn.service.OrderService;
+import kr.co.lotteOn.service.PointService;
 import kr.co.lotteOn.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +32,46 @@ public class ProductController {
 
     private final ProductService productService;
     private final IssuedCouponService issuedCouponService;
+    private final PointService pointService;
+    private final OrderService orderService;
+
+    private void preparePaymentPage(Member member, ProductDTO product, int quantity, String option, Model model) {
+        // 1. 상품 계산
+        int originalTotal = product.getPrice() * quantity;
+        int discountedTotal = originalTotal * (100 - product.getDiscount()) / 100;
+        int discountAmount = originalTotal - discountedTotal;
+        int deliveryFee = discountedTotal >= 30000 ? 0 : 3000;
+        int finalTotal = discountedTotal + deliveryFee;
+        int discountedPrice = product.getPrice() * (100 - product.getDiscount()) / 100 * quantity;
+
+        // 2. 쿠폰 및 포인트
+        List<IssuedCouponDTO> coupons = issuedCouponService.getAvailableCouponsForMember(member.getId());
+        Point latestPoint = pointService.getLatestPoint(member);
+        int memberPoint = (latestPoint != null) ? latestPoint.getTotalPoint() : 0;
+
+        // 3. 상품 정보
+        Map<String, Object> item = new HashMap<>();
+        item.put("product", product);
+        item.put("quantity", quantity);
+        item.put("option", option);
+
+        // 4. model에 담기
+        model.addAttribute("items", List.of(item));
+        model.addAttribute("coupons", coupons);
+        model.addAttribute("member", member);
+        model.addAttribute("memberId", member.getId());
+        model.addAttribute("productCode", product.getProductCode());
+        model.addAttribute("quantity", quantity);
+        model.addAttribute("option", option);
+
+        model.addAttribute("originalTotal", originalTotal);
+        model.addAttribute("discountedTotal", discountedTotal);
+        model.addAttribute("discountAmount", discountAmount);
+        model.addAttribute("deliveryFee", deliveryFee);
+        model.addAttribute("finalTotal", finalTotal);
+        model.addAttribute("memberPoint", memberPoint);
+        model.addAttribute("discountedPrice", discountedPrice);
+    }
 
     //상품 - 목록
     @GetMapping("/list")
@@ -51,54 +97,33 @@ public class ProductController {
         return "/product/detail";
     }
 
-    @PostMapping("/payment")
-    public String paymentPage(@AuthenticationPrincipal MyUserDetails myUserDetails,
-                            @RequestParam String productCode,
-                            @RequestParam int quantity,
-                            @RequestParam String option,
-                            Model model) {
-        log.warn("🔥🔥🔥 paymentPage() 컨트롤러 진입");
-        if (myUserDetails == null) {
-            return "redirect:/member/login?redirect=/product/detail?productCode=" + productCode;
-        }
+    @GetMapping("/payment")
+    public String paymentGet(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                             @RequestParam String productCode,
+                             @RequestParam int quantity,
+                             @RequestParam String option,
+                             Model model) {
+
         Member member = myUserDetails.getMember();
         ProductDTO product = productService.getProductByCode(productCode);
-
-        List<IssuedCouponDTO> coupons = issuedCouponService.getAvailableCouponsForMember(member.getId());
-        model.addAttribute("coupons", coupons);
-
-        log.info("🔥 POST payment: memberId={}", member.getId());
-        log.info("🔥 POST payment: coupon size = {}", coupons.size());
-        coupons.forEach(c -> log.info("🔥 쿠폰: {}", c));
-
-        Map<String, Object> item = new HashMap<>();
-        item.put("product", product);
-        item.put("quantity", quantity);
-        item.put("option", option);
-
-        model.addAttribute("items", List.of(item));
-        model.addAttribute("member", member);
-
+        preparePaymentPage(member, product, quantity, option, model);
         return "/product/payment";
     }
 
-    //상품 - 주문하기
-    @GetMapping("/payment")
-    public String payment(@AuthenticationPrincipal MyUserDetails myUserDetails,
-                          @RequestParam String productCode,
-                          @RequestParam int quantity,
-                          @RequestParam String option,
-                          Model model) {
-        String memberId = myUserDetails.getMember().getId();
-        List<IssuedCouponDTO> coupons = issuedCouponService.getAvailableCouponsForMember(memberId);
-        log.info("coupons: {}", coupons);
+    @PostMapping("/payment")
+    public String paymentPost(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                              @RequestParam String productCode,
+                              @RequestParam int quantity,
+                              @RequestParam String option,
+                              Model model) {
 
-        model.addAttribute("coupons", coupons);
-        model.addAttribute("productCode", productCode);
-        model.addAttribute("quantity", quantity);
-        model.addAttribute("option", option);
-        model.addAttribute("memberId", memberId);
+        if (myUserDetails == null) {
+            return "redirect:/member/login?redirect=/product/detail?productCode=" + productCode;
+        }
 
+        Member member = myUserDetails.getMember();
+        ProductDTO product = productService.getProductByCode(productCode);
+        preparePaymentPage(member, product, quantity, option, model);
         return "/product/payment";
     }
     @GetMapping("/payment/coupons")
@@ -114,7 +139,13 @@ public class ProductController {
         return "/product/completeOrder";
     }
 
-    //상품 - 검색
+    @PostMapping("completeOrder")
+    public String completeOrder(@ModelAttribute @Valid OrderRequestDTO requestDTO, Model model) {
+        OrderResultDTO resultDTO = orderService.createOrder(requestDTO);
 
+        model.addAttribute("resultDTO", resultDTO);
+
+        return "/product/completeOrder";
+    }
 
 }

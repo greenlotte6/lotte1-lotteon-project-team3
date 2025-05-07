@@ -32,4 +32,8 @@ public class PointService {
         pointRepository.save(point);
 
     }
+
+    public Point getLatestPoint(Member member){
+        return pointRepository.findTopByMemberOrderByGiveDateDesc(member);
+    }
 }

@@ -258,6 +258,10 @@ button {
     cursor: pointer;
 }
 
+.redColor {
+    color: #E60012 !important;
+}
+
 .themeColor {
     color: #E60012 !important;
 }
