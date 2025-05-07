@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,9 +26,7 @@ public class Order {
     private Member member;
 
     private String name;
-    private String productCode;
-    private String quantity;
-    private String totalPrice;
+
     private String payment;
     private String orderStatus;
     private LocalDateTime orderDate = LocalDateTime.now();
@@ -34,5 +34,8 @@ public class Order {
     private String discount;
     private String fee;
     private String actualMoney;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items = new ArrayList<>();
 }
 

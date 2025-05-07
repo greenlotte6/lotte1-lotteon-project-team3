@@ -63,6 +63,11 @@ spring:
     password: Qwerty@123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+    logging:
+      level:
+        com.zaxxer.hikari.HikariConfig: DEBUG
+        com.zaxxer.hikari: TRACE
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:

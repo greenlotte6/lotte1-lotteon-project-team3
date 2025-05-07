@@ -8,50 +8,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class OrderRequestDTO {
 
-    private String memberId;
-    private String receiver;
-    private String sender;
-    private String hp;
-
-    private String zip;
-    private String addr1;
-    private String addr2;
-    private String other;
-
-    private String payment;
-    private int totalPrice;
-    private int deliveryFee;
-    private int discountAmount;
-    private int finalTotal;
-
-    private String productCode;
+    private String memberId;     // ✔ Member 대신 memberId만 받음
+    private String name;
+    private String productCode;  // ✔ Product 대신 productCode만 받음
     private String quantity;
-    private String option;
-    private String issuedNo;
-    private int usedPoint;
-
-    public Order toEntity(Member member) {
-        return Order.builder()
-                .orderCode(OrderCodeGenerator.generateOrderCode())
-                .member(member)
-                .name(receiver)
-                .productCode(productCode)
-                .quantity(quantity)
-                .totalPrice(String.valueOf(totalPrice))
-                .payment(payment)
-                .orderStatus("결제완료")
-                .delivery(zip + " " + addr1 + " " + addr2 + (other != null ? " " + other : ""))
-                .discount(String.valueOf(discountAmount))
-                .fee(String.valueOf(deliveryFee))
-                .actualMoney(String.valueOf(finalTotal))
-                .build();
-    }
-
+    private String totalPrice;
+    private String payment;
+    private String delivery;
+    private String discount;
+    private String fee;
+    private String actualMoney;
 
 }
