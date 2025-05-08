@@ -1,5 +1,6 @@
 package kr.co.lotteOn.repository.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -85,13 +87,50 @@ public class PointRepositoryImpl implements PointRepositoryCustom {
     @Override
     public Page<Tuple> findAllByMemberId(PointPageRequestDTO pageRequestDTO, Pageable pageable) {
         String memberId = pageRequestDTO.getMemberId();
+        String period = pageRequestDTO.getPeriod();
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(qPoint.member.id.eq(memberId));
+
+        //날짜검색조건
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
+        if (period != null && !period.isEmpty()) {
+            switch (period) {
+                case "1week":
+                    endDate = LocalDate.now();
+                    startDate = endDate.minusWeeks(1);
+                    break;
+                case "1month":
+                    endDate = LocalDate.now();
+                    startDate = endDate.minusMonths(1);
+                    break;
+                case "3month":
+                    endDate = LocalDate.now();
+                    startDate = endDate.minusMonths(3);
+                    break;
+                case "custom":
+                    endDate = pageRequestDTO.getEndDate();
+                    startDate = pageRequestDTO.getStartDate();
+                    break;
+            }
+        }
+
+        // 날짜 필터 조건이 설정된 경우에만 builder에 추가
+        if (startDate != null && endDate != null) {
+            builder.and(qPoint.giveDate.between(
+                    startDate.atStartOfDay(),
+                    endDate.plusDays(1).atStartOfDay()
+            ));
+        }
 
         List<Tuple> tupleList = queryFactory
                 .select(qPoint, qMember.id)
                 .from(qPoint)
                 .join(qMember)
                 .on(qPoint.member.id.eq(qMember.id))
-                .where(qPoint.member.id.eq(memberId))
+                .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(qPoint.pointNo.desc())
@@ -100,7 +139,7 @@ public class PointRepositoryImpl implements PointRepositoryCustom {
         long total = queryFactory
                 .select(qPoint.count())
                 .from(qPoint)
-                .where(qPoint.member.id.eq(memberId))
+                .where(builder)
                 .fetchOne();
 
         return new PageImpl<>(tupleList, pageable, total);

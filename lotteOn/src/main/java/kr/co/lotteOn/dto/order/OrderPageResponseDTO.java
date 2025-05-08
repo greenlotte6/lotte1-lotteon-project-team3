@@ -1,7 +1,6 @@
-package kr.co.lotteOn.dto.point;
+package kr.co.lotteOn.dto.order;
 
 
-import kr.co.lotteOn.dto.qna.QnaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +12,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PointPageResponseDTO {
+public class OrderPageResponseDTO {
 
-    private List<PointDTO> dtoList;
+    private List<OrderDTO> dtoList;
 
     private int pg;
     private int size;
@@ -27,30 +26,30 @@ public class PointPageResponseDTO {
     //search
     private String searchType;
     private String keyword;
-    private String giveDate;
+    private String orderDate;
     private String period;
     private LocalDate startDate; // period가 "custom"일 경우
     private LocalDate endDate;
+
 
     //mypage
     private String writer;
     private String memberId;
 
     @Builder
-    public PointPageResponseDTO(PointPageRequestDTO pageRequestDTO, List<PointDTO> dtoList, int total) {
+    public OrderPageResponseDTO(OrderPageRequestDTO pageRequestDTO, List<OrderDTO> dtoList, int total) {
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();
         this.total = total;
         this.dtoList = dtoList;
-
+        this.period = period;
 
         this.writer = pageRequestDTO.getWriter();
 
         //search
         this.searchType = pageRequestDTO.getSearchType();
         this.keyword = pageRequestDTO.getKeyword();
-        this.giveDate = pageRequestDTO.getGiveDate();
-        this.period = pageRequestDTO.getPeriod();
+        this.orderDate = pageRequestDTO.getOrderDate();
 
         this.startNo = total - ((pg - 1) * size);
         this.end = (int) (Math.ceil(this.pg / 10.0)) * 10;

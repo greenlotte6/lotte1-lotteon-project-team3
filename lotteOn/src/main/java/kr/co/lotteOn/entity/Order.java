@@ -35,6 +35,8 @@ public class Order {
     private String fee;
     private String actualMoney;
 
+    private String confirm;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items = new ArrayList<>();
 }

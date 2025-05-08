@@ -187,6 +187,7 @@ li {
 table tr{
     width: auto;
     height: auto;
+    text-align: center;
 }
 
 table .table-tr1{
@@ -198,7 +199,6 @@ table .table-tr1{
     font-weight: 400;
     color: #000000;
     position: relative;
-    left: 60px;
 }
 
 .table tr:nth-child(2){
@@ -239,14 +239,6 @@ table .table-tr1{
     left: 30px;
 }
 
-table tr:nth-child(1) .baesong{
-    font-size: 14px;
-    color: #000000;
-    position: relative;
-    text-align: center;
-    font-weight: bold;
-}
-
 .table tr:nth-child(1) td:nth-child(4){
     width: 158px;
     height: auto;
@@ -270,22 +262,6 @@ table tr:nth-child(1) .baesong{
 .btn_blue{
     background-color: #558ed5;
     color: #ffffff;
-}
-
-.table tr:nth-child(2) td:nth-child(1){
-    font-size: 14px;
-    font-weight: 400;
-    color: #000000;
-    position: relative;
-    left: 60px;
-}
-
-.table tr:nth-child(2) td:nth-child(3){
-    font-size: 14px;
-    color: #000000;
-    position: relative;
-    text-align: center;
-    font-weight: bold;
 }
 
 .article_title2{
@@ -1459,7 +1435,7 @@ table tr:nth-child(1) .baesong{
 }
 
 
-.point_tr1, .point_tr2{
+.point_tr1{
     height: 60.54px !important;
     border-bottom: 0.4px solid #a6a6a6 !important;
 }
@@ -1560,15 +1536,6 @@ table tr:nth-child(1) .baesong{
 }
 
 .product_tr1{
-    height: 60.54px !important;
-    border-bottom: 0.4px solid #a6a6a6 !important;
-}
-.product_tr2{
-    height: 60.54px !important;
-    border-bottom: 0.4px solid #a6a6a6 !important;
-}
-
-.product_tr3{
     height: 60.54px !important;
     border-bottom: 0.4px solid #a6a6a6 !important;
 }
@@ -1700,14 +1667,6 @@ table tr:nth-child(1) .baesong{
 }
 
 .in_tr1{
-    height: 66px !important;
-    border-bottom: 0.4px solid #a6a6a6 !important;
-}
-.in_tr2{
-    height: 66px !important;
-    border-bottom: 0.4px solid #a6a6a6 !important;
-}
-.in_tr3{
     height: 66px !important;
     border-bottom: 0.4px solid #a6a6a6 !important;
 }

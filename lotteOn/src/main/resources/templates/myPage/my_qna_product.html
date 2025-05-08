@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <link rel="stylesheet" href="/style/common/_footer.css">
+    <link rel="stylesheet" href="/style/common/_header.css">
+    <link rel="stylesheet" href="/style/mypage/my_qna_product.css">
+    <title>나의쇼핑정보 상품문의</title>
+</head>
+
+<body>
+<div id="container">
+    <th:block th:include="/common/_header.html"/>
+    <main class="main_container">
+        <div class="mypage-header">
+            <div class="mypage-title">
+                <h2>나의쇼핑정보</h2>
+            </div>
+            <th:block th:insert="~{/myPage/_header.html}"/>
+        </div>
+
+        <div class="div_section">
+            <th:block th:insert="~{/myPage/_side.html}"/>
+            <section class="right_section">
+                <div class="ad">
+                    <div>광고</div>
+                </div>
+                <h1>상품문의</h1>
+                <table class="article">
+                    <tr>
+                        <th>번호</th>
+                        <th>주문코드</th>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>상태</th>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="text-align: center;">등록된 문의가 없습니다</td>
+                    </tr>
+                </table>
+
+                <div class="pageBtn">
+
+                </div>
+            </section>
+        </div>
+    </main>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
+</div>
+</body>
+</html>

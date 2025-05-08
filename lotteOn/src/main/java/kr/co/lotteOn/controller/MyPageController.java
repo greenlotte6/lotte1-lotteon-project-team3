@@ -6,6 +6,10 @@ import kr.co.lotteOn.dto.coupon.CouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.order.OrderDTO;
+import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
+import kr.co.lotteOn.dto.order.OrderPageResponseDTO;
+import kr.co.lotteOn.dto.point.PointDTO;
 import kr.co.lotteOn.dto.point.PointPageRequestDTO;
 import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
@@ -58,11 +62,13 @@ public class MyPageController {
         int totalQnaCount = myPageService.countQnaByWriter(memberId);
         int totalPointCount = myPageService.getLatestTotalPoint(memberId);
         int totalCoupon = myPageService.countIssuedByMemberId(memberId);
+        int totalOrder = myPageService.countOrderByMemberId(memberId);
 
         //모델에 추가
         model.addAttribute("totalQnaCount", totalQnaCount);
         model.addAttribute("totalPointCount", totalPointCount);
         model.addAttribute("totalCoupon", totalCoupon);
+        model.addAttribute("totalOrder", totalOrder);
 
     }
 
@@ -79,35 +85,42 @@ public class MyPageController {
 
         // 3. 최근 문의 3개 조회
         List<QnaDTO> recentQnaTop3 = myPageService.findByMemberIdByLimit3(memberDTO);
-
-        // Qna 게시글 총 개수 조회
-        int totalQnaCount = myPageService.countQnaByWriter(memberId);
-
+        List<PointDTO> recentPointTop3 = myPageService.findPointByMemberIdByLimit3(memberDTO);
+        List<OrderDTO> recentOrderTop3 = myPageService.findOrderByMemberIdByLimit3(memberDTO);
 
         // 4. 모델에 추가
         model.addAttribute("recentQna", recentQnaTop3);
-        model.addAttribute("totalQnaCount", totalQnaCount);
+        model.addAttribute("recentPoint", recentPointTop3);
+        model.addAttribute("recentOrder", recentOrderTop3);
 
         return "/myPage/my_home";
     }
 
-    //마이페이지 - 전체주문내역
+    //마이페이지 - 전체주문내역(갯수)
     @GetMapping("/my_order")
-    public String myOrder(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
+    public String myOrder(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
+                          OrderPageRequestDTO pageRequestDTO) {
         // 1. 로그인한 회원의 ID 가져오기
-        String memberId = userDetails.getUsername();
+        Member currentMember = userDetails.getMember();
+        String loginId = currentMember.getId();
 
         // 2. MemberDTO 생성
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(memberId);
+        pageRequestDTO.setMemberId(loginId);
 
-        // Qna 게시글 총 개수 조회
-        int totalQnaCount = myPageService.countQnaByWriter(memberId);
-
-        model.addAttribute("totalQnaCount", totalQnaCount);
+        // 3. Service 호출
+        OrderPageResponseDTO pageResponseDTO = myPageService.getOrderByMemberId(pageRequestDTO);
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("order", pageResponseDTO.getDtoList());
 
         return "/myPage/my_order";
     }
+
+    @GetMapping("/my_order_period")
+    public String myOrderPeriod(){
+
+        return "/myPage/my_order";
+    }
+
     //마이페이지 - 포인트내역
     @GetMapping("/my_point")
     public String myPoint(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
@@ -197,6 +210,11 @@ public class MyPageController {
 
 
         return "/myPage/my_qna"; // 실제 뷰 경로
+    }
+
+    @GetMapping("/my_qna_product")
+    public String myProductQna(){
+        return "/myPage/my_qna_product";
     }
 
     //마이페이지 - 나의설정

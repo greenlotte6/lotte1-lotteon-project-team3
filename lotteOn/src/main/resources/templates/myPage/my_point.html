@@ -30,19 +30,55 @@
         <div class="banner"></div>
         <article>
           <div class="article_title">
-            <h3>전체 주문내역</h3>
+            <h3>전체 적립내역</h3>
           </div>
-          <div class="searchTab">
-            <p> 기간 지정 </p>
-            <input type="date"> ~ <input type="date" >
-            <button type="submit">조회</button>
-          </div>
+          <table class="datetable">
+            <tr>
+              <th>기간별조회</th>
+              <td>
+                <form th:action="@{/myPage/my_point}" method="get">
+                  <div class="searchArea">
+                    <div class="period">
+                      <select name="period" id="period">
+                        <option value="1week" th:selected="${#strings.equals(param.period, '1week')}">1주일</option>
+                        <option value="1month" th:selected="${#strings.equals(param.period, '1month')}">1개월</option>
+                        <option value="3month" th:selected="${#strings.equals(param.period, '3month')}">3개월</option>
+                        <option value="custom" th:selected="${#strings.equals(param.period, 'custom')}">직접선택</option>
+                      </select>
+
+                      <!-- 기간 선택은 'custom'일 경우에만 노출되게 JS 처리해도 좋음 -->
+                      <input class="date" type="date" name="startDate" th:value="${param.startDate}" />
+                      <input class="date" type="date" name="endDate" th:value="${param.endDate}" />
+                    </div>
+                    <div>
+                      <button class="searchButton" type="submit">조회하기</button>
+                    </div>
+                  </div>
+                </form>
+                <script>
+                  const periodSelect = document.getElementById('period');
+                  const startDateInput = document.querySelector('input[name="startDate"]');
+                  const endDateInput = document.querySelector('input[name="endDate"]');
+
+                  function toggleDateInputs() {
+                    const isCustom = periodSelect.value === 'custom';
+                    startDateInput.style.display = isCustom ? 'inline-block' : 'none';
+                    endDateInput.style.display = isCustom ? 'inline-block' : 'none';
+                  }
+
+                  periodSelect.addEventListener('change', toggleDateInputs);
+                  window.addEventListener('DOMContentLoaded', toggleDateInputs);
+                </script>
+              </td>
+            </tr>
+          </table>
            <table class="point-table">
              <thead>
                <tr>
                  <th>날짜</th>
                  <th>구분</th>
                  <th>적립금액</th>
+                 <th>적립코드</th>
                  <th>비고</th>
                </tr>
              </thead>
@@ -52,39 +88,74 @@
                </tr>
 
                <tr th:each = "point, i : ${point}" th:unless="${#lists.isEmpty(point)}">
-                 <td th:text="${point.giveDate}">2022-12-13</td>
+                 <td th:text="${point.giveDate}"></td>
                  <td th:text="${point.givePoint > 0} ? '적립' : '사용'"></td>
-                 <td th:text="${point.givePoint}">340</td>
-                 <td th:text="${point.giveContent}">상품 구매확정</td>
+                 <td th:text="${point.givePoint}"></td>
+                 <td>
+                   <a href="#" th:onclick="'showPopup(' + ${i.index} + '); return false;'">
+                     [[${point.orderCode}]]
+                   </a>
+
+                   <!-- 팝업: 조건에 따라 상품정보 노출 -->
+                   <div th:id="'popup-' + ${i.index}" class="popup" style="display: none;">
+                     <div class="popup-content">
+                       <h1><strong>적립 상세 정보</strong></h1>
+                       <p><span>적립 코드: </span>[[${point.orderCode}]]</p>
+                       <p><span>적립 내용: </span>[[${point.giveContent}]]</p>
+                       <p><span>적립 포인트: </span>[[${point.givePoint}]]</p>
+
+                       <!-- 상품 정보 노출 조건 -->
+                       <div th:if="${point.giveContent == '상품 구매 확정'}">
+                         <hr>
+                         <h1><strong>상품 정보</strong></h1>
+                         <p><span>상품명: </span>[[${point.productName}]]</p>
+                         <p><span>수량: </span>[[${point.quantity}]]</p>
+                         <p><span>가격: </span>[[${point.price}]]원</p>
+                       </div>
+
+                       <button th:onclick="'closePopup(' + ${i.index} + ');'">닫기</button>
+                     </div>
+                   </div>
+                 </td>
+                 <td th:text="${point.giveContent}"></td>
                </tr>
              </tbody>
            </table>
+          <script>
+            function showPopup(index) {
+              document.getElementById("popup-" + index).style.display = "block";
+            }
+
+            function closePopup(index) {
+              document.getElementById("popup-" + index).style.display = "none";
+            }
+          </script>
 
           <div class="btnarea">
             <div class="pageBtn">
               <th:block th:if="${page?.end > 0}">
                 <th:block th:if="${page.prev}">
-                  <a th:href="@{/myPage/my_point(pg=${page.start-2})}" class="prev">
+                  <a th:href="@{/myPage/my_point(pg=${page.start-2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
                     <img src="/images/back-double.png">
                   </a>
                 </th:block>
                 <th:block th:if="${page.prev}">
-                  <a th:href="@{/myPage/my_point(pg=${page.start-1})}" class="prev">
+                  <a th:href="@{/myPage/my_point(pg=${page.start-1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
                     <img src="/images/back-single.png" class="single">
                   </a>
                 </th:block>
 
                 <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                  <a th:href="@{/myPage/my_point(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                  <a th:href="@{/myPage/my_point(pg=${num}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
                 </th:block>
 
                 <th:block th:if="${page.next}">
-                  <a th:href="@{/myPage/my_point(pg=${page.end+1})}" class="next">
+                  <a th:href="@{/myPage/my_point(pg=${page.end+1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
                     <img src="/images/right-single.png" class="single">
                   </a>
                 </th:block>
                 <th:block th:if="${page.next}">
-                  <a th:href="@{/myPage/my_point(pg=${page.end+2})}" class="next">
+                  <a th:href="@{/myPage/my_point(pg=${page.end+2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
                     <img src="/images/right-double.png">
                   </a>
                 </th:block>
