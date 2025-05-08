@@ -31,16 +31,19 @@ public class Point {
     private int totalPoint;
     private String giveContent;
 
-    @ManyToOne
-    @JoinColumn(name = "orderCode", referencedColumnName = "orderCode")
-    private Order order;
+    private String orderCode;
 
     @CreationTimestamp
     private LocalDateTime giveDate;
 
-    public String getOrderCode() {
-        return order != null ? order.getOrderCode() : null;
-    }
+//    @ManyToOne
+//    @JoinColumn(name = "orderCode", referencedColumnName = "orderCode")
+//    private Order order;
+
+
+//    public String getOrderCode() {
+//        return order != null ? order.getOrderCode() : null;
+//    }
 
 
 }
