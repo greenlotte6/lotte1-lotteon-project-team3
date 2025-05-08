@@ -47,7 +47,6 @@ public class ProductService {
         Product product = new Product();
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
-        product.setMaker(dto.getMaker());
         product.setPrice(dto.getPrice());
         product.setDiscount(dto.getDiscount());
         product.setPoint(dto.getPoint());
