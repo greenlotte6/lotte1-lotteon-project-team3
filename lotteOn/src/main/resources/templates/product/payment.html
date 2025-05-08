@@ -42,7 +42,7 @@
                             <div class="productSectionContainer">
                                 <div class="productSectionWrapper">
                                     <div class="productSectionContainer">
-                                        <th:block th:each="item : ${items}">
+                                        <th:block th:each="item, iStat : ${items}">
                                             <div class="productSection">
                                                 <img th:src="@{'/images/' + ${item.product.imageList}}" alt="상품사진">
                                                 <div class="productInfo">
@@ -56,148 +56,170 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Form hidden input 처리 -->
+                                            <input type="hidden" th:name="'items[' + ${iStat.index} + '].productCode'"
+                                                   th:value="${item.product.productCode}"/>
+                                            <input type="hidden" th:name="'items[' + ${iStat.index} + '].quantity'"
+                                                   th:value="${item.quantity}"/>
+                                            <input type="hidden" th:name="'items[' + ${iStat.index} + '].price'"
+                                                   th:value="${item.product.price}"/>
+                                            <input type="hidden" th:name="'items[' + ${iStat.index} + '].discount'"
+                                                   th:value="${item.product.discount}"/>
+                                            <input type="hidden" th:name="'items[' + ${iStat.index} + '].total'"
+                                                   th:value="${item.product.price * (100 - item.product.discount) / 100 * item.quantity}"/>
                                         </th:block>
                                     </div>
                                 </div>
+                                <h3 class="sectionTitle">주문자 정보</h3>
+                                <div class="sectionWrapper">
+                                    <div class="section">
+                                        <p>수령자</p>
+                                        <input type="text" name="receiver" autocomplete="off" placeholder="수령자를 입력하세요" required>
+                                    </div>
+                                    <div class="section">
+                                        <p>보내는 분</p>
+                                        <input type="text" name="sender" th:value="${items[0].product.companyName}"
+                                               readonly>
+                                        <input type="hidden" name="name"
+                                               th:value="${items[0].product.companyName}"/>
+                                    </div>
+                                    <div class="section">
+                                        <p>휴대폰</p>
+                                        <input type="text" name="hp" th:value="${member.hp}" readonly>
+                                    </div>
+                                </div>
+                                <h3 class="sectionTitle">배송정보</h3>
+                                <div class="sectionWrapper">
+                                    <div class="section">
+                                        <p>우편번호</p>
+                                        <input type="text" name="zip" th:value="${member.zip}" class="zip"
+                                               id="postcode"
+                                               readonly>
+                                        <button type="button" onclick="DaumPostcode()" class="findAddress">우편번호 찾기
+                                        </button>
+                                    </div>
+                                    <div class="section">
+                                        <p>기본주소</p>
+                                        <input type="text" name="addr1" th:value="${member.addr1}" id="address"
+                                               readonly>
+                                    </div>
+                                    <div class="section">
+                                        <p>상세주소</p>
+                                        <input type="text" name="addr2" th:value="${member.addr2}"
+                                               id="detailAddress"
+                                               placeholder="상세주소를 입력하세요" required>
+                                    </div>
+                                    <div class="section">
+                                        <p>기타</p>
+                                        <input type="text" name="other" class="other"
+                                               placeholder="기타 내용을 작성해주세요 (최대 25자)"
+                                               maxlength="25" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="AllContainer">
+                                    <div class="leftContainer">
+                                        <h3 class="sectionTitle">쿠폰/포인트 사용</h3>
+                                        <div class="sectionWrapper">
+                                            <div class="section3">
+                                                <p>잔여 포인트</p>
+                                                <div class="remainPoint">
+                                                    <p th:text="'보유 포인트: ' + ${memberPoint} + 'P'"></p>
+                                                    <p>&nbsp</p>
+                                                </div>
+                                            </div>
+                                            <div class="section3">
+                                                <p>포인트 사용</p>
+                                                <div>
+                                                    <button type="button" class="usePointBtn">사용</button>
+                                                    <input type="number" placeholder="0" class="point"
+                                                           min="0"></input>
+                                                </div>
+                                            </div>
+                                            <div class="section3">
+                                                <p>쿠폰 적용</p>
+                                                <div class="chooseOption">
+                                                    <p class="chooseBtn">사용할 쿠폰</p>
+                                                    <div class="options">
+                                                        <ul id="couponList">
+                                                            <!-- JS로 li들 들어옴 -->
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="issuedNo" id="issuedNo">
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="memberId" th:value="${member.id}"/>
+                                        <input type="hidden" name="name"
+                                               th:value="${items[0].product.companyName}"/>
+                                        <input type="hidden" name="delivery"
+                                               th:value="${member.zip + ' ' + member.addr1 + ' ' + member.addr2}"/>
+                                        <input type="hidden" name="discount" th:value="${discountAmount}"/>
+                                        <input type="hidden" name="fee" th:value="${deliveryFee}"/>
+                                        <input type="hidden" name="actualMoney" th:value="${discountedTotal}"/>
+                                        <input type="hidden" id="selectedPayment" name="payment"/>
+                                        <h3 class="sectionTitle">결제수단</h3>
+                                        <div class="sectionWrapper marginBottomZero">
+                                            <div class="paymentMethod">
+                                                <input type="checkbox" onclick="selectOne(this)" name="phone"
+                                                       class="payment payment-phone">
+                                                <input type="checkbox" onclick="selectOne(this)" name="creditCard"
+                                                       class="payment payment-creditCard">
+                                                <input type="checkbox" onclick="selectOne(this)" name="kakaopay"
+                                                       class="payment payment-kakaoPay">
+                                                <input type="checkbox" onclick="selectOne(this)" name="tosspay"
+                                                       class="payment payment-tossPay">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="rightContainer">
+                                            <h3>총 결제금액</h3>
+                                            <div class="sectionWrapper2">
+                                                <div class="section4">
+                                                    <p>총 상품금액</p>
+                                                    <div>
+                                                        <p class="productTotalAmount"
+                                                           th:text="${#numbers.formatInteger(originalTotal, 3, 'COMMA')}"></p>
+                                                        <p>&nbsp;원</p>
+                                                    </div>
+                                                </div>
+                                                <div class="section4">
+                                                    <p>배송비</p>
+                                                    <div>
+                                                        <p class="deliveryFee"
+                                                           th:attr="data-fee=${deliveryFee}"
+                                                           th:text="${#numbers.formatInteger(deliveryFee, 3, 'COMMA')}"></p>
+                                                        <p>&nbsp;원</p>
+                                                    </div>
+                                                </div>
+                                                <div class="section4">
+                                                    <p>할인금액</p>
+                                                    <div>
+                                                        <p class="discountAmount"
+                                                           th:text="${#numbers.formatInteger(discountAmount, 3, 'COMMA')}"></p>
+                                                        <p>&nbsp;원</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="totalPrice">
+                                                <div>
+                                                    <p>총</p>
+                                                    <p class="totalCount" th:text="${items.size()}"></p>
+                                                    <p>건</p>
+                                                </div>
+                                                <p class="themeColor"
+                                                   th:text="${#numbers.formatInteger(finalTotal, 3, 'COMMA')} + '원'"></p>
+                                            </div>
+                                            <input type="hidden" id="originalTotal" th:value="${originalTotal}"/>
+                                            <input type="hidden" id="discountedTotal"
+                                                   th:value="${discountedTotal}"/>
+                                        </div>
+                                        <button type="submit" class="payingBtn">결제하기</button>
+                                    </div>
+                                </div>
                             </div>
-                            <th:block th:each="item, iStat : ${items}">
-                                <input type="hidden" th:name="'items[' + ${iStat.index} + '].productCode'" th:value="${item.product.productCode}" />
-                                <input type="hidden" th:name="'items[' + ${iStat.index} + '].quantity'" th:value="${item.quantity}" />
-                                <input type="hidden" th:name="'items[' + ${iStat.index} + '].price'" th:value="${item.product.price}" />
-                                <input type="hidden" th:name="'items[' + ${iStat.index} + '].discount'" th:value="${item.product.discount}" />
-                                <input type="hidden" th:name="'items[' + ${iStat.index} + '].total'" th:value="${item.product.price * (100 - item.product.discount) / 100 * item.quantity}" />
-                            </th:block>
                         </div>
-                            <h3 class="sectionTitle">주문자 정보</h3>
-                            <div class="sectionWrapper">
-                                <div class="section">
-                                    <p>수령자</p>
-                                    <input type="text" name="receiver" placeholder="수령자를 입력하세요" required>
-                                </div>
-                                <div class="section">
-                                    <p>보내는 분</p>
-                                    <input type="text" name="sender" th:value="${items[0].product.companyName}" readonly>
-                                </div>
-                                <div class="section">
-                                    <p>휴대폰</p>
-                                    <input type="text" name="hp" th:value="${member.hp}" readonly>
-                                </div>
-                            </div>
-                            <h3 class="sectionTitle">배송정보</h3>
-                            <div class="sectionWrapper">
-                                <div class="section">
-                                    <p>우편번호</p>
-                                    <input type="text" name="zip" th:value="${member.zip}" class="zip" id="postcode"
-                                           readonly>
-                                    <button type="button" onclick="DaumPostcode()" class="findAddress">우편번호 찾기</button>
-                                </div>
-                                <div class="section">
-                                    <p>기본주소</p>
-                                    <input type="text" name="addr1" th:value="${member.addr1}" id="address" readonly>
-                                </div>
-                                <div class="section">
-                                    <p>상세주소</p>
-                                    <input type="text" name="addr2" th:value="${member.addr2}" id="detailAddress"
-                                           placeholder="상세주소를 입력하세요" required>
-                                </div>
-                                <div class="section">
-                                    <p>기타</p>
-                                    <input type="text" name="other" class="other" placeholder="기타 내용을 작성해주세요 (최대 25자)"
-                                           maxlength="25">
-                                </div>
-                            </div>
-                            <div class="AllContainer">
-                                <div class="leftContainer">
-                                    <h3 class="sectionTitle">쿠폰/포인트 사용</h3>
-                                    <div class="sectionWrapper">
-                                        <div class="section3">
-                                            <p>잔여 포인트</p>
-                                            <div class="remainPoint">
-                                                <p th:text="'보유 포인트: ' + ${memberPoint} + 'P'"></p>
-                                                <p>&nbsp</p>
-                                            </div>
-                                        </div>
-                                        <div class="section3">
-                                            <p>포인트 사용</p>
-                                            <div>
-                                                <button type="button" class="usePointBtn">사용</button>
-                                                <input type="number" placeholder="0" class="point" min="0"></input>
-                                            </div>
-                                        </div>
-                                        <div class="section3">
-                                            <p>쿠폰 적용</p>
-                                            <div class="chooseOption">
-                                                <p class="chooseBtn">사용할 쿠폰</p>
-                                                <div class="options">
-                                                    <ul id="couponList">
-                                                        <!-- JS로 li들 들어옴 -->
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="issuedNo" id="issuedNo">
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="memberId" th:value="${member.id}" />
-                                    <input type="hidden" name="name" th:value="${items[0].product.companyName}" />
-                                    <input type="hidden" name="delivery" th:value="${member.zip + ' ' + member.addr1 + ' ' + member.addr2}" />
-                                    <input type="hidden" name="discount" th:value="${discountAmount}" />
-                                    <input type="hidden" name="fee" th:value="${deliveryFee}" />
-                                    <input type="hidden" name="actualMoney" th:value="${discountedTotal}" />
-                                    <input type="hidden" id="selectedPayment" name="payment" />
-                                    <h3 class="sectionTitle">결제수단</h3>
-                                    <div class="sectionWrapper marginBottomZero">
-                                        <div class="paymentMethod">
-                                            <input type="checkbox" onclick="selectOne(this)" name="phone"
-                                                   class="payment payment-phone">
-                                            <input type="checkbox" onclick="selectOne(this)" name="creditCard"
-                                                   class="payment payment-creditCard">
-                                            <input type="checkbox" onclick="selectOne(this)" name="kakaopay"
-                                                   class="payment payment-kakaoPay">
-                                            <input type="checkbox" onclick="selectOne(this)" name="tosspay"
-                                                   class="payment payment-tossPay">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="rightContainer">
-                                        <h3>총 결제금액</h3>
-                                        <div class="sectionWrapper2">
-                                            <div class="section4">
-                                                <p>총 상품금액</p>
-                                                <div>
-                                                    <p class="productTotalAmount" th:text="${#numbers.formatInteger(originalTotal, 3, 'COMMA')}"></p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>배송비</p>
-                                                <div>
-                                                    <p class="deliveryFee" th:text="${#numbers.formatInteger(deliveryFee, 3, 'COMMA')}"></p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                            <div class="section4">
-                                                <p>할인금액</p>
-                                                <div>
-                                                    <p class="discountAmount" th:text="${#numbers.formatInteger(discountAmount, 3, 'COMMA')}"></p>
-                                                    <p>&nbsp;원</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="totalPrice">
-                                            <div>
-                                                <p>총</p>
-                                                <p class="totalCount" th:text="${quantity}"></p>
-                                                <p>건</p>
-                                            </div>
-                                            <p class="themeColor" th:text="${#numbers.formatInteger(finalTotal, 3, 'COMMA')} + '원'"></p>
-                                        </div>
-                                        <input type="hidden" id="originalTotal" th:value="${originalTotal}" />
-                                        <input type="hidden" id="discountedTotal" th:value="${discountedTotal}" />
-                                    </div>
-                                    <button type="submit" class="payingBtn">결제하기</button>
-                                </div>
-                            </div>
                     </div>
                 </form>
             </div>

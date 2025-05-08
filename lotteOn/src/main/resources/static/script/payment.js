@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTotals() {
         const totalDiscount = baseDiscount + currentCouponDiscount + currentPointDiscount;
         const discountedTotal = originalTotal - baseDiscount - currentCouponDiscount - currentPointDiscount;
-        const deliveryFee = discountedTotal >= 30000 ? 0 : 3000;
+        const deliveryFee = parseInt(document.querySelector('.deliveryFee').getAttribute('data-fee'));
         const finalTotal = discountedTotal + deliveryFee;
 
         document.querySelector('.discountAmount').textContent = totalDiscount.toLocaleString();

@@ -95,7 +95,7 @@
                         <div class="section5">
                             <p>쿠폰/포인트 할인</p>
                             <div>
-                                <p th:text="${orderResult.discount}"></p>
+                                <p th:text="${#numbers.formatInteger(orderResult.couponPointDiscount, 3, 'COMMA')}"></p>
                                 <p>&nbsp;원</p>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                         <div class="section5">
                             <p>총 주문금액</p>
                             <div class="totalPrice">
-                                <p th:text="${#numbers.formatInteger(finalTotal, 3, 'COMMA')}"></p>
+                                <p th:text="${#numbers.formatInteger(orderResult.actualMoney, 3, 'COMMA')}"></p>
                                 <p>&nbsp;원</p>
                             </div>
                         </div>
