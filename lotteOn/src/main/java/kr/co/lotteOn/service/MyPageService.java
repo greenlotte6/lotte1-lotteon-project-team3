@@ -2,12 +2,12 @@ package kr.co.lotteOn.service;
 
 import com.querydsl.core.Tuple;
 import kr.co.lotteOn.dto.MemberDTO;
-import kr.co.lotteOn.dto.coupon.CouponDTO;
-import kr.co.lotteOn.dto.coupon.CouponPageRequestDTO;
-import kr.co.lotteOn.dto.coupon.CouponPageResponseDTO;
+import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
+import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
+import kr.co.lotteOn.dto.order.OrderPageResponseDTO;
 import kr.co.lotteOn.dto.point.PointDTO;
 import kr.co.lotteOn.dto.point.PointPageRequestDTO;
 import kr.co.lotteOn.dto.point.PointPageResponseDTO;
@@ -35,11 +35,12 @@ public class MyPageService {
 
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
-    private final FaqRepository faqRepository;
     private final IssuedCouponRepository issuedCouponRepository;
     private final QnaRepository qnaRepository;
     private final CouponRepository couponRepository;
     private final PointRepository pointRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
     //회원별 문의내역
     public QnaPageResponseDTO getQnaByWriter(QnaPageRequestDTO qnaPageRequestDTO) {
@@ -199,6 +200,21 @@ public class MyPageService {
                     PointDTO pointDTO = modelMapper.map(point, PointDTO.class);
                     pointDTO.setMemberId(memberId);
 
+                            // "상품 구매 확정"인 경우 상품 정보 추가
+                            if ("상품 구매 확정".equals(point.getGiveContent())) {
+                                String orderCode = point.getOrderCode();
+
+                                // 주문 코드로 주문 아이템 조회 (OrderItemRepository 활용)
+                                OrderItem orderItem = orderItemRepository.findFirstByOrder_OrderCode(orderCode);
+                                if (orderItem != null && orderItem.getProduct() != null) {
+                                    Product product = orderItem.getProduct();  // Product 엔티티에 접근
+                                    pointDTO.setProductImage(product.getImageMain());
+                                    pointDTO.setProductName(product.getName());
+                                    pointDTO.setQuantity(orderItem.getQuantity());
+                                    pointDTO.setPrice(product.getPrice());
+                                }
+                            }
+
                     return pointDTO;
                 }).collect(Collectors.toList());
 
@@ -230,6 +246,99 @@ public class MyPageService {
     public int countIssuedByMemberId(String memberId) {
         // 쿠폰 개수 조회
         return issuedCouponRepository.countByMember_Id(memberId);
+    }
+
+    // 주문내역 총 갯수 조회
+    public int countOrderByMemberId(String memberId) {
+
+        return orderRepository.countByMember_Id(memberId);
+    }
+
+    //최신 주문 내역 불러오기(3)
+    public List<OrderDTO> findOrderByMemberIdByLimit3(MemberDTO memberDTO) {
+        Member memberId = memberRepository.findById(memberDTO.getId()).get();
+
+        Page<Tuple> pageOrder = orderRepository.findTop3ByMemberOrderByOrderDateDesc(memberId);
+
+        List<OrderDTO> orderDTOList = pageOrder
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Order order = tuple.get(0, Order.class);
+                    OrderItem orderItem = tuple.get(1, OrderItem.class);
+                    Product product = tuple.get(2, Product.class);
+
+                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+                    orderDTO.setMember(memberId);
+                    orderDTO.setCompanyName(product.getCompanyName());
+                    orderDTO.setDescription(product.getDescription());
+                    orderDTO.setPrice(product.getPrice());
+                    orderDTO.setPoint(product.getPoint());
+                    orderDTO.setProductName(product.getName());
+                    orderDTO.setQuantity(orderItem.getQuantity());
+                    orderDTO.setImageList(product.getImageList());
+
+                    return orderDTO;
+                }).collect(Collectors.toList());
+
+
+        return orderDTOList;
+    }
+
+
+    //최신 포인트 내역 불러오기(3)
+    public List<PointDTO> findPointByMemberIdByLimit3(MemberDTO memberDTO){
+        Member memberId = Member.builder().id(memberDTO.getId()).build();
+
+        List<Point> point = pointRepository.findTop3ByMemberOrderByGiveDateDesc(memberId);
+
+        List<PointDTO> pointDTOList = point.stream().map(point1 -> {
+            PointDTO pointDTO = modelMapper.map(point1, PointDTO.class);
+            pointDTO.setMemberId(memberId.getId());
+
+            return pointDTO;
+        }).toList();
+
+        return pointDTOList;
+    }
+
+    //고객별 주문내역 불러오기
+    public OrderPageResponseDTO getOrderByMemberId(OrderPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("memberId");
+        Page<Tuple> pageOrder = orderRepository.findAllByMember_Id(pageRequestDTO, pageable);
+
+        List<OrderDTO> orderDTOList = pageOrder
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Order order = tuple.get(0, Order.class);
+                    OrderItem orderItem = tuple.get(1, OrderItem.class);
+                    Product product = tuple.get(2, Product.class);
+                    Member member = tuple.get(3, Member.class);
+
+                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+                    orderDTO.setMember(member);
+                    orderDTO.setCompanyName(product.getCompanyName());
+                    orderDTO.setDescription(product.getDescription());
+                    orderDTO.setPrice(product.getPrice());
+                    orderDTO.setPoint(product.getPoint());
+                    orderDTO.setProductName(product.getName());
+                    orderDTO.setQuantity(orderItem.getQuantity());
+                    orderDTO.setImageList(product.getImageList());
+
+
+
+                    return orderDTO;
+                }).collect(Collectors.toList());
+
+        int total = (int) pageOrder.getTotalElements();
+
+        return OrderPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(orderDTOList)
+                .total(total)
+                .build();
     }
 
 

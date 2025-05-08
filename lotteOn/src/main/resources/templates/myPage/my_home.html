@@ -28,6 +28,11 @@
         .answered {
             color: #2ecc71; /* 예쁜 그린톤 */
         }
+        .table_inquiry tr:nth-last-child(1) td{
+            border-bottom: 1px solid #dfdfdf;
+            padding: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -511,56 +516,43 @@
                     </div>
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>날짜</th>
-                            <th>상품정보</th>
-                            <th>상품</th>
-                            <th>확인/신청</th>
-                        </tr>
+                            <tr>
+                                <th>날짜</th>
+                                <th>상품정보</th>
+                                <th>상품</th>
+                                <th>확인/신청</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="table-tr1">
-                            <td class="table-td">2022-12-13</td>
-                            <td class="table-td">
-                                <div>
-                                    <img src="/images/slide1.webp" alt="#" class="main_img1">
-                                </div>
-                                <p><a href="#" class="order-link main_p">주문번호: 1012211341</a><br>
-                                    <a href="#" class="company-link main_p">(주)상호명 <br>
-                                        상품명</a><br>
-                                    수량: 1개 <br><br>
-                                    <strong>34,000원</strong></p>
-                            </td>
-                            <td class="baesong table-td">배송완료</td>
-                            <td class="table-td">
-                                <button class="btn_blue confirm-btn">구매확정</button>
-                                <button class="btn_blue review-btn">상품평쓰기</button>
-                                <button class="return-btn">반품신청</button>
-                                <button class="exchange-btn">교환신청</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="table-td">2022-12-13</td>
-                            <td class="table-td">
-                                <div>
-                                    <img src="/images/slide1.webp" alt="#" class="main_img1">
-                                </div>
-                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
-                                    <a href="#" class="company-link">(주)상호명 <br>
-                                        상품명</a> <br>
-                                    수량: 1개 <br><br><br>
-                                    <strong>34,000원</strong></p>
-                            </td>
-                            <td class="table-td">배송완료</td>
-                            <td class="table-td">
-                                <button class="btn_blue confirm-btn">구매확정</button>
-                                <button class="btn_blue review-btn">상품평쓰기</button>
-                                <button class="return-btn">반품신청</button>
-                                <button class="exchange-btn">교환신청</button>
-                            </td>
-                        </tr>
-
+                            <tr class="table-tr1" th:each="order : ${recentOrder}">
+                                <td class="table-td" th:text="${order.orderDate}"></td>
+                                <td class="table-td">
+                                    <div>
+                                        <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
+                                    </div>
+                                    <div>
+                                        <a href="#" class="order-link main_p">
+                                            <p th:text="${order.orderCode}">주문번호</p>
+                                        </a>
+                                        <a href="#" class="company-link main_p">
+                                            <p th:text="${order.companyName}">회사명</p>
+                                        </a>
+                                        <p th:text="${order.productName}">상품명</p>
+                                        <p>
+                                            <span>수량 : </span>
+                                            <span>[[${order.quantity}]]</span>
+                                        </p>
+                                        <p th:text="${order.price}">상품 가격</p>
+                                    </div>
+                                </td>
+                                <td class="baesong table-td" th:text="${order.orderStatus}"></td>
+                                <td class="table-td">
+                                    <button class="btn_blue confirm-btn">구매확정</button>
+                                    <button class="btn_blue review-btn">상품평쓰기</button>
+                                    <button class="return-btn">반품신청</button>
+                                    <button class="exchange-btn">교환신청</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="article_title2">
@@ -569,32 +561,24 @@
                     </div>
                     <table class="main_point">
                         <thead class="point_thead">
-                        <tr class="point_tr">
-                            <th class="point_th1">날짜</th>
-                            <th class="point_th2">구분</th>
-                            <th class="point_th3">주문번호</th>
-                            <th class="point_th4">적립금액</th>
-                            <th class="point_th5">비고</th>
-                            <th class="point_th6">유효기간</th>
-                        </tr>
+                            <tr class="point_tr">
+                                <th class="point_th1">날짜</th>
+                                <th class="point_th2">구분</th>
+                                <th class="point_th4">적립금액</th>
+                                <th class="point_th5">적립내용</th>
+                                <th class="point_th3">적립코드</th>
+                                <th class="point_th6">유효기간</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="point_tr1">
-                            <td class="point_td1">2022-12-13</td>
-                            <td class="point_td2">적립</td>
-                            <td class="point_td3">2022121001</td>
-                            <td class="point_td4">340</td>
-                            <td class="point_td5">상품 구매확정</td>
-                            <td class="point_td6">2024-12-10</td>
-                        </tr>
-                        <tr class="point_tr1">
-                            <td class="point_td1">2022-12-13</td>
-                            <td class="point_td2">적립</td>
-                            <td class="point_td3">2022121001</td>
-                            <td class="point_td4">340</td>
-                            <td class="point_td5">상품 구매확정</td>
-                            <td class="point_td6">2024-12-10</td>
-                        </tr>
+                            <tr class="point_tr1" th:each="point : ${recentPoint}">
+                                <td class="point_td1" th:text="${point.giveDate}"></td>
+                                <td class="point_td2" th:text="${point.givePoint > 0 ? '적립' : (point.givePoint < 0 ? '차감' : '0') }">적립</td>
+                                <td class="point_td3" th:text="${point.givePoint}"></td>
+                                <td class="point_td1" th:text="${point.giveDate}"></td>
+                                <td class="point_td4" th:text="${point.orderCode}"></td>
+                                <td>유효기간 없음</td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="article_title3">
@@ -603,69 +587,33 @@
                     </div>
                     <table class="table_product">
                         <thead>
-                        <tr>
-                            <th class="product_th1">번호</th>
-                            <th class="product_th2">상품명</th>
-                            <th class="product_th3">내용</th>
-                            <th class="product_th4">평점</th>
-                            <th class="product_th5">작성일</th>
-                        </tr>
+                            <tr>
+                                <th class="product_th1">번호</th>
+                                <th class="product_th2">상품명</th>
+                                <th class="product_th3">내용</th>
+                                <th class="product_th4">평점</th>
+                                <th class="product_th5">작성일</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="product_tr1">
-                            <td class="pr_td">1</td>
-                            <td class="pr_td">상품번호/상품명</td>
-                            <td class="pr_td">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                            <td class="pr_star">
-                                <div class="star-rating1">
-                                    <input type="radio" id="star9" name="rating" value="4"><label for="star8"
-                                                                                                  title="4점"></label>
-                                    <input type="radio" id="star8" name="rating" value="3"><label for="star7"
-                                                                                                  title="3점"></label>
-                                    <input type="radio" id="star7" name="rating" value="2"><label for="star6"
-                                                                                                  title="2점"></label>
-                                    <input type="radio" id="star6" name="rating" value="1"><label for="star5"
-                                                                                                  title="1점"></label>
-                                </div>
-                            </td>
-                            <td class="pr_date">2022-12-10</td>
-                        </tr>
-                        <tr class="product_tr2">
-                            <td class="pr_td">1</td>
-                            <td class="pr_td">상품번호/상품명</td>
-                            <td class="pr_td">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                            <td class="pr_star">
-                                <div class="star-rating1">
-                                    <input type="radio" id="star13" name="rating" value="4"><label for="star8"
-                                                                                                   title="4점"></label>
-                                    <input type="radio" id="star12" name="rating" value="3"><label for="star7"
-                                                                                                   title="3점"></label>
-                                    <input type="radio" id="star11" name="rating" value="2"><label for="star6"
-                                                                                                   title="2점"></label>
-                                    <input type="radio" id="star10" name="rating" value="1"><label for="star5"
-                                                                                                   title="1점"></label>
-                                </div>
-                            </td>
-                            <td class="pr_date">2022-12-10</td>
-                        </tr>
-                        <tr class="product_tr3">
-                            <td class="pr_td">1</td>
-                            <td class="pr_td">상품번호/상품명</td>
-                            <td class="pr_td">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                            <td class="pr_star">
-                                <div class="star-rating1">
-                                    <input type="radio" id="star17" name="rating" value="4"><label for="star8"
-                                                                                                   title="4점"></label>
-                                    <input type="radio" id="star16" name="rating" value="3"><label for="star7"
-                                                                                                   title="3점"></label>
-                                    <input type="radio" id="star15" name="rating" value="2"><label for="star6"
-                                                                                                   title="2점"></label>
-                                    <input type="radio" id="star14" name="rating" value="1"><label for="star5"
-                                                                                                   title="1점"></label>
-                                </div>
-                            </td>
-                            <td class="pr_date">2022-12-10</td>
-                        </tr>
+                            <tr class="product_tr1">
+                                <td class="pr_td">1</td>
+                                <td class="pr_td">상품번호/상품명</td>
+                                <td class="pr_td">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td class="pr_star">
+                                    <div class="star-rating1">
+                                        <input type="radio" id="star9" name="rating" value="4"><label for="star8"
+                                                                                                      title="4점"></label>
+                                        <input type="radio" id="star8" name="rating" value="3"><label for="star7"
+                                                                                                      title="3점"></label>
+                                        <input type="radio" id="star7" name="rating" value="2"><label for="star6"
+                                                                                                      title="2점"></label>
+                                        <input type="radio" id="star6" name="rating" value="1"><label for="star5"
+                                                                                                      title="1점"></label>
+                                    </div>
+                                </td>
+                                <td class="pr_date">2022-12-10</td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="article_title4">
@@ -682,6 +630,7 @@
                             <th class="in_th5">작성일</th>
                             <th class="in_th6">상태</th>
                         </tr>
+                        </thead>
                         <tbody>
                             <tr class="in_tr1" th:each="qna : ${recentQna}">
                                <td class="in_td1" th:text="${qna.qnaNo}"></td>
@@ -694,8 +643,11 @@
                                     th:classappend="${qna.status == '답변완료'} ? ' answered' : ''">
                                 </td>
                             </tr>
+                            <!-- 리스트가 null 또는 비어 있으면 출력 -->
+                            <tr th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
+                                <td colspan="6">문의 내역이 없습니다.</td>
+                            </tr>
                         </tbody>
-                        </thead>
                     </table>
                     <div class="article_title4">
                         <h3>상품문의</h3>
@@ -703,65 +655,24 @@
                     </div>
                     <table class="table_inquiry">
                         <thead>
-                        <tr>
-                            <th class="in_th1">번호</th>
-                            <th class="in_th2">문의채널</th>
-                            <th class="in_th3">문의유형</th>
-                            <th class="in_th4">제목</th>
-                            <th class="in_th5">작성일</th>
-                            <th class="in_th6">상태</th>
-                        </tr>
+                            <tr>
+                                <th class="in_th1">번호</th>
+                                <th class="in_th2">문의채널</th>
+                                <th class="in_th4">제목</th>
+                                <th class="in_th5">작성일</th>
+                                <th class="in_th6">상태</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class="in_tr1">
                                <td class="in_td1">1</td>
-                               <td class="in_td2">고객센터</td>
-                               <td class="in_td3">주문/결제</td>
+                               <td class="in_td2">상품문의</td>
                                <td class="in_td4">신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
                                <td class="in_td5">2022-12-12</td>
                                <td class="in_td6">검토중</td>
                             </tr>
-                            <tr class="in_tr2">
-                                <td class="in_td1">1</td>
-                                <td class="in_td2">고객센터</td>
-                                <td class="in_td3">주문/결제</td>
-                                <td class="in_td4">신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                                <td class="in_td5">2022-12-12</td>
-                                <td class="in_td7">답변완료</td>
-                            </tr>
-                            <tr class="in_tr3">
-                                <td class="in_td1">1</td>
-                                <td class="in_td2">판매자게시판</td>
-                                <td class="in_td8">배송</td>
-                                <td class="in_td4">배송기간이 보통 얼마나 걸리나요?</td>
-                                <td class="in_td5">2022-12-12</td>
-                                <td class="in_td7">답변완료</td>
-                            </tr>
                         </tbody>
-                        </thead>
                     </table>
-                    <div class="article_title5">
-                        <h3>나의설정</h3>
-                    </div>
-                    <div class="setting_container">
-                        <div class="setting_box">
-                            <h3>기본배송지설정 <a href="#">변경</a></h3>
-                            <p>부산광역시 부산진구 연동 120 <br>
-                               한빛빌딩 10층
-                            </p>
-                        </div>
-                        <div class="setting_box">
-                            <h3>Email 설정 <a href="#">변경</a></h3>
-                            <p>abc123@naver.com <br>
-                               (최종수정일 2021-12-10)
-                            </p>
-                        </div>
-                        <div class="setting_box">
-                            <h3>휴대폰 설정 <a href="#">변경</a></h3>
-                            <p>010-1234-1001 <br>
-                               (최종수정일 2021-12-10)
-                            </p>
-                        </div>
-                    </div>
                 </article>
             </section>
         </div>

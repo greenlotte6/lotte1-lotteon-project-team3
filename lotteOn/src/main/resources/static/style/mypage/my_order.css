@@ -137,6 +137,31 @@ li {
     font-size: 16px !important;
     color: #000000;
 }
+
+.searchButton {
+    border: none;
+    background: white;
+    height: 32px;
+    padding: 5px;
+    font-size: 15px;
+}
+.searchArea {
+    display: flex;
+    gap: 8px;
+    float: right;
+    margin-right: 20px;
+}
+.date {
+    height: 32px;
+    border: none;
+}
+.searchArea select {
+    outline: none;
+    font-size: 15px;
+    color: #333;
+    height: 32px;
+    background-color: white;
+}
 .right_section{
     height: auto;
     width: 1000px;
@@ -190,7 +215,7 @@ li {
 .datetable tr th {
     padding: 10px;
     color: white;
-    width: 100px;
+    width: 20px;
 }
 .datetable tr td {
     color: white;
@@ -198,13 +223,6 @@ li {
 }
 .datetable input[type="datetime-local"] {
     width: 100px;
-}
-.datetable button {
-    background-color: #8a8a8a;
-    color: white;
-    border: none;
-    position: relative;
-    top: 3px;
 }
 .table thead th:nth-child(2){
     width: 413.63px;
@@ -278,7 +296,7 @@ li {
 
 }
 
-.table td .img_1{
+.table td .main_img1{
     width: 118.32px;
     height: 115px;
     border: 1.98px solid #d8d8d8;
@@ -287,13 +305,6 @@ li {
     left: 30px;
 }
 
-.table tr:nth-child(1) .baesong{
-    font-size: 14px;
-    color: #000000;
-    position: relative;
-    text-align: center;
-    font-weight: bold;
-}
 
 .table tr:nth-child(1) td:nth-child(4){
     width: 158px;
@@ -326,14 +337,6 @@ table .table-td1{
     color: #000000;
     position: relative;
     left: 60px;
-}
-
-.table tr:nth-child(2) td:nth-child(3){
-    font-size: 14px;
-    color: #000000;
-    position: relative;
-    text-align: center;
-    font-weight: bold;
 }
 
 .article_title2{

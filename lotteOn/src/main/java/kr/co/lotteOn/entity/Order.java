@@ -39,6 +39,8 @@ public class Order {
     @Builder.Default
     private LocalDateTime orderDate = LocalDateTime.now();
 
+    private String confirm;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @Builder.Default
     private List<OrderItem> items = new ArrayList<>();

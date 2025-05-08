@@ -496,94 +496,118 @@
                         <tr>
                             <th>기간별조회</th>
                             <td>
-                                <select>
-                                    <option>기간 선택</option>
-                                    <option>1주일</option>
-                                    <option>15일</option>
-                                    <option>1개월</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select>
-                                    <option>기간 선택</option>
-                                    <option>3월</option>
-                                    <option>2월</option>
-                                    <option>1월</option>
-                                    <option>12월</option>
-                                    <option>11월</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="datetime-local"> ~ <input type="datetime-local">
-                            </td>
-                            <td>
-                                <button type="submit">[ 조회 ]</button>
+                                <form th:action="@{/myPage/my_order}" method="get">
+                                    <div class="searchArea">
+                                        <div class="period">
+                                            <select name="period" id="period">
+                                                <option value="1week" th:selected="${#strings.equals(param.period, '1week')}">1주일</option>
+                                                <option value="1month" th:selected="${#strings.equals(param.period, '1month')}">1개월</option>
+                                                <option value="3month" th:selected="${#strings.equals(param.period, '3month')}">3개월</option>
+                                                <option value="custom" th:selected="${#strings.equals(param.period, 'custom')}">직접선택</option>
+                                            </select>
+
+                                            <!-- 기간 선택은 'custom'일 경우에만 노출되게 JS 처리해도 좋음 -->
+                                            <input class="date" type="date" name="startDate" th:value="${param.startDate}" />
+                                            <input class="date" type="date" name="endDate" th:value="${param.endDate}" />
+                                        </div>
+                                        <div>
+                                            <button class="searchButton" type="submit">조회하기</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <script>
+                                    const periodSelect = document.getElementById('period');
+                                    const startDateInput = document.querySelector('input[name="startDate"]');
+                                    const endDateInput = document.querySelector('input[name="endDate"]');
+
+                                    function toggleDateInputs() {
+                                        const isCustom = periodSelect.value === 'custom';
+                                        startDateInput.style.display = isCustom ? 'inline-block' : 'none';
+                                        endDateInput.style.display = isCustom ? 'inline-block' : 'none';
+                                    }
+
+                                    periodSelect.addEventListener('change', toggleDateInputs);
+                                    window.addEventListener('DOMContentLoaded', toggleDateInputs);
+                                </script>
                             </td>
                         </tr>
                     </table>
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>날짜</th>
-                            <th>상품정보</th>
-                            <th>상품</th>
-                            <th>확인/신청</th>
-                        </tr>
+                            <tr>
+                                <th>날짜</th>
+                                <th>상품정보</th>
+                                <th>상품</th>
+                                <th>확인/신청</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="table-tr1">
-                            <td class="table-td table-td1">2022-12-13</td>
-                            <td class="table-td">
-                                <div>
-                                    <img src="/images/slide1.webp" alt="#" class="img_1">
-                                </div>
-                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
-                                    <a href="#" class="company-link">(주)상호명 <br>
-                                        상품명</a><br>
-                                    수량: 1개 <br><br>
-                                    <strong>34,000원</strong></p>
-                            </td>
-                            <td class="baesong table-td">배송완료</td>
-                            <td class="table-td">
-                                <button class="btn_blue confirm-btn">구매확정</button>
-                                <button class="btn_blue review-btn">상품평쓰기</button>
-                                <button class="return-btn">반품신청</button>
-                                <button class="exchange-btn">교환신청</button>
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <td class="table-td td1">2022-12-13</td>
-                            <td class="table-td">
-                                <div>
-                                    <img src="/images/slide1.webp" alt="#" class="img_1">
-                                </div>
-                                <p><a href="#" class="order-link">주문번호: 1012211341</a><br>
-                                    <a href="#" class="company-link">(주)상호명 <br>
-                                        상품명</a> <br>
-                                    수량: 1개 <br><br><br>
-                                    <strong>34,000원</strong></p>
-                            </td>
-                            <td class="table-td">배송완료</td>
-                            <td class="table-td">
-                                <button class="btn_blue confirm-btn">구매확정</button>
-                                <button class="btn_blue review-btn">상품평쓰기</button>
-                                <button class="return-btn">반품신청</button>
-                                <button class="exchange-btn">교환신청</button>
-                            </td>
-                        </tr>
+                            <tr th:if="${#lists.isEmpty(order)}">
+                                <td colspan="6" style="text-align: center;">주문 내역이 없습니다</td>
+                            </tr>
+
+                            <tr class="table-tr1" th:each="order, i : ${order}">
+                                <td class="table-td table-td1" th:text="${order.orderDate}"></td>
+                                <td class="table-td">
+                                    <div>
+                                        <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
+                                    </div>
+                                    <div>
+                                        <a href="#" class="order-link main_p">
+                                            <p th:text="${order.orderCode}"></p>
+                                        </a>
+                                        <a href="#" class="company-link main_p">
+                                            <p th:text="${order.companyName}"></p>
+                                        </a>
+                                        <p th:text="${order.productName}"></p>
+                                        <p>
+                                            <span>수량 : </span>
+                                            <span>[[${order.quantity}]]</span>
+                                        </p>
+                                        <p th:text="${order.price}"></p>
+                                    </div>
+                                </td>
+                                <td class="baesong table-td" th:text="${order.orderStatus}">배송완료</td>
+                                <td class="table-td">
+                                    <button class="btn_blue confirm-btn">구매확정</button>
+                                    <button class="btn_blue review-btn">상품평쓰기</button>
+                                    <button class="return-btn">반품신청</button>
+                                    <button class="exchange-btn">교환신청</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </article>
                 <div class="btnarea">
                     <div class="pageBtn">
-                        <a href=""><img src="../../static/images/back-double.png"></a>
-                        <a href=""><img src="../../static/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="../../static/images/right-single.png" class="single"></a>
-                        <a href=""><img src="../../static/images/right-double.png"></a>
+                        <th:block th:if="${page?.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/myPage/my_order(pg=${page.start-2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/myPage/my_order(pg=${page.start-1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/myPage/my_order(pg=${num}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
+
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/myPage/my_order(pg=${page.end+1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/myPage/my_order(pg=${page.end+2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
+                        </th:block>
                     </div>
                 </div>
             </section>

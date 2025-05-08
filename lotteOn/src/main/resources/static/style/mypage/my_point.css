@@ -134,6 +134,49 @@ li {
     font-size: 16px !important;
     color: #000000;
 }
+
+
+.searchButton {
+    border: none;
+    background: white;
+    height: 32px;
+    padding: 5px;
+    font-size: 15px;
+}
+.searchArea {
+    display: flex;
+    gap: 8px;
+    float: right;
+    margin-right: 20px;
+}
+.date {
+    height: 32px;
+    border: none;
+}
+.searchArea select {
+    outline: none;
+    font-size: 15px;
+    color: #333;
+    height: 32px;
+    background-color: white;
+}
+.datetable {
+    margin-left: 50px;
+    width: 900px;
+    height: 60px;
+    margin-bottom: 20px;
+    background-color: #8a8a8a;
+}
+.datetable tr th {
+    padding: 10px;
+    color: white;
+    width: 20px;
+}
+.datetable tr td {
+    color: white;
+    width: 50px;
+}
+
 .right_section{
     height: auto;
     width: 1000px;
@@ -210,25 +253,43 @@ table tr:nth-child(2){
     height: 120px;
 
 }
-table div{
-    width: 118.32px;
-    height: 115px;
-}
-
 table p a{
     text-decoration: underline;
 }
 
-table p {
-    font-size: 14px;
-    font-weight: 400;
-    color: #000000;
-    position: relative;
-    left: 175px;
-    bottom: 70px;
-    gap: 10px;
-    letter-spacing: 0.5px;
+.popup {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+}
+.popup-content {
+    padding: 20px;
+    line-height: 3;
+}
+.popup-content span {
+    font-weight: bold;
+}
+.popup-content button {
+    float: right;
+    margin: 20px 0;
+    padding: 10px;
+    background: #333333;
+    color: white;
+    border: none;
+}
 
+.popup-content p {
+    text-align: left;
+}
+.popup-content h1 {
+    margin-top: 20px;
 }
 
 .table_two tr td{

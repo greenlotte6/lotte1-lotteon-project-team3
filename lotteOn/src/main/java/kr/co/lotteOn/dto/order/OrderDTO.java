@@ -1,0 +1,54 @@
+package kr.co.lotteOn.dto.order;
+
+import kr.co.lotteOn.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class OrderDTO {
+
+    private String orderCode;
+    private Member member;
+    private String name;
+    private String productCode;
+    private String totalPrice;
+    private String payment;
+    private String orderStatus;
+    private String orderDate;
+    private String delivery;
+    private String discount;
+    private String fee;
+    private String actualMoney;
+    private String confirm;
+
+    //추가필드
+    private String companyName;
+    private String productName;
+    private String description;
+    private int point;
+    private String imageList;
+    private int price;
+    private int quantity;
+
+
+    public String getOrderCode(){
+        if(orderCode != null){
+            return orderCode.substring(0,8);
+
+        }
+        return null;
+    }
+    public String getOrderDate(){
+        if(orderDate != null){
+            return orderDate.substring(0,10);   // yyyy-mm-dd
+
+        }
+        return null;
+    }
+}
+
