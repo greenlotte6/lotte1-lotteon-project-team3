@@ -28,6 +28,7 @@ public class Point {
     private int givePoint;
     private int totalPoint;
     private String giveContent;
+    private String orderCode;
 
     @CreationTimestamp
     private LocalDateTime giveDate;

@@ -21,4 +21,6 @@ public interface PointRepository extends JpaRepository<Point, Integer>, PointRep
 
 
     public Point findTopByMemberOrderByGiveDateDesc(Member member);
+
+    public List<Point> findTop3ByMemberOrderByGiveDateDesc(Member memberId);
 }

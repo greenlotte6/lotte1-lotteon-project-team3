@@ -1,4 +1,4 @@
-package kr.co.lotteOn.dto.point;
+package kr.co.lotteOn.dto.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PointPageRequestDTO {
+public class OrderPageRequestDTO {
 
     @Builder.Default    //기본값 초기화
     private int no = 1;
@@ -30,7 +30,7 @@ public class PointPageRequestDTO {
     private String writer;
     private String memberId;
 
-    private String giveDate;
+    private String orderDate;
     private String period;
     private LocalDate startDate; // period가 "custom"일 경우
     private LocalDate endDate;
