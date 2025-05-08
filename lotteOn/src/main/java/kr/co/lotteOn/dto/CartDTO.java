@@ -25,4 +25,5 @@ public class CartDTO {
     private int discount;
     private int deliveryFee;
     private String productOption;
+    private String productCode;
 }

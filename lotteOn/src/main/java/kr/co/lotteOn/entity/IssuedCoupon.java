@@ -30,6 +30,13 @@ public class IssuedCoupon {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="memberId")
     private Member member;
+
+    private boolean used = false;
+
+    //사용된 주문 코드
+    @ManyToOne
+    @JoinColumn(name = "orderCode", referencedColumnName = "orderCode")
+    private Order order;
     
     private LocalDateTime useDate;
 

@@ -41,13 +41,13 @@
                                     <div class="cartItem">
                                         <div class="itemHead">
                                             <div class="align">
-                                                <input type="checkbox" class="checkOne" th:data-id="${item.id}">
+                                                <input type="checkbox" class="checkOne" th:data-id="${item.id}" th:data-code="${item.productCode}">
                                                 <p th:text="${item.productName}">상품명</p>
                                             </div>
                                             <button class="remove" th:data-id="${item.id}"></button>
                                         </div>
                                         <div class="itemMain">
-                                            <a th:href="@{'/product/detail?productId=' + ${item.productId}}">
+                                            <a th:href="@{'/product/detail?productCode=' + ${item.productCode}}">
                                                 <img th:src="@{'/images/' + ${item.productImage}}" alt="상품사진">
                                             </a>
                                             <div class="itemSub">
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                             <div class="order">
-                                <button class="orderBtn" th:onclick="|location.href='/product/payment'|">
+                                <button class="orderBtn" type="button">
                                     <span th:text="${#numbers.formatInteger(totalOrderPrice, 3, 'COMMA')} + '원 주문하기'"></span>
                                 </button>
                             </div>

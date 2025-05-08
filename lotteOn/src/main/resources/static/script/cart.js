@@ -24,31 +24,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateQuantity(cartId, newQty, countDiv, priceEl) {
         fetch('/product/cart/updateQuantity', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({cartId, quantity: newQty})
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cartId, quantity: newQty })
         })
             .then(res => res.json())
             .then(data => {
-                console.log('응답 데이터:', data);
-                console.log('응답 데이터:', data);
-                console.log('응답 데이터:', data);
-                console.log('응답 데이터:', data);
-                const {price, discount, deliveryFee, updatedQuantity} = data;
+                const { price, discount, deliveryFee, updatedQuantity } = data;
 
-                // 수량 반영
                 countDiv.textContent = updatedQuantity;
 
-                // 할인된 단가 및 총액
                 const discountedUnitPrice = Math.floor(price * (100 - discount) / 100);
                 const totalPrice = discountedUnitPrice * updatedQuantity;
 
-                // data-* 동기화
                 priceEl.setAttribute('data-price', price.toString());
                 priceEl.setAttribute('data-discount', discount.toString());
                 priceEl.setAttribute('data-delivery', deliveryFee.toString());
                 priceEl.setAttribute('data-quantity', updatedQuantity.toString());
 
-                // 화면에 표시
                 priceEl.textContent = formatNumber(totalPrice) + '원';
 
                 recalculateTotal();
@@ -64,22 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let discountTotal = 0;
         let deliveryTotal = 0;
 
-        document.querySelectorAll('.itemPrice').forEach(el => {
-            console.log('===');
-            console.log('price:', el.getAttribute('data-price'));
-            console.log('discount:', el.getAttribute('data-discount'));
-            console.log('qty:', el.getAttribute('data-quantity'));
-            console.log('delivery:', el.getAttribute('data-delivery'));
+        document.querySelectorAll('.cartItem').forEach(item => {
+            const checkbox = item.querySelector('.checkOne');
+            if (!checkbox.checked) return;
 
-            const qty = parseInt(el.getAttribute('data-quantity') || '0');
-            const price = parseInt(el.getAttribute('data-price') || '0');
-            const discount = parseInt(el.getAttribute('data-discount') || '0');
-            const delivery = parseInt(el.getAttribute('data-delivery') || '0');
+            const priceEl = item.querySelector('.itemPrice');
 
-            if (isNaN(qty) || isNaN(price) || isNaN(discount) || isNaN(delivery)) {
-                console.warn('NaN 발생! ->', el.getAttribute);
-                return;
-            }
+            const qty = parseInt(priceEl.getAttribute('data-quantity') || '0');
+            const price = parseInt(priceEl.getAttribute('data-price') || '0');
+            const discount = parseInt(priceEl.getAttribute('data-discount') || '0');
+            const delivery = parseInt(priceEl.getAttribute('data-delivery') || '0');
 
             const baseTotal = price * qty;
             const discountAmount = Math.floor(price * (discount / 100)) * qty;
@@ -89,35 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
             deliveryTotal += delivery;
         });
 
-        const finalTotal = productTotal - discountTotal + deliveryTotal;
+        const deliveryCapped = Math.min(deliveryTotal, 3000);
+        const finalTotal = productTotal - discountTotal + deliveryCapped;
 
         document.querySelector('.priceInfoBox .priceInfos:nth-child(2) .f-w-600').textContent = formatNumber(productTotal) + '원';
         document.querySelector('.priceInfoBox .priceInfos:nth-child(3) .f-w-600').textContent = '-' + formatNumber(discountTotal) + '원';
-        document.querySelector('.priceInfoBox .priceInfos:nth-child(4) .f-w-600').textContent = formatNumber(deliveryTotal) + '원';
+        document.querySelector('.priceInfoBox .priceInfos:nth-child(4) .f-w-600').textContent = formatNumber(deliveryCapped) + '원';
         document.querySelector('.totalPrice p:last-child').textContent = formatNumber(finalTotal) + '원';
         document.querySelector('.orderBtn span').textContent = formatNumber(finalTotal) + '원 주문하기';
     }
-
-    /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 수량증가, 가격 js 끝 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-
-    /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 삭제기능 시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-
-    //x클릭시 삭제
-    document.querySelectorAll('.remove').forEach(button => {
-        button.addEventListener('click', () => {
-            const cartId = button.dataset.id;
-            if (confirm('이 상품을 장바구니에서 삭제할까요?')) {
-                fetch(`/product/cart/delete/${cartId}`, {
-                    method: 'DELETE'
-                })
-                    .then(res => {
-                        if (res.ok) {
-                            location.reload(); // 새로고침
-                        }
-                    });
-            }
-        });
-    });
 
     // 체크박스 전체선택/해제
     document.querySelector('.checkAll').addEventListener('change', function () {
@@ -125,19 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.checkOne').forEach(chk => {
             chk.checked = checked;
         });
+        recalculateTotal(); // 반영
     });
 
-// 개별 체크박스 변경 시 전체선택 상태 동기화
     document.querySelectorAll('.checkOne').forEach(chk => {
         chk.addEventListener('change', () => {
             const all = document.querySelectorAll('.checkOne');
             const checked = document.querySelectorAll('.checkOne:checked');
-
             document.querySelector('.checkAll').checked = all.length === checked.length;
+            recalculateTotal(); // 반영
         });
     });
 
-// 선택삭제 버튼
+    // 선택삭제 버튼
     document.querySelector('.chooseRemove').addEventListener('click', () => {
         const checked = document.querySelectorAll('.checkOne:checked');
         if (checked.length === 0) {
@@ -147,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!confirm('선택한 상품을 삭제할까요?')) return;
 
-        const ids = Array.from(checked).map(chk => Number(chk.dataset.id)); // ← Number로 변환 중요!
+        const ids = Array.from(checked).map(chk => Number(chk.dataset.id));
 
         fetch('/product/cart/deleteSelected', {
             method: 'POST',
@@ -159,4 +125,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // 선택상품 주문 버튼
+    document.querySelector('.orderBtn').addEventListener('click', () => {
+        const selected = document.querySelectorAll('.checkOne:checked');
+        if (selected.length === 0) {
+            alert('주문할 상품을 선택하세요.');
+            return;
+        }
+
+        const productCodes = [];
+        const quantities = [];
+        const options = [];
+
+        selected.forEach(chk => {
+            const cartItem = chk.closest('.cartItem');
+
+            const href = cartItem.querySelector('a').getAttribute('href');
+            const productCode = chk.dataset.code;
+            const quantity = cartItem.querySelector('.count').textContent.trim();
+            const option = cartItem.querySelector('.itemOption').textContent.trim();
+
+            productCodes.push(productCode);
+            quantities.push(quantity);
+            options.push(option);
+        });
+
+        const query = productCodes.map((code, i) =>
+            `productCode=${code}&quantity=${quantities[i]}&option=${encodeURIComponent(options[i])}`
+        ).join('&');
+
+        location.href = `/product/payment?${query}`;
+    });
+
+    recalculateTotal(); // 페이지 로딩 시 초기 계산
 });

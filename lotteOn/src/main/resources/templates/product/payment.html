@@ -79,10 +79,10 @@
                                     </div>
                                     <div class="section">
                                         <p>보내는 분</p>
-                                        <input type="text" name="sender" th:value="${items[0].product.companyName}"
+                                        <input type="text" name="name" th:value="${senderNames}"
                                                readonly>
-                                        <input type="hidden" name="name"
-                                               th:value="${items[0].product.companyName}"/>
+                                        <input type="hidden" name="sender"
+                                               th:value="${senderNames}"/>
                                     </div>
                                     <div class="section">
                                         <p>휴대폰</p>
@@ -150,8 +150,6 @@
                                             </div>
                                         </div>
                                         <input type="hidden" name="memberId" th:value="${member.id}"/>
-                                        <input type="hidden" name="name"
-                                               th:value="${items[0].product.companyName}"/>
                                         <input type="hidden" name="delivery"
                                                th:value="${member.zip + ' ' + member.addr1 + ' ' + member.addr2}"/>
                                         <input type="hidden" name="discount" th:value="${discountAmount}"/>

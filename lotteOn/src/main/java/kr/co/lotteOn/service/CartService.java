@@ -62,6 +62,7 @@ public class CartService {
             dto.setDiscount(p.getDiscount());
             dto.setDeliveryFee(p.getDeliveryFee());
             dto.setProductOption(cart.getProductOption());
+            dto.setProductCode(p.getProductCode());
             return dto;
         }).toList();
     }
@@ -84,6 +85,7 @@ public class CartService {
                 .price(p.getPrice())
                 .discount(p.getDiscount())
                 .deliveryFee(p.getDeliveryFee())
+                .productCode(p.getProductCode())
                 .build();
     }
 

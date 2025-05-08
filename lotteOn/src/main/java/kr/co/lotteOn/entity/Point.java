@@ -25,13 +25,22 @@ public class Point {
     @JoinColumn(name = "memberId")
     private Member member;
 
+    private String type;    //SAVE, USE 등등
+
     private int givePoint;
     private int totalPoint;
     private String giveContent;
-    private String orderCode;
+
+    @ManyToOne
+    @JoinColumn(name = "orderCode", referencedColumnName = "orderCode")
+    private Order order;
 
     @CreationTimestamp
     private LocalDateTime giveDate;
+
+    public String getOrderCode() {
+        return order != null ? order.getOrderCode() : null;
+    }
 
 
 }
