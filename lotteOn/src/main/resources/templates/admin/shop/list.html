@@ -17,7 +17,7 @@
     <script src="/script/banner.js"></script>
     <script src="/script/aside.js"></script>
     <script src="/script/shopValidation.js"></script>
-    <script src="/script/status.js"></script>
+    <!--<script src="/script/status.js"></script>-->
     <script src="/script/shopCheckbox.js"></script>
 </head>
 <body>
@@ -72,9 +72,16 @@
                         <td th:text="${seller.communicationNo}"></td>
                         <td th:text="${seller.hp}"></td>
                         <td class="shop-id" style="display: none" th:text="${seller.sellerId}"></td>
-                        <td><div class="status-circle" data-status="0" style="background-color: blue;"></div></td>
                         <td>
-                            <button type="button" class="manageBtn">[ 승인 ]</button>
+                            <div class="status-circle"
+                                 th:attr="data-status=${seller.status}"
+                                 th:style="'background-color:' + (${seller.status} == '운영중' ? 'green' : (${seller.status} == '운영중지' ? 'red' : 'blue'))">
+                            </div>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/shop/state(sellerId=${seller.sellerId})}" class="manageBtn"
+                                th:text="${seller.status == '운영중' ? '[중단]' : (seller.status == '운영중지' ? '[승인]' :'[재개]')}">
+                            </a>
                         </td>
                     </tr>
                     </th:block>

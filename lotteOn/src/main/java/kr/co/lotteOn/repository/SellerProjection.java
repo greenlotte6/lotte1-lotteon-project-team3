@@ -9,5 +9,9 @@ public interface SellerProjection {
     String getBusinessNo();
     String getCommunicationNo();
     String getHp();
+    String getStatus();
+
+
+
 
 }

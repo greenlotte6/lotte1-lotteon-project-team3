@@ -2,6 +2,7 @@ package kr.co.lotteOn.controller;
 
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.dto.ShopDTO;
+import kr.co.lotteOn.entity.Seller;
 import kr.co.lotteOn.entity.Shop;
 import kr.co.lotteOn.repository.SellerProjection;
 import kr.co.lotteOn.repository.ShopRepository;
@@ -82,7 +83,8 @@ public class AdminStoreController {
         }else{
             log.info("sellerDTO 값 확인: {}", sellerDTO);
         }
-        sellerService.register(sellerDTO);
+
+        Seller seller = sellerService.register(sellerDTO);
 
         ShopDTO shopDTO = new ShopDTO();
         shopDTO.setSellerId(sellerDTO.getSellerId());
@@ -98,11 +100,13 @@ public class AdminStoreController {
         shopDTO.setAddr1(sellerDTO.getAddr1());
         shopDTO.setAddr2(sellerDTO.getAddr2());
 
-        shopService.register(shopDTO);
+        shopService.register(shopDTO, seller);
 
         log.info("상점 등록이 완료 되었습니다.");
         return "redirect:/admin/shop/list";
     }
+
+
 
     //상점 삭제 처리
     @PostMapping("/shop/delete")
@@ -117,6 +121,15 @@ public class AdminStoreController {
             return "redirect:/admin/shop/list?error=true";
         }
         log.info("Selected shops have been deleted successfully.");
+        return "redirect:/admin/shop/list";
+    }
+
+
+    // 상점 상태 변화
+    @GetMapping("/shop/state")
+    public String shopState(@RequestParam("sellerId") String sellerId, Model model){
+        sellerService.modifyState(sellerId);
+
         return "redirect:/admin/shop/list";
     }
 
@@ -140,6 +153,9 @@ public class AdminStoreController {
 //        }
 //        return response;
 //    }
+
+
+
 
 
 

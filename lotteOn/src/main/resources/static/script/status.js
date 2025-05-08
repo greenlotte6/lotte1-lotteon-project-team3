@@ -1,59 +1,58 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", ()=>{
     const buttons = document.querySelectorAll(".manageBtn");
 
-    buttons.forEach((button) => {
-        button.addEventListener("click", () => {
+    buttons.forEach((button)=>{
+        button.addEventListener("click", ()=>{
             const statusDiv = button.closest("tr").querySelector(".status-circle");
             if (!statusDiv) return;
 
             let currentStatus = parseInt(statusDiv.dataset.status);
-            let nextStatus = (currentStatus + 1) % 3; // 0 → 1 → 2 → 0 순환
+            let nextStauts = (currentStatus + 1) % 3;
 
-            const shopId= button.closest("tr").querySelector(".shop-id").textContent;
-            const status = nextStatus.toString();
+            const shopId = button.closest("tr").querySelector(".shop-id").textContent;
+            const status = nextStauts.toString();
 
-            //서버에 폼 전송으로 업데이트 요청
             updateStatusInDB(shopId, status);
 
-            updateStatusUI(statusDiv, button, nextStatus);
+            updateStatusUI(statusDiv, button, nextStauts);
         });
-    });
+    })
 });
 
 function updateStatusUI(statusDiv, button, status) {
-    statusDiv.dataset.status = status;
+    statusDiv.dataset.status= status;
 
-    if (status === 0) {
-        statusDiv.style.backgroundColor = "blue";
-        button.textContent = "[ 승인 ]";
-    } else if (status === 1) {
+    if (status === 0 ){
+        statusDiv.style.backgroundColor= "blue";
+        button.textContent = "[ 승인 ] ";
+    }else if (status === 1) {
         statusDiv.style.backgroundColor = "green";
         button.textContent = "[ 중단 ]";
-    } else if (status === 2) {
-        statusDiv.style.backgroundColor = "red";
-        button.textContent = "[ 재개 ]";
+    }else if (status === 2){
+        statusDiv.style.backgroundColor= "red";
+        button.textContent = "[ 재개 ] ";
     }
 }
 
 function updateStatusInDB(shopId, status) {
     const form= new FormData();
-    form.append('sellerId',sellerId);
-    form.append('status',status);
+    form.append('shopId', shopId);
+    form.append('status', status);
 
     fetch('/admin/shop/update-shop-status',{
         method: 'POST',
         body: form
-
     })
         .then(response => response.json())
-        .then(data =>{
+        .then(data => {
             if (data.success){
                 console.log('DB 업데이트 성공');
             }else{
-                console.log("DB 업데이트 실패");
+                console.log('DB 업데이트 실패');
             }
         })
-        .catch(error => {
-            console.log('에러 발생:',error);
+        .catch(error =>{
+            console.log('에러 발생',error);
         });
+
 }
