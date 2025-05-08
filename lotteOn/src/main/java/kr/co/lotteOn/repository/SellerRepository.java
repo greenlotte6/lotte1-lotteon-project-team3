@@ -46,4 +46,6 @@ public interface SellerRepository extends JpaRepository<Seller, String> {
     Page<SellerProjection> findAllProjections(Pageable pageable);
 
     Seller findBySellerId(String sellerId);
+
+    Seller findByCompanyName(String companyName);
 }

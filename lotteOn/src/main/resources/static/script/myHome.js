@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function(){
     //상호명 모달 요소
     const companyLinks= document.querySelectorAll('.company-link');
     const companyModal= document.getElementById('companyModal');
-    const companyCloseBtn= companyModal.querySelector('.close');
 
     //문의하기 모달 요소
     const inquiryBtn = document.querySelector('#companyModal button'); // 회사 모달 내 문의하기 버튼
@@ -35,21 +34,6 @@ document.addEventListener("DOMContentLoaded", function(){
     const exchangeCloseBtn= exchangeModal.querySelector('.close');
     const exchangeButtons = document.querySelectorAll('.exchange-btn');
 
-    //주문 상세 모달 열기
-    orderLinks.forEach(link =>{
-        link.addEventListener('click', function(e){
-            e.preventDefault(); //기본 링크 클릭 동작 방지
-            modal.style.display = "block"; //모달 표시
-        });
-    });
-
-    //상호명 클릭 시 모달 열기
-    companyLinks.forEach(link =>{
-        link.addEventListener('click', function (e){
-            e.preventDefault();
-            companyModal.style.display="block";
-        });
-    });
 
     //문의하기 버튼 클릭 시 모달 열기
     inquiryBtn.addEventListener('click', function () {

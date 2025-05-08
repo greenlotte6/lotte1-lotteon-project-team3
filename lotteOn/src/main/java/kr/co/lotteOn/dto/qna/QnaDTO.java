@@ -48,6 +48,8 @@ public class QnaDTO {
             case "cancel": return "취소/반품/교환";
             case "travel": return "여행/숙박/항공";
             case "safe": return "안전거래";
+            case "product": return "상품";
+            case "etc": return "기타";
             default: return "알 수 없음";
         }
     }
@@ -61,6 +63,8 @@ public class QnaDTO {
             case "취소/반품/교환": return "cancel";
             case "여행/숙박/항공": return "travel";
             case "안전거래": return "safe";
+            case "상품": return "product";
+            case "기타": return "etc";
             default: return "알 수 없음";
         }
     }

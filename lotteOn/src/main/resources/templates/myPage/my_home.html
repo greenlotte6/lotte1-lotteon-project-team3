@@ -11,129 +11,20 @@
     <script src="/script/myHome.js"></script>
     <title>마이페이지 메인</title>
     <style>
-
+        .alert_message {
+            padding: 20px;
+        }
+        .confirm_button button {
+            float: none;
+            margin: 0 10px 20px 5px;
+        }
+        .confirm_button {
+            position: relative;
+            left: 250px;
+        }
     </style>
 </head>
 <body>
-
-<!--region:상호명 모달-->
-<div id="companyModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>판매자정보</h2>
-            <span class="close" style="margin-left: 770px">&times;</span>
-        </div>
-        <div id="companyModalBody">
-            <!-- 상호명 모달 내용-->
-            <table class="table_three">
-                <tr>
-                    <th>판매자 등급</th>
-                    <td>파워딜러</td>
-                </tr>
-                <tr>
-                    <th>상호</th>
-                    <td>(주)상호명</td>
-                </tr>
-                <tr>
-                    <th>대표자</th>
-                    <td>홍길동</td>
-                </tr>
-                <tr>
-                    <th>전화번호</th>
-                    <td>051-123-1000</td>
-                </tr>
-                <tr>
-                    <th>FAX</th>
-                    <td>051-123-1001</td>
-                </tr>
-                <tr>
-                    <th>Eamil</th>
-                    <td>company@abc.com</td>
-                </tr>
-                <tr>
-                    <th>사업자번호</th>
-                    <td>123-12-1234567</td>
-                </tr>
-                <tr>
-                    <th>영업소 재지</th>
-                    <td>[210**] 부산광역시 부산진구 대연동 121 10층 1004호</td>
-                </tr>
-            </table>
-            <div>
-                <p>
-                    * 위 정보는 전자상거래법 제 20조 제2항 및 동법시행령 제 25조 제2항에 의거하여 <br>
-                    소바자보호에 의거 공개합니다
-                </p>
-            </div>
-            <button type="button">문의하기</button>
-        </div>
-    </div>
-</div>
-<!--endregion-->
-
-<!--region:문의하기 모달-->
-<div id="inquiryModal" class="modal inquirymodal">
-    <div class="modal-content">
-        <div class="modal-header inquiry-header">
-            <h2>문의하기</h2>
-            <span class="close inquiry-close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <table class="table_four">
-                <tr>
-                    <th class="table-four-th">문의종류</th>
-                    <td class="radio">
-                        <input type="radio" id="product" name="inquiryType" value="product">상품
-                        <input type="radio" id="delivery" name="inquiryType" value="delivery">배송
-                        <input type="radio" id="refund" name="inquiryType" value="refund">반품/취소
-                        <input type="radio" id="exchange" name="inquiryType" value="exchange">교환
-                        <input type="radio" id="exc" name="inquiryType" value="etc">기타
-                    </td>
-                </tr>
-                <tr>
-                    <th class="table-four-th">Email</th>
-                    <td><input type="text" placeholder="  chh*gmail.com" name="Email"></td>
-                </tr>
-                <tr>
-                    <th class="table-four-th">제목</th>
-                    <td><input type="text" placeholder="" name="title"></td>
-                </tr>
-                <tr>
-                    <th class="table-four-th2">내용</th>
-                    <td><input type="text" name="context"></td>
-                </tr>
-            </table>
-            <div class="inquiry_btn">
-                <button type="button" class="btn_left">등록하기</button>
-                <button type="button" class="btn_right">취소</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--endregion-->
-
-<!--region:구매확정 모달-->
-<div id="confirmModal" class="modal confirmmodal">
-    <div class="modal-content">
-        <div class="modal-header confirm-header">
-            <h2>구매확정</h2>
-            <span class="close confirm-close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="confirm-p">
-                <p>상품을 받으셨나요? <br>
-                    상품을 받으신 분만 구매확정을 해주세요.
-                </p>
-            </div>
-            <div class="confirm_btn">
-                <button type="button" class="btn_left2">확인</button>
-                <button type="button" class="btn_right2">취소</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--endregion-->
-
 <!--region:상품평쓰기 모달-->
 <div id="reviewModal" class="modal reviewmodal">
     <div class="modal-content">
@@ -405,6 +296,10 @@
                         <h3>최근 주문내역</h3>
                         <a th:href="@{/myPage/my_order}">더보기 ></a>
                     </div>
+                    <div style="margin: 10px 0 15px 50px">
+                        <p> 상품 정보의 주문 번호(맨 위 상단) 클릭 시 상품 상세보기</p>
+                        <p> 상품 정보의 회사명(주문번호 밑) 클릭 시 판매자 상세보기</p>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -426,7 +321,7 @@
                                             <p th:text="${order.orderCode}"></p>
                                         </a>
                                         <!-- 기타 주문 요약 정보 -->
-                                        <a href="#" class="company-link main_p">
+                                        <a href="#" th:onclick="'showCompanyPopup(' + ${i.index} + ')'">
                                             <p th:text="${order.companyName}">회사명</p>
                                         </a>
                                         <p th:text="${order.productName}">상품명</p>
@@ -439,7 +334,7 @@
                                 </td>
                                 <td class="baesong table-td" th:text="${order.orderStatus}"></td>
                                 <td class="table-td">
-                                    <button class="btn_blue confirm-btn">구매확정</button>
+                                    <button class="btn_blue confirm-btn" th:onclick="'showConfirmPopup(' + ${i.index} + ')'">구매확정</button>
                                     <button class="btn_blue review-btn">상품평쓰기</button>
                                     <button class="return-btn">반품신청</button>
                                     <button class="exchange-btn">교환신청</button>
@@ -448,6 +343,7 @@
                         </tbody>
                     </table>
                     <!-- ✅ tr 밖에 모달을 따로 위치 -->
+
                     <!-- 주문 상세 모달 -->
                     <div th:each="order, i : ${recentOrder}" th:id="'popup-' + ${i.index}" class="popup" style="display:none;">
                         <div class="popup-content">
@@ -517,13 +413,163 @@
                             <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
                         </div>
                     </div>
+
+                    <!-- 회사 정보 모달 -->
+                    <div th:each="seller, i : ${recentOrder}" th:id="'company-popup-' + ${i.index}" class="popup" style="display:none;">
+                        <div class="popup-content">
+                            <h2>회사 정보</h2>
+                            <div class="info_company">
+                                <h3>회사 정보</h3>
+                                <table>
+                                    <tr>
+                                        <th>판매자 등급</th>
+                                        <td>[[${seller.rating}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>회사명</th>
+                                        <td>[[${seller.companyName}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>대표자</th>
+                                        <td>[[${seller.delegate}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>전화번호</th>
+                                        <td>[[${seller.hp}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>FAX</th>
+                                        <td>[[${seller.fax}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>사업자번호</th>
+                                        <td>[[${seller.businessNo}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>영업소재지</th>
+                                        <td><span>[</span>[[${seller.zip}]]<span>]</span> &nbsp;&nbsp;
+                                            [[${seller.addr1}]], &nbsp;
+                                            [[${seller.addr2}]]
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
+                            </div>
+                            <button th:onclick="'closePopup(' + ${i.index} + ')'" type="button">닫기</button>
+                            <button type="button" th:onclick="'showInquiryPopup(' + ${i.index} + ')'">문의하기</button>
+                        </div>
+                    </div>
+
+                    <!-- 문의하기 모달 -->
+                    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="popup" style="display:none;">
+                        <div class="popup-content">
+                            <h2>문의하기</h2>
+                            <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
+                                <div class="inquiry_form">
+                                    <table>
+                                        <tr>
+                                            <th>카테고리</th>
+                                            <td>
+                                                <select name="cate1">
+                                                    <option value="product">상품</option>
+                                                    <option value="delivery">배송</option>
+                                                    <option value="cancel">반품/취소/교환</option>
+                                                    <option value="etc">기타</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>제목</th>
+                                            <td>
+                                                <div>
+                                                    <input type="text" name="title" id="title" placeholder="제목 입력">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>문의내용</th>
+                                            <td>
+                                                <div>
+                                                    <textarea name="content" id="content" placeholder="문의내용 작성"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <button type="submit">문의하기</button>
+                            </form>
+                            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
+                        </div>
+                    </div>
+
+                    <!-- 구매확정 모달 -->
+                    <div th:each="order, i : ${recentOrder}" th:id="'confirm-popup-' + ${i.index}" class="popup" style="display: none; width: 400px">
+                        <div class="popup-content">
+                            <h2>구매확정</h2>
+                            <div class="confirm_message">
+                                <div class="alert_message">
+                                    <p>상품을 받으셨나요?</p>
+                                    <p>상품을 받으신 분만 구매확정을 해주세요.</p>
+                                    <p style="text-decoration: underline; font-weight: bold">구매 확정 후에는 반품 또는 교환이 어렵습니다.</p>
+                                </div>
+                                <div class="confirm_button">
+                                    <button onclick="confirmOrder('[[${order.orderCode}]]')">확인</button>
+                                    <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <script>
+                        //상품정보
                         function showPopup(index) {
                             document.getElementById("popup-" + index).style.display = "block";
                         }
 
+                        //회사정보
+                        function showCompanyPopup(index) {
+                            document.getElementById("company-popup-" + index).style.display = "block";
+                        }
+
+                        //문의하기
+                        function showInquiryPopup(index) {
+                            // 회사정보 모달 닫기
+                            document.getElementById("company-popup-" + index).style.display = "none";
+                            // 문의하기 모달 열기
+                            document.getElementById("inquiry-popup-" + index).style.display = "block";
+                        }
+
+                        //상품확정
+                        function showConfirmPopup(index) {
+                            document.getElementById("confirm-popup-" + index).style.display = "block";
+                        }
+
+                        // 모달 닫기
                         function closePopup(index) {
                             document.getElementById("popup-" + index).style.display = "none";
+                            document.getElementById("company-popup-" + index).style.display = "none";
+                            document.getElementById("inquiry-popup-" + index).style.display = "none";
+                            document.getElementById("confirm-popup-" + index).style.display = "none";
+                        }
+
+                        //구매 확정
+                        function confirmOrder(orderCode) {
+                            console.log("Order Code: ", orderCode); // 여기서 orderCode를 확인
+                            fetch('/myPage/my_confirm', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ orderCode })
+                            })
+                                .then(res => {
+                                    if (res.ok) {
+                                        alert("구매 확정 완료! 포인트가 적립되었습니다.");
+                                        location.reload();
+                                    } else {
+                                        alert("처리 중 오류가 발생했습니다.");
+                                    }
+                                });
                         }
                     </script>
                     <div class="article_title2">
@@ -588,7 +634,7 @@
                         </tbody>
                     </table>
                     <div class="article_title4">
-                        <h3>고객센터</h3>
+                        <h3>문의하기</h3>
                         <a th:href="@{/myPage/my_qna}">더보기 ></a>
                     </div>
                     <table class="table_inquiry">
@@ -617,30 +663,6 @@
                             <!-- 리스트가 null 또는 비어 있으면 출력 -->
                             <tr th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
                                 <td colspan="6">문의 내역이 없습니다.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="article_title4">
-                        <h3>상품문의</h3>
-                        <a th:href="@{/myPage/my_qna}">더보기 ></a>
-                    </div>
-                    <table class="table_inquiry">
-                        <thead>
-                            <tr>
-                                <th class="in_th1">번호</th>
-                                <th class="in_th2">문의채널</th>
-                                <th class="in_th4">제목</th>
-                                <th class="in_th5">작성일</th>
-                                <th class="in_th6">상태</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="in_tr1">
-                               <td class="in_td1">1</td>
-                               <td class="in_td2">상품문의</td>
-                               <td class="in_td4">신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                               <td class="in_td5">2022-12-12</td>
-                               <td class="in_td6">검토중</td>
                             </tr>
                         </tbody>
                     </table>

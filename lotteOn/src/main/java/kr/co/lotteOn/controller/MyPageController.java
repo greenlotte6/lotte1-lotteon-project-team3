@@ -23,17 +23,17 @@ import kr.co.lotteOn.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -87,7 +87,9 @@ public class MyPageController {
         List<QnaDTO> recentQnaTop3 = myPageService.findByMemberIdByLimit3(memberDTO);
         List<PointDTO> recentPointTop3 = myPageService.findPointByMemberIdByLimit3(memberDTO);
         List<OrderDTO> recentOrderTop3 = myPageService.findOrderByMemberIdByLimit3(memberDTO);
-
+        for(OrderDTO orderDTO : recentOrderTop3){
+            orderDTO.setPayment(orderDTO.getPaymentName());
+        }
         // 4. 모델에 추가
         model.addAttribute("recentQna", recentQnaTop3);
         model.addAttribute("recentPoint", recentPointTop3);
@@ -206,6 +208,14 @@ public class MyPageController {
         return "/myPage/my_qna"; // 실제 뷰 경로
     }
 
+    //문의글작성하기
+    @PostMapping("/my_seller_qna")
+    public String sellerQnaWrite(QnaDTO qnaDTO){
+        int no = myPageService.qnaWrite(qnaDTO);
+
+        return "redirect:/myPage/my_qna";
+    }
+
     @GetMapping("/my_qna_product")
     public String myProductQna(){
         return "/myPage/my_qna_product";
@@ -269,5 +279,17 @@ public class MyPageController {
         return "redirect:/member/logout";
     }
 
+
+    @PostMapping("/my_confirm")
+    public ResponseEntity<String> confirmPurchase(@RequestBody Map<String, String> data) {
+        try {
+            String orderCode = data.get("orderCode");
+            myPageService.confirmPurchase(orderCode);
+            return ResponseEntity.ok("구매확정 및 포인트 적립 완료");
+        } catch (Exception e) {
+            log.info("구매확정 처리 중 오류 발생 - orderCode: {}", data.get("orderCode"), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("처리 중 오류 발생");
+        }
+    }
 
 }
