@@ -25,7 +25,6 @@ public class Product {
 
     private String name;
     private String description;
-    private String maker;
     private int price;
     private int discount;
     private int point;

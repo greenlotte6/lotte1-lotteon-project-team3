@@ -23,7 +23,6 @@ public class ProductDTO {
     private String productCode;
     private String name;
     private String description;
-    private String maker;
     private Integer price;
     private Integer discount;
     private Integer point;
@@ -56,7 +55,6 @@ public class ProductDTO {
                 .productCode(product.getProductCode())
                 .name(product.getName())
                 .description(product.getDescription())
-                .maker(product.getMaker())
                 .price(product.getPrice())
                 .discount(product.getDiscount())
                 .point(product.getPoint())
