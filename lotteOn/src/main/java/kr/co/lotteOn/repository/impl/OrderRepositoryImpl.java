@@ -27,6 +27,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final QPoint qPoint = QPoint.point;
     private final QProduct qProduct = QProduct.product;
     private final QOrderItem qOrderItem = QOrderItem.orderItem;
+    private final QSeller qSeller = QSeller.seller;
 
 
     @Override
@@ -71,7 +72,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         }
 
         List<Tuple> tupleList = queryFactory
-                .select(qOrder,qOrderItem, qProduct, qMember)
+                .select(qOrder,qOrderItem, qProduct, qMember, qSeller)
                 .from(qOrder)
                 .join(qOrderItem)
                 .on(qOrderItem.order.orderCode.eq(qOrder.orderCode))
@@ -79,6 +80,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .on(qOrderItem.product.productCode.eq(qProduct.productCode))
                 .join(qMember)
                 .on(qOrder.member.id.eq(qMember.id))
+                /*.join(qSeller)
+                .on(qProduct.companyName.eq(qSeller.companyName))*/
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

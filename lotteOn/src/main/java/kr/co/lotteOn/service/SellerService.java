@@ -2,7 +2,9 @@ package kr.co.lotteOn.service;
 
 
 import kr.co.lotteOn.dto.SellerDTO;
+import kr.co.lotteOn.dto.ShopDTO;
 import kr.co.lotteOn.entity.Seller;
+import kr.co.lotteOn.entity.Shop;
 import kr.co.lotteOn.repository.SellerRepository;
 import kr.co.lotteOn.repository.SellerProjection;
 import kr.co.lotteOn.repository.ShopRepository;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static kr.co.lotteOn.entity.QSeller.seller;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,8 +56,8 @@ public class SellerService {
         return sellerRepository.existsByFax(fax);
     }
 
-    //판매자 등록
-    public void register(SellerDTO sellerDTO) {
+
+    public Seller register(SellerDTO sellerDTO) {
         //비밀번호 암호화
         String encodedPass= passwordEncoder.encode(sellerDTO.getPassword());
         sellerDTO.setPassword(encodedPass);
@@ -62,8 +66,9 @@ public class SellerService {
         Seller seller = modelMapper.map(sellerDTO, Seller.class);
 
         //저장
-        sellerRepository.save(seller);
+        return sellerRepository.save(seller);
     }
+
 
     public List<SellerProjection> getSellerList(){
         return sellerRepository.findAllBy();
@@ -104,5 +109,53 @@ public class SellerService {
     }
 
 
+//    public void modifyState(String sellerId) {
+//
+//        Seller seller = Seller.builder()
+//                .sellerId(sellerId)
+//                .build();
+//
+//        List<Shop> shopList = shopRepository.findBySeller(seller);
+//
+//        for(Shop shop: shopList){
+//            if(shop.getStatus().equals("운영중")){
+//                shop.setStatus("운영중지");
+//            }else if(shop.getStatus().equals("운영중지")){
+//                shop.setStatus("운영준비");
+//            }else{
+//                shop.setStatus("운영중");
+//            }
+//
+//            shopRepository.save(shop);
+//        }
+//
+//
+//    }
 
+    public void modifyState(String sellerId){
+        Seller seller = sellerRepository.findBySellerId(sellerId);
+        List<Shop> shopList = shopRepository.findBySeller(seller);
+
+        String nextStatus= "운영중";
+
+        String currentStatus = seller.getStatus();
+        switch (currentStatus) {
+                case "운영중":
+                    nextStatus = "운영중지";
+                    break;
+                case "운영중지":
+                    nextStatus= "운영준비";
+                    break;
+            case "운영준비":
+                    nextStatus= "운영중";
+                    break;
+            }
+           for (Shop shop : shopList) {
+               shop.setStatus(nextStatus);
+               shopRepository.save(shop);
+           }
+
+        seller.setStatus(nextStatus);
+        sellerRepository.save(seller);
+    }
 }

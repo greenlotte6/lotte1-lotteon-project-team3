@@ -44,4 +44,6 @@ public interface SellerRepository extends JpaRepository<Seller, String> {
 
     @Query("SELECT s FROM Seller s")
     Page<SellerProjection> findAllProjections(Pageable pageable);
+
+    Seller findBySellerId(String sellerId);
 }
