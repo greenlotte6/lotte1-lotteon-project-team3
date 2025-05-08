@@ -18,13 +18,14 @@ public class OrderRequestDTO {
 
     private String memberId;     // ✔ Member 대신 memberId만 받음
     private String name;
+    private String delivery;
+    private String payment;
+    private String discount;
+    private String fee;
+    private String receiver;
+    private String actualMoney;
     private String productCode;  // ✔ Product 대신 productCode만 받음
     private String quantity;
     private String totalPrice;
-    private String payment;
-    private String delivery;
-    private String discount;
-    private String fee;
-    private String actualMoney;
 
 }

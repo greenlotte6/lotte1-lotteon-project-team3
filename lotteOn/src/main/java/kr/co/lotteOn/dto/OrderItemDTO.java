@@ -15,25 +15,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderItemDTO {
 
-    private Long id;
-    private String orderCode;
     private String productCode;
     private int quantity;
     private int price;
     private int discount;
     private int total;
-
-    public static OrderItemDTO fromEntity(OrderItem item) {
-        return OrderItemDTO.builder()
-                .id(item.getId())
-                .orderCode(item.getOrder().getOrderCode())
-                .productCode(item.getProduct().getProductCode())
-                .quantity(item.getQuantity())
-                .price(item.getPrice())
-                .discount(item.getDiscount())
-                .total(item.getTotal())
-                .build();
-    }
+    private Long id;
+    private String orderCode;
 
     public static OrderItem toEntity(Order order, Product product, OrderItemDTO dto) {
         return OrderItem.builder()
@@ -45,4 +33,17 @@ public class OrderItemDTO {
                 .total(dto.getTotal())
                 .build();
     }
+
+//    public static OrderItemDTO fromEntity(OrderItem item) {
+//        return OrderItemDTO.builder()
+//                .id(item.getId())
+//                .orderCode(item.getOrder().getOrderCode())
+//                .productCode(item.getProduct().getProductCode())
+//                .quantity(item.getQuantity())
+//                .price(item.getPrice())
+//                .discount(item.getDiscount())
+//                .total(item.getTotal())
+//                .build();
+//    }
+//
 }

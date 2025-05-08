@@ -82,10 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.deliveryFee').textContent = deliveryFee.toLocaleString();
         document.querySelector('.themeColor').textContent = finalTotal.toLocaleString() + '원';
 
+        // form 전송용 input에 실제 값 반영
+        document.querySelector('input[name="discount"]').value = totalDiscount;
+        document.querySelector('input[name="actualMoney"]').value = finalTotal;
+
         // ✅ 여기 추가: 총 건 옆 금액도 업데이트
         const totalPriceElement = document.querySelector('.totalPrice .themeColor');
         if (totalPriceElement) {
             totalPriceElement.textContent = finalTotal.toLocaleString() + '원';
         }
+
+
     }
 });

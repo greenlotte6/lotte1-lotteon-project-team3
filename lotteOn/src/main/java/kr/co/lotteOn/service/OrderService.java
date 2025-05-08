@@ -6,6 +6,7 @@ import kr.co.lotteOn.dto.OrderRequestDTO;
 import kr.co.lotteOn.dto.OrderResultDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Order;
+import kr.co.lotteOn.entity.OrderItem;
 import kr.co.lotteOn.entity.Product;
 import kr.co.lotteOn.repository.MemberRepository;
 import kr.co.lotteOn.repository.OrderRepository;
@@ -26,6 +27,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+    private final OrderItemService orderItemService;
 
     public String createOrder(OrderRequestDTO dto, List<OrderItemDTO> items) {
         // 1. Member, Product 조회
@@ -39,22 +41,32 @@ public class OrderService {
         Order order = Order.builder()
                 .orderCode(orderCode)
                 .member(member)
+                .receiver(dto.getReceiver())
                 .name(dto.getName())
-                .payment(dto.getPayment())
-                .orderStatus("결제완료")
-                .orderDate(LocalDateTime.now())
                 .delivery(dto.getDelivery())
+                .payment(dto.getPayment())
                 .discount(dto.getDiscount())
                 .fee(dto.getFee())
                 .actualMoney(dto.getActualMoney())
+                .orderStatus("결제완료")
+                .orderDate(LocalDateTime.now())
                 .build();
 
-        orderRepository.save(order);
-
         for (OrderItemDTO itemDTO : items) {
-            productRepository.findByProductCode(itemDTO.getProductCode())
+            Product product = productRepository.findByProductCode(itemDTO.getProductCode())
                     .orElseThrow(() -> new IllegalArgumentException("상품 없음"));
+
+            OrderItem item = OrderItem.builder()
+                    .order(order)
+                    .product(product)
+                    .quantity(itemDTO.getQuantity())
+                    .price(itemDTO.getPrice())
+                    .discount(itemDTO.getDiscount())
+                    .total(itemDTO.getTotal())
+                    .build();
+            order.getItems().add(item);
         }
+        orderRepository.save(order);
         return orderCode; // 이후 조회용으로 return
     }
 
@@ -62,4 +74,5 @@ public class OrderService {
         return orderRepository.findById(orderCode)
                 .orElseThrow(() -> new IllegalArgumentException("주문 정보 없음"));
     }
+
 }

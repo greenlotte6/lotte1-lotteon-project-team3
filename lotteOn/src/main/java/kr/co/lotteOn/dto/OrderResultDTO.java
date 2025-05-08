@@ -1,5 +1,6 @@
 package kr.co.lotteOn.dto;
 
+import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Order;
 import kr.co.lotteOn.entity.OrderItem;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,11 @@ public class OrderResultDTO {
     private String addr;
     private String hp;
     private String payment;
+    private String discount;
+    private String fee;
+    private String actualMoney;
+
+    private Member member;
 
     public static OrderResultDTO fromEntity(Order order, OrderItem item) {
         return OrderResultDTO.builder()
@@ -30,10 +36,13 @@ public class OrderResultDTO {
                 .productName(item.getProduct().getName()) // 여기서 상품명 가져옴
                 .quantity(item.getQuantity())
                 .finalPrice(item.getTotal()) // 또는 order.getActualMoney() 써도 됨
-                .receiver(order.getName())
+                .receiver(order.getReceiver())
                 .addr(order.getDelivery())
                 .hp(order.getMember().getHp())
                 .payment(order.getPayment())
+                .discount(order.getDiscount())
+                .fee(order.getFee())
+                .member(order.getMember())
                 .build();
     }
 }
