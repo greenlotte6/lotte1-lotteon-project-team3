@@ -23,6 +23,7 @@ public class Shop {
     private String businessNo;
     private String communicationNo;
     private String shopHp;
+
     private String status;
     private String management;
 
@@ -30,6 +31,11 @@ public class Shop {
     @JoinColumn(name= "sellerId")
     private Seller seller;
 
+    @PrePersist //Default값 세팅
+    public void prePersist() {
+        if (this.status == null) this.status = "운영중";
+
+    }
 
 }
 

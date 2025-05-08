@@ -21,5 +21,5 @@ Optional<Shop> findById(Integer shopId);
     void deleteBySellerIds(@Param("sellerIds") List<String> sellerIds);
 
 
-
+    List<Shop> findBySeller(Seller seller);
 }
