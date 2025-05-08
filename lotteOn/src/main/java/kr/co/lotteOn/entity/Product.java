@@ -30,6 +30,7 @@ public class Product {
     private int point;
     private int stock;
     private int deliveryFee;
+
     private String companyName;
 
     private String imageList;

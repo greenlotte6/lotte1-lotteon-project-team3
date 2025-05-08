@@ -14,10 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("/product")
@@ -83,6 +81,14 @@ public class ProductController {
         model.addAttribute("deliveryFee", deliveryFee);
         model.addAttribute("finalTotal", finalTotal);
         model.addAttribute("memberPoint", memberPoint);
+
+        Set<String> companyNames = products.stream()
+                .map(ProductDTO::getCompanyName)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        String senderNames = String.join(", ", companyNames);
+        model.addAttribute("senderNames", senderNames);
     }
 
     //상품 - 목록
@@ -119,9 +125,20 @@ public class ProductController {
         Member member = myUserDetails.getMember();
 
         // productCode에 따라 ProductDTO 리스트 구성
-        List<ProductDTO> products = productCode.stream()
-                .map(code -> productService.getProductByCode(code))
-                .toList();
+        List<ProductDTO> products = new ArrayList<>();
+        for (String code : productCode) {
+            ProductDTO product = productService.getProductByCode(code);
+            if (product == null) {
+                log.warn("productCode [{}] 에 해당하는 상품이 존재하지 않음", code);
+            } else {
+                products.add(product);
+            }
+        }
+
+        if (products.size() != quantity.size()) {
+            log.error("상품 수와 수량 수가 다름. 필터링 중 일부 상품이 null로 제거됨");
+            return "redirect:/product/cart"; // 또는 오류 페이지
+        }
 
         preparePaymentPage(member, products, quantity, option, model);
         return "/product/payment";
@@ -139,9 +156,20 @@ public class ProductController {
         }
 
         Member member = myUserDetails.getMember();
-        List<ProductDTO> products = productCode.stream()
-                .map(code -> productService.getProductByCode(code))
-                .toList();
+        List<ProductDTO> products = new ArrayList<>();
+        for (String code : productCode) {
+            ProductDTO product = productService.getProductByCode(code);
+            if (product == null) {
+                log.warn("productCode [{}] 에 해당하는 상품이 존재하지 않음", code);
+            } else {
+                products.add(product);
+            }
+        }
+
+        if (products.size() != quantity.size()) {
+            log.error("상품 수와 수량 수가 다름. 필터링 중 일부 상품이 null로 제거됨");
+            return "redirect:/product/cart"; // 또는 오류 페이지
+        }
 
         preparePaymentPage(member, products, quantity, option, model);
         return "/product/payment";
@@ -162,26 +190,25 @@ public class ProductController {
 
         List<OrderItem> items = order.getItems();
         OrderItem firstItem = items.get(0);
-
         OrderResultDTO orderResult = OrderResultDTO.fromEntity(order, firstItem);
+
         int totalPrice = items.stream().mapToInt(OrderItem::getTotal).sum();
         int originalPrice = items.stream()
                         .mapToInt(i -> i.getPrice() * i.getQuantity())
                                 .sum();
-        int fee = Integer.parseInt(order.getFee());
         int actualMoney = Integer.parseInt(order.getActualMoney());
-        int productDiscount = originalPrice - totalPrice;
-        int totalDiscount = originalPrice + fee - actualMoney;
+        int totalDiscount = Integer.parseInt(order.getDiscount());
+        int productDiscount = items.stream()
+                        .mapToInt(i -> (i.getPrice() * i.getDiscount() / 100) * i.getQuantity())
+                                .sum();
         int couponPointDiscount = totalDiscount - productDiscount;
 
         model.addAttribute("orderResult", orderResult);
         model.addAttribute("items", items);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("originalPrice", originalPrice);
-        model.addAttribute("fee", fee);
         model.addAttribute("actualMoney", actualMoney);
         model.addAttribute("productDiscount", productDiscount);
-        model.addAttribute("totalDiscount", totalDiscount);
         model.addAttribute("couponPointDiscount", couponPointDiscount);
         return "/product/completeOrder";
     }
