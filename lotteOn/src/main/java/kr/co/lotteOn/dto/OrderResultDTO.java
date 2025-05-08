@@ -26,6 +26,8 @@ public class OrderResultDTO {
     private String discount;
     private String fee;
     private String actualMoney;
+    private int finalTotal;
+    private int couponPointDiscount;
 
     private Member member;
 
@@ -43,6 +45,7 @@ public class OrderResultDTO {
                 .discount(order.getDiscount())
                 .fee(order.getFee())
                 .member(order.getMember())
+                .actualMoney(order.getActualMoney())
                 .build();
     }
 }
