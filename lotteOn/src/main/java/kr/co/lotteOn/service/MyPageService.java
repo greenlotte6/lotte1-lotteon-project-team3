@@ -278,6 +278,7 @@ public class MyPageService {
                     orderDTO.setQuantity(orderItem.getQuantity());
                     orderDTO.setImageList(product.getImageList());
 
+
                     return orderDTO;
                 }).collect(Collectors.toList());
 

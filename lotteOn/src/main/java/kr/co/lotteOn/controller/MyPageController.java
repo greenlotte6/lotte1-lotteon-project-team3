@@ -115,12 +115,6 @@ public class MyPageController {
         return "/myPage/my_order";
     }
 
-    @GetMapping("/my_order_period")
-    public String myOrderPeriod(){
-
-        return "/myPage/my_order";
-    }
-
     //마이페이지 - 포인트내역
     @GetMapping("/my_point")
     public String myPoint(@AuthenticationPrincipal MyUserDetails userDetails, Model model,

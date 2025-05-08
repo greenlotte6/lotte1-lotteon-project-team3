@@ -25,6 +25,7 @@ public class OrderDTO {
     private String fee;
     private String actualMoney;
     private String confirm;
+    private String receiver;
 
     //추가필드
     private String companyName;
