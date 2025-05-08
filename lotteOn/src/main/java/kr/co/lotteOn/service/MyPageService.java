@@ -1,6 +1,7 @@
 package kr.co.lotteOn.service;
 
 import com.querydsl.core.Tuple;
+import jakarta.transaction.Transactional;
 import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +43,9 @@ public class MyPageService {
     private final PointRepository pointRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final SellerRepository sellerRepository;
+    private final ProductRepository productRepository;
+    private final PointService pointService;
 
     //회원별 문의내역
     public QnaPageResponseDTO getQnaByWriter(QnaPageRequestDTO qnaPageRequestDTO) {
@@ -258,6 +263,7 @@ public class MyPageService {
     public List<OrderDTO> findOrderByMemberIdByLimit3(MemberDTO memberDTO) {
         Member memberId = memberRepository.findById(memberDTO.getId()).get();
 
+
         Page<Tuple> pageOrder = orderRepository.findTop3ByMemberOrderByOrderDateDesc(memberId);
 
         List<OrderDTO> orderDTOList = pageOrder
@@ -268,6 +274,7 @@ public class MyPageService {
                     OrderItem orderItem = tuple.get(1, OrderItem.class);
                     Product product = tuple.get(2, Product.class);
 
+                    //상품정보
                     OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
                     orderDTO.setMember(memberId);
                     orderDTO.setCompanyName(product.getCompanyName());
@@ -278,6 +285,19 @@ public class MyPageService {
                     orderDTO.setQuantity(orderItem.getQuantity());
                     orderDTO.setImageList(product.getImageList());
 
+                    // 판매자 정보 조회: companyName을 사용하여 Seller 조회
+                    String companyName = product.getCompanyName(); // companyName을 이용해 Seller 조회
+                    Seller seller = sellerRepository.findByCompanyName(companyName); // 회사명으로 Seller 조회
+
+                    //판매자정보
+                    orderDTO.setRating(seller.getRating());
+                    orderDTO.setDelegate(seller.getDelegate());
+                    orderDTO.setHp(seller.getHp());
+                    orderDTO.setBusinessNo(seller.getBusinessNo());
+                    orderDTO.setFax(seller.getFax());
+                    orderDTO.setAddr1(seller.getAddr1());
+                    orderDTO.setAddr2(seller.getAddr2());
+                    orderDTO.setZip(seller.getZip());
 
                     return orderDTO;
                 }).collect(Collectors.toList());
@@ -342,5 +362,51 @@ public class MyPageService {
                 .build();
     }
 
+    //고객 상품 문의내역(channel = 판매자 게시판)
+    public int qnaWrite(QnaDTO qnaDTO){
+        Member member = Member.builder()
+                .id(qnaDTO.getWriter())
+                .build();
+        
+        Qna qna = modelMapper.map(qnaDTO, Qna.class);
+        String cate1Name = qnaDTO.getCate1Name();
+
+        qna.setWriter(member);
+        qna.setChannel("판매자 게시판");
+        qna.setCate2(cate1Name);
+
+        Qna savedQna = qnaRepository.save(qna);
+
+        return savedQna.getQnaNo();
+    }
+
+    //주문확정
+    @Transactional
+    public void confirmPurchase(String orderCode){
+
+        //구매확정으로 변경
+        Order order = orderRepository.findByOrderCode(orderCode);
+
+        order.setConfirm("구매 확정");
+
+        //회원 정보
+        Member member = order.getMember();
+
+        //상품에 대한 포인트 적립
+        List<OrderItem> items = orderItemRepository.findByOrder_OrderCode(orderCode);
+
+        for(OrderItem item : items){
+            String productCode = item.getProduct().getProductCode();
+
+            Optional<Product> product = productRepository.findByProductCode(productCode);
+            if(product.isPresent()){
+                int point = product.get().getPoint();
+
+                pointService.addPoint(member, point, "상품 구매 확정", orderCode);
+            }
+
+        }
+
+    }
 
 }

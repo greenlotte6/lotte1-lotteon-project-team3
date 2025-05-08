@@ -80,8 +80,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .on(qOrderItem.product.productCode.eq(qProduct.productCode))
                 .join(qMember)
                 .on(qOrder.member.id.eq(qMember.id))
-                /*.join(qSeller)
-                .on(qProduct.companyName.eq(qSeller.companyName))*/
+                .join(qSeller)
+                .on(qProduct.companyName.eq(qSeller.companyName))
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

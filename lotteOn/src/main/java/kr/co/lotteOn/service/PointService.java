@@ -33,6 +33,23 @@ public class PointService {
 
     }
 
+    // 주문번호를 저장하는 오버로딩 메서드
+    public void addPoint(Member member, int givePoint, String giveContent, String orderCode){
+        Point latestPoint = pointRepository.findTopByMemberOrderByGiveDateDesc(member);
+        int previousPoint = (latestPoint != null) ? latestPoint.getTotalPoint() : 0;
+        int newPoint = previousPoint + givePoint;
+
+        Point point = Point.builder()
+                .member(member)
+                .givePoint(givePoint)
+                .totalPoint(newPoint)
+                .giveContent(giveContent)
+                .orderCode(orderCode) // 주문번호 저장
+                .build();
+
+        pointRepository.save(point);
+    }
+
     public Point getLatestPoint(Member member){
         return pointRepository.findTopByMemberOrderByGiveDateDesc(member);
     }

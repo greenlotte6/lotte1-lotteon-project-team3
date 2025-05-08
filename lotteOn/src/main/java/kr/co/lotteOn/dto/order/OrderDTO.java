@@ -35,6 +35,15 @@ public class OrderDTO {
     private String imageList;
     private int price;
     private int quantity;
+    private String rating;
+    private String delegate;
+    private String hp;
+    private String businessNo;
+    private String fax;
+    private String addr1;
+    private String addr2;
+    private String zip;
+
 
 
     public String getOrderCode(){
@@ -51,5 +60,16 @@ public class OrderDTO {
         }
         return null;
     }
+
+    public String getPaymentName(){
+        switch (this.payment) {
+            case "tosspay": return "토스페이";
+            case "creditCard": return "신용카드";
+            case "kakaopay": return "카카오페이";
+            case "phone": return "휴대폰결제";
+            default: return null;
+        }
+    }
+
 }
 

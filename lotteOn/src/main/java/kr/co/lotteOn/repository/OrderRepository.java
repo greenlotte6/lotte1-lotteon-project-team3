@@ -25,5 +25,7 @@ public interface OrderRepository extends JpaRepository<Order, String> ,
     Optional<Order> findFullOrderByCode(@Param("orderCode") String orderCode);
 
     int countByMember_Id(String memberId);
+
+    Order findByOrderCode(String orderCode);
 }
 

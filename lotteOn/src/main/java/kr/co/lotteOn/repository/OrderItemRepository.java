@@ -12,4 +12,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
     List<OrderItem> findByOrder_OrderCode(String orderCode);
 
     OrderItem findFirstByOrder_OrderCode(String orderCode);
+
 }

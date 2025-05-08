@@ -63,16 +63,16 @@
     color: white;
     height: 50px;
 }
-.info table {
+.info table, .info_company table {
     width: 100%;
     border-top: 2px solid #333333;
     border-bottom: 2px solid #333333;
     border-spacing: 0;
 }
-.info h3 {
+.info h3, .info_company h3 {
     font-size: 18px;
 }
-.info {
+.info, .info_company {
     padding: 20px;
 }
 .info table tr:nth-child(1) th {
@@ -81,11 +81,11 @@
 .info table:nth-child(2) td {
     width: 200px;
 }
-.info table:nth-child(4) th {
+.info table:nth-child(4) th, .info_company th {
     border-bottom: 1px solid #dfdfdf;
     border-right: 1px solid #dfdfdf;
 }
-.info table:nth-child(4) td {
+.info table:nth-child(4) td, .info_company td {
     border-bottom: 1px solid #dfdfdf;
 }
 .info img {
