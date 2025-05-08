@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import kr.co.lotteOn.dto.*;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.entity.*;
+import kr.co.lotteOn.repository.OrderRepository;
 import kr.co.lotteOn.security.MyUserDetails;
 import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class ProductController {
     private final PointService pointService;
     private final OrderService orderService;
     private final OrderItemService orderItemService;
+    private final OrderRepository orderRepository;
 
     private void preparePaymentPage(Member member, ProductDTO product, int quantity, String option, Model model) {
         // 1. 상품 계산
@@ -130,29 +132,30 @@ public class ProductController {
     //상품 - 주문완료
     @GetMapping("/completeOrder/{orderCode}")
     public String showCompleteOrder(@PathVariable String orderCode, Model model) {
-        Order order = orderService.getOrderByCode(orderCode);
-        List<OrderItem> items = orderItemService.getItemsByOrderCode(orderCode);
 
-        OrderResultDTO dto = OrderResultDTO.fromEntity(order, items.get(0));
+        Order order = orderRepository.findFullOrderByCode(orderCode)
+                .orElseThrow(() -> new IllegalArgumentException("주문 없음"));
 
-        model.addAttribute("order", order);
+        List<OrderItem> items = order.getItems();
+
+        OrderItem firstItem = items.get(0);
+        OrderResultDTO orderResult = OrderResultDTO.fromEntity(order, firstItem);
+        int totalPrice = items.stream().mapToInt(OrderItem::getTotal).sum();
+        int originalPrice = items.stream()
+                        .mapToInt(i -> i.getPrice() * i.getQuantity())
+                                .sum();
+
+        model.addAttribute("orderResult", orderResult);
         model.addAttribute("items", items);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("originalPrice", originalPrice);
         return "/product/completeOrder";
     }
 
     @PostMapping("/completeOrder")
     public String completeOrder(@ModelAttribute OrderRequestDTO orderRequestDTO,
-                                @ModelAttribute OrderItemListDTO itemListDTO,
-                                Model model) {
+                                @ModelAttribute OrderItemListDTO itemListDTO) {
         String orderCode = orderService.createOrder(orderRequestDTO, itemListDTO.getItems());
-
-        orderItemService.saveOrderItems(orderCode, itemListDTO.getItems());
-
-        Order order = orderService.getOrderByCode(orderCode);
-        List<OrderItem> items = orderItemService.getItemsByOrderCode(orderCode);
-
-        model.addAttribute("order", order);
-        model.addAttribute("items", items);
         return "redirect:/product/completeOrder/" + orderCode;
 
     }

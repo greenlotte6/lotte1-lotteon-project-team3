@@ -53,34 +53,34 @@
                     <div class="sectionWrapper">
                         <div class="section">
                             <p>주문번호</p>
-                            <p th:text="${order.orderCode}"></p>
+                            <p th:text="${orderResult.orderCode}"></p>
                         </div>
                         <div class="section">
                             <p>결제방법</p>
-                            <p th:text="${order.payment}"></p>
+                            <p th:text="${orderResult.payment}"></p>
                         </div>
                         <div class="section">
                             <p>주문자</p>
-                            <p th:text="${order.name}"></p>
+                            <p th:text="${orderResult.member.name}"></p>
                         </div>
                         <div class="section">
                             <p>휴대폰</p>
-                            <p th:text="${order.member.hp}"></p>
+                            <p th:text="${orderResult.hp}"></p>
                         </div>
                     </div>
                     <h3 class="sectionTitle">배송정보</h3>
                     <div class="sectionWrapper">
                         <div class="section">
                             <p>수령자</p>
-                            <p th:text="${order.name}"></p>
+                            <p th:text="${orderResult.receiver}"></p>
                         </div>
                         <div class="section">
                             <p>연락처</p>
-                            <p th:text="${order.member.hp}"></p>
+                            <p th:text="${orderResult.hp}"></p>
                         </div>
                         <div class="section">
                             <p>배송지 주소</p>
-                            <p th:text="${order.delivery}"></p>
+                            <p th:text="${orderResult.addr}"></p>
                         </div>
                     </div>
                     <h3 class="sectionTitle">결제정보</h3>
@@ -88,28 +88,28 @@
                         <div class="section5">
                             <p>상품금액</p>
                             <div>
-                                <p th:text="${order.totalPrice}"></p>
+                                <p th:text="${#numbers.formatInteger(orderResult.finalPrice, 3, 'COMMA')}"></p>
                                 <p>&nbsp;원</p>
                             </div>
                         </div>
                         <div class="section5">
                             <p>쿠폰/포인트 할인</p>
                             <div>
-                                <p th:text="${order.discount}"></p>
+                                <p th:text="${orderResult.discount}"></p>
                                 <p>&nbsp;원</p>
                             </div>
                         </div>
                         <div class="section5">
                             <p>배송비</p>
                             <div>
-                                <p th:text="${order.fee}"></p>
+                                <p th:text="${orderResult.fee}"></p>
                                 <p>&nbsp;원</p>
                             </div>
                         </div>
                         <div class="section5">
                             <p>총 주문금액</p>
                             <div class="totalPrice">
-                                <p th:text="${order.actualMoney}"></p>
+                                <p th:text="${#numbers.formatInteger(finalTotal, 3, 'COMMA')}"></p>
                                 <p>&nbsp;원</p>
                             </div>
                         </div>

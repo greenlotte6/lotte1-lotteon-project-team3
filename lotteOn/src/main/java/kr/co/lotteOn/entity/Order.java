@@ -26,16 +26,21 @@ public class Order {
     private Member member;
 
     private String name;
-
-    private String payment;
-    private String orderStatus;
-    private LocalDateTime orderDate = LocalDateTime.now();
     private String delivery;
+    private String payment;
     private String discount;
     private String fee;
     private String actualMoney;
+    private String orderStatus;
+
+    @Column(nullable = false)
+    private String receiver;
+
+    @Builder.Default
+    private LocalDateTime orderDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<OrderItem> items = new ArrayList<>();
 }
 
