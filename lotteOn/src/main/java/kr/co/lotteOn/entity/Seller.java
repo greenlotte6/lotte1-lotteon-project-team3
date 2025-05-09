@@ -49,6 +49,6 @@ public class Seller {
 
 
 
-    @OneToMany(mappedBy = "seller")
-    private List<Shop> shops;
+//    @OneToMany(mappedBy = "seller")
+//    private List<Shop> shops;
 }

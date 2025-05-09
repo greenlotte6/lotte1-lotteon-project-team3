@@ -127,10 +127,22 @@ public class AdminStoreController {
 
     // 상점 상태 변화
     @GetMapping("/shop/state")
-    public String shopState(@RequestParam("sellerId") String sellerId, Model model){
+    public String shopState(@RequestParam("sellerId") String sellerId,
+                            @RequestParam("page") int page,
+                            @RequestParam(value = "type", required = false) String type,
+                            @RequestParam(value = "keyword", required = false) String keyword,
+                            Model model){
         sellerService.modifyState(sellerId);
 
-        return "redirect:/admin/shop/list";
+        String redirectUrl= String.format("redirect:/admin/shop/list?page=%d", page);
+        if (type != null && !type.isEmpty()) {
+            redirectUrl += "&type=" + type;
+        }
+        if (keyword != null && !keyword.isEmpty()) {
+            redirectUrl += "&keyword=" + keyword;
+        }
+
+        return redirectUrl;
     }
 
 
