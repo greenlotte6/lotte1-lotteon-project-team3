@@ -3,7 +3,7 @@ logging:
     root: info
     kr.co.lotteOn: debug
     org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql: trace
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 jasypt:
   encryptor:

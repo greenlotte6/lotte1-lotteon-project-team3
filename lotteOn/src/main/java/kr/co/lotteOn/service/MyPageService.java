@@ -167,28 +167,6 @@ public class MyPageService {
         return null;
     }
 
-    //마이페이지 메인 문의출력
-    public List<QnaDTO> findByMemberIdByLimit3(MemberDTO memberDTO) {
-        Member writer = Member
-                .builder()
-                .id(memberDTO.getId())
-                .build();
-
-        List<Qna> qna = qnaRepository.findTop3ByWriterOrderByRegDateDesc(writer);
-
-        List<QnaDTO> qnaDTOList = qna
-                .stream()
-                .map(qna1 -> {
-                    QnaDTO qnaDTO = modelMapper.map(qna1, QnaDTO.class);
-                    qnaDTO.setWriter(writer.getId());
-
-                    return qnaDTO;
-                })
-                .toList();
-
-        return qnaDTOList;
-
-    }
 
     //회원별 포인트 적립내역 출력
     public PointPageResponseDTO getPointByMemberId(PointPageRequestDTO pageRequestDTO) {
@@ -205,20 +183,20 @@ public class MyPageService {
                     PointDTO pointDTO = modelMapper.map(point, PointDTO.class);
                     pointDTO.setMemberId(memberId);
 
-                            // "상품 구매 확정"인 경우 상품 정보 추가
-                            if ("상품 구매 확정".equals(point.getGiveContent())) {
-                                String orderCode = point.getOrderCode();
+                    // "상품 구매 확정"인 경우 상품 정보 추가
+                    if ("상품 구매 확정".equals(point.getGiveContent())) {
+                        String orderCode = point.getOrderCode();
 
-                                // 주문 코드로 주문 아이템 조회 (OrderItemRepository 활용)
-                                OrderItem orderItem = orderItemRepository.findFirstByOrder_OrderCode(orderCode);
-                                if (orderItem != null && orderItem.getProduct() != null) {
-                                    Product product = orderItem.getProduct();  // Product 엔티티에 접근
-                                    pointDTO.setProductImage(product.getImageMain());
-                                    pointDTO.setProductName(product.getName());
-                                    pointDTO.setQuantity(orderItem.getQuantity());
-                                    pointDTO.setPrice(product.getPrice());
-                                }
-                            }
+                        // 주문 코드로 주문 아이템 조회 (OrderItemRepository 활용)
+                        OrderItem orderItem = orderItemRepository.findFirstByOrder_OrderCode(orderCode);
+                        if (orderItem != null && orderItem.getProduct() != null) {
+                            Product product = orderItem.getProduct();  // Product 엔티티에 접근
+                            pointDTO.setProductImage(product.getImageMain());
+                            pointDTO.setProductName(product.getName());
+                            pointDTO.setQuantity(orderItem.getQuantity());
+                            pointDTO.setPrice(product.getPrice());
+                        }
+                    }
 
                     return pointDTO;
                 }).collect(Collectors.toList());
@@ -230,97 +208,6 @@ public class MyPageService {
                 .dtoList(pointDTOList)
                 .total(total)
                 .build();
-    }
-
-    // Member의 id를 이용해 Qna 총 개수 조회
-    public int countQnaByWriter(String writerId) {
-        // Qna 게시글 개수 조회
-        return qnaRepository.countByWriter_Id(writerId);
-    }
-
-    // 최신 포인트 내역 조회
-    public int getLatestTotalPoint(String memberId) {
-        // 최신 giveDate 기준으로 1개의 totalPoint 가져오기
-        List<Integer> points = pointRepository.findLatestTotalPointByMemberId(memberId, PageRequest.of(0, 1));
-
-        // 리스트가 비어있으면 0 반환, 아니면 첫 번째 값을 반환
-        return points.isEmpty() ? 0 : points.get(0);
-    }
-
-    // 쿠폰 총 갯수 조회
-    public int countIssuedByMemberId(String memberId) {
-        // 쿠폰 개수 조회
-        return issuedCouponRepository.countByMember_Id(memberId);
-    }
-
-    // 주문내역 총 갯수 조회
-    public int countOrderByMemberId(String memberId) {
-
-        return orderRepository.countByMember_Id(memberId);
-    }
-
-    //최신 주문 내역 불러오기(3)
-    public List<OrderDTO> findOrderByMemberIdByLimit3(MemberDTO memberDTO) {
-        Member memberId = memberRepository.findById(memberDTO.getId()).get();
-
-
-        Page<Tuple> pageOrder = orderRepository.findTop3ByMemberOrderByOrderDateDesc(memberId);
-
-        List<OrderDTO> orderDTOList = pageOrder
-                .getContent()
-                .stream()
-                .map(tuple -> {
-                    Order order = tuple.get(0, Order.class);
-                    OrderItem orderItem = tuple.get(1, OrderItem.class);
-                    Product product = tuple.get(2, Product.class);
-
-                    //상품정보
-                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-                    orderDTO.setMember(memberId);
-                    orderDTO.setCompanyName(product.getCompanyName());
-                    orderDTO.setDescription(product.getDescription());
-                    orderDTO.setPrice(product.getPrice());
-                    orderDTO.setPoint(product.getPoint());
-                    orderDTO.setProductName(product.getName());
-                    orderDTO.setQuantity(orderItem.getQuantity());
-                    orderDTO.setImageList(product.getImageList());
-
-                    // 판매자 정보 조회: companyName을 사용하여 Seller 조회
-                    String companyName = product.getCompanyName(); // companyName을 이용해 Seller 조회
-                    Seller seller = sellerRepository.findByCompanyName(companyName); // 회사명으로 Seller 조회
-
-                    //판매자정보
-                    orderDTO.setRating(seller.getRating());
-                    orderDTO.setDelegate(seller.getDelegate());
-                    orderDTO.setHp(seller.getHp());
-                    orderDTO.setBusinessNo(seller.getBusinessNo());
-                    orderDTO.setFax(seller.getFax());
-                    orderDTO.setAddr1(seller.getAddr1());
-                    orderDTO.setAddr2(seller.getAddr2());
-                    orderDTO.setZip(seller.getZip());
-
-                    return orderDTO;
-                }).collect(Collectors.toList());
-
-
-        return orderDTOList;
-    }
-
-
-    //최신 포인트 내역 불러오기(3)
-    public List<PointDTO> findPointByMemberIdByLimit3(MemberDTO memberDTO){
-        Member memberId = Member.builder().id(memberDTO.getId()).build();
-
-        List<Point> point = pointRepository.findTop3ByMemberOrderByGiveDateDesc(memberId);
-
-        List<PointDTO> pointDTOList = point.stream().map(point1 -> {
-            PointDTO pointDTO = modelMapper.map(point1, PointDTO.class);
-            pointDTO.setMemberId(memberId.getId());
-
-            return pointDTO;
-        }).toList();
-
-        return pointDTOList;
     }
 
     //고객별 주문내역 불러오기
@@ -362,12 +249,101 @@ public class MyPageService {
                 .build();
     }
 
+
+    /*메인페이지 시작*/    /*메인페이지 시작*/    /*메인페이지 시작*/    /*메인페이지 시작*/
+
+    //마이페이지 메인 문의출력
+    public List<QnaDTO> findByMemberIdByLimit3(MemberDTO memberDTO) {
+        Member writer = Member
+                .builder()
+                .id(memberDTO.getId())
+                .build();
+
+        List<Qna> qna = qnaRepository.findTop3ByWriterOrderByRegDateDesc(writer);
+
+        List<QnaDTO> qnaDTOList = qna
+                .stream()
+                .map(qna1 -> {
+                    QnaDTO qnaDTO = modelMapper.map(qna1, QnaDTO.class);
+                    qnaDTO.setWriter(writer.getId());
+
+                    return qnaDTO;
+                })
+                .toList();
+
+        return qnaDTOList;
+
+    }
+
+    //최신 주문 내역 불러오기(3)
+    public List<OrderDTO> findOrderByMemberIdByLimit3(MemberDTO memberDTO) {
+        Member member = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+
+        // 회원에 해당하는 주문 내역만 가져오기
+        Page<Tuple> pageOrder = orderRepository.findTop3ByMemberOrderByOrderDateDesc(member);
+
+        List<OrderDTO> orderDTOList = pageOrder
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Order order = tuple.get(0, Order.class);
+                    OrderItem orderItem = tuple.get(1, OrderItem.class);
+                    Product product = tuple.get(2, Product.class);
+
+                    // 상품 정보 설정
+                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+                    orderDTO.setMember(member);
+                    orderDTO.setCompanyName(product.getCompanyName());
+                    orderDTO.setDescription(product.getDescription());
+                    orderDTO.setPrice(product.getPrice());
+                    orderDTO.setPoint(product.getPoint());
+                    orderDTO.setProductName(product.getName());
+                    orderDTO.setQuantity(orderItem.getQuantity());
+                    orderDTO.setImageList(product.getImageList());
+                    orderDTO.setOrderCode(order.getOrderCode());
+
+                    // 판매자 정보 조회
+                    String companyName = product.getCompanyName();
+                    Seller seller = sellerRepository.findByCompanyName(companyName);
+
+                    // 판매자 정보 설정
+                    orderDTO.setRating(seller.getRating());
+                    orderDTO.setDelegate(seller.getDelegate());
+                    orderDTO.setHp(seller.getHp());
+                    orderDTO.setBusinessNo(seller.getBusinessNo());
+                    orderDTO.setFax(seller.getFax());
+                    orderDTO.setAddr1(seller.getAddr1());
+                    orderDTO.setAddr2(seller.getAddr2());
+                    orderDTO.setZip(seller.getZip());
+
+                    return orderDTO;
+                }).collect(Collectors.toList());
+
+        return orderDTOList;
+    }
+
+
+    //최신 포인트 내역 불러오기(3)
+    public List<PointDTO> findPointByMemberIdByLimit3(MemberDTO memberDTO){
+        Member memberId = Member.builder().id(memberDTO.getId()).build();
+
+        List<Point> point = pointRepository.findTop3ByMemberOrderByGiveDateDesc(memberId);
+
+        List<PointDTO> pointDTOList = point.stream().map(point1 -> {
+            PointDTO pointDTO = modelMapper.map(point1, PointDTO.class);
+            pointDTO.setMemberId(memberId.getId());
+
+            return pointDTO;
+        }).toList();
+
+        return pointDTOList;
+    }
     //고객 상품 문의내역(channel = 판매자 게시판)
     public int qnaWrite(QnaDTO qnaDTO){
         Member member = Member.builder()
                 .id(qnaDTO.getWriter())
                 .build();
-        
+
         Qna qna = modelMapper.map(qnaDTO, Qna.class);
         String cate1Name = qnaDTO.getCate1Name();
 
@@ -383,20 +359,26 @@ public class MyPageService {
     //주문확정
     @Transactional
     public void confirmPurchase(String orderCode){
+        System.out.println(orderCode);
 
-        //구매확정으로 변경
+        //주문조회
         Order order = orderRepository.findByOrderCode(orderCode);
 
+        //구매확정으로 변경
         order.setConfirm("구매 확정");
 
         //회원 정보
         Member member = order.getMember();
 
+
         //상품에 대한 포인트 적립
         List<OrderItem> items = orderItemRepository.findByOrder_OrderCode(orderCode);
 
+
         for(OrderItem item : items){
             String productCode = item.getProduct().getProductCode();
+
+
 
             Optional<Product> product = productRepository.findByProductCode(productCode);
             if(product.isPresent()){
@@ -408,5 +390,47 @@ public class MyPageService {
         }
 
     }
+
+    //상품평쓰기
+
+
+
+
+    /*메인페이지 끝*/    /*메인페이지 끝*/    /*메인페이지 끝*/    /*메인페이지 끝*/    /*메인페이지 끝*/
+
+
+
+
+    /*헤더 시작*/    /*헤더 시작*/    /*헤더 시작*/    /*헤더 시작*/    /*헤더 시작*/    /*헤더 시작*/
+
+    // Member의 id를 이용해 Qna 총 개수 조회
+    public int countQnaByWriter(String writerId) {
+        // Qna 게시글 개수 조회
+        return qnaRepository.countByWriter_Id(writerId);
+    }
+
+    // 최신 포인트 내역 조회
+    public int getLatestTotalPoint(String memberId) {
+        // 최신 giveDate 기준으로 1개의 totalPoint 가져오기
+        List<Integer> points = pointRepository.findLatestTotalPointByMemberId(memberId, PageRequest.of(0, 1));
+
+        // 리스트가 비어있으면 0 반환, 아니면 첫 번째 값을 반환
+        return points.isEmpty() ? 0 : points.get(0);
+    }
+
+    // 쿠폰 총 갯수 조회
+    public int countIssuedByMemberId(String memberId) {
+        // 쿠폰 개수 조회
+        return issuedCouponRepository.countByMember_Id(memberId);
+    }
+
+    // 주문내역 총 갯수 조회
+    public int countOrderByMemberId(String memberId) {
+
+        return orderRepository.countByMember_Id(memberId);
+    }
+
+    /*헤더 끝*/    /*헤더 끝*/    /*헤더 끝*/    /*헤더 끝*/    /*헤더 끝*/    /*헤더 끝*/
+
 
 }

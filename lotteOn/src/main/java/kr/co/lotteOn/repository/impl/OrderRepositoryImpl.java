@@ -98,7 +98,11 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public Page<Tuple> findTop3ByMemberOrderByOrderDateDesc(Member memberId) {
+    public Page<Tuple> findTop3ByMemberOrderByOrderDateDesc(Member member) {
+
+        String memberId = member.getId();
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(qOrder.member.id.eq(memberId));
 
         List<Tuple> result = queryFactory
                 .select(qOrder, qOrderItem, qProduct, qMember.id)
@@ -109,7 +113,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .on(qOrderItem.product.productCode.eq(qProduct.productCode))
                 .join(qMember)
                 .on(qOrder.member.id.eq(qMember.id))
-                .where(qOrder.member.id.eq(qMember.id))
+                .where(builder)
                 .orderBy(qOrder.orderDate.desc())
                 .limit(3)
                 .fetch();

@@ -63,16 +63,16 @@
     color: white;
     height: 50px;
 }
-.info table, .info_company table {
+.info table, .info_company table, .review_form table, .inquiry_form table {
     width: 100%;
     border-top: 2px solid #333333;
     border-bottom: 2px solid #333333;
     border-spacing: 0;
 }
-.info h3, .info_company h3 {
+.info h3, .info_company h3, .review_form table h3 {
     font-size: 18px;
 }
-.info, .info_company {
+.info, .info_company, .review_form, .inquiry_form {
     padding: 20px;
 }
 .info table tr:nth-child(1) th {
@@ -81,14 +81,49 @@
 .info table:nth-child(2) td {
     width: 200px;
 }
-.info table:nth-child(4) th, .info_company th {
+.info table:nth-child(4) th, .info_company th, .inquiry_form th {
     border-bottom: 1px solid #dfdfdf;
     border-right: 1px solid #dfdfdf;
 }
-.info table:nth-child(4) td, .info_company td {
+.info table:nth-child(4) td, .info_company td, .inquiry_form td {
     border-bottom: 1px solid #dfdfdf;
 }
 .info img {
     width: 220px;
     height: 220px;
+}
+.inquiry_form select {
+    width: 200px;
+    float: left;
+    margin-left: 10px;
+    height: 40px;
+    font-size: 15px;
+}
+.inquiry_form textarea {
+    resize: none;
+    float: left;
+    padding: 10px;
+    width: 500px;
+    border: none;
+    height: 500px;
+}
+.inquiry_form input {
+    height: 30px;
+    width: 500px;
+    float: left;
+    padding: 10px;
+    border: none;
+}
+.inquiry_form th {
+    width: 150px;
+}        .alert_message {
+             padding: 20px;
+         }
+.confirm_button button {
+    float: none;
+    margin: 0 10px 20px 5px;
+}
+.confirm_button {
+    position: relative;
+    left: 250px;
 }
