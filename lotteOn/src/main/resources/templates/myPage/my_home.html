@@ -8,86 +8,12 @@
     <link rel="stylesheet" href="/style/mypage/my_home_modal.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
-    <script src="/script/myHome.js"></script>
     <title>마이페이지 메인</title>
     <style>
-        .alert_message {
-            padding: 20px;
-        }
-        .confirm_button button {
-            float: none;
-            margin: 0 10px 20px 5px;
-        }
-        .confirm_button {
-            position: relative;
-            left: 250px;
-        }
+
     </style>
 </head>
 <body>
-<!--region:상품평쓰기 모달-->
-<div id="reviewModal" class="modal reviewmodal">
-    <div class="modal-content">
-        <div class="modal-header review-header">
-            <h2>상품평작성하기</h2>
-            <span class="close review-close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <table class="table_five">
-                <tr>
-                    <th class="five-th1">상품명</th>
-                    <td>상품명 출력</td>
-                </tr>
-                <tr>
-                    <th class="five-th2">만족도</th>
-                    <td>
-                        <div class="star-rating">
-                            <input type="radio" id="star5" name="rating" value="5"><label for="star5"
-                                                                                          title="5점"></label>
-                            <input type="radio" id="star4" name="rating" value="4"><label for="star4"
-                                                                                          title="4점"></label>
-                            <input type="radio" id="star3" name="rating" value="3"><label for="star3"
-                                                                                          title="3점"></label>
-                            <input type="radio" id="star2" name="rating" value="2"><label for="star2"
-                                                                                          title="2점"></label>
-                            <input type="radio" id="star1" name="rating" value="1"><label for="star1"
-                                                                                          title="1점"></label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="five-th3">내용</th>
-                    <td>
-                        <input type="text" placeholder="최소 10자 이상 200자 이내 외로 작성해주세요" class="placeholder">
-                    </td>
-                </tr>
-                <tr>
-                    <th class="five-th4">사진</th>
-                    <td class="five-td1">
-
-                        <div class="picture-1">
-                            <button type="button" class="picture-btn">파일선택</button>
-                            <p>선택된파일없음</p>
-                        </div>
-                        <div class="picture-1">
-                            <button type="button" class="picture-btn">파일선택</button>
-                            <p>선택된파일없음</p>
-                        </div>
-                        <div class="picture-1">
-                            <button type="button" class="picture-btn">파일선택</button>
-                            <p>선택된파일없음</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="review_btn">
-                <button type="button" class="review_btn1">작성완료</button>
-                <button type="button" class="review_btn2">취소</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--endregion-->
 
 <!--region:반품신청 모달-->
 <div id="returnModal" class="modal returnmodal">
@@ -335,7 +261,7 @@
                                 <td class="baesong table-td" th:text="${order.orderStatus}"></td>
                                 <td class="table-td">
                                     <button class="btn_blue confirm-btn" th:onclick="'showConfirmPopup(' + ${i.index} + ')'">구매확정</button>
-                                    <button class="btn_blue review-btn">상품평쓰기</button>
+                                    <button class="btn_blue review-btn" th:onclick="'showReviewPopup(' + ${i.index} + ')'">상품평쓰기</button>
                                     <button class="return-btn">반품신청</button>
                                     <button class="exchange-btn">교환신청</button>
                                 </td>
@@ -461,7 +387,7 @@
                     </div>
 
                     <!-- 문의하기 모달 -->
-                    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="popup" style="display:none;">
+                    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
                         <div class="popup-content">
                             <h2>문의하기</h2>
                             <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
@@ -507,20 +433,81 @@
                     <div th:each="order, i : ${recentOrder}" th:id="'confirm-popup-' + ${i.index}" class="popup" style="display: none; width: 400px">
                         <div class="popup-content">
                             <h2>구매확정</h2>
-                            <div class="confirm_message">
-                                <div class="alert_message">
-                                    <p>상품을 받으셨나요?</p>
-                                    <p>상품을 받으신 분만 구매확정을 해주세요.</p>
-                                    <p style="text-decoration: underline; font-weight: bold">구매 확정 후에는 반품 또는 교환이 어렵습니다.</p>
+                            <form action="/myPage/my_confirm" method="post">
+                                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
+                                <div class="confirm_message">
+                                    <div class="alert_message">
+                                        <p>상품을 받으셨나요?</p>
+                                        <p>상품을 받으신 분만 구매확정을 해주세요.</p>
+                                        <p style="text-decoration: underline; font-weight: bold">구매 확정 후에는 반품 또는 교환이 어렵습니다.</p>
+                                    </div>
+                                    <div class="confirm_button">
+                                        <button type="submit">확인</button>
+                                    </div>
                                 </div>
-                                <div class="confirm_button">
-                                    <button onclick="confirmOrder('[[${order.orderCode}]]')">확인</button>
-                                    <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
-                                </div>
-                            </div>
+                            </form>
+                            <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
                         </div>
                     </div>
-                    <script>
+
+                    <!--region:상품평쓰기 모달-->
+                    <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
+                        <div class="popup-content">
+                            <h2>상품평</h2>
+                            <form action="/myPage/my_review_write" method="post">
+                                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
+                                <div class="review_form">
+                                    <h3>리뷰 작성하기</h3>
+                                    <table>
+                                        <tr>
+                                            <th>상품명</th>
+                                            <td>이름</td>
+                                        </tr>
+                                        <tr>
+                                            <th>만족도</th>
+                                            <td>
+                                                ★★★★★
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>제목</th>
+                                            <td>
+                                                <input type="text" placeholder="제목 입력">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>내용</th>
+                                            <td>
+                                                <textarea placeholder="내용 입력"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>사진</th>
+                                            <td>
+                                                <div>
+                                                    <input type="file" name="imageListFile" placeholder="선택된 파일 없음">
+                                                    <p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
+                                                </div>
+                                                <div>
+                                                    <input type="file" name="imageMainFile" placeholder="선택된 파일 없음">
+                                                    <p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
+                                                </div>
+                                                <div>
+                                                    <input type="file" name="imageDetailFile" placeholder="선택된 파일 없음">
+                                                    <p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="review_button">
+                                        <button type="button" class="review_btn1">작성완료</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <button th:onclick="'closePopup(' + ${i.index} + ')'" class="review_btn2">취소</button>
+                        </div>
+                    </div>
+                    <script th:inline="javascript">
                         //상품정보
                         function showPopup(index) {
                             document.getElementById("popup-" + index).style.display = "block";
@@ -544,32 +531,18 @@
                             document.getElementById("confirm-popup-" + index).style.display = "block";
                         }
 
+                        //상품평
+                        function showReviewPopup(index) {
+                            document.getElementById("review-popup-" + index).style.display = "block";
+                        }
+
                         // 모달 닫기
                         function closePopup(index) {
                             document.getElementById("popup-" + index).style.display = "none";
                             document.getElementById("company-popup-" + index).style.display = "none";
                             document.getElementById("inquiry-popup-" + index).style.display = "none";
                             document.getElementById("confirm-popup-" + index).style.display = "none";
-                        }
-
-                        //구매 확정
-                        function confirmOrder(orderCode) {
-                            console.log("Order Code: ", orderCode); // 여기서 orderCode를 확인
-                            fetch('/myPage/my_confirm', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ orderCode })
-                            })
-                                .then(res => {
-                                    if (res.ok) {
-                                        alert("구매 확정 완료! 포인트가 적립되었습니다.");
-                                        location.reload();
-                                    } else {
-                                        alert("처리 중 오류가 발생했습니다.");
-                                    }
-                                });
+                            document.getElementById("review-popup-" + index).style.display = "none";
                         }
                     </script>
                     <div class="article_title2">
@@ -618,16 +591,6 @@
                                 <td class="pr_td">상품번호/상품명</td>
                                 <td class="pr_td">배송이 빠릅니다. 잘 사용하겠습니다.</td>
                                 <td class="pr_star">
-                                    <div class="star-rating1">
-                                        <input type="radio" id="star9" name="rating" value="4"><label for="star8"
-                                                                                                      title="4점"></label>
-                                        <input type="radio" id="star8" name="rating" value="3"><label for="star7"
-                                                                                                      title="3점"></label>
-                                        <input type="radio" id="star7" name="rating" value="2"><label for="star6"
-                                                                                                      title="2점"></label>
-                                        <input type="radio" id="star6" name="rating" value="1"><label for="star5"
-                                                                                                      title="1점"></label>
-                                    </div>
                                 </td>
                                 <td class="pr_date">2022-12-10</td>
                             </tr>

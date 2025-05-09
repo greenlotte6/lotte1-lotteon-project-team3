@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -279,17 +280,14 @@ public class MyPageController {
         return "redirect:/member/logout";
     }
 
-
     @PostMapping("/my_confirm")
-    public ResponseEntity<String> confirmPurchase(@RequestBody Map<String, String> data) {
-        try {
-            String orderCode = data.get("orderCode");
-            myPageService.confirmPurchase(orderCode);
-            return ResponseEntity.ok("구매확정 및 포인트 적립 완료");
-        } catch (Exception e) {
-            log.info("구매확정 처리 중 오류 발생 - orderCode: {}", data.get("orderCode"), e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("처리 중 오류 발생");
-        }
+    public String confirmPurchase(@RequestParam("orderCode") String orderCode) {
+        System.out.println(orderCode);
+
+        myPageService.confirmPurchase(orderCode);
+
+        return "redirect:/myPage/my_order";
     }
+
 
 }

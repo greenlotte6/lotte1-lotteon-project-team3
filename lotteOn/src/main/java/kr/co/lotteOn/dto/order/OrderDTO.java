@@ -44,15 +44,6 @@ public class OrderDTO {
     private String addr2;
     private String zip;
 
-
-
-    public String getOrderCode(){
-        if(orderCode != null){
-            return orderCode.substring(0,8);
-
-        }
-        return null;
-    }
     public String getOrderDate(){
         if(orderDate != null){
             return orderDate.substring(0,10);   // yyyy-mm-dd
