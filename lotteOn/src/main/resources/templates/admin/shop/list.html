@@ -79,7 +79,7 @@
                             </div>
                         </td>
                         <td>
-                            <a th:href="@{/admin/shop/state(sellerId=${seller.sellerId})}" class="manageBtn"
+                            <a th:href="@{/admin/shop/state(sellerId=${seller.sellerId},page=${currentPage}, type=${type}, keyword=${keyword})}" class="manageBtn"
                                 th:text="${seller.status == '운영중' ? '[중단]' : (seller.status == '운영중지' ? '[승인]' :'[재개]')}">
                             </a>
                         </td>
