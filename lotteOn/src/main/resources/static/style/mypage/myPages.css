@@ -1,0 +1,639 @@
+main > div > * {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.mainContainer {
+    padding: 45px 0 120px;
+    display: flex;
+}
+
+aside {
+    width: 180px;
+}
+
+aside h2 {
+    font-size: 36px;
+    font-weight: 400;
+    padding-bottom: 30px;
+}
+
+.asideLink {
+    display: flex;
+    flex-direction: column;
+}
+
+.asideLink a {
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.asideLink a:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+.customerService {
+    padding-top: 30px;
+}
+
+.customerService p:first-child {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.customerService div {
+    padding: 5px 0;
+    display: flex;
+    letter-spacing: -1px;
+}
+
+.customerService h4 {
+    font-size: 26px;
+}
+
+.customerService span {
+    font-size: 10px;
+    font-weight: 500;
+    margin-top: 16px;
+}
+
+.customerService p:not(:first-child) {
+    font-size: 13px;
+    color: #777;
+}
+
+.asideBtn {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 30px;
+}
+
+.asideBtn button {
+    width: 100%;
+    height: 40px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+section {
+    width: 100%;
+    padding-left: 50px;
+}
+
+.simpleInfoWrapper {
+    margin-bottom: 40px;
+}
+
+.simpleInfo {
+    background-color: #F8F8F8;
+    display: flex;
+    justify-content: space-between;
+    padding: 34px 0px 26px 40px;
+    border-radius: 14px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.simpleInfo > div {
+    width: 100%;
+}
+
+.simpleInfo > div:nth-of-type(1) > p {
+    font-size: 14px;
+}
+
+.nameBox {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    width: fit-content;
+}
+
+.nameBox::after {
+    width: 22px;
+    height: 22px;
+    content: "";
+    background: url("../../images/icon_mylotte_next_black.svg") no-repeat 50%;
+    vertical-align: baseline;
+}
+
+.nameBox p {
+    font-size: 26px;
+}
+
+.ratingBox {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ratingBox img {
+    width: 20px;
+}
+
+.ratingBox p {
+    font-size: 15px;
+}
+
+.simpleInfo > div:nth-of-type(2) {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-left: 1px solid #ededed;
+}
+
+.simpleInfo > div:nth-of-type(2) > div {
+    width: 150px;
+}
+
+.simpleInfo > div:nth-of-type(2) > div:not(:last-child) {
+    border-right: 1px solid #ededed;
+}
+
+.simpleInfo > div:nth-of-type(2) > div > a > div {
+    display: flex;
+    justify-content: center;
+}
+
+.simpleInfo > div:nth-of-type(2) > div > a > div > p {
+    font-size: 20px;
+}
+
+.simpleInfo > div:nth-of-type(2) > div > a > div > p:last-child {
+    font-weight: 500;
+}
+
+.simpleInfo > div:nth-of-type(2) > div > a > p {
+    position: relative;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #686c6f;
+    text-align: center;
+}
+
+.simpleInfo > div:nth-of-type(2) > div > a > p::after {
+    position: absolute;
+    margin-left: 2px;
+    top: 1.5px;
+    width: 12px;
+    height: 12px;
+    content: "";
+    background: url("../../images/icon_mylotte_next_gray.svg") no-repeat 50%;
+    vertical-align: baseline;
+}
+
+.simpleInfoFooter {
+    height: 60px;
+    background-image: linear-gradient(266deg, #ff597e, #e96f5d);
+    border-radius: 0 0 8px 8px;
+}
+
+.swiper {
+    height: inherit;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: white;
+}
+
+.var:not(:last-child) {
+    margin-bottom: 60px;
+}
+
+.var h3 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.varTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+}
+
+.varTitle2 {
+    border-bottom: 1px solid #ddd;
+    padding-top: 16px;
+    padding-bottom: 20px;
+}
+
+.allView {
+    position: relative;
+    padding-right: 18px;
+    font-size: 14px;
+}
+
+.allView::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100% 100%;
+    background-image: url("../../images/allView.png");
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 20px;
+    border-top: 1px solid #ddd;
+    background-color: #F8F8F8;
+}
+
+.orderHeader > div {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.orderHeader > div > p {
+    font-size: 14px;
+}
+
+.orderDate {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.orderNo {
+    font-size: 12px !important;
+    color: #999;
+}
+
+.detailView {
+    position: relative;
+    padding-right: 16px;
+    font-size: 13px;
+}
+
+.detailView::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 11px;
+    height: 11px;
+    margin-top: -5px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100% 100%;
+    background-image: url("../../images/allView.png");
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 22px 40px;
+}
+
+.orderItem:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+.itemDetail {
+    display: flex;
+}
+
+.itemInfo {
+    padding-top: 10px;
+}
+
+.itemImg {
+    margin-right: 12px;
+}
+
+.itemImg > img {
+    width: 140px;
+}
+
+.itemTitle {
+    display: flex;
+    column-gap: 6px;
+}
+
+.itemCompany {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.itemName {
+    font-size: 14px;
+}
+
+.itemOption {
+    display: flex;
+    padding: 10px 0;
+}
+
+.itemOption p {
+    font-size: 13px;
+    color: #666;
+}
+
+.itemPrice {
+    display: flex;
+    align-items: center;
+}
+
+.itemPrice p {
+    font-size: 12px;
+    margin-left: 1px;
+}
+
+.itemPrice span {
+    font-size: 12px;
+    color: #999;
+}
+
+.orderManagement {
+    display: flex;
+    column-gap: 60px;
+}
+
+.orderStatus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 6px;
+}
+
+.orderStatus h4 {
+    color: #4185ed;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.orderStatus p {
+    font-size: 13px;
+    color: #888;
+}
+
+.orderButtons {
+    display: flex;
+    width: 120px;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.orderButtons a {
+    width: inherit;
+}
+
+.orderButtons button {
+    width: inherit;
+    height: 36px;
+    border: 1px solid #ebebeb;
+    background-color: white;
+    font-size: 13px;
+}
+
+.pointList h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pointList table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+.pointList table tr:first-child {
+    background-color: #f8f8f8;
+}
+
+.pointList table tr {
+    height: 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.pointList table td {
+    width: 200px;
+}
+
+.pointList table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pointList table td {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+.reviewList table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+
+}
+
+.reviewList table tr:first-child {
+    background-color: #f8f8f8;
+}
+
+.reviewList table tr {
+    height: 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.reviewList table td:nth-of-type(1) {
+    width: 80px;
+}
+
+.reviewList table td:nth-of-type(2) {
+    width: 150px;
+}
+
+.reviewList table td:nth-of-type(3) {
+    width: 470px;
+}
+
+.reviewList table td {
+    width: 150px;
+}
+
+
+.reviewList table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.reviewList table td {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+.helpList table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+
+}
+
+.helpList table tr:first-child {
+    background-color: #f8f8f8;
+}
+
+.helpList table tr {
+    height: 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.helpList table td {
+    width: 100px;
+}
+
+.helpList table td:nth-of-type(3) {
+    width: 130px;
+}
+
+.helpList table td:nth-of-type(4) {
+    width: 410px;
+}
+
+.helpList table td:nth-of-type(5), .helpList table td:nth-of-type(6) {
+    width: 130px;
+}
+
+
+.helpList table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.helpList table td {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+.productServiceList table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+
+}
+
+.productServiceList table tr:first-child {
+    background-color: #f8f8f8;
+}
+
+.productServiceList table tr {
+    height: 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.productServiceList table td:nth-of-type(1) {
+    width: 100px;
+}
+
+.productServiceList table td:nth-of-type(2) {
+    width: 130px;
+}
+
+.productServiceList table td:nth-of-type(4), .productServiceList table td:nth-of-type(5) {
+    width: 130px;
+}
+
+.productServiceList table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.productServiceList table td {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+.profileManagement form {
+    margin-top: 16px;
+    padding-left: 16px;
+}
+
+.profileManagement table tr > td:first-child {
+    width: 200px;
+    height: 50px;
+    font-size: 14px;
+}
+
+.profileManagement table td {
+    width: 100%;
+}
+
+.profileManagement table span {
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+.profileManagement table input {
+    width: 400px;
+    height: 40px;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    font-size: 14px;
+}
+
+.profileManagement table tr > td:last-child {
+    display: flex;
+    align-items: center;
+}
+
+.profileManagement table tr:last-child > td:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 145px;
+}
+
+.profileBtns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.profileBtns button {
+    width: 120px;
+    height: 40px;
+    border: 1px solid #E60012;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.profileBtns button:last-child {
+    background-color: white;
+    color: #E60012;
+}
+
+.profileBtns button:first-child {
+    background-color: #E60012;
+    color: white;
+}
+
+.bold {
+    font-weight: 700;
+}
