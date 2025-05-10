@@ -4,124 +4,212 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
-    <link rel="stylesheet" href="/style/mypage/my_info.css">
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/script/swiper3.js"></script>
+
+    <!-- Script -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/script/daumPostCode.js"></script>
+    <script src="/script/autoPhoneNumber.js"></script>
+    <script src="/script/myPointComma.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
+
+    <link rel="stylesheet" href="/style/mypage/myPages.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
-    <title>마이페이지 메인</title>
-    <style>
-
-    </style>
+    <title>마이페이지 : 롯데ON</title>
 </head>
 <body>
 <div id="container">
     <th:block th:insert="~{/common/_header.html}"/>
-    <main class="main_container">
-
-        <div class="mypage-header">
-            <div class="mypage-title">
-                <h2>나의쇼핑정보</h2>
+    <main>
+        <div class="mainWrapper">
+            <div class="mainContainer">
+                <aside>
+                    <h2>마이롯데</h2>
+                    <div class="asideLink">
+                        <a th:href="@{/myPage/my_order}">주문 내역</a>
+                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
+                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
+                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
+                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
+                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
+                        <a th:href="@{/myPage/my_info}">나의 설정</a>
+                    </div>
+                    <div class="customerService">
+                        <p>롯데ON 고객센터</p>
+                        <div>
+                            <h4>1899-7000</h4>
+                        </div>
+                        <p>월~금요일 09:00 ~ 18:00</p>
+                        <p>주말, 공휴일 휴무</p>
+                    </div>
+                    <div class="asideBtn">
+                        <a th:href="@{/cust/cust_main}">
+                            <button>고객센터</button>
+                        </a>
+                        <a href="#">
+                            <button>문의하기</button>
+                        </a>
+                    </div>
+                </aside>
+                <section>
+                    <div class="simpleInfoWrapper">
+                        <div class="simpleInfo">
+                            <div>
+                                <p>쇼핑하기 좋은 날이에요!</p>
+                                <a href="#" class="nameBox">
+                                    <p class="bold" th:text="${member.name}"></p>
+                                    <p>님</p>
+                                </a>
+                                <div class="ratingBox">
+                                    <img src="/images/icon_mylotte.png" alt="등급">
+                                    <p class="bold">롯데ON</p>
+                                    <p class="bold" th:text="${member.rating}"></p>
+                                    <p>등급이네요!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_order}">
+                                        <p>주문 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalOrder}"></p>
+                                            <p>건</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_point}">
+                                        <p>POINT</p>
+                                        <div>
+                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
+                                            <p>P</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myCoupon">
+                                    <a th:href="@{/myPage/my_coupon}">
+                                        <p>나의 쿠폰</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalCoupon}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myReview">
+                                    <a th:href="@{/myPage/my_qna}">
+                                        <p>문의 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalQnaCount}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simpleInfoFooter">
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
+                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
+                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profileManagement var">
+                        <div class="varTitle varTitle2">
+                            <h3>프로필 관리</h3>
+                        </div>
+                        <form id="leaveForm" th:action="@{/myPage/my_info/leave}" method="post" style="display: none;"></form>
+                        <form th:action="@{/myPage/my_info}" method="post" autocomplete="off" id="myProfile">
+                            <table>
+                                <tr>
+                                    <td>아이디</td>
+                                    <td>
+                                        <input type="text" name="id" th:value="${member.id}" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>새 비밀번호</td>
+                                    <td>
+                                        <input type="password" class="password1" placeholder="새 비밀번호를 입력해 주세요">
+                                        <span class="passMsg1"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>새 비밀번호 확인</td>
+                                    <td>
+                                        <input type="password" class="password2" placeholder="새 비밀번호를 다시 입력해 주세요">
+                                        <input type="hidden" name="password" class="realPassword" th:value="${member.password}" data-original="${member.password}">
+                                        <span class="passMsg2"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>이름</td>
+                                    <td>
+                                        <input type="text" name="name" th:value="${member.name}" placeholder="이름을 입력해 주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>이메일</td>
+                                    <td>
+                                        <input type="email" name="email" th:value="${member.email}" placeholder="이메일을 입력해 주세요">
+                                        <span></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>휴대폰</td>
+                                    <td>
+                                        <input type="text" name="hp" th:value="${member.hp}" placeholder="번호를 입력해 주세요">
+                                        <span></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>생년월일</td>
+                                    <td>
+                                        <input type="text" name="birthDate" th:value="${member.birthDate}" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>주소</td>
+                                    <td>
+                                        <input type="text" id="postcode" name="zip" placeholder="우편번호 찾기" th:value="${member.zip}" onclick="DaumPostcode()" readonly>
+                                        <input type="text" id="address" name="addr1" placeholder="기본 주소 찾기" th:value="${member.addr1}" readonly>
+                                        <input type="text" id="detailAddress" name="addr2" placeholder="상세 주소를 입력해 주세요" th:value="${member.addr2}">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="profileBtns">
+                                <button type="submit" class="modify">프로필 수정</button>
+                                <button type="button" class="leave">탈퇴하기</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
             </div>
-            <th:block th:insert="~{/myPage/_header.html}"/>
-        </div>
-
-        <div class="div_section">
-            <th:block th:insert="~{/myPage/_side.html}"/>
-
-            <section class="right_section">
-                <div class="ad">
-                    <div>광고</div>
-                </div>
-                <form th:action="@{/myPage/my_info}" method="post">
-                    <table class="info">
-                        <tr>
-                            <th>사용자 ID</th>
-                            <td>
-                                <input readonly type="text" name="id" th:value="${member.id}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>비밀번호</th>
-                            <td>
-                                <button type="button" class="modify_pw">비밀번호 수정</button>
-                                <input type="password" name="password" class="pw_input" style="display:none;" placeholder="새 비밀번호 입력" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <td>
-                                <input type="text" name="name"  th:value="${member.name}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>구매 등급</th>
-                            <td>
-                                <span th:class="'rating-' + ${member.rating}">
-                                    <span th:text="${member.rating}">회원 등급</span>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>생년월일</th>
-                            <td>
-                                <input readonly type="text" name="birthDate" th:value="${member.birthDate}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>성별</th>
-                            <td>
-                                <input type="text" name="gender" readonly th:value="${member.gender}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td>
-                                <div>
-                                    <input type="text" name="email" th:value="${member.email}">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>휴대폰</th>
-                            <td>
-                                <input type="text" name="hp" th:value="${member.hp}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>주소</th>
-                            <td>
-                                <div class="info_addr">
-                                    <input type="text"  id="zip" name="zip" th:value="${member.zip}">
-                                    <button type="button" class="post info_btn3">주소검색</button>
-                                    <input type="text"  id="addr1" name="addr1" th:value="${member.addr1}">
-                                    <input type="text"  id="addr2" name="addr2" th:value="${member.addr2}">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    <script>
-                        document.querySelector(".modify_pw").addEventListener("click", function () {
-                            document.querySelector(".pw_input").style.display = "inline-block";
-                            this.style.display = "none"; // 버튼 숨김
-                        });
-                    </script>
-                    <button type="submit" class="end_btn">수정하기</button>
-                </form>
-                <div>
-                    <form th:action="@{/myPage/my_info/leave}" method="post" id="leaveForm">
-                        <button type="button" class="leave">탈퇴하기</button>
-                    </form>
-                </div>
-                <script>
-                    document.querySelector('.leave').addEventListener('click', function () {
-                        if (confirm('정말 탈퇴하시겠습니까?')) {
-                            document.getElementById('leaveForm').submit();
-                        }
-                    });
-                </script>
-            </section>
         </div>
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
+<script>
+    document.querySelector('.leave').addEventListener('click', function () {
+        if (confirm('정말 탈퇴하시겠습니까?')) {
+            document.getElementById('leaveForm').submit();
+        }
+    });
+
+    document.querySelector('.modify').addEventListener('click', function () {
+        if (confirm('수정하시겠습니까?')) {
+            document.getElementById('myProfile').submit();
+        }
+    });
+</script>
 </body>
 </html>
