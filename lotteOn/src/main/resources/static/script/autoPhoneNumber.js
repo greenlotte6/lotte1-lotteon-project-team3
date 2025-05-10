@@ -71,24 +71,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (pw1 === '' && pw2 === '') {
             realPassword.disabled = true;
+
+            if (!confirm('수정하시겠습니까?')) {
+                e.preventDefault();
+            }
             return;
         }
 
         if (!rePass.test(pw1)) {
             e.preventDefault();
-            alert('비밀번호는 영문+숫자+특수문자 포함 8~12자여야 합니다.');
+            alert('비밀번호를 확인해 주세요.');
             return;
         }
 
         if (pw1 !== pw2) {
             e.preventDefault();
-            alert('비밀번호가 일치하지 않습니다.');
+            alert('비밀번호를 확인해 주세요.');
             return;
         }
 
         realPassword.value = pw2;
-        alert('수정이 완료되었습니다.');
+
+        if (!confirm('수정하시겠습니까?')) {
+            e.preventDefault();
+        } else {
+            alert('수정이 완료되었습니다.');
+        }
     });
-
-
 });
