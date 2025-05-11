@@ -138,30 +138,6 @@ li {
     color: #000000;
 }
 
-.searchButton {
-    border: none;
-    background: white;
-    height: 32px;
-    padding: 5px;
-    font-size: 15px;
-}
-.searchArea {
-    display: flex;
-    gap: 8px;
-    float: right;
-    margin-right: 20px;
-}
-.date {
-    height: 32px;
-    border: none;
-}
-.searchArea select {
-    outline: none;
-    font-size: 15px;
-    color: #333;
-    height: 32px;
-    background-color: white;
-}
 .right_section{
     height: auto;
     width: 1000px;

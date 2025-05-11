@@ -5,57 +5,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" as="style" crossorigin
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/script/swiper3.js"></script>
+
+    <!-- Script -->
+    <script src="/script/search.js"></script>
+    <script src="/script/myPointComma.js"></script>
+
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
-    <link rel="stylesheet" href="/style/mypage/my_review.css">
-    <title>나의쇼핑정보 나의리뷰</title>
+    <link rel="stylesheet" href="/style/mypage/myPages.css">
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
+
+    <title>리뷰내역 : 롯데ON</title>
 </head>
 
 <body>
 <div id="container">
     <th:block th:include="/common/_header.html"/>
-    <main class="main_container">
-        <div class="mypage-header">
-          <div class="mypage-title">
-            <h2>나의쇼핑정보</h2>
-          </div>
-            <th:block th:insert="~{/myPage/_header.html}"/>
-        </div>
-    
-        <div class="div_section">
-            <th:block th:insert="~{/myPage/_side.html}"/>
-    
-            <section class="right_section">
-                <div class="ad">
-                    <div>광고</div>
-                </div>
-                <h1>나의리뷰</h1>
+    <main>
+        <div class="mainWrapper">
+            <div class="mainContainer">
+                <aside>
+                    <h2>마이롯데</h2>
+                    <div class="asideLink">
+                        <a th:href="@{/myPage/my_order}">주문 내역</a>
+                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
+                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
+                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
+                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
+                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
+                        <a th:href="@{/myPage/my_info}">나의 설정</a>
+                    </div>
+                    <div class="customerService">
+                        <p>롯데ON 고객센터</p>
+                        <div>
+                            <h4>1899-7000</h4>
+                        </div>
+                        <p>월~금요일 09:00 ~ 18:00</p>
+                        <p>주말, 공휴일 휴무</p>
+                    </div>
+                    <div class="asideBtn">
+                        <a th:href="@{/cust/cust_main}">
+                            <button>고객센터</button>
+                        </a>
+                        <a href="#">
+                            <button>문의하기</button>
+                        </a>
+                    </div>
+                </aside>
                 <section>
-
+                    <div class="simpleInfoWrapper">
+                        <div class="simpleInfo">
+                            <div>
+                                <p>쇼핑하기 좋은 날이에요!</p>
+                                <a th:href="@{/myPage/my_info}" class="nameBox">
+                                    <p class="bold" th:text="${loginUser.name}"></p>
+                                    <p>님</p>
+                                </a>
+                                <div class="ratingBox">
+                                    <img src="/images/icon_mylotte.png" alt="등급">
+                                    <p class="bold">롯데ON</p>
+                                    <p class="bold" th:text="${loginUser.rating}"></p>
+                                    <p>등급이네요!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_order}">
+                                        <p>주문 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalOrder}"></p>
+                                            <p>건</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_point}">
+                                        <p>POINT</p>
+                                        <div>
+                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
+                                            <p>P</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myCoupon">
+                                    <a th:href="@{/myPage/my_coupon}">
+                                        <p>나의 쿠폰</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalCoupon}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myReview">
+                                    <a th:href="@{/myPage/my_qna}">
+                                        <p>문의 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalQnaCount}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simpleInfoFooter">
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
+                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
+                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myReviewList var">
+                        <div class="varTitle">
+                            <h3>나의 리뷰</h3>
+                        </div>
+                        <div class="orderHeader">
+                            <div>
+                                <p>작성한 리뷰가 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="reviewList">
+                            <table>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>상품명</th>
+                                    <th>내용</th>
+                                    <th>별점</th>
+                                    <th>작성일</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>한우 1++ 1kg</td>
+                                    <td>한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
+                                    <td>⭐⭐⭐⭐⭐</td>
+                                    <td>2025.05.08</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>한우 1++ 1kg</td>
+                                    <td>한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
+                                    <td>⭐⭐⭐⭐⭐</td>
+                                    <td>2025.05.08</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>한우 1++ 1kg</td>
+                                    <td>한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
+                                    <td>⭐⭐⭐⭐⭐</td>
+                                    <td>2025.05.08</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </section>
-                <table class="article">
-                    <tr>
-                        <th>번호</th>
-                        <th>상품명</th>
-                        <th>내용</th>
-                        <th>평점</th>
-                        <th>작성일</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>상품번호/상품명</td>
-                        <td>배송이 빠릅니다.</td>
-                        <td>★★★★☆</td>
-                        <td>~12/31</td>
-                    </tr>
-                </table>
-                <div class="page">
-                    <a class="prev">◁</a>
-                    <a class="num">1</a>
-                    <a class="num">2</a>
-                    <a class="next">▷</a>
-                </div>
-            </section>
+            </div>
         </div>
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>

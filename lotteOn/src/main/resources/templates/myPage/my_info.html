@@ -14,6 +14,7 @@
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/script/daumPostCode.js"></script>
     <script src="/script/autoPhoneNumber.js"></script>
+    <script src="/script/search.js"></script>
     <script src="/script/myPointComma.js"></script>
 
     <!-- Favicon -->
@@ -63,7 +64,7 @@
                         <div class="simpleInfo">
                             <div>
                                 <p>쇼핑하기 좋은 날이에요!</p>
-                                <a href="#" class="nameBox">
+                                <a th:href="@{/myPage/my_info}" class="nameBox">
                                     <p class="bold" th:text="${member.name}"></p>
                                     <p>님</p>
                                 </a>

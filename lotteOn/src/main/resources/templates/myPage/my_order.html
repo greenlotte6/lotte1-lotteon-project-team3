@@ -6,12 +6,26 @@
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
 
     <link rel="stylesheet" href="/style/mypage/my_order.css">
+    <link rel="stylesheet" href="/style/mypage/myPages.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
 
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/script/swiper3.js"></script>
+
+    <!-- Script -->
+    <script src="/script/search.js"></script>
+    <script src="/script/myPointComma.js"></script>
+    <script src="/script/myPointScript.js"></script>
+
     <script src="/script/myHome.js"></script>
 
-    <title>마이페이지 메인</title>
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
+
+    <title>주문내역 : 롯데ON</title>
 </head>
 <body>
 
@@ -475,142 +489,216 @@
 
 <div id="container">
     <th:block th:include="/common/_header.html"/>
-    <main class="main_container">
-        <div class="mypage-header">
-            <div class="mypage-title">
-                <h2>나의쇼핑정보</h2>
-            </div>
-            <th:block th:insert="~{/myPage/_header.html}"/>
-        </div>
-
-        <div class="div_section">
-            <th:block th:insert="~{/myPage/_side.html}"/>
-
-            <section class="right_section">
-                <div class="banner"></div>
-                <article>
-                    <div class="article_title">
-                        <h3>전체 주문내역</h3>
+    <main>
+        <div class="mainWrapper">
+            <div class="mainContainer">
+                <aside>
+                    <h2>마이롯데</h2>
+                    <div class="asideLink">
+                        <a th:href="@{/myPage/my_order}">주문 내역</a>
+                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
+                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
+                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
+                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
+                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
+                        <a th:href="@{/myPage/my_info}">나의 설정</a>
                     </div>
-                    <table class="datetable">
-                        <tr>
-                            <th>기간별조회</th>
-                            <td>
-                                <form th:action="@{/myPage/my_order}" method="get">
-                                    <div class="searchArea">
-                                        <div class="period">
-                                            <select name="period" id="period">
-                                                <option value="1week" th:selected="${#strings.equals(param.period, '1week')}">1주일</option>
-                                                <option value="1month" th:selected="${#strings.equals(param.period, '1month')}">1개월</option>
-                                                <option value="3month" th:selected="${#strings.equals(param.period, '3month')}">3개월</option>
-                                                <option value="custom" th:selected="${#strings.equals(param.period, 'custom')}">직접선택</option>
-                                            </select>
+                    <div class="customerService">
+                        <p>롯데ON 고객센터</p>
+                        <div>
+                            <h4>1899-7000</h4>
+                        </div>
+                        <p>월~금요일 09:00 ~ 18:00</p>
+                        <p>주말, 공휴일 휴무</p>
+                    </div>
+                    <div class="asideBtn">
+                        <a th:href="@{/cust/cust_main}">
+                            <button>고객센터</button>
+                        </a>
+                        <a href="#">
+                            <button>문의하기</button>
+                        </a>
+                    </div>
+                </aside>
+                <section>
+                    <div class="simpleInfoWrapper">
+                        <div class="simpleInfo">
+                            <div>
+                                <p>쇼핑하기 좋은 날이에요!</p>
+                                <a th:href="@{/myPage/my_info}" class="nameBox">
+                                    <p class="bold" th:text="${loginUser.name}"></p>
+                                    <p>님</p>
+                                </a>
+                                <div class="ratingBox">
+                                    <img src="/images/icon_mylotte.png" alt="등급">
+                                    <p class="bold">롯데ON</p>
+                                    <p class="bold" th:text="${loginUser.rating}"></p>
+                                    <p>등급이네요!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_order}">
+                                        <p>주문 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalOrder}"></p>
+                                            <p>건</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_point}">
+                                        <p>POINT</p>
+                                        <div>
+                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
+                                            <p>P</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myCoupon">
+                                    <a th:href="@{/myPage/my_coupon}">
+                                        <p>나의 쿠폰</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalCoupon}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myReview">
+                                    <a th:href="@{/myPage/my_qna}">
+                                        <p>문의 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalQnaCount}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simpleInfoFooter">
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
+                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
+                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recentOrder var">
+                        <div class="varTitle">
+                            <h3>전체 주문 내역</h3>
+                            <form th:action="@{/myPage/my_order}" method="get">
+                                <div class="searchArea">
+                                    <div class="period">
+                                        <select name="period" id="period">
+                                            <option selected>전체</option>
+                                            <option value="1week" th:selected="${#strings.equals(param.period, '1week')}">1주일</option>
+                                            <option value="1month" th:selected="${#strings.equals(param.period, '1month')}">1개월</option>
+                                            <option value="3month" th:selected="${#strings.equals(param.period, '3month')}">3개월</option>
+                                            <option value="custom" th:selected="${#strings.equals(param.period, 'custom')}">직접선택</option>
+                                        </select>
 
-                                            <!-- 기간 선택은 'custom'일 경우에만 노출되게 JS 처리해도 좋음 -->
+                                        <div class="selectDate">
                                             <input class="date" type="date" name="startDate" th:value="${param.startDate}" />
+                                            ~
                                             <input class="date" type="date" name="endDate" th:value="${param.endDate}" />
                                         </div>
-                                        <div>
-                                            <button class="searchButton" type="submit">조회하기</button>
+                                    </div>
+                                    <div>
+                                        <button class="searchButton" type="submit">조회하기</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="orderHeader" th:if="${#lists.isEmpty(order)}">
+                            <div>
+                                <p>최근 주문한 내역이 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="orderList" th:each="order, i : ${order}">
+                            <div class="orderHeader">
+                                <div>
+                                    <p class="orderDate" th:text="${order.orderDate}"></p>
+                                    <p class="orderNo" th:text="${order.orderCode}"></p>
+                                </div>
+                                <a href="#" class="detailView">상세보기</a>
+                            </div>
+                            <div class="orderItem">
+                                <div class="itemDetail">
+                                    <div class="itemImg">
+                                        <img th:src="@{'/images/' + ${order.imageList}}" alt="주문한 상품 이미지">
+                                    </div>
+                                    <div class="itemInfo">
+                                        <div class="itemTitle">
+                                            <a href="#" class="itemCompany" th:text="${order.companyName}"></a>
+                                            <p class="itemName" th:text="${order.productName}"></p>
+                                        </div>
+                                        <div class="itemOption">
+                                            <p th:text="${order.description}"></p>
+                                        </div>
+                                        <div class="itemPrice">
+                                            <h4 th:text="${order.price}" class="thisIsMyPoint"></h4>
+                                            <p>원</p>
+                                            <div class="v-l"></div>
+                                            <span>수량 [[${order.quantity}]]</span>
                                         </div>
                                     </div>
-                                </form>
-                                <script>
-                                    const periodSelect = document.getElementById('period');
-                                    const startDateInput = document.querySelector('input[name="startDate"]');
-                                    const endDateInput = document.querySelector('input[name="endDate"]');
-
-                                    function toggleDateInputs() {
-                                        const isCustom = periodSelect.value === 'custom';
-                                        startDateInput.style.display = isCustom ? 'inline-block' : 'none';
-                                        endDateInput.style.display = isCustom ? 'inline-block' : 'none';
-                                    }
-
-                                    periodSelect.addEventListener('change', toggleDateInputs);
-                                    window.addEventListener('DOMContentLoaded', toggleDateInputs);
-                                </script>
-                            </td>
-                        </tr>
-                    </table>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>날짜</th>
-                                <th>상품정보</th>
-                                <th>상품</th>
-                                <th>확인/신청</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr th:if="${#lists.isEmpty(order)}">
-                                <td colspan="6" style="text-align: center;">주문 내역이 없습니다</td>
-                            </tr>
-
-                            <tr class="table-tr1" th:each="order, i : ${order}">
-                                <td class="table-td table-td1" th:text="${order.orderDate}"></td>
-                                <td class="table-td">
-                                    <div>
-                                        <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
+                                </div>
+                                <div class="orderManagement">
+                                    <div class="orderStatus">
+                                        <h4 th:text="${order.orderStatus}"></h4>
+                                        <p>을(를) 했습니다.</p>
                                     </div>
-                                    <div>
-                                        <a href="#" class="order-link main_p">
-                                            <p th:text="${order.orderCode}"></p>
+                                    <div class="orderButtons">
+                                        <a href="#">
+                                            <button class="confirm-btn">구매확정</button>
                                         </a>
-                                        <a href="#" class="company-link main_p">
-                                            <p th:text="${order.companyName}"></p>
+                                        <a href="#">
+                                            <button class="review-btn">리뷰쓰기</button>
                                         </a>
-                                        <p th:text="${order.productName}"></p>
-                                        <p>
-                                            <span>수량 : </span>
-                                            <span>[[${order.quantity}]]</span>
-                                        </p>
-                                        <p th:text="${order.price}"></p>
+                                        <a href="#">
+                                            <button class="return-btn">반품신청</button>
+                                        </a>
+                                        <a href="#">
+                                            <button class="exchange-btn">교환신청</button>
+                                        </a>
                                     </div>
-                                </td>
-                                <td class="baesong table-td" th:text="${order.orderStatus}">배송완료</td>
-                                <td class="table-td">
-                                    <button class="btn_blue confirm-btn">구매확정</button>
-                                    <button class="btn_blue review-btn">상품평쓰기</button>
-                                    <button class="return-btn">반품신청</button>
-                                    <button class="exchange-btn">교환신청</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </article>
-                <div class="btnarea">
-                    <div class="pageBtn">
-                        <th:block th:if="${page?.end > 0}">
-                            <th:block th:if="${page.prev}">
-                                <a th:href="@{/myPage/my_order(pg=${page.start-2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
-                                    <img src="/images/back-double.png">
-                                </a>
-                            </th:block>
-                            <th:block th:if="${page.prev}">
-                                <a th:href="@{/myPage/my_order(pg=${page.start-1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
-                                    <img src="/images/back-single.png" class="single">
-                                </a>
-                            </th:block>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pageBtn">
+                            <th:block th:if="${page?.end > 0}">
+                                <th:block th:if="${page.prev}">
+                                    <a th:href="@{/myPage/my_order(pg=${page.start-2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
+                                        <img src="/images/back-double.png">
+                                    </a>
+                                </th:block>
+                                <th:block th:if="${page.prev}">
+                                    <a th:href="@{/myPage/my_order(pg=${page.start-1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="prev">
+                                        <img src="/images/back-single.png" class="single">
+                                    </a>
+                                </th:block>
 
-                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                                <a th:href="@{/myPage/my_order(pg=${num}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
-                            </th:block>
+                                <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                    <a th:href="@{/myPage/my_order(pg=${num}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                </th:block>
 
-                            <th:block th:if="${page.next}">
-                                <a th:href="@{/myPage/my_order(pg=${page.end+1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
-                                    <img src="/images/right-single.png" class="single">
-                                </a>
+                                <th:block th:if="${page.next}">
+                                    <a th:href="@{/myPage/my_order(pg=${page.end+1}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
+                                        <img src="/images/right-single.png" class="single">
+                                    </a>
+                                </th:block>
+                                <th:block th:if="${page.next}">
+                                    <a th:href="@{/myPage/my_order(pg=${page.end+2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
+                                        <img src="/images/right-double.png">
+                                    </a>
+                                </th:block>
                             </th:block>
-                            <th:block th:if="${page.next}">
-                                <a th:href="@{/myPage/my_order(pg=${page.end+2}, period=${param.period}, startDate=${param.startDate}, endDate=${param.endDate})}" class="next">
-                                    <img src="/images/right-double.png">
-                                </a>
-                            </th:block>
-                        </th:block>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>

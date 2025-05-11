@@ -5,85 +5,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" as="style" crossorigin
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/script/swiper3.js"></script>
+
+    <!-- Script -->
+    <script src="/script/search.js"></script>
+    <script src="/script/myPointComma.js"></script>
+
+    <!-- Style -->
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
-    <link rel="stylesheet" href="/style/mypage/my_qna.css">
-    <title>나의쇼핑정보 문의하기</title>
+    <link rel="stylesheet" href="/style/mypage/myPages.css">
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
+
+    <title>문의하기 : 롯데ON</title>
 </head>
 
 <body>
 <div id="container">
     <th:block th:include="/common/_header.html"/>
-    <main class="main_container">
-        <div class="mypage-header">
-            <div class="mypage-title">
-                <h2>나의쇼핑정보</h2>
+    <main>
+        <div class="mainWrapper">
+            <div class="mainContainer">
+                <aside>
+                    <h2>마이롯데</h2>
+                    <div class="asideLink">
+                        <a th:href="@{/myPage/my_order}">주문 내역</a>
+                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
+                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
+                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
+                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
+                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
+                        <a th:href="@{/myPage/my_info}">나의 설정</a>
+                    </div>
+                    <div class="customerService">
+                        <p>롯데ON 고객센터</p>
+                        <div>
+                            <h4>1899-7000</h4>
+                        </div>
+                        <p>월~금요일 09:00 ~ 18:00</p>
+                        <p>주말, 공휴일 휴무</p>
+                    </div>
+                    <div class="asideBtn">
+                        <a th:href="@{/cust/cust_main}">
+                            <button>고객센터</button>
+                        </a>
+                        <a href="#">
+                            <button>문의하기</button>
+                        </a>
+                    </div>
+                </aside>
+                <section>
+                    <div class="simpleInfoWrapper">
+                        <div class="simpleInfo">
+                            <div>
+                                <p>쇼핑하기 좋은 날이에요!</p>
+                                <a th:href="@{/myPage/my_info}" class="nameBox">
+                                    <p class="bold" th:text="${loginUser.name}"></p>
+                                    <p>님</p>
+                                </a>
+                                <div class="ratingBox">
+                                    <img src="/images/icon_mylotte.png" alt="등급">
+                                    <p class="bold">롯데ON</p>
+                                    <p class="bold" th:text="${loginUser.rating}"></p>
+                                    <p>등급이네요!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_order}">
+                                        <p>주문 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalOrder}"></p>
+                                            <p>건</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_point}">
+                                        <p>POINT</p>
+                                        <div>
+                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
+                                            <p>P</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myCoupon">
+                                    <a th:href="@{/myPage/my_coupon}">
+                                        <p>나의 쿠폰</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalCoupon}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myReview">
+                                    <a th:href="@{/myPage/my_qna}">
+                                        <p>문의 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalQnaCount}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simpleInfoFooter">
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
+                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
+                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="customerCenter var">
+                        <div class="varTitle">
+                            <h3>고객 문의</h3>
+                        </div>
+                        <div class="orderHeader" th:if="${#lists.isEmpty(qna)}">
+                            <div>
+                                <p>등록된 문의가 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="helpList">
+                            <table>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>채널</th>
+                                    <th>유형</th>
+                                    <th>제목</th>
+                                    <th>작성일</th>
+                                    <th>상태</th>
+                                </tr>
+                                <tr th:each="qna, i : ${qna}" th:unless="${#lists.isEmpty(qna)}">
+                                    <td th:text="${qna.qnaNo}">1</td>
+                                    <td th:text="${qna.channel}">고객센터</td>
+                                    <td th:text="${qna.cate2}">반품신청/철회</td>
+                                    <td>
+                                        <a th:href="@{/myPage/my_view(qnaNo=${qna.qnaNo})}" class="qnaTitles">[[${qna.title}]]</a>
+                                    </td>
+                                    <td th:text="${qna.regDate}">2025.05.08</td>
+                                    <td th:text="${qna.status}">답변 대기 중</td>
+                                </tr>
+                            </table>
+                            <div class="pageBtn">
+                                <th:block th:if="${page?.end > 0}">
+                                    <th:block th:if="${page.prev}">
+                                        <a th:href="@{/myPage/my_qna(pg=${page.start-2})}" class="prev">
+                                            <img src="/images/back-double.png">
+                                        </a>
+                                    </th:block>
+                                    <th:block th:if="${page.prev}">
+                                        <a th:href="@{/myPage/my_qna(pg=${page.start-1})}" class="prev">
+                                            <img src="/images/back-single.png" class="single">
+                                        </a>
+                                    </th:block>
+
+                                    <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                        <a th:href="@{/myPage/my_qna(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                    </th:block>
+
+                                    <th:block th:if="${page.next}">
+                                        <a th:href="@{/myPage/my_qna(pg=${page.end+1})}" class="next">
+                                            <img src="/images/right-single.png" class="single">
+                                        </a>
+                                    </th:block>
+                                    <th:block th:if="${page.next}">
+                                        <a th:href="@{/myPage/my_qna(pg=${page.end+2})}" class="next">
+                                            <img src="/images/right-double.png">
+                                        </a>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <th:block th:insert="~{/myPage/_header.html}"/>
-        </div>
-
-        <div class="div_section">
-            <th:block th:insert="~{/myPage/_side.html}"/>
-            <section class="right_section">
-                <div class="ad">
-                    <div>광고</div>
-                </div>
-                <h1>문의하기</h1>
-                <table class="article">
-                    <tr>
-                        <th>번호</th>
-                        <th>문의채널</th>
-                        <th>문의유형</th>
-                        <th>제목</th>
-                        <th>작성일</th>
-                        <th>상태</th>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(qna)}">
-                        <td colspan="6" style="text-align: center;">등록된 문의가 없습니다</td>
-                    </tr>
-
-                    <tr th:each="qna, i : ${qna}" th:unless="${#lists.isEmpty(qna)}">
-                        <td th:text="${qna.qnaNo}"></td>
-                        <td th:text="${qna.channel}"></td>
-                        <td th:text="${qna.cate2}"></td>
-                        <td>
-                            <a th:href="@{/myPage/my_view(qnaNo=${qna.qnaNo})}">[[${qna.title}]]</a>
-                        </td>
-                        <td th:text="${qna.regDate}"></td>
-                        <td th:text="${qna.status}"></td>
-                    </tr>
-                </table>
-
-                <div class="pageBtn">
-                    <th:block th:if="${page?.end > 0}">
-                        <th:block th:if="${page.prev}">
-                            <a th:href="@{/myPage/my_qna(pg=${page.start-2})}" class="prev">
-                                <img src="/images/back-double.png">
-                            </a>
-                        </th:block>
-                        <th:block th:if="${page.prev}">
-                            <a th:href="@{/myPage/my_qna(pg=${page.start-1})}" class="prev">
-                                <img src="/images/back-single.png" class="single">
-                            </a>
-                        </th:block>
-
-                        <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
-                            <a th:href="@{/myPage/my_qna(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
-                        </th:block>
-
-                        <th:block th:if="${page.next}">
-                            <a th:href="@{/myPage/my_qna(pg=${page.end+1})}" class="next">
-                                <img src="/images/right-single.png" class="single">
-                            </a>
-                        </th:block>
-                        <th:block th:if="${page.next}">
-                            <a th:href="@{/myPage/my_qna(pg=${page.end+2})}" class="next">
-                                <img src="/images/right-double.png">
-                            </a>
-                        </th:block>
-                    </th:block>
-                </div>
-            </section>
         </div>
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
