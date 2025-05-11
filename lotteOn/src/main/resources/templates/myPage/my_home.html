@@ -8,10 +8,21 @@
     <link rel="stylesheet" href="/style/mypage/my_home_modal.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
-    <title>마이페이지 메인</title>
-    <style>
+    <link rel="stylesheet" href="/style/mypage/myPages.css">
 
-    </style>
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/script/swiper3.js"></script>
+
+    <!-- Script -->
+    <script src="/script/search.js"></script>
+    <script src="/script/myPointComma.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
+
+    <title>마이페이지 : 롯데ON</title>
 </head>
 <body>
 
@@ -203,437 +214,565 @@
 
 <div id="container">
     <th:block th:include="/common/_header.html"/>
-    <main class="main_container">
-
-        <div class="mypage-header">
-            <div class="mypage-title">
-                <h2>나의쇼핑정보</h2>
+    <main>
+        <div class="mainWrapper">
+            <div class="mainContainer">
+                <aside>
+                    <h2>마이롯데</h2>
+                    <div class="asideLink">
+                        <a th:href="@{/myPage/my_order}">주문 내역</a>
+                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
+                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
+                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
+                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
+                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
+                        <a th:href="@{/myPage/my_info}">나의 설정</a>
+                    </div>
+                    <div class="customerService">
+                        <p>롯데ON 고객센터</p>
+                        <div>
+                            <h4>1899-7000</h4>
+                        </div>
+                        <p>월~금요일 09:00 ~ 18:00</p>
+                        <p>주말, 공휴일 휴무</p>
+                    </div>
+                    <div class="asideBtn">
+                        <a th:href="@{/cust/cust_main}">
+                            <button>고객센터</button>
+                        </a>
+                        <a href="#">
+                            <button>문의하기</button>
+                        </a>
+                    </div>
+                </aside>
+                <section>
+                    <div class="simpleInfoWrapper">
+                        <div class="simpleInfo">
+                            <div>
+                                <p>쇼핑하기 좋은 날이에요!</p>
+                                <a th:href="@{/myPage/my_info}" class="nameBox">
+                                    <p class="bold" th:text="${loginUser.name}"></p>
+                                    <p>님</p>
+                                </a>
+                                <div class="ratingBox">
+                                    <img src="/images/icon_mylotte.png" alt="등급">
+                                    <p class="bold">롯데ON</p>
+                                    <p class="bold" th:text="${loginUser.rating}"></p>
+                                    <p>등급이네요!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_order}">
+                                        <p>주문 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalOrder}"></p>
+                                            <p>건</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myPoint">
+                                    <a th:href="@{/myPage/my_point}">
+                                        <p>POINT</p>
+                                        <div>
+                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
+                                            <p>P</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myCoupon">
+                                    <a th:href="@{/myPage/my_coupon}">
+                                        <p>나의 쿠폰</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalCoupon}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="myReview">
+                                    <a th:href="@{/myPage/my_qna}">
+                                        <p>문의 수</p>
+                                        <div>
+                                            <p class="bold" th:text="${totalQnaCount}"></p>
+                                            <p>개</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simpleInfoFooter">
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
+                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
+                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recentOrder var">
+                        <div class="varTitle">
+                            <h3>최근 주문 내역</h3>
+                            <a th:href="@{/myPage/my_order}" class="allView" >전체보기</a>
+                        </div>
+                        <div class="orderHeader" th:if="${#lists.isEmpty(recentOrder)}">
+                            <div>
+                                <p>최근 주문한 내역이 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="orderList" th:each="order, i : ${recentOrder}">
+                            <div class="orderHeader">
+                                <div>
+                                    <p class="orderDate">2025.05.09</p>
+                                    <p class="orderNo" th:text="${order.orderCode}" th:onclick="'showPopup(' + ${i.index} + ')'"></p>
+                                </div>
+                                <a href="#" class="detailView" th:onclick="'showPopup(' + ${i.index} + ')'">상세보기</a>
+                            </div>
+                            <div class="orderItem">
+                                <div class="itemDetail">
+                                    <div class="itemImg">
+                                        <img th:src="@{'/images/' + ${order.imageList}}" alt="주문한 상품 이미지">
+                                    </div>
+                                    <div class="itemInfo">
+                                        <div class="itemTitle">
+                                            <a href="#" class="itemCompany" th:text="${order.companyName}" th:onclick="'showCompanyPopup(' + ${i.index} + ')'">맛있는소고기</a>
+                                            <p class="itemName" th:text="${order.productName}"></p>
+                                        </div>
+                                        <div class="itemOption">
+                                            <p th:text="${order.description}"></p>
+                                        </div>
+                                        <div class="itemPrice">
+                                            <h4 th:text="${order.price}" class="thisIsMyPoint"></h4>
+                                            <p>원</p>
+                                            <div class="v-l"></div>
+                                            <span>수량 [[${order.quantity}]]</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="orderManagement">
+                                    <div class="orderStatus">
+                                        <h4 th:text="${order.orderStatus}">구매확정</h4>
+                                        <p>을(를) 했습니다.</p>
+                                    </div>
+                                    <div class="orderButtons">
+                                        <a href="#">
+                                            <button th:onclick="'showConfirmPopup(' + ${i.index} + ')'">구매확정</button>
+                                        </a>
+                                        <a href="#">
+                                            <button th:onclick="'showReviewPopup(' + ${i.index} + ')'">리뷰쓰기</button>
+                                        </a>
+                                        <a href="#">
+                                            <button>반품신청</button>
+                                        </a>
+                                        <a href="#">
+                                            <button>교환신청</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pointHistory var">
+                        <div class="varTitle">
+                            <h3>포인트 적립 내역</h3>
+                            <a th:href="@{/myPage/my_point}" class="allView">전체보기</a>
+                        </div>
+                        <div class="orderHeader" th:if="${#lists.isEmpty(recentPoint)}">
+                            <div>
+                                <p>적립한 포인트가 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="pointList">
+                            <table>
+                                <tr>
+                                    <th>적립일</th>
+                                    <th>구분</th>
+                                    <th>적립 포인트</th>
+                                    <th>적립 코드</th>
+                                    <th>적립 내용</th>
+                                </tr>
+                                <tr th:each="point : ${recentPoint}">
+                                    <td th:text="${point.giveDate}"></td>
+                                    <td th:text="${point.givePoint > 0 ? '적립' : (point.givePoint < 0 ? '차감' : '0') }"></td>
+                                    <td th:text="${point.givePoint}" class="thisIsMyPoint savePoints"></td>
+                                    <td th:text="${point.orderCode}"></td>
+                                    <td th:text="${point.giveContent}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="myReviewList var">
+                        <div class="varTitle">
+                            <h3>나의 리뷰</h3>
+                            <a th:href="@{/myPage/my_review}" class="allView">전체보기</a>
+                        </div>
+                        <div class="orderHeader">
+                            <div>
+                                <p>작성한 리뷰가 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="reviewList">
+                            <table>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>상품명</th>
+                                    <th>내용</th>
+                                    <th>별점</th>
+                                    <th>작성일</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>한우 1++ 1kg</td>
+                                    <td>한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
+                                    <td>⭐⭐⭐⭐⭐</td>
+                                    <td>2025.05.08</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="customerCenter var">
+                        <div class="varTitle">
+                            <h3>고객 문의</h3>
+                            <a th:href="@{/myPage/my_qna}" class="allView">전체보기</a>
+                        </div>
+                        <div class="orderHeader" th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
+                            <div>
+                                <p>등록된 문의가 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="helpList">
+                            <table>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>채널</th>
+                                    <th>유형</th>
+                                    <th>제목</th>
+                                    <th>작성일</th>
+                                    <th>상태</th>
+                                </tr>
+                                <tr th:each="qna : ${recentQna}">
+                                    <td th:text="${qna.qnaNo}">1</td>
+                                    <td th:text="${qna.channel}">고객센터</td>
+                                    <td th:text="${qna.cate2}">반품신청/철회</td>
+                                    <td th:text="${qna.title}">소고기가 너무 맛이가 없자나 응?</td>
+                                    <td th:text="${qna.regDate}">2025.05.08</td>
+                                    <td th:text="${qna.status}"
+                                        th:classappend="${qna.status == '답변완료'} ? ' answered' : ''"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="productService var">
+                        <div class="varTitle">
+                            <h3>상품 문의</h3>
+                            <a th:href="@{/myPage/my_qna_product}" class="allView">전체보기</a>
+                        </div>
+                        <div class="orderHeader">
+                            <div>
+                                <p>등록된 문의가 없습니다.</p>
+                            </div>
+                        </div>
+                        <div class="productServiceList">
+                            <table>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>채널</th>
+                                    <th>제목</th>
+                                    <th>작성일</th>
+                                    <th>상태</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>상품 문의</td>
+                                    <td>소고기가 너무 맛이가 없자나 응?</td>
+                                    <td>2025.05.08</td>
+                                    <td>답변 대기 중</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <th:block th:insert="~{/myPage/_header.html}"/>
-        </div>
-
-        <div class="div_section">
-            <th:block th:insert="~{/myPage/_side.html}"/>
-
-            <section class="right_section">
-                <div class="banner"></div>
-                <article>
-                    <div class="article_title">
-                        <h3>최근 주문내역</h3>
-                        <a th:href="@{/myPage/my_order}">더보기 ></a>
-                    </div>
-                    <div style="margin: 10px 0 15px 50px">
-                        <p> 상품 정보의 주문 번호(맨 위 상단) 클릭 시 상품 상세보기</p>
-                        <p> 상품 정보의 회사명(주문번호 밑) 클릭 시 판매자 상세보기</p>
-                    </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>날짜</th>
-                                <th>상품정보</th>
-                                <th>상품</th>
-                                <th>확인/신청</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="table-tr1" th:each="order, i : ${recentOrder}">
-                                <td class="table-td" th:text="${order.orderDate}"></td>
-                                <td class="table-td">
-                                    <div>
-                                        <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
-                                    </div>
-                                    <div>
-                                        <a href="#" th:onclick="'showPopup(' + ${i.index} + ')'">
-                                            <p th:text="${order.orderCode}"></p>
-                                        </a>
-                                        <!-- 기타 주문 요약 정보 -->
-                                        <a href="#" th:onclick="'showCompanyPopup(' + ${i.index} + ')'">
-                                            <p th:text="${order.companyName}">회사명</p>
-                                        </a>
-                                        <p th:text="${order.productName}">상품명</p>
-                                        <p>
-                                            <span>수량 : </span>
-                                            <span>[[${order.quantity}]]</span>
-                                        </p>
-                                        <p th:text="${order.price}">상품 가격</p>
-                                    </div>
-                                </td>
-                                <td class="baesong table-td" th:text="${order.orderStatus}"></td>
-                                <td class="table-td">
-                                    <button class="btn_blue confirm-btn" th:onclick="'showConfirmPopup(' + ${i.index} + ')'">구매확정</button>
-                                    <button class="btn_blue review-btn" th:onclick="'showReviewPopup(' + ${i.index} + ')'">상품평쓰기</button>
-                                    <button class="return-btn">반품신청</button>
-                                    <button class="exchange-btn">교환신청</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- ✅ tr 밖에 모달을 따로 위치 -->
-
-                    <!-- 주문 상세 모달 -->
-                    <div th:each="order, i : ${recentOrder}" th:id="'popup-' + ${i.index}" class="popup" style="display:none;">
-                        <div class="popup-content">
-                            <h2>주문 상세</h2>
-                            <div class="info">
-                                <h3>상품 정보</h3>
-                                <table>
-                                    <tr>
-                                        <th>상품 이미지</th>
-                                        <th colspan="2">상품 상세정보</th>
-                                        <th colspan="2">결제 정보</th>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="6" style="width: 230px; padding: 0">
-                                            <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
-                                        </td>
-                                        <th>주문 번호</th>
-                                        <td>[[${order.orderCode}]]</td>
-                                        <th>금액</th>
-                                        <td>[[${order.price}]]원</td>
-                                    </tr>
-                                    <tr>
-                                        <th>판매자</th>
-                                        <td>[[${order.companyName}]]</td>
-                                        <th>할인</th>
-                                        <td>[[${order.discount}]]원</td>
-                                    </tr>
-                                    <tr>
-                                        <th>주문일</th>
-                                        <td>[[${order.orderDate}]]</td>
-                                        <th>결제</th>
-                                        <td>[[${order.actualMoney}]]원</td>
-                                    </tr>
-                                    <tr>
-                                        <th>상품명</th>
-                                        <td>[[${order.productName}]]</td>
-                                        <th>배송비</th>
-                                        <td>[[${order.fee}]]원</td>
-                                    </tr>
-                                    <tr>
-                                        <th>수량</th>
-                                        <td>[[${order.quantity}]]</td>
-                                        <th>결제수단</th>
-                                        <td>[[${order.payment}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>금액</th>
-                                        <td>[[${order.price}]]원</td>
-                                    </tr>
-                                </table>
-                                <h3>배송 정보</h3>
-                                <table>
-                                    <tr>
-                                        <th>배송상태</th>
-                                        <td>[[${order.orderStatus}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>이름</th>
-                                        <td>[[${order.receiver}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>주소</th>
-                                        <td>[[${order.delivery}]]</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
-                        </div>
-                    </div>
-
-                    <!-- 회사 정보 모달 -->
-                    <div th:each="seller, i : ${recentOrder}" th:id="'company-popup-' + ${i.index}" class="popup" style="display:none;">
-                        <div class="popup-content">
-                            <h2>회사 정보</h2>
-                            <div class="info_company">
-                                <h3>회사 정보</h3>
-                                <table>
-                                    <tr>
-                                        <th>판매자 등급</th>
-                                        <td>[[${seller.rating}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>회사명</th>
-                                        <td>[[${seller.companyName}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>대표자</th>
-                                        <td>[[${seller.delegate}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>전화번호</th>
-                                        <td>[[${seller.hp}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>FAX</th>
-                                        <td>[[${seller.fax}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>사업자번호</th>
-                                        <td>[[${seller.businessNo}]]</td>
-                                    </tr>
-                                    <tr>
-                                        <th>영업소재지</th>
-                                        <td><span>[</span>[[${seller.zip}]]<span>]</span> &nbsp;&nbsp;
-                                            [[${seller.addr1}]], &nbsp;
-                                            [[${seller.addr2}]]
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
-                            </div>
-                            <button th:onclick="'closePopup(' + ${i.index} + ')'" type="button">닫기</button>
-                            <button type="button" th:onclick="'showInquiryPopup(' + ${i.index} + ')'">문의하기</button>
-                        </div>
-                    </div>
-
-                    <!-- 문의하기 모달 -->
-                    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
-                        <div class="popup-content">
-                            <h2>문의하기</h2>
-                            <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
-                                <div class="inquiry_form">
-                                    <table>
-                                        <tr>
-                                            <th>카테고리</th>
-                                            <td>
-                                                <select name="cate1">
-                                                    <option value="product">상품</option>
-                                                    <option value="delivery">배송</option>
-                                                    <option value="cancel">반품/취소/교환</option>
-                                                    <option value="etc">기타</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>제목</th>
-                                            <td>
-                                                <div>
-                                                    <input type="text" name="title" id="title" placeholder="제목 입력">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>문의내용</th>
-                                            <td>
-                                                <div>
-                                                    <textarea name="content" id="content" placeholder="문의내용 작성"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <button type="submit">문의하기</button>
-                            </form>
-                            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
-                        </div>
-                    </div>
-
-                    <!-- 구매확정 모달 -->
-                    <div th:each="order, i : ${recentOrder}" th:id="'confirm-popup-' + ${i.index}" class="popup" style="display: none; width: 400px">
-                        <div class="popup-content">
-                            <h2>구매확정</h2>
-                            <form action="/myPage/my_confirm" method="post">
-                                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
-                                <div class="confirm_message">
-                                    <div class="alert_message">
-                                        <p>상품을 받으셨나요?</p>
-                                        <p>상품을 받으신 분만 구매확정을 해주세요.</p>
-                                        <p style="text-decoration: underline; font-weight: bold">구매 확정 후에는 반품 또는 교환이 어렵습니다.</p>
-                                    </div>
-                                    <div class="confirm_button">
-                                        <button type="submit">확인</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
-                        </div>
-                    </div>
-
-                    <!--region:상품평쓰기 모달-->
-                    <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
-                        <div class="popup-content">
-                            <h2>상품평</h2>
-                            <form action="/myPage/my_review_write" method="post">
-                                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
-                                <div class="review_form">
-                                    <h3>리뷰 작성하기</h3>
-                                    <table>
-                                        <tr>
-                                            <th>상품명</th>
-                                            <td>이름</td>
-                                        </tr>
-                                        <tr>
-                                            <th>만족도</th>
-                                            <td>
-                                                ★★★★★
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>제목</th>
-                                            <td>
-                                                <input type="text" placeholder="제목 입력">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>내용</th>
-                                            <td>
-                                                <textarea placeholder="내용 입력"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>사진</th>
-                                            <td>
-                                                <div>
-                                                    <input type="file" name="imageListFile" placeholder="선택된 파일 없음">
-                                                    <p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
-                                                </div>
-                                                <div>
-                                                    <input type="file" name="imageMainFile" placeholder="선택된 파일 없음">
-                                                    <p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
-                                                </div>
-                                                <div>
-                                                    <input type="file" name="imageDetailFile" placeholder="선택된 파일 없음">
-                                                    <p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <div class="review_button">
-                                        <button type="button" class="review_btn1">작성완료</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <button th:onclick="'closePopup(' + ${i.index} + ')'" class="review_btn2">취소</button>
-                        </div>
-                    </div>
-                    <script th:inline="javascript">
-                        //상품정보
-                        function showPopup(index) {
-                            document.getElementById("popup-" + index).style.display = "block";
-                        }
-
-                        //회사정보
-                        function showCompanyPopup(index) {
-                            document.getElementById("company-popup-" + index).style.display = "block";
-                        }
-
-                        //문의하기
-                        function showInquiryPopup(index) {
-                            // 회사정보 모달 닫기
-                            document.getElementById("company-popup-" + index).style.display = "none";
-                            // 문의하기 모달 열기
-                            document.getElementById("inquiry-popup-" + index).style.display = "block";
-                        }
-
-                        //상품확정
-                        function showConfirmPopup(index) {
-                            document.getElementById("confirm-popup-" + index).style.display = "block";
-                        }
-
-                        //상품평
-                        function showReviewPopup(index) {
-                            document.getElementById("review-popup-" + index).style.display = "block";
-                        }
-
-                        // 모달 닫기
-                        function closePopup(index) {
-                            document.getElementById("popup-" + index).style.display = "none";
-                            document.getElementById("company-popup-" + index).style.display = "none";
-                            document.getElementById("inquiry-popup-" + index).style.display = "none";
-                            document.getElementById("confirm-popup-" + index).style.display = "none";
-                            document.getElementById("review-popup-" + index).style.display = "none";
-                        }
-                    </script>
-                    <div class="article_title2">
-                        <h3>포인트적립내역</h3>
-                        <a th:href="@{/myPage/my_order}">더보기 ></a>
-                    </div>
-                    <table class="main_point">
-                        <thead class="point_thead">
-                            <tr class="point_tr">
-                                <th class="point_th1">날짜</th>
-                                <th class="point_th2">구분</th>
-                                <th class="point_th4">적립금액</th>
-                                <th class="point_th5">적립내용</th>
-                                <th class="point_th3">적립코드</th>
-                                <th class="point_th6">유효기간</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="point_tr1" th:each="point : ${recentPoint}">
-                                <td class="point_td1" th:text="${point.giveDate}"></td>
-                                <td class="point_td2" th:text="${point.givePoint > 0 ? '적립' : (point.givePoint < 0 ? '차감' : '0') }">적립</td>
-                                <td class="point_td3" th:text="${point.givePoint}"></td>
-                                <td class="point_td1" th:text="${point.giveDate}"></td>
-                                <td class="point_td4" th:text="${point.orderCode}"></td>
-                                <td>유효기간 없음</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="article_title3">
-                        <h3>상품평</h3>
-                        <a th:href="@{/myPage/my_review}">더보기 ></a>
-                    </div>
-                    <table class="table_product">
-                        <thead>
-                            <tr>
-                                <th class="product_th1">번호</th>
-                                <th class="product_th2">상품명</th>
-                                <th class="product_th3">내용</th>
-                                <th class="product_th4">평점</th>
-                                <th class="product_th5">작성일</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="product_tr1">
-                                <td class="pr_td">1</td>
-                                <td class="pr_td">상품번호/상품명</td>
-                                <td class="pr_td">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td class="pr_star">
-                                </td>
-                                <td class="pr_date">2022-12-10</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="article_title4">
-                        <h3>문의하기</h3>
-                        <a th:href="@{/myPage/my_qna}">더보기 ></a>
-                    </div>
-                    <table class="table_inquiry">
-                        <thead>
-                        <tr>
-                            <th class="in_th1">번호</th>
-                            <th class="in_th2">문의채널</th>
-                            <th class="in_th3">문의유형</th>
-                            <th class="in_th4">제목</th>
-                            <th class="in_th5">작성일</th>
-                            <th class="in_th6">상태</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="in_tr1" th:each="qna : ${recentQna}">
-                               <td class="in_td1" th:text="${qna.qnaNo}"></td>
-                               <td class="in_td2" th:text="${qna.channel}"></td>
-                               <td class="in_td3" th:text="${qna.cate2}"></td>
-                               <td class="in_td4" th:text="${qna.title}"></td>
-                               <td class="in_td5" th:text="${qna.regDate}"></td>
-                                <td class="in_td6"
-                                    th:text="${qna.status}"
-                                    th:classappend="${qna.status == '답변완료'} ? ' answered' : ''">
-                                </td>
-                            </tr>
-                            <!-- 리스트가 null 또는 비어 있으면 출력 -->
-                            <tr th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
-                                <td colspan="6">문의 내역이 없습니다.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </article>
-            </section>
         </div>
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
+    <!-- ✅ tr 밖에 모달을 따로 위치 -->
+
+    <!-- 주문 상세 모달 -->
+    <div th:each="order, i : ${recentOrder}" th:id="'popup-' + ${i.index}" class="popup" style="display:none;">
+        <div class="popup-content">
+            <h2>주문 상세</h2>
+            <div class="info">
+                <h3>상품 정보</h3>
+                <table>
+                    <tr>
+                        <th>상품 이미지</th>
+                        <th colspan="2">상품 상세정보</th>
+                        <th colspan="2">결제 정보</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="6" style="width: 230px; padding: 0">
+                            <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
+                        </td>
+                        <th>주문 번호</th>
+                        <td>[[${order.orderCode}]]</td>
+                        <th>금액</th>
+                        <td>[[${order.price}]]원</td>
+                    </tr>
+                    <tr>
+                        <th>판매자</th>
+                        <td>[[${order.companyName}]]</td>
+                        <th>할인</th>
+                        <td>[[${order.discount}]]원</td>
+                    </tr>
+                    <tr>
+                        <th>주문일</th>
+                        <td>[[${order.orderDate}]]</td>
+                        <th>결제</th>
+                        <td>[[${order.actualMoney}]]원</td>
+                    </tr>
+                    <tr>
+                        <th>상품명</th>
+                        <td>[[${order.productName}]]</td>
+                        <th>배송비</th>
+                        <td>[[${order.fee}]]원</td>
+                    </tr>
+                    <tr>
+                        <th>수량</th>
+                        <td>[[${order.quantity}]]</td>
+                        <th>결제수단</th>
+                        <td>[[${order.payment}]]</td>
+                    </tr>
+                    <tr>
+                        <th>금액</th>
+                        <td>[[${order.price}]]원</td>
+                    </tr>
+                </table>
+                <h3>배송 정보</h3>
+                <table>
+                    <tr>
+                        <th>배송상태</th>
+                        <td>[[${order.orderStatus}]]</td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td>[[${order.receiver}]]</td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td>[[${order.delivery}]]</td>
+                    </tr>
+                </table>
+            </div>
+            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
+        </div>
+    </div>
+
+    <!-- 회사 정보 모달 -->
+    <div th:each="seller, i : ${recentOrder}" th:id="'company-popup-' + ${i.index}" class="popup" style="display:none;">
+        <div class="popup-content">
+            <h2>회사 정보</h2>
+            <div class="info_company">
+                <h3>회사 정보</h3>
+                <table>
+                    <tr>
+                        <th>판매자 등급</th>
+                        <td>[[${seller.rating}]]</td>
+                    </tr>
+                    <tr>
+                        <th>회사명</th>
+                        <td>[[${seller.companyName}]]</td>
+                    </tr>
+                    <tr>
+                        <th>대표자</th>
+                        <td>[[${seller.delegate}]]</td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td>[[${seller.hp}]]</td>
+                    </tr>
+                    <tr>
+                        <th>FAX</th>
+                        <td>[[${seller.fax}]]</td>
+                    </tr>
+                    <tr>
+                        <th>사업자번호</th>
+                        <td>[[${seller.businessNo}]]</td>
+                    </tr>
+                    <tr>
+                        <th>영업소재지</th>
+                        <td><span>[</span>[[${seller.zip}]]<span>]</span> &nbsp;&nbsp;
+                            [[${seller.addr1}]], &nbsp;
+                            [[${seller.addr2}]]
+                        </td>
+                    </tr>
+                </table>
+                <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
+            </div>
+            <button th:onclick="'closePopup(' + ${i.index} + ')'" type="button">닫기</button>
+            <button type="button" th:onclick="'showInquiryPopup(' + ${i.index} + ')'">문의하기</button>
+        </div>
+    </div>
+
+    <!-- 문의하기 모달 -->
+    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
+        <div class="popup-content">
+            <h2>문의하기</h2>
+            <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
+                <div class="inquiry_form">
+                    <table>
+                        <tr>
+                            <th>카테고리</th>
+                            <td>
+                                <select name="cate1">
+                                    <option value="product">상품</option>
+                                    <option value="delivery">배송</option>
+                                    <option value="cancel">반품/취소/교환</option>
+                                    <option value="etc">기타</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>제목</th>
+                            <td>
+                                <div>
+                                    <input type="text" name="title" id="title" placeholder="제목 입력">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>문의내용</th>
+                            <td>
+                                <div>
+                                    <textarea name="content" id="content" placeholder="문의내용 작성"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <button type="submit">문의하기</button>
+            </form>
+            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
+        </div>
+    </div>
+
+    <!-- 구매확정 모달 -->
+    <div th:each="order, i : ${recentOrder}" th:id="'confirm-popup-' + ${i.index}" class="popup" style="display: none; width: 400px">
+        <div class="popup-content">
+            <h2>구매확정</h2>
+            <form action="/myPage/my_confirm" method="post">
+                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
+                <div class="confirm_message">
+                    <div class="alert_message">
+                        <p>상품을 받으셨나요?</p>
+                        <p>상품을 받으신 분만 구매확정을 해주세요.</p>
+                        <p style="text-decoration: underline; font-weight: bold">구매 확정 후에는 반품 또는 교환이 어렵습니다.</p>
+                    </div>
+                    <div class="confirm_button">
+                        <button type="submit">확인</button>
+                    </div>
+                </div>
+            </form>
+            <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+        </div>
+    </div>
+
+    <!--region:상품평쓰기 모달-->
+    <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
+        <div class="popup-content">
+            <h2>상품평</h2>
+            <form action="/myPage/my_review_write" method="post">
+                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
+                <div class="review_form">
+                    <h3>리뷰 작성하기</h3>
+                    <table>
+                        <tr>
+                            <th>상품명</th>
+                            <td>이름</td>
+                        </tr>
+                        <tr>
+                            <th>만족도</th>
+                            <td>
+                                ★★★★★
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>제목</th>
+                            <td>
+                                <input type="text" placeholder="제목 입력">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td>
+                                <textarea placeholder="내용 입력"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>사진</th>
+                            <td>
+                                <div>
+                                    <input type="file" name="imageListFile" placeholder="선택된 파일 없음">
+                                    <p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
+                                </div>
+                                <div>
+                                    <input type="file" name="imageMainFile" placeholder="선택된 파일 없음">
+                                    <p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
+                                </div>
+                                <div>
+                                    <input type="file" name="imageDetailFile" placeholder="선택된 파일 없음">
+                                    <p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="review_button">
+                        <button type="button" class="review_btn1">작성완료</button>
+                    </div>
+                </div>
+            </form>
+            <button th:onclick="'closePopup(' + ${i.index} + ')'" class="review_btn2">취소</button>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        //상품정보
+        function showPopup(index) {
+            document.getElementById("popup-" + index).style.display = "block";
+        }
+
+        //회사정보
+        function showCompanyPopup(index) {
+            document.getElementById("company-popup-" + index).style.display = "block";
+        }
+
+        //문의하기
+        function showInquiryPopup(index) {
+            // 회사정보 모달 닫기
+            document.getElementById("company-popup-" + index).style.display = "none";
+            // 문의하기 모달 열기
+            document.getElementById("inquiry-popup-" + index).style.display = "block";
+        }
+
+        //상품확정
+        function showConfirmPopup(index) {
+            document.getElementById("confirm-popup-" + index).style.display = "block";
+        }
+
+        //상품평
+        function showReviewPopup(index) {
+            document.getElementById("review-popup-" + index).style.display = "block";
+        }
+
+        // 모달 닫기
+        function closePopup(index) {
+            document.getElementById("popup-" + index).style.display = "none";
+            document.getElementById("company-popup-" + index).style.display = "none";
+            document.getElementById("inquiry-popup-" + index).style.display = "none";
+            document.getElementById("confirm-popup-" + index).style.display = "none";
+            document.getElementById("review-popup-" + index).style.display = "none";
+        }
+    </script>
 </div>
 </body>
 </html>

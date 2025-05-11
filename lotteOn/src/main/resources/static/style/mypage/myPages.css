@@ -197,7 +197,7 @@ section {
 }
 
 .swiper-slide {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     font-size: 16px;
@@ -222,8 +222,7 @@ section {
 
 .varTitle2 {
     border-bottom: 1px solid #ddd;
-    padding-top: 16px;
-    padding-bottom: 20px;
+    padding-bottom: 14px;
 }
 
 .allView {
@@ -301,7 +300,7 @@ section {
     padding: 22px 40px;
 }
 
-.orderItem:not(:last-child) {
+.orderList:last-child {
     border-bottom: 1px solid #eee;
 }
 
@@ -311,6 +310,7 @@ section {
 
 .itemInfo {
     padding-top: 10px;
+    padding-left: 20px;
 }
 
 .itemImg {
@@ -423,8 +423,8 @@ section {
     border-bottom: 1px solid #eee;
 }
 
-.pointList table td {
-    width: 200px;
+.pointList table td:nth-of-type(4) {
+    width: 400px;
 }
 
 .pointList table th {
@@ -433,6 +433,7 @@ section {
 }
 
 .pointList table td {
+    width: 150px;
     text-align: center;
     font-size: 13px;
     padding: 10px 0;
@@ -477,6 +478,41 @@ section {
 }
 
 .reviewList table td {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+.couponList h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.couponList table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+.couponList table tr:first-child {
+    background-color: #f8f8f8;
+}
+
+.couponList table tr {
+    height: 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.couponList table td {
+    width: 200px;
+}
+
+.couponList table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.couponList table td {
     text-align: center;
     font-size: 13px;
     padding: 10px 0;
@@ -633,6 +669,85 @@ section {
     background-color: #E60012;
     color: white;
 }
+
+.qnaTitles {
+    font-size: 13px;
+}
+
+.pageBtn {
+    display: flex;
+    justify-content: center;
+    column-gap: 3px;
+    margin-top: 50px;
+}
+
+.pageBtn > a {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+}
+
+.current {
+    background-color: #f7f7f7;
+    color: #e80011;
+}
+
+.num {
+    color: #555;
+}
+
+table tr:not(:first-child) * {
+    font-size: 13px;
+}
+
+.searchArea {
+    display: flex;
+    align-items: center;
+}
+
+.period {
+    display: flex;
+    align-items: center;
+}
+
+#period {
+    appearance: none;
+    outline: none;
+    font-size: 13px;
+    color: #333;
+    border: 1px solid #ddd;
+    height: 34px;
+    padding: 0 38px 0 12px;
+    background-color: white;
+    background-image: url(../../images/icon_footer_family.svg);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    margin-right: 8px;
+}
+
+.selectDate {
+    color: #666;
+}
+
+.selectDate .date {
+    width: 140px;
+    height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.searchButton {
+    width: 70px;
+    height: 34px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 13px;
+}
+
+
 
 .bold {
     font-weight: 700;
