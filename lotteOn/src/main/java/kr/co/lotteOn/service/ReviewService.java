@@ -1,6 +1,6 @@
 package kr.co.lotteOn.service;
 
-import kr.co.lotteOn.dto.ReviewDTO;
+import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Product;
 import kr.co.lotteOn.entity.Review;

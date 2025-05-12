@@ -35,8 +35,6 @@ public class Review {
     private String image2;
     private String image3;
 
-    private String productCode;
-
     @CreationTimestamp
     private LocalDateTime regDate;
 
