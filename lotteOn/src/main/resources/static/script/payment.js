@@ -66,8 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('보유 포인트보다 많이 사용할 수 없습니다.');
             return;
         }
-
         currentPointDiscount = pointValue;
+
+        document.querySelector('#usedPoint').value = pointValue;
+
+        const newRemain = remainPoint - pointValue;
+        remainPointText.textContent = `보유 포인트: ${newRemain.toLocaleString()}P`;
+
         updateTotals();
     });
 

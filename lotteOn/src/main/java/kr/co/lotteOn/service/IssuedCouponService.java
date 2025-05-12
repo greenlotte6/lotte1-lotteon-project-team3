@@ -6,9 +6,11 @@ import kr.co.lotteOn.entity.IssuedCoupon;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.repository.CouponRepository;
 import kr.co.lotteOn.repository.IssuedCouponRepository;
+import kr.co.lotteOn.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public class IssuedCouponService {
 
     private final IssuedCouponRepository issuedCouponRepository;
     private final CouponRepository couponRepository;
+    private final OrderRepository orderRepository;
 
     //payment페이지에 회원별 쿠폰 select하는 메서드
     public List<IssuedCouponDTO> getAvailableCouponsForMember(String memberId) {
@@ -58,5 +61,17 @@ public class IssuedCouponService {
 
         // 발급 내역 저장
         issuedCouponRepository.save(issuedCoupon);
+    }
+
+    @Transactional
+    public void markCouponAsUsed(int issuedNo, String orderCode) {
+        IssuedCoupon issuedCoupon = issuedCouponRepository.findByIssuedNo(issuedNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 없습니다."));
+        issuedCoupon.setUsed(true);
+        issuedCoupon.setUseDate(LocalDateTime.now());
+        issuedCoupon.setOrder(orderRepository.findByOrderCode(orderCode));
+        issuedCoupon.setStatus("사용 불가");
+
+
     }
 }

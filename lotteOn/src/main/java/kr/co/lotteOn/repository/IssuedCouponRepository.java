@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IssuedCouponRepository extends JpaRepository<IssuedCoupon, Integer>, IssuedCouponRepositoryCustom {
@@ -18,5 +19,7 @@ public interface IssuedCouponRepository extends JpaRepository<IssuedCoupon, Inte
     public List<IssuedCouponDTO> findAvailableCouponsByMemberId(String memberId);
 
     public int countByMember_Id(String memberId);
+
+    Optional<IssuedCoupon> findByIssuedNo(int issuedNo);
 
 }

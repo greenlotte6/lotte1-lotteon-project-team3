@@ -115,7 +115,7 @@
             </div>
             <div class="substitution"></div>
             <div class="descImg" id="detailInfo">
-                <img src="/images/prodDescImg.jpg" alt="">
+                <img th:src="@{'/images/' + ${product.imageDetail}}" alt="상품설명">
             </div>
             <div class="reviewContainer" id="review">
                 <h2>상품 후기</h2>

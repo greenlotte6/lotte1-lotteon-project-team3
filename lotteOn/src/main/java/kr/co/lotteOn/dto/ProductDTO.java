@@ -34,6 +34,7 @@ public class ProductDTO {
     private MultipartFile imageListFile;
     private MultipartFile imageMainFile;
     private MultipartFile imageDetailFile;
+    private MultipartFile imageInfoFile;
 
     // 이미지 경로 저장용 (DB에서 조회)
     private String imageList;

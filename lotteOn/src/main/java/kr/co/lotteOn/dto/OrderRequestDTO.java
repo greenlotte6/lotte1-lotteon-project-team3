@@ -27,5 +27,7 @@ public class OrderRequestDTO {
     private String productCode;  // ✔ Product 대신 productCode만 받음
     private String quantity;
     private String totalPrice;
+    private int usedPoint;
+    private int issuedNo;
 
 }

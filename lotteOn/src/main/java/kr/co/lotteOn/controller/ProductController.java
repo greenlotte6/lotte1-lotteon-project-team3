@@ -217,6 +217,13 @@ public class ProductController {
     public String completeOrder(@ModelAttribute OrderRequestDTO orderRequestDTO,
                                 @ModelAttribute OrderItemListDTO itemListDTO) {
         String orderCode = orderService.createOrder(orderRequestDTO, itemListDTO.getItems());
+
+        pointService.usePoint(orderRequestDTO.getMemberId(), orderRequestDTO.getUsedPoint(), orderCode);
+
+        if (orderRequestDTO.getIssuedNo() > 0) {
+            issuedCouponService.markCouponAsUsed(orderRequestDTO.getIssuedNo(), orderCode);
+        }
+
         return "redirect:/product/completeOrder/" + orderCode;
 
     }
