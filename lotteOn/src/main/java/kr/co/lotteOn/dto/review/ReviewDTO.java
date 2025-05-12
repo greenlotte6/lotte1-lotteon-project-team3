@@ -32,6 +32,7 @@ public class ReviewDTO {
 
     //추가필드
     private MemberDTO member;
+    private String productName;
 
     //업로드용
     private MultipartFile imageList1;
@@ -43,6 +44,19 @@ public class ReviewDTO {
         if(regDate != null){
             return regDate.substring(0,10);   // yyyy-mm-dd
 
+        }
+        return null;
+    }
+
+    public String getRating(){
+        if(rating != null){
+            return switch (this.rating) {
+                case "1" -> "⭐";
+                case "2" -> "⭐⭐";
+                case "3" -> "⭐⭐⭐";
+                case "4" -> "⭐⭐⭐⭐";
+                default -> "⭐⭐⭐⭐⭐";
+            };
         }
         return null;
     }

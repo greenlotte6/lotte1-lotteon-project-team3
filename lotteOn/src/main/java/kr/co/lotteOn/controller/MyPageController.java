@@ -2,6 +2,7 @@ package kr.co.lotteOn.controller;
 
 
 import kr.co.lotteOn.dto.MemberDTO;
+import kr.co.lotteOn.dto.ReturnDTO;
 import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
@@ -71,6 +72,51 @@ public class MyPageController {
 
     }
 
+    //문의글작성하기
+    @PostMapping("/my_seller_qna")
+    public String sellerQnaWrite(QnaDTO qnaDTO){
+        int no = myPageService.qnaWrite(qnaDTO);
+
+        return "redirect:/myPage/my_qna";
+    }
+
+    //구매확정하기
+    @PostMapping("/my_confirm")
+    public String confirmPurchase(@RequestParam("orderCode") String orderCode) {
+        System.out.println(orderCode);
+
+        myPageService.confirmPurchase(orderCode);
+
+        return "redirect:/myPage/my_order";
+    }
+
+    //리뷰쓰기
+    @PostMapping("/my_review_write")
+    public String writeReview(ReviewDTO reviewDTO) {
+        int no = myPageService.writeReview(reviewDTO);
+
+        return "redirect:/myPage/my_review";
+    }
+
+    //반품신청
+    @PostMapping("/my_refund")
+    public String writeRefund(ReturnDTO returnDTO) {
+        returnDTO.setChannel("반품");
+        int no = myPageService.writeRefund(returnDTO);
+
+        return "redirect:/myPage/my_home";
+    }
+
+    //교환신청
+    @PostMapping("/my_exchange")
+    public String writeExchange(ReturnDTO returnDTO) {
+        returnDTO.setChannel("교환");
+        int no = myPageService.writeRefund(returnDTO);
+
+        return "redirect:/myPage/my_home";
+    }
+
+
     //마이페이지 - 메인
     @GetMapping("/my_home")
     public String myHome(@AuthenticationPrincipal MyUserDetails userDetails, Model model, QnaPageRequestDTO pageRequestDTO) {
@@ -86,7 +132,7 @@ public class MyPageController {
         List<QnaDTO> recentQnaTop3 = myPageService.findByMemberIdByLimit3(memberDTO);
         List<PointDTO> recentPointTop3 = myPageService.findPointByMemberIdByLimit3(memberDTO);
         List<OrderDTO> recentOrderTop3 = myPageService.findOrderByMemberIdByLimit3(memberDTO);
-        //List<ReviewDTO> recentReviewTop3 = myPageService.find
+        List<ReviewDTO> recentReviewTop3 = myPageService.findReviewByMemberIdByLimit3(memberDTO);
         for(OrderDTO orderDTO : recentOrderTop3){
             orderDTO.setPayment(orderDTO.getPaymentName());
         }
@@ -94,6 +140,7 @@ public class MyPageController {
         model.addAttribute("recentQna", recentQnaTop3);
         model.addAttribute("recentPoint", recentPointTop3);
         model.addAttribute("recentOrder", recentOrderTop3);
+        model.addAttribute("recentReview", recentReviewTop3);
 
         return "/myPage/my_home";
     }
@@ -217,13 +264,7 @@ public class MyPageController {
         return "/myPage/my_qna"; // 실제 뷰 경로
     }
 
-    //문의글작성하기
-    @PostMapping("/my_seller_qna")
-    public String sellerQnaWrite(QnaDTO qnaDTO){
-        int no = myPageService.qnaWrite(qnaDTO);
 
-        return "redirect:/myPage/my_qna";
-    }
 
     //마이페이지 - 나의설정
     @GetMapping("/my_info")
@@ -282,23 +323,6 @@ public class MyPageController {
         // 로그아웃 처리 등 추가 가능
         return "redirect:/member/logout";
     }
-
-    @PostMapping("/my_confirm")
-    public String confirmPurchase(@RequestParam("orderCode") String orderCode) {
-        System.out.println(orderCode);
-
-        myPageService.confirmPurchase(orderCode);
-
-        return "redirect:/myPage/my_order";
-    }
-
-    @PostMapping("/my_review_write")
-    public String writeReview(ReviewDTO reviewDTO) {
-        int no = myPageService.writeReview(reviewDTO);
-
-        return "redirect:/myPage/my_review";
-    }
-
 
 
 }

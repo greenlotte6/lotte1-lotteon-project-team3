@@ -2,9 +2,7 @@ package kr.co.lotteOn.service;
 
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
-import kr.co.lotteOn.dto.MemberDTO;
-import kr.co.lotteOn.dto.OrderItemDTO;
-import kr.co.lotteOn.dto.ProductDTO;
+import kr.co.lotteOn.dto.*;
 import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
@@ -50,6 +48,7 @@ public class MyPageService {
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final ReturnRepository returnRepository;
     private final PointService pointService;
 
     //회원별 문의내역
@@ -268,9 +267,9 @@ public class MyPageService {
                     Member member = tuple.get(2, Member.class);
 
                     ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
-                    ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
                     MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
 
+                    reviewDTO.setProductName(product.getName());
                     reviewDTO.setMember(memberDTO);
 
                     return reviewDTO;
@@ -392,6 +391,7 @@ public class MyPageService {
                     Member member = tuple.get(2, Member.class);
 
                     ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+                    reviewDTO.setProductName(product.getName());
 
                     reviewDTO.setMember(memberDTO);
 
@@ -479,6 +479,32 @@ public class MyPageService {
 
         return savedReview.getReviewNo();
 
+    }
+    
+    //교환 및 반품신청
+    @Transactional
+    public int writeRefund(ReturnDTO returnDTO){
+        Member member = Member.builder()
+                .id((returnDTO.getMemberId()))
+                .build();
+
+        Return returns = modelMapper.map(returnDTO, Return.class);
+        returns.setMember(member);
+
+        // 이미지 파일이 null이 아닐 때만 파일 이름을 설정
+        if (returnDTO.getImageList1() != null && !returnDTO.getImageList1().isEmpty()) {
+            returns.setImage1(returnDTO.getImageList1().getOriginalFilename());
+        }
+        if (returnDTO.getImageList2() != null && !returnDTO.getImageList2().isEmpty()) {
+            returns.setImage2(returnDTO.getImageList2().getOriginalFilename());
+        }
+        if (returnDTO.getImageList3() != null && !returnDTO.getImageList3().isEmpty()) {
+            returns.setImage3(returnDTO.getImageList3().getOriginalFilename());
+        }
+
+        Return savedReturn = returnRepository.save(returns);
+
+        return savedReturn.getReturnNo();
     }
 
 
