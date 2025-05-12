@@ -31,7 +31,10 @@ public class Coupon {
     private String endDate;     //사용기간 종료
     private String companyName; //발급자(회사)
     private int issueCount; //발급수
+
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int useCount;   //사용수
+
     private String status;  //발급중, 발급종료
 
     @CreationTimestamp

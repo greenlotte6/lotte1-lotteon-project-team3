@@ -28,6 +28,6 @@ public class OrderRequestDTO {
     private String quantity;
     private String totalPrice;
     private int usedPoint;
-    private int issuedNo;
+    private Integer issuedNo;
 
 }

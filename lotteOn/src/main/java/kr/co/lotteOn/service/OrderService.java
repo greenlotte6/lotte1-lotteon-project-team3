@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("회원 없음"));
 
         // 2. 주문코드 생성 (UUID or 조합된 규칙 기반)
-        String orderCode = UUID.randomUUID().toString();
+        String orderCode = generateOrderCode();
 
         // 3. Order 생성 및 저장
         Order order = Order.builder()
@@ -73,6 +74,14 @@ public class OrderService {
     public Order getOrderByCode(String orderCode) {
         return orderRepository.findById(orderCode)
                 .orElseThrow(() -> new IllegalArgumentException("주문 정보 없음"));
+    }
+
+    public String generateOrderCode(){
+        String prefix = "ORD";
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int random = (int)(Math.random() * 9000) + 1000;
+
+        return prefix + "-" + date + "-" + random;
     }
 
 }
