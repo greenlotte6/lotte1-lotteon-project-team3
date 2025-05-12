@@ -23,6 +23,25 @@
     <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
     <title>마이페이지 : 롯데ON</title>
+    <style>
+        .rating {
+            display: inline-block;
+        }
+
+        .star {
+            font-size: 30px;
+            color: #ccc; /* 기본 회색 */
+            cursor: pointer;
+        }
+
+        .star.selected {
+            color: #f39c12; /* 선택된 별은 노란색 */
+        }
+
+        .star:hover {
+            color: #f39c12; /* 호버 시 노란색 */
+        }
+    </style>
 </head>
 <body>
 
@@ -682,53 +701,61 @@
     <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
         <div class="popup-content">
             <h2>상품평</h2>
-            <form action="/myPage/my_review_write" method="post">
-                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
+            <form action="/myPage/my_review_write" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="productCode" th:value="${order.productCode}">
+                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
                 <div class="review_form">
                     <h3>리뷰 작성하기</h3>
                     <table>
                         <tr>
                             <th>상품명</th>
-                            <td>이름</td>
+                            <td>[[${order.productName}]]</td>
                         </tr>
                         <tr>
                             <th>만족도</th>
                             <td>
-                                ★★★★★
+                                <div class="rating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                                <input type="hidden" name="rating" id="rating">
                             </td>
                         </tr>
                         <tr>
                             <th>제목</th>
                             <td>
-                                <input type="text" placeholder="제목 입력">
+                                <input type="text" name="title" placeholder="제목 입력">
                             </td>
                         </tr>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea placeholder="내용 입력"></textarea>
+                                <textarea name="content" placeholder="내용 입력"></textarea>
                             </td>
                         </tr>
                         <tr>
                             <th>사진</th>
                             <td>
                                 <div>
-                                    <input type="file" name="imageListFile" placeholder="선택된 파일 없음">
+                                    <input type="file" name="imageList1" placeholder="선택된 파일 없음">
                                     <p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
                                 </div>
                                 <div>
-                                    <input type="file" name="imageMainFile" placeholder="선택된 파일 없음">
+                                    <input type="file" name="imageList2" placeholder="선택된 파일 없음">
                                     <p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
                                 </div>
                                 <div>
-                                    <input type="file" name="imageDetailFile" placeholder="선택된 파일 없음">
+                                    <input type="file" name="imageList3" placeholder="선택된 파일 없음">
                                     <p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
                                 </div>
                             </td>
                         </tr>
                     </table>
                     <div class="review_button">
-                        <button type="button" class="review_btn1">작성완료</button>
+                        <button type="submit" class="review_btn1">작성완료</button>
                     </div>
                 </div>
             </form>
@@ -772,6 +799,57 @@
             document.getElementById("confirm-popup-" + index).style.display = "none";
             document.getElementById("review-popup-" + index).style.display = "none";
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const stars = document.querySelectorAll(".star");
+            const ratingInput = document.getElementById("rating");
+
+            stars.forEach(star => {
+                star.addEventListener("click", function() {
+                    const value = this.getAttribute("data-value");
+                    const reviewForm = this.closest(".review_form"); // 이 별이 속한 리뷰 영역
+                    const ratingInput = reviewForm.querySelector("input[name='rating']"); // 해당 폼의 rating input
+
+                    ratingInput.value = value;
+
+                    const allStars = reviewForm.querySelectorAll(".star");
+                    allStars.forEach(s => {
+                        if (s.getAttribute("data-value") <= value) {
+                            s.classList.add("selected");
+                        } else {
+                            s.classList.remove("selected");
+                        }
+                    });
+                });
+
+                star.addEventListener("mouseover", function() {
+                    const value = this.getAttribute("data-value");
+                    const reviewForm = this.closest(".review_form");
+                    const allStars = reviewForm.querySelectorAll(".star");
+
+                    allStars.forEach(s => {
+                        if (s.getAttribute("data-value") <= value) {
+                            s.classList.add("selected");
+                        } else {
+                            s.classList.remove("selected");
+                        }
+                    });
+                });
+
+                star.addEventListener("mouseout", function() {
+                    const reviewForm = this.closest(".review_form");
+                    const ratingInput = reviewForm.querySelector("input[name='rating']");
+                    const value = ratingInput.value;
+                    const allStars = reviewForm.querySelectorAll(".star");
+
+                    allStars.forEach(s => {
+                        s.classList.remove("selected");
+                        if (s.getAttribute("data-value") <= value) {
+                            s.classList.add("selected");
+                        }
+                    });
+                });
+            });
+        });
     </script>
 </div>
 </body>

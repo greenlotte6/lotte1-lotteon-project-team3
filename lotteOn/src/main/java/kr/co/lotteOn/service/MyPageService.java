@@ -3,6 +3,9 @@ package kr.co.lotteOn.service;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteOn.dto.MemberDTO;
+import kr.co.lotteOn.dto.OrderItemDTO;
+import kr.co.lotteOn.dto.ProductDTO;
+import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
@@ -15,6 +18,8 @@ import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
+import kr.co.lotteOn.dto.review.ReviewPageRequestDTO;
+import kr.co.lotteOn.dto.review.ReviewPageResponseDTO;
 import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +30,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,6 +49,7 @@ public class MyPageService {
     private final OrderItemRepository orderItemRepository;
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
+    private final ReviewRepository reviewRepository;
     private final PointService pointService;
 
     //회원별 문의내역
@@ -249,6 +254,38 @@ public class MyPageService {
                 .build();
     }
 
+    //고객별 리뷰 내역 불러오기
+    public ReviewPageResponseDTO getReviewByWriter(ReviewPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("writer");
+        Page<Tuple> pageReview = reviewRepository.findAllByMember_Id(pageRequestDTO, pageable);
+
+        List<ReviewDTO> reviewDTOList = pageReview
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Review review = tuple.get(0, Review.class);
+                    Product product = tuple.get(1, Product.class);
+                    Member member = tuple.get(2, Member.class);
+
+                    ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+                    ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+                    MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+
+                    reviewDTO.setMember(memberDTO);
+
+                    return reviewDTO;
+                }).collect(Collectors.toList());
+
+        int total = (int) pageReview.getTotalElements();
+
+        return ReviewPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(reviewDTOList)
+                .total(total)
+                .build();
+    }
+
 
     /*메인페이지 시작*/    /*메인페이지 시작*/    /*메인페이지 시작*/    /*메인페이지 시작*/
 
@@ -298,9 +335,10 @@ public class MyPageService {
                     orderDTO.setPrice(product.getPrice());
                     orderDTO.setPoint(product.getPoint());
                     orderDTO.setProductName(product.getName());
-                    orderDTO.setQuantity(orderItem.getQuantity());
                     orderDTO.setImageList(product.getImageList());
                     orderDTO.setOrderCode(order.getOrderCode());
+                    orderDTO.setQuantity(orderItem.getQuantity());
+                    orderDTO.setProductCode(orderItem.getProduct().getProductCode());
 
                     // 판매자 정보 조회
                     String companyName = product.getCompanyName();
@@ -338,7 +376,32 @@ public class MyPageService {
 
         return pointDTOList;
     }
-    //고객 상품 문의내역(channel = 판매자 게시판)
+
+    //최신 리뷰 내역 불러오기(3)
+    public List<ReviewDTO> findReviewByMemberIdByLimit3(MemberDTO memberDTO){
+        Member memberId = Member.builder().id(memberDTO.getId()).build();
+
+        Page<Tuple> pageReview = reviewRepository.findTop3ByMemberOrderByRegDateDesc(memberId);
+
+        List<ReviewDTO> reviewDTOList = pageReview
+                .getContent()
+                .stream()
+                .map(tuple -> {
+                    Review review = tuple.get(0, Review.class);
+                    Product product = tuple.get(1, Product.class);
+                    Member member = tuple.get(2, Member.class);
+
+                    ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+
+                    reviewDTO.setMember(memberDTO);
+
+                    return reviewDTO;
+                }).toList();
+
+        return reviewDTOList;
+    }
+
+    //고객 상품 문의(channel = 판매자 게시판)
     public int qnaWrite(QnaDTO qnaDTO){
         Member member = Member.builder()
                 .id(qnaDTO.getWriter())
@@ -392,6 +455,31 @@ public class MyPageService {
     }
 
     //상품평쓰기
+    @Transactional
+    public int writeReview(ReviewDTO reviewDTO){
+        Member member = Member.builder()
+                .id(reviewDTO.getWriter())
+                .build();
+
+        Review review = modelMapper.map(reviewDTO, Review.class);
+        review.setMember(member);
+
+        // 이미지 파일이 null이 아닐 때만 파일 이름을 설정
+        if (reviewDTO.getImageList1() != null && !reviewDTO.getImageList1().isEmpty()) {
+            review.setImage1(reviewDTO.getImageList1().getOriginalFilename());
+        }
+        if (reviewDTO.getImageList2() != null && !reviewDTO.getImageList2().isEmpty()) {
+            review.setImage2(reviewDTO.getImageList2().getOriginalFilename());
+        }
+        if (reviewDTO.getImageList3() != null && !reviewDTO.getImageList3().isEmpty()) {
+            review.setImage3(reviewDTO.getImageList3().getOriginalFilename());
+        }
+
+        Review savedReview = reviewRepository.save(review);
+
+        return savedReview.getReviewNo();
+
+    }
 
 
 
