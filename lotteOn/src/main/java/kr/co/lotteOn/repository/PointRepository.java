@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PointRepository extends JpaRepository<Point, Integer>, PointRepositoryCustom {
@@ -23,4 +24,6 @@ public interface PointRepository extends JpaRepository<Point, Integer>, PointRep
     public Point findTopByMemberOrderByGiveDateDesc(Member member);
 
     public List<Point> findTop3ByMemberOrderByGiveDateDesc(Member memberId);
+
+    Optional<Point> findTopByMember_IdOrderByGiveDateDesc(String memberId);
 }

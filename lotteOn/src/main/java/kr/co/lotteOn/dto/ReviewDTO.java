@@ -41,4 +41,5 @@ public class ReviewDTO {
         }
         return null;
     }
+    private String productCode;
 }

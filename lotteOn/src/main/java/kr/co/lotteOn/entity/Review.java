@@ -25,6 +25,8 @@ public class Review {
     @JoinColumn(name = "id")
     private Member member;
 
+    private String productCode;
+
     private String title;
     private String rating;
     private String content;

@@ -2,6 +2,7 @@ package kr.co.lotteOn.service;
 
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Point;
+import kr.co.lotteOn.repository.MemberRepository;
 import kr.co.lotteOn.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class PointService {
 
     public final PointRepository pointRepository;
+    private final MemberRepository memberRepository;
 
     public void addPoint(Member member, int givePoint, String giveContent){
         //최신 포인트 조회
@@ -52,5 +54,30 @@ public class PointService {
 
     public Point getLatestPoint(Member member){
         return pointRepository.findTopByMemberOrderByGiveDateDesc(member);
+    }
+
+    public void usePoint(String memberId, int amount, String orderCode){
+        if (amount <= 0) return;
+
+        // 1. 최신 누적 포인트 가져오기 (최근 사용 내역 기준)
+        int currentTotal = pointRepository.findTopByMember_IdOrderByGiveDateDesc(memberId)
+                .map(Point::getTotalPoint)
+                .orElse(0);
+
+        // 2. 회원 조회
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("회원 없음"));
+
+        // 3. 포인트 차감 내역 생성
+        Point point = Point.builder()
+                .member(member)
+                .type("USE")
+                .givePoint(-amount)
+                .totalPoint(currentTotal - amount)
+                .giveContent("주문 사용")
+                .orderCode(orderCode)
+                .build();
+
+        pointRepository.save(point);
     }
 }
