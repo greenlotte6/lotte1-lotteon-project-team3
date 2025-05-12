@@ -18,19 +18,22 @@ import java.time.LocalDateTime;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewNo;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "writer")
     private Member member;
 
     private String title;
     private String rating;
     private String content;
+
     private String image1;
     private String image2;
     private String image3;
+
+    private String productCode;
 
     @CreationTimestamp
     private LocalDateTime regDate;

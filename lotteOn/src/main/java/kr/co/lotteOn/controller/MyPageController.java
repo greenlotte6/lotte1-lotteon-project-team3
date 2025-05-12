@@ -2,7 +2,7 @@ package kr.co.lotteOn.controller;
 
 
 import kr.co.lotteOn.dto.MemberDTO;
-import kr.co.lotteOn.dto.coupon.CouponDTO;
+import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageResponseDTO;
@@ -15,6 +15,8 @@ import kr.co.lotteOn.dto.point.PointPageResponseDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.dto.qna.QnaPageRequestDTO;
 import kr.co.lotteOn.dto.qna.QnaPageResponseDTO;
+import kr.co.lotteOn.dto.review.ReviewPageRequestDTO;
+import kr.co.lotteOn.dto.review.ReviewPageResponseDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.repository.MemberRepository;
 import kr.co.lotteOn.security.MyUserDetails;
@@ -23,18 +25,14 @@ import kr.co.lotteOn.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -88,6 +86,7 @@ public class MyPageController {
         List<QnaDTO> recentQnaTop3 = myPageService.findByMemberIdByLimit3(memberDTO);
         List<PointDTO> recentPointTop3 = myPageService.findPointByMemberIdByLimit3(memberDTO);
         List<OrderDTO> recentOrderTop3 = myPageService.findOrderByMemberIdByLimit3(memberDTO);
+        //List<ReviewDTO> recentReviewTop3 = myPageService.find
         for(OrderDTO orderDTO : recentOrderTop3){
             orderDTO.setPayment(orderDTO.getPaymentName());
         }
@@ -164,7 +163,16 @@ public class MyPageController {
 
     //마이페이지 - 나의리뷰
     @GetMapping("/my_review")
-    public String myReview() {
+    public String myReview(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
+                           @ModelAttribute Member member, ReviewPageRequestDTO pageRequestDTO) {
+        Member currentMember = userDetails.getMember();
+        String loginId = currentMember.getId();
+        pageRequestDTO.setWriter(loginId);
+
+        ReviewPageResponseDTO pageResponseDTO = myPageService.getReviewByWriter(pageRequestDTO);
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("review", pageResponseDTO.getDtoList());
+
         return "/myPage/my_review";
     }
 
@@ -215,11 +223,6 @@ public class MyPageController {
         int no = myPageService.qnaWrite(qnaDTO);
 
         return "redirect:/myPage/my_qna";
-    }
-
-    @GetMapping("/my_qna_product")
-    public String myProductQna(){
-        return "/myPage/my_qna_product";
     }
 
     //마이페이지 - 나의설정
@@ -288,6 +291,14 @@ public class MyPageController {
 
         return "redirect:/myPage/my_order";
     }
+
+    @PostMapping("/my_review_write")
+    public String writeReview(ReviewDTO reviewDTO) {
+        int no = myPageService.writeReview(reviewDTO);
+
+        return "redirect:/myPage/my_review";
+    }
+
 
 
 }
