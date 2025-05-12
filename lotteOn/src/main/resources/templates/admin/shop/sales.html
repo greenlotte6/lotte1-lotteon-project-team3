@@ -47,11 +47,11 @@
                         <th>주문합계</th>
                         <th>매출합계</th>
                     </tr>
-                    <tr>
+                    <tr th:each="sale : ${salesList}">
                         <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td>(주) 롯데온</td>
-                        <td>112-12-12345</td>
+                        <td th:text="${sale.salesNo}"></td>
+                        <td th:text="${sale.companyName}"></td>
+                        <td th:text="${sale.businessNo}"></td>
                         <td>100</td>
                         <td>90</td>
                         <td>55</td>

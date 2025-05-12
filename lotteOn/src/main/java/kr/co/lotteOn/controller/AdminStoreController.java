@@ -1,11 +1,14 @@
 package kr.co.lotteOn.controller;
 
+import kr.co.lotteOn.dto.SalesDTO;
 import kr.co.lotteOn.dto.SellerDTO;
 import kr.co.lotteOn.dto.ShopDTO;
+import kr.co.lotteOn.entity.Sales;
 import kr.co.lotteOn.entity.Seller;
-import kr.co.lotteOn.entity.Shop;
+import kr.co.lotteOn.repository.SalesRepository;
 import kr.co.lotteOn.repository.SellerProjection;
 import kr.co.lotteOn.repository.ShopRepository;
+import kr.co.lotteOn.service.SalesService;
 import kr.co.lotteOn.service.SellerService;
 import kr.co.lotteOn.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +18,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/admin")
 @Controller
@@ -35,6 +34,8 @@ public class AdminStoreController {
     private final ModelMapper modelMapper;
     private final SellerService sellerService;
     private final ShopRepository shopRepository;
+    private final SalesService salesService;
+    private final SalesRepository salesRepository;
 
 
     /*------------ 관리자 - 상점관리 ------------*/
@@ -174,9 +175,14 @@ public class AdminStoreController {
 
     //상점관리 - 매출관리
     @GetMapping("/shop/sales")
-    public String shopSales(){
+    public String shopSales(Model model){
+
+        List<SalesDTO> salesList= salesService.getSalesList();
+        model.addAttribute("salesList", salesList);
         return "/admin/shop/sales";
     }
+
+
 
 
 }

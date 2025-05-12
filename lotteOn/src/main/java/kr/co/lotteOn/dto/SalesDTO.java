@@ -1,0 +1,18 @@
+package kr.co.lotteOn.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class SalesDTO {
+
+    private int salesNo;
+    private String companyName;
+    private String businessNo;
+}
