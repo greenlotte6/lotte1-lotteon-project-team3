@@ -44,193 +44,6 @@
     </style>
 </head>
 <body>
-
-<!--region:반품신청 모달-->
-<div id="returnModal" class="modal returnmodal">
-    <div class="modal-content">
-        <div class="modal-header return-header">
-            <h2>반품신청</h2>
-            <span class="close return-close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div>
-                <h2>상품정보</h2>
-            </div>
-            <table class="table_six">
-                <thead>
-                <tr>
-                    <th>날짜</th>
-                    <th>상품정보</th>
-                    <th>결제금액</th>
-                    <th>상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <p>0000-00-00</p>
-                    </td>
-                    <td>
-                        <div class="tablesix-imgpdiv">
-                            <div>
-                                <img src="/images/admin-persons.png" alt="#">
-                            </div>
-                            <p>주문번호: 101221341 <br>
-                                (주) 상호명 <br>
-                                상품명 <br>
-                                수량: 1개 <br><br>
-                                <strong class="strong_1">34,000원</strong>
-                            </p>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div>
-                            <div class="gyeoljae2">
-                                <p>판매가&nbsp;34,000원 <br>
-                                    할인 &nbsp;&nbsp;&nbsp; -3,000원 <br><br>
-                            </div>
-                            결제금액 &nbsp; <strong>34,000원</strong>
-                            </p>
-                        </div>
-                    </td>
-                    <td>
-                        배송완료
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div>
-                <h2 class="table2-h2">반품정보 입력</h2>
-            </div>
-            <table class="table_seven">
-                <tr>
-                    <th>반품유형</th>
-                    <td class="radio">
-                        <input type="radio" id="change" name="inquiryType" value="change">단순 변심
-                        <input type="radio" id="error" name="inquiryType" value="error">파손 및 불량
-                        <input type="radio" id="mistake" name="inquiryType" value="mistake">주문 실수
-                        <input type="radio" id="etc" name="inquiryType" value="etc">기타
-                    </td>
-                </tr>
-                <tr>
-                    <th>사유입력</th>
-                    <td>
-                        <input type="text" name="reason">
-                    </td>
-                </tr>
-                <tr>
-                    <th>사진첨부(선택)</th>
-                    <td>
-                        <div class="picture-2">
-                            <button type="button" class="picture2-btn">파일선택</button>
-                            <p>선택된파일없음</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="review_btn">
-                <button type="button" class="return_btn1">반품신청</button>
-                <button type="button" class="return_btn2">취소</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--endregion-->
-
-<!--region:교환신청 모달-->
-<div id="exchangeModal" class="modal exchangemodal">
-    <div class="modal-content">
-        <div class="modal-header exchange-header">
-            <h2>교환신청</h2>
-            <span class="close exchange-close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div>
-                <h2>상품정보</h2>
-            </div>
-            <table class="table_six">
-                <thead>
-                <tr>
-                    <th>날짜</th>
-                    <th>상품정보</th>
-                    <th>결제금액</th>
-                    <th>상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <p>0000-00-00</p>
-                    </td>
-                    <td>
-                        <div class="tablesix-imgpdiv">
-                            <div>
-                                <img src="/images/admin-persons.png" alt="#">
-                            </div>
-                            <p>주문번호: 101221341 <br>
-                                (주) 상호명 <br>
-                                상품명 <br>
-                                수량: 1개 <br><br>
-                                <strong class="strong_1">34,000원</strong>
-                            </p>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div>
-                            <div class="gyeoljae2">
-                                <p>판매가&nbsp;34,000원 <br>
-                                    할인 &nbsp;&nbsp;&nbsp; -3,000원 <br><br>
-                            </div>
-                            결제금액 &nbsp; <strong>34,000원</strong>
-                            </p>
-                        </div>
-                    </td>
-                    <td>
-                        배송완료
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div>
-                <h2 class="table2-h2">반품정보 입력</h2>
-            </div>
-            <table class="table_seven">
-                <tr>
-                    <th>반품유형</th>
-                    <td class="radio">
-                        <input type="radio" id="change1" name="inquiryType" value="change">단순 변심
-                        <input type="radio" id="error1" name="inquiryType" value="error">파손 및 불량
-                        <input type="radio" id="mistake1" name="inquiryType" value="mistake">주문 실수
-                        <input type="radio" id="etc1" name="inquiryType" value="etc">기타
-                    </td>
-                </tr>
-                <tr>
-                    <th>사유입력</th>
-                    <td>
-                        <input type="text" name="reason">
-                    </td>
-                </tr>
-                <tr>
-                    <th>사진첨부(선택)</th>
-                    <td>
-                        <div class="picture-2">
-                            <button type="button" class="picture2-btn">파일선택</button>
-                            <p>선택된파일없음</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="review_btn">
-                <button type="button" class="return_btn1">반품신청</button>
-                <button type="button" class="return_btn2">취소</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--endregion-->
-
 <div id="container">
     <th:block th:include="/common/_header.html"/>
     <main>
@@ -342,7 +155,7 @@
                         <div class="orderList" th:each="order, i : ${recentOrder}">
                             <div class="orderHeader">
                                 <div>
-                                    <p class="orderDate">2025.05.09</p>
+                                    <p class="orderDate" th:text="${order.orderDate}">2025.05.09</p>
                                     <p class="orderNo" th:text="${order.orderCode}" th:onclick="'showPopup(' + ${i.index} + ')'"></p>
                                 </div>
                                 <a href="#" class="detailView" th:onclick="'showPopup(' + ${i.index} + ')'">상세보기</a>
@@ -381,10 +194,10 @@
                                             <button th:onclick="'showReviewPopup(' + ${i.index} + ')'">리뷰쓰기</button>
                                         </a>
                                         <a href="#">
-                                            <button>반품신청</button>
+                                            <button th:onclick="'showRefundPopup(' + ${i.index} + ')'">반품신청</button>
                                         </a>
                                         <a href="#">
-                                            <button>교환신청</button>
+                                            <button th:onclick="'showExchangePopup(' + ${i.index} + ')'">교환신청</button>
                                         </a>
                                     </div>
                                 </div>
@@ -425,26 +238,28 @@
                             <h3>나의 리뷰</h3>
                             <a th:href="@{/myPage/my_review}" class="allView">전체보기</a>
                         </div>
-                        <div class="orderHeader">
+                        <div class="orderHeader" th:if="${#lists.isEmpty(recentReview)}">
                             <div>
                                 <p>작성한 리뷰가 없습니다.</p>
                             </div>
                         </div>
-                        <div class="reviewList">
+                        <div class="reviewList" th:each="review, i : ${recentReview}">
                             <table>
                                 <tr>
                                     <th>번호</th>
                                     <th>상품명</th>
+                                    <th>제목</th>
                                     <th>내용</th>
                                     <th>별점</th>
                                     <th>작성일</th>
                                 </tr>
                                 <tr>
-                                    <td>1</td>
-                                    <td>한우 1++ 1kg</td>
-                                    <td>한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
-                                    <td>⭐⭐⭐⭐⭐</td>
-                                    <td>2025.05.08</td>
+                                    <td th:text="${review.reviewNo}">1</td>
+                                    <td th:text="${review.productName}">한우 1++ 1kg</td>
+                                    <td th:text="${review.title}">한우 맞나요?</td>
+                                    <td th:text="${review.content}">한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
+                                    <td th:text="${review.rating}">⭐⭐⭐⭐⭐</td>
+                                    <td th:text="${review.regDate}">2025.05.08</td>
                                 </tr>
                             </table>
                         </div>
@@ -477,35 +292,6 @@
                                     <td th:text="${qna.regDate}">2025.05.08</td>
                                     <td th:text="${qna.status}"
                                         th:classappend="${qna.status == '답변완료'} ? ' answered' : ''"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="productService var">
-                        <div class="varTitle">
-                            <h3>상품 문의</h3>
-                            <a th:href="@{/myPage/my_qna_product}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader">
-                            <div>
-                                <p>등록된 문의가 없습니다.</p>
-                            </div>
-                        </div>
-                        <div class="productServiceList">
-                            <table>
-                                <tr>
-                                    <th>번호</th>
-                                    <th>채널</th>
-                                    <th>제목</th>
-                                    <th>작성일</th>
-                                    <th>상태</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>상품 문의</td>
-                                    <td>소고기가 너무 맛이가 없자나 응?</td>
-                                    <td>2025.05.08</td>
-                                    <td>답변 대기 중</td>
                                 </tr>
                             </table>
                         </div>
@@ -697,7 +483,7 @@
         </div>
     </div>
 
-    <!--region:상품평쓰기 모달-->
+    <!--상품평쓰기 모달-->
     <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
         <div class="popup-content">
             <h2>상품평</h2>
@@ -741,15 +527,12 @@
                             <td>
                                 <div>
                                     <input type="file" name="imageList1" placeholder="선택된 파일 없음">
-                                    <p>크기 190x190, 상품 목록에 출력 될 이미지 입니다.</p>
                                 </div>
                                 <div>
                                     <input type="file" name="imageList2" placeholder="선택된 파일 없음">
-                                    <p>크기 230x230, 상품 메인에 출력 될 이미지 입니다.</p>
                                 </div>
                                 <div>
                                     <input type="file" name="imageList3" placeholder="선택된 파일 없음">
-                                    <p>크기 456x456, 상품 상세에 출력 될 이미지 입니다.</p>
                                 </div>
                             </td>
                         </tr>
@@ -762,6 +545,185 @@
             <button th:onclick="'closePopup(' + ${i.index} + ')'" class="review_btn2">취소</button>
         </div>
     </div>
+
+    <!--반품신청 모달-->
+    <div th:each="order, i : ${recentOrder}" th:id="'refund-popup-' + ${i.index}" class="popup" style="display: none; width: 700px">
+        <div class="popup-content">
+            <h2>반품신청</h2>
+            <form action="/myPage/my_refund" method="post">
+                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
+                <div class="product_info">
+                    <h3>상품 정보</h3>
+                    <table>
+                        <tr>
+                            <th>주문 번호</th>
+                            <td>[[${order.orderCode}]]</td>
+                            <th>주문일</th>
+                            <td>[[${order.orderDate}]]</td>
+                        </tr>
+                        <tr>
+                            <th>판매자</th>
+                            <td>[[${order.companyName}]]</td>
+                            <th>상품</th>
+                            <td>[[${order.productName}]]&nbsp;/&nbsp;[[${order.quantity}]]개</td>
+                        </tr>
+                        <tr>
+                            <th>결제금액</th>
+                            <td>[[${order.actualMoney}]]원</td>
+                            <th>배송비</th>
+                            <td>[[${order.fee}]]원</td>
+                        </tr>
+                        <tr>
+                            <th>결제수단</th>
+                            <td>[[${order.payment}]]</td>
+                            <th>최종 반품금액</th>
+                            <td>-[[${order.actualMoney}]]원</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="refund_info">
+                    <h3>반품 정보 입력</h3>
+                    <table class="refund">
+                        <tr>
+                            <th>주문번호</th>
+                            <td>
+                                <input type="text" readonly name="orderCode" th:value="${order.orderCode}">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>반품 유형</th>
+                            <td>
+                                <div class="radio">
+                                    불량/파손<input type="radio" name="returnType" value="broken">
+                                    단순변심<input type="radio" name="returnType" value="dislike">
+                                    주문실수<input type="radio" name="returnType" value="misorder">
+                                    오배송<input type="radio" name="returnType" value="misdelivery">
+                                    배송지연<input type="radio" name="returnType" value="delay">
+                                    상품정보 상이<input type="radio" name="returnType" value="misinfo">
+                                    기타<input type="radio" name="returnType" value="etc">
+                                </div>
+                                <p>개인 변심이나 주문 실수로 인한 반품 배송비는 고객 부담입니다.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">반품 사유(자세히)</th>
+                            <td>
+                                <textarea type="text" name="reason"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>사진</th>
+                            <td>
+                                <div>
+                                    <input type="file" name="imageList1" placeholder="선택된 파일 없음">
+                                </div>
+                                <div>
+                                    <input type="file" name="imageList2" placeholder="선택된 파일 없음">
+                                </div>
+                                <div>
+                                    <input type="file" name="imageList3" placeholder="선택된 파일 없음">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="confirm_button">
+                    <button type="submit">반품신청</button>
+                </div>
+            </form>
+            <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+        </div>
+    </div>
+
+    <!--교환신청 모달-->
+    <div th:each="order, i : ${recentOrder}" th:id="'exchange-popup-' + ${i.index}" class="popup" style="display: none; width: 700px">
+    <div class="popup-content">
+        <h2>교환신청</h2>
+        <form action="/myPage/my_exchange" method="post">
+            <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
+            <div class="product_info">
+                <h3>상품 정보</h3>
+                <table>
+                    <tr>
+                        <th>주문 번호</th>
+                        <td>[[${order.orderCode}]]</td>
+                        <th>주문일</th>
+                        <td>[[${order.orderDate}]]</td>
+                    </tr>
+                    <tr>
+                        <th>판매자</th>
+                        <td>[[${order.companyName}]]</td>
+                        <th>상품</th>
+                        <td>[[${order.productName}]]&nbsp;/&nbsp;[[${order.quantity}]]개</td>
+                    </tr>
+                    <tr>
+                        <th>결제금액</th>
+                        <td>[[${order.actualMoney}]]원</td>
+                        <th>배송비</th>
+                        <td>[[${order.fee}]]원</td>
+                    </tr>
+                    <tr>
+                        <th>결제수단</th>
+                        <td>[[${order.payment}]]</td>
+                        <th>최종 반품금액</th>
+                        <td>-[[${order.actualMoney}]]원</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="refund_info">
+                <h3>반품 정보 입력</h3>
+                <table class="refund">
+                    <tr>
+                        <th>주문번호</th>
+                        <td>
+                            <input type="text" readonly name="orderCode" th:value="${order.orderCode}">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>교환 유형</th>
+                        <td>
+                            <div class="radio">
+                                불량/파손<input type="radio" name="exchangeType" value="broken">
+                                오배송<input type="radio" name="exchangeType" value="misdelivery">
+                                사이즈<input type="radio" name="exchangeType" value="size">
+                                상품정보 상이<input type="radio" name="exchangeType" value="misinfo">
+                                기타<input type="radio" name="exchangeType" value="etc">
+                            </div>
+                            <p>개인 변심이나 주문 실수로 인한 반품 배송비는 고객 부담입니다.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">교환 사유(자세히)</th>
+                        <td>
+                            <textarea type="text" name="reason"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>사진</th>
+                        <td>
+                            <div>
+                                <input type="file" name="imageList1" placeholder="선택된 파일 없음">
+                            </div>
+                            <div>
+                                <input type="file" name="imageList2" placeholder="선택된 파일 없음">
+                            </div>
+                            <div>
+                                <input type="file" name="imageList3" placeholder="선택된 파일 없음">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="confirm_button">
+                <button type="submit">교환신청</button>
+            </div>
+        </form>
+        <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+    </div>
+</div>
+
     <script th:inline="javascript">
         //상품정보
         function showPopup(index) {
@@ -791,6 +753,16 @@
             document.getElementById("review-popup-" + index).style.display = "block";
         }
 
+        //반품신청
+        function showRefundPopup(index) {
+            document.getElementById("refund-popup-" + index).style.display = "block";
+        }
+
+        //교환신청
+        function showExchangePopup(index) {
+            document.getElementById("exchange-popup-" + index).style.display = "block";
+        }
+
         // 모달 닫기
         function closePopup(index) {
             document.getElementById("popup-" + index).style.display = "none";
@@ -798,7 +770,10 @@
             document.getElementById("inquiry-popup-" + index).style.display = "none";
             document.getElementById("confirm-popup-" + index).style.display = "none";
             document.getElementById("review-popup-" + index).style.display = "none";
+            document.getElementById("refund-popup-" + index).style.display = "none";
+            document.getElementById("exchange-popup-" + index).style.display = "none";
         }
+
         document.addEventListener("DOMContentLoaded", function() {
             const stars = document.querySelectorAll(".star");
             const ratingInput = document.getElementById("rating");
