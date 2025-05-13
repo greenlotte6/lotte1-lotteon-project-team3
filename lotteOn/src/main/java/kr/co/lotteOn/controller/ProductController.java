@@ -9,6 +9,7 @@ import kr.co.lotteOn.security.MyUserDetails;
 import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,7 +101,10 @@ public class ProductController {
         }else {
             products = productService.getAllProducts();
         }
+
+        List<ProductDTO> bestProducts = productService.getBest10Products();
         model.addAttribute("products", products);
+        model.addAttribute("bestProducts", bestProducts);
         return "/product/list";
     }
 

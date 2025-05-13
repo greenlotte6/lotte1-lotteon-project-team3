@@ -132,246 +132,35 @@
                     </div>
                     <div class="swiper2 best10">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide productItem">
+                            <div class="swiper-slide productItem" th:each="product, idxStat : ${bestProducts}">
                                 <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(6).jpg" alt="상품">
+                                    <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
+                                        <img th:src="@{'/images/' + ${product.imageList}}" alt="상품">
                                     </a>
                                     <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
+                                        <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}" class="text">
+                                            <span class="bold" th:text="${product.companyName}"></span>
+                                            <span th:text="${product.name}"></span>
                                         </a>
                                         <div class="totalPrice">
                                             <del>
-                                                <p>184,600</p>
+                                                <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
                                                 <span>원</span>
                                             </del>
                                         </div>
                                         <div class="priceInfo">
-                                            <p class="discount">20%</p>
+                                            <p class="discount" th:text="${product.discount + '%'}"></p>
                                             <div class="price">
-                                                <p>147,680</p>
+                                                <p th:text="${#numbers.formatInteger(((product.price * (100 - product.discount)) / 100), 3, 'COMMA')}"></p>
                                                 <span>원</span>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(2).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(5).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(3).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(4).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide productItem">
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(2).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(3).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(4).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(5).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="items">
-                                    <a href="#">
-                                        <img src="/images/255x255(6).jpg" alt="상품">
-                                    </a>
-                                    <div class="descWrap">
-                                        <a href="#" class="text">
-                                            <span class="bold">어반드레스</span>
-                                            414956 여자 풀밴딩 스트레이트 팬츠
-                                        </a>
-                                        <div class="totalPrice">
-                                            <del>
-                                                <p>184,600</p>
-                                                <span>원</span>
-                                            </del>
-                                        </div>
-                                        <div class="priceInfo">
-                                            <p class="discount">20%</p>
-                                            <div class="price">
-                                                <p>147,680</p>
-                                                <span>원</span>
-                                            </div>
+                                        <div class="review">
+                                            <span class="starGrade"></span>
+                                            <span class="rating">4.8</span>
+                                            <div class="v-l"></div>
+                                            <span class="reviewInfo">리뷰</span>
+                                            <span class="reviewCount" th:text="${product.views}"></span>
                                         </div>
                                     </div>
                                 </div>

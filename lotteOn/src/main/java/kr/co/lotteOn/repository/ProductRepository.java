@@ -3,6 +3,7 @@ package kr.co.lotteOn.repository;
 import kr.co.lotteOn.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +22,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findWithCategoryByProductCode(@Param("productCode") String productCode);
 
     List<Product> findByCategory_CategoryId(Long categoryId);
+
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.options WHERE p.productCode IN :codes")
+    List<Product> findAllByProductCodeInWithOptions(@Param("codes") List<String> codes);
+
+    List<Product> findByProductCodeIn(List<String> productCodes);
 
 }

@@ -2,6 +2,7 @@ package kr.co.lotteOn.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.core.annotation.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class Category {
     @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @OrderBy("sortOrder ASC")
     private List<Category> children = new ArrayList<>();
 }
 

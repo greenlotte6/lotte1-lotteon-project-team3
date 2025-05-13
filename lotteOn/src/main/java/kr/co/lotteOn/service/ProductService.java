@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +36,7 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
     private final PointRepository pointRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Transactional(readOnly = true)
     public List<ProductDTO> getAllProducts() {
@@ -189,12 +193,40 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    // 최신 포인트 내역 조회
-//    public int getLatestTotalPoint(String memberId) {
-//        // 최신 giveDate 기준으로 1개의 totalPoint 가져오기
-//        List<Integer> points = pointRepository.findLatestTotalPointByMemberId(memberId, PageRequest.of(0, 1));
-//
-//        // 리스트가 비어있으면 0 반환, 아니면 첫 번째 값을 반환
-//        return points.isEmpty() ? 0 : points.get(0);
-//    }
+    public List<ProductDTO> getPopularProducts() {
+        Pageable top4 = PageRequest.of(0, 4);
+        List<String> codes = orderItemRepository.findTopPopularProductCodes(top4);
+
+        if (codes.isEmpty()) return List.of();
+
+        List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
+
+        // 인기순 정렬 유지 (productCode 기준)
+        Map<String, Product> productMap = products.stream()
+                .collect(Collectors.toMap(Product::getProductCode, p -> p));
+
+        return codes.stream()
+                .map(productMap::get)
+                .filter(Objects::nonNull)
+                .map(ProductDTO::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getBest10Products() {
+        Pageable top10 = PageRequest.of(0, 10);
+        List<String> codes = orderItemRepository.findTopPopularProductCodes(top10);
+        if (codes.isEmpty()) return List.of();
+
+        List<Product> products = productRepository.findByProductCodeIn(codes);
+        Map<String, Product> map = products.stream()
+                .collect(Collectors.toMap(Product::getProductCode, p -> p));
+
+        return codes.stream()
+                .map(map::get)
+                .filter(Objects::nonNull)
+                .map(ProductDTO::fromEntity)
+                .toList();
+    }
+
 }
