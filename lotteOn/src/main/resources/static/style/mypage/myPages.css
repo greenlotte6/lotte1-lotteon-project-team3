@@ -460,15 +460,18 @@ section {
 }
 
 .reviewList table td:nth-of-type(2) {
-    width: 150px;
+    width: 180px;
 }
 
 .reviewList table td:nth-of-type(3) {
-    width: 470px;
+    width: 250px;
+}
+.reviewList table td:nth-of-type(4) {
+    width: 250px;
 }
 
 .reviewList table td {
-    width: 150px;
+    width: 120px;
 }
 
 
@@ -747,6 +750,44 @@ table tr:not(:first-child) * {
     font-size: 13px;
 }
 
+.myView table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.myView table td {
+    height: 50px;
+    font-size: 14px !important;
+    border-bottom: 1px solid #eee;
+    padding-left: 16px;
+}
+
+.myView table tr:nth-of-type(1) td {
+    border-top: 1px solid #eee;
+}
+
+.myView table tr:nth-of-type(4) td:nth-of-type(2) {
+    height: 200px;
+}
+
+.myView table tr:nth-of-type(5) td:nth-of-type(2) {
+    height: 200px;
+}
+
+.myView .backToList {
+    display: flex;
+    justify-content: right;
+    margin-top: 26px;
+}
+
+.myView .backToList a {
+    font-size: 14px;
+    border: 1px solid #ddd;
+    padding: 12px 18px;
+    border-radius: 3px;
+    font-weight: 300;
+}
 
 
 .bold {
