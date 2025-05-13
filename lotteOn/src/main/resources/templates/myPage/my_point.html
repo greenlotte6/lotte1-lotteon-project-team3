@@ -130,7 +130,7 @@
                 <p>적립한 포인트가 없습니다.</p>
               </div>
             </div>
-            <div class="pointList">
+            <div class="pointList" th:unless="${#lists.isEmpty(point)}">
               <table>
                 <tr>
                   <th>적립일</th>
@@ -139,7 +139,7 @@
                   <th>적립 코드</th>
                   <th>적립 내용</th>
                 </tr>
-                <tr th:each = "point, i : ${point}" th:unless="${#lists.isEmpty(point)}">
+                <tr th:each = "point, i : ${point}">
                   <td th:text="${point.giveDate}"></td>
                   <td th:text="${point.givePoint > 0} ? '적립' : '사용'"></td>
                   <td th:text="${point.givePoint}" class="thisIsMyPoint savePoints"></td>

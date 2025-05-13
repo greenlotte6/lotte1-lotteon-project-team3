@@ -109,7 +109,7 @@
                                 <p>작성한 리뷰가 없습니다.</p>
                             </div>
                         </div>
-                        <div class="reviewList" th:inless="${#lists.isEmpty(review)}">
+                        <div class="reviewList" th:unless="${#lists.isEmpty(review)}">
                             <table>
                                 <tr>
                                     <th>번호</th>
