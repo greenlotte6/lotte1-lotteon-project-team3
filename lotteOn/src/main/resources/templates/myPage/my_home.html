@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
-    <link rel="stylesheet" href="/style/mypage/my_home.css">
-    <link rel="stylesheet" href="/style/mypage/my_home_modal.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/mypage/myPages.css">
+    <link rel="stylesheet" href="/style/mypage/myPageModals.css">
 
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -121,7 +120,7 @@
                     <div class="recentOrder var">
                         <div class="varTitle">
                             <h3>최근 주문 내역</h3>
-                            <a th:href="@{/myPage/my_order}" class="allView" >전체보기</a>
+                            <a th:href="@{/myPage/my_order}" class="allView">전체보기</a>
                         </div>
                         <div class="orderHeader" th:if="${#lists.isEmpty(recentOrder)}">
                             <div>
@@ -132,7 +131,8 @@
                             <div class="orderHeader">
                                 <div>
                                     <p class="orderDate" th:text="${order.orderDate}">2025.05.09</p>
-                                    <p class="orderNo" th:text="${order.orderCode}" th:onclick="'showPopup(' + ${i.index} + ')'"></p>
+                                    <p class="orderNo" th:text="${order.orderCode}"
+                                       th:onclick="'showPopup(' + ${i.index} + ')'"></p>
                                 </div>
                                 <a href="#" class="detailView" th:onclick="'showPopup(' + ${i.index} + ')'">상세보기</a>
                             </div>
@@ -143,14 +143,15 @@
                                     </div>
                                     <div class="itemInfo">
                                         <div class="itemTitle">
-                                            <a href="#" class="itemCompany" th:text="${order.companyName}" th:onclick="'showCompanyPopup(' + ${i.index} + ')'">맛있는소고기</a>
+                                            <a href="#" class="itemCompany" th:text="${order.companyName}"
+                                               th:onclick="'showCompanyPopup(' + ${i.index} + ')'">맛있는소고기</a>
                                             <p class="itemName" th:text="${order.productName}"></p>
                                         </div>
                                         <div class="itemOption">
                                             <p th:text="${order.description}"></p>
                                         </div>
                                         <div class="itemPrice">
-                                            <h4 th:text="${order.price}" class="thisIsMyPoint"></h4>
+                                            <h4 th:text="${order.actualMoney}" class="thisIsMyPoint"></h4>
                                             <p>원</p>
                                             <div class="v-l"></div>
                                             <span>수량 [[${order.quantity}]]</span>
@@ -318,528 +319,803 @@
     <!-- ✅ tr 밖에 모달을 따로 위치 -->
 
     <!-- 주문 상세 모달 -->
-    <div th:each="order, i : ${recentOrder}" th:id="'popup-' + ${i.index}" class="popup" style="display:none;">
-        <div class="popup-content">
-            <h2>주문 상세</h2>
-            <div class="info">
-                <h3>상품 정보</h3>
-                <table>
-                    <tr>
-                        <th>상품 이미지</th>
-                        <th colspan="2">상품 상세정보</th>
-                        <th colspan="2">결제 정보</th>
-                    </tr>
-                    <tr>
-                        <td rowspan="6" style="width: 230px; padding: 0">
-                            <img th:src="@{'/images/' + ${order.imageList}}" alt="#" class="main_img1">
-                        </td>
-                        <th>주문 번호</th>
-                        <td>[[${order.orderCode}]]</td>
-                        <th>금액</th>
-                        <td>[[${order.price}]]원</td>
-                    </tr>
-                    <tr>
-                        <th>판매자</th>
-                        <td>[[${order.companyName}]]</td>
-                        <th>할인</th>
-                        <td>[[${order.discount}]]원</td>
-                    </tr>
-                    <tr>
-                        <th>주문일</th>
-                        <td>[[${order.orderDate}]]</td>
-                        <th>결제</th>
-                        <td>[[${order.actualMoney}]]원</td>
-                    </tr>
-                    <tr>
-                        <th>상품명</th>
-                        <td>[[${order.productName}]]</td>
-                        <th>배송비</th>
-                        <td>[[${order.fee}]]원</td>
-                    </tr>
-                    <tr>
-                        <th>수량</th>
-                        <td>[[${order.quantity}]]</td>
-                        <th>결제수단</th>
-                        <td>[[${order.payment}]]</td>
-                    </tr>
-                    <tr>
-                        <th>금액</th>
-                        <td>[[${order.price}]]원</td>
-                    </tr>
-                </table>
-                <h3>배송 정보</h3>
-                <table>
-                    <tr>
-                        <th>배송상태</th>
-                        <td>[[${order.orderStatus}]]</td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td>[[${order.receiver}]]</td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td>[[${order.delivery}]]</td>
-                    </tr>
-                </table>
+    <div th:each="order, i : ${recentOrder}" th:id="'popup-' + ${i.index}" class="modalControl">
+        <div id="orderDetailModal">
+            <div class="modalHeader">
+                <p>주문 상세</p>
+                <button class="closeBtn" th:onclick="'closePopup(' + ${i.index} + ')'"></button>
             </div>
-            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
+            <div class="modalBody">
+                <h4>상품 정보</h4>
+                <div class="productInfo">
+                    <img th:src="@{'/images/' + ${order.imageList}}" alt="상품 사진"/>
+                    <div class="productDetailInfo">
+                        <div>
+                            <p>[[${order.orderCode}]]</p>
+                            <p>[[${order.orderDate}]]</p>
+                        </div>
+                        <div>
+                            <p class="sellerName">[[${order.companyName}]]</p>
+                            <p>[[${order.productName}]]</p>
+                        </div>
+                        <div>
+                            <div class="orderPrice">
+                                <p class="thisIsMyPoint">[[${order.actualMoney}]]</p>
+                                <p>원</p>
+                            </div>
+                            <div>
+                                <p>수량</p>
+                                <p>[[${order.quantity}]]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4>배송 정보</h4>
+                <div class="paymentInfo">
+                    <table>
+                        <tr>
+                            <td>배송 상태</td>
+                            <td>[[${order.orderStatus}]]</td>
+                        </tr>
+                        <tr>
+                            <td>수령자</td>
+                            <td>[[${order.receiver}]]</td>
+                        </tr>
+                        <tr>
+                            <td>주소</td>
+                            <td>[[${order.delivery}]]</td>
+                        </tr>
+                    </table>
+                </div>
+                <h4>결제 정보</h4>
+                <div class="paymentInfo">
+                    <table>
+                        <tr>
+                            <td>주문 금액</td>
+                            <td>[[${order.price}]]원</td>
+                        </tr>
+                        <tr>
+                            <td>할인</td>
+                            <td>[[${order.discount}]]원</td>
+                        </tr>
+                        <tr>
+                            <td>배송비</td>
+                            <td>[[${order.fee}]]원</td>
+                        </tr>
+                        <tr>
+                            <td>결제 수단</td>
+                            <td class="mop">[[${order.payment}]]</td>
+                        </tr>
+                        <tr>
+                            <td>결제 금액</td>
+                            <td class="howmuchisit">[[${order.actualMoney}]]원</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- 회사 정보 모달 -->
-    <div th:each="seller, i : ${recentOrder}" th:id="'company-popup-' + ${i.index}" class="popup" style="display:none;">
-        <div class="popup-content">
-            <h2>회사 정보</h2>
-            <div class="info_company">
-                <h3>회사 정보</h3>
-                <table>
-                    <tr>
-                        <th>판매자 등급</th>
-                        <td>[[${seller.rating}]]</td>
-                    </tr>
-                    <tr>
-                        <th>회사명</th>
-                        <td>[[${seller.companyName}]]</td>
-                    </tr>
-                    <tr>
-                        <th>대표자</th>
-                        <td>[[${seller.delegate}]]</td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td>[[${seller.hp}]]</td>
-                    </tr>
-                    <tr>
-                        <th>FAX</th>
-                        <td>[[${seller.fax}]]</td>
-                    </tr>
-                    <tr>
-                        <th>사업자번호</th>
-                        <td>[[${seller.businessNo}]]</td>
-                    </tr>
-                    <tr>
-                        <th>영업소재지</th>
-                        <td><span>[</span>[[${seller.zip}]]<span>]</span> &nbsp;&nbsp;
-                            [[${seller.addr1}]], &nbsp;
-                            [[${seller.addr2}]]
-                        </td>
-                    </tr>
-                </table>
-                <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
+    <div th:each="seller, i : ${recentOrder}" th:id="'company-popup-' + ${i.index}" class="modalControl">
+        <div id="companyInfoModal">
+            <div class="modalHeader">
+                <p>회사 정보</p>
+                <button class="closeBtn" th:onclick="'closePopup(' + ${i.index} + ')'" type="button"></button>
             </div>
-            <button th:onclick="'closePopup(' + ${i.index} + ')'" type="button">닫기</button>
-            <button type="button" th:onclick="'showInquiryPopup(' + ${i.index} + ')'">문의하기</button>
+            <div class="modalBody">
+                <div class="companyInfoModal">
+                    <table>
+                        <tr>
+                            <td>판매자 등급</td>
+                            <td>[[${seller.rating}]]</td>
+                        </tr>
+                        <tr>
+                            <td>회사명</td>
+                            <td>[[${seller.companyName}]]</td>
+                        </tr>
+                        <tr>
+                            <td>대표자</td>
+                            <td>[[${seller.delegate}]]</td>
+                        </tr>
+                        <tr>
+                            <td>연락처</td>
+                            <td>[[${seller.hp}]]</td>
+                        </tr>
+                        <tr>
+                            <td>FAX</td>
+                            <td>[[${seller.fax}]]</td>
+                        </tr>
+                        <tr>
+                            <td>사업자 번호</td>
+                            <td>[[${seller.businessNo}]]</td>
+                        </tr>
+                        <tr>
+                            <td>영업 소재지</td>
+                            <td>[[${seller.zip}]] &nbsp; [[${seller.addr1}]], &nbsp; [[${seller.addr2}]]</td>
+                        </tr>
+                    </table>
+                    <div class="review2Btn">
+                        <button th:onclick="'closePopup(' + ${i.index} + ')'" type="button">닫기</button>
+                        <button type="button" th:onclick="'showInquiryPopup(' + ${i.index} + ')'">문의하기</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- 문의하기 모달 -->
-    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
-        <div class="popup-content">
-            <h2>문의하기</h2>
-            <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
-                <div class="inquiry_form">
-                    <table>
-                        <tr>
-                            <th>카테고리</th>
-                            <td>
-                                <select name="cate1">
-                                    <option value="product">상품</option>
-                                    <option value="delivery">배송</option>
-                                    <option value="cancel">반품/취소/교환</option>
-                                    <option value="etc">기타</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>제목</th>
-                            <td>
-                                <div>
-                                    <input type="text" name="title" id="title" placeholder="제목 입력">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>문의내용</th>
-                            <td>
-                                <div>
-                                    <textarea name="content" id="content" placeholder="문의내용 작성"></textarea>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+    <div th:each="seller, i : ${recentOrder}" th:id="'inquiry-popup-' + ${i.index}" class="modalControl">
+        <div id="contactModal">
+            <div class="modalHeader">
+                <p>문의하기</p>
+                <button class="closeBtn" th:onclick="'closePopup(' + ${i.index} + ')'" type="button"></button>
+            </div>
+            <div class="modalBody">
+                <div class="contactModal">
+                    <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
+                        <table>
+                            <tr>
+                                <td>카테고리</td>
+                                <td>
+                                    <select name="cate1">
+                                        <option value="product">상품</option>
+                                        <option value="delivery">배송</option>
+                                        <option value="cancel">반품 / 취소 / 교환</option>
+                                        <option value="etc">기타</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>제목</td>
+                                <td>
+                                    <input type="text" name="title" placeholder="제목을 입력해 주세요">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>문의 내용</td>
+                                <td>
+                                    <textarea name="content" placeholder="문의 내용을 작성해 주세요"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="review2Btn">
+                            <button th:onclick="'closePopup(' + ${i.index} + ')'" type="button">닫기</button>
+                            <button type="submit">문의하기</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit">문의하기</button>
-            </form>
-            <button th:onclick="'closePopup(' + ${i.index} + ')'">닫기</button>
+            </div>
         </div>
     </div>
 
     <!-- 구매확정 모달 -->
-    <div th:each="order, i : ${recentOrder}" th:id="'confirm-popup-' + ${i.index}" class="popup" style="display: none; width: 400px">
-        <div class="popup-content">
-            <h2>구매확정</h2>
-            <form action="/myPage/my_confirm" method="post">
-                <input type="hidden" name="orderCode" th:value="${order.orderCode}">
-                <div class="confirm_message">
-                    <div class="alert_message">
+    <div th:each="order, i : ${recentOrder}" th:id="'confirm-popup-' + ${i.index}" class="modalControl">
+        <div id="okPurchase">
+            <div class="modalHeader">
+                <p>구매 확정</p>
+                <button class="closeBtn" type="button" th:onclick="'closePopup(' + ${i.index} + ')'"></button>
+            </div>
+            <div class="modalBody">
+                <form action="/myPage/my_confirm" method="post">
+                    <input type="hidden" name="orderCode" th:value="${order.orderCode}">
+                    <div class="okPurchase">
                         <p>상품을 받으셨나요?</p>
-                        <p>상품을 받으신 분만 구매확정을 해주세요.</p>
-                        <p style="text-decoration: underline; font-weight: bold">구매 확정 후에는 반품 또는 교환이 어렵습니다.</p>
+                        <p>상품을 받으셨다면 구매확정으로 변경해 주세요.</p>
+                        <p>
+                            <span>*</span>구매확정 후에는 반품 또는 교환이
+                            어렵습니다.
+                        </p>
+                        <div>
+                            <button type="button" th:onclick="'closePopup(' + ${i.index} + ')'">취소</button>
+                            <button type="submit">확인</button>
+                        </div>
                     </div>
-                    <div class="confirm_button">
-                        <button type="submit">확인</button>
-                    </div>
-                </div>
-            </form>
-            <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <!--상품평쓰기 모달-->
-    <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="popup" style="display:none; width: 700px">
-        <div class="popup-content">
-            <h2>상품평</h2>
-            <form action="/myPage/my_review_write" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="productCode" th:value="${order.productCode}">
-                <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
-                <div class="review_form">
-                    <h3>리뷰 작성하기</h3>
-                    <table>
-                        <tr>
-                            <th>상품명</th>
-                            <td>[[${order.productName}]]</td>
-                        </tr>
-                        <tr>
-                            <th>만족도</th>
-                            <td>
-                                <div class="rating">
-                                    <span class="star" data-value="1">&#9733;</span>
-                                    <span class="star" data-value="2">&#9733;</span>
-                                    <span class="star" data-value="3">&#9733;</span>
-                                    <span class="star" data-value="4">&#9733;</span>
-                                    <span class="star" data-value="5">&#9733;</span>
-                                </div>
-                                <input type="hidden" name="rating" id="rating">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>제목</th>
-                            <td>
-                                <input type="text" name="title" placeholder="제목 입력">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>내용</th>
-                            <td>
-                                <textarea name="content" placeholder="내용 입력"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>사진</th>
-                            <td>
-                                <div>
-                                    <input type="file" name="imageList1" placeholder="선택된 파일 없음">
-                                </div>
-                                <div>
-                                    <input type="file" name="imageList2" placeholder="선택된 파일 없음">
-                                </div>
-                                <div>
-                                    <input type="file" name="imageList3" placeholder="선택된 파일 없음">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="review_button">
-                        <button type="submit" class="review_btn1">작성완료</button>
-                    </div>
+    <div th:each="order, i : ${recentOrder}" th:id="'review-popup-' + ${i.index}" class="modalControl">
+        <div id="writeReview2">
+            <div class="modalHeader">
+                <p>리뷰 작성</p>
+                <button class="closeBtn" type="button" th:onclick="'closePopup(' + ${i.index} + ')'"></button>
+            </div>
+            <div class="modalBody">
+                <div class="writeReview2">
+                    <form action="/myPage/my_review_write" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="productCode" th:value="${order.productCode}"/>
+                        <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
+                        <table>
+                            <tr>
+                                <td>상품명</td>
+                                <td>[[${order.productName}]]</td>
+                            </tr>
+                            <tr>
+                                <td>별점</td>
+                                <td>
+                                    <div class="rating">
+                                        <span class="star" data-value="1">&#9733;</span>
+                                        <span class="star" data-value="2">&#9733;</span>
+                                        <span class="star" data-value="3">&#9733;</span>
+                                        <span class="star" data-value="4">&#9733;</span>
+                                        <span class="star" data-value="5">&#9733;</span>
+                                        <input type="hidden" name="rating" id="rating"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>제목</td>
+                                <td>
+                                    <input type="text" name="title" placeholder="제목을 입력하세요."/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내용</td>
+                                <td>
+                                    <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>사진</td>
+                                <td>
+                                    <div class="file-upload-wrapper">
+                                        <div>
+                                            <label for="file11" class="custom-file-upload">파일1 선택</label>
+                                            <span class="file-name">선택된 파일 없음</span>
+                                            <input type="file" id="file11" name="imageList1" class="hidden-file-input"/>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                크기 190x190, 상품 목록에
+                                                출력될 이미지 입니다.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="file-upload-wrapper">
+                                        <div>
+                                            <label for="file21" class="custom-file-upload">파일2 선택</label>
+                                            <span class="file-name">선택된 파일 없음</span>
+                                            <input type="file" id="file21" name="imageList2" class="hidden-file-input"/>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                크기 230x230, 상품 메인에
+                                                출력될 이미지 입니다.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="file-upload-wrapper">
+                                        <div>
+                                            <label for="file31" class="custom-file-upload">파일3 선택</label>
+                                            <span class="file-name">선택된 파일 없음</span>
+                                            <input type="file" id="file31" name="imageList3" class="hidden-file-input"/>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                크기 456x456, 상품 상세에
+                                                출력될 이미지 입니다.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="review2Btn">
+                            <button type="button" th:onclick="'closePopup(' + ${i.index} + ')'">취소</button>
+                            <button type="submit">작성</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-            <button th:onclick="'closePopup(' + ${i.index} + ')'" class="review_btn2">취소</button>
+            </div>
         </div>
     </div>
 
     <!--반품신청 모달-->
-    <div th:each="order, i : ${recentOrder}" th:id="'refund-popup-' + ${i.index}" class="popup" style="display: none; width: 700px">
-        <div class="popup-content">
-            <h2>반품신청</h2>
-            <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
-                <div class="product_info">
-                    <h3>상품 정보</h3>
-                    <table>
-                        <tr>
-                            <th>주문 번호</th>
-                            <td>[[${order.orderCode}]]</td>
-                            <th>주문일</th>
-                            <td>[[${order.orderDate}]]</td>
-                        </tr>
-                        <tr>
-                            <th>판매자</th>
-                            <td>[[${order.companyName}]]</td>
-                            <th>상품</th>
-                            <td>[[${order.productName}]]&nbsp;/&nbsp;[[${order.quantity}]]개</td>
-                        </tr>
-                        <tr>
-                            <th>결제금액</th>
-                            <td>[[${order.actualMoney}]]원</td>
-                            <th>배송비</th>
-                            <td>[[${order.fee}]]원</td>
-                        </tr>
-                        <tr>
-                            <th>결제수단</th>
-                            <td>[[${order.payment}]]</td>
-                            <th>최종 반품금액</th>
-                            <td>-[[${order.actualMoney}]]원</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="refund_info">
-                    <h3>반품 정보 입력</h3>
-                    <table class="refund">
-                        <tr>
-                            <th>주문번호</th>
-                            <td>
-                                <input type="text" readonly name="orderCode" th:value="${order.orderCode}">
+    <div th:each="order, i : ${recentOrder}" th:id="'refund-popup-' + ${i.index}" class="modalControl">
+        <div id="refundModal">
+            <div class="modalHeader">
+                <p>반품 신청</p>
+                <button class="closeBtn" type="button" th:onclick="'closePopup(' + ${i.index} + ')'"></button>
+            </div>
+            <div class="modalBody">
+                <h4>상품 정보</h4>
+                <div class="refundModal">
+                    <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
+                        <table>
+                            <tr>
+                                <td>주문번호</td>
+                                <td>[[${order.orderCode}]]</td>
+                                <td>주문 일자</td>
+                                <td>[[${order.orderDate}]]</td>
+                            </tr>
+                            <tr>
+                                <td>판매자</td>
+                                <td>[[${order.companyName}]]</td>
+                                <td>상품명</td>
+                                <td>[[${order.productName}]]&nbsp;/&nbsp;[[${order.quantity}]]개</td>
+                            </tr>
+                            <tr>
+                                <td>결제금액</td>
+                                <td>[[${order.actualMoney}]]원</td>
+                                <td>배송비</td>
+                                <td>[[${order.fee}]]원</td>
+                            </tr>
+                            <tr>
+                                <td>결제수단</td>
+                                <td>[[${order.payment}]]</td>
+                                <td>최종 반품금액</td>
+                                <td>-[[${order.actualMoney}]]원</td>
+                            </tr>
+                            <tr>
+                                <td>반품정보 입력</td>
+                                <td colspan="3">
+                                    <div class="radio">
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="broken"
+                                                id="broken"
+                                        />
+                                        <label for="broken"
+                                        >불량/파손</label
+                                        >
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="dislike"
+                                                id="dislike"
+                                        />
+                                        <label for="dislike"
+                                        >단순변심</label
+                                        >
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="misorder"
+                                                id="misorder"
+                                        />
+                                        <label for="misorder"
+                                        >주문실수</label
+                                        >
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="misdelivery"
+                                                id="misdelivery"
+                                        />
+                                        <label for="misdelivery">
+                                            오배송
+                                        </label>
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="delay"
+                                                id="delay"
+                                        />
+                                        <label for="delay">
+                                            배송지연
+                                        </label>
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="misinfo"
+                                                id="misinfo"
+                                        />
+                                        <label for="misinfo">
+                                            상품정보 상이
+                                        </label>
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="etc"
+                                                id="etc"
+                                        />
+                                        <label for="etc"> 기타 </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="yourFault"></td>
+                                <td colspan="3" class="yourFault">
+                                    <p>
+                                        개인 변심이나 주문 실수로 인한 반품
+                                        배송비는 고객 부담입니다.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>반품사유</td>
+                                <td colspan="3">
+                                        <textarea
+                                                name="reason"
+                                                placeholder="반품 사유를 자세히 작성해 주세요."
+                                        ></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>사진</td>
+                                <td colspan="3">
+                                    <div class="fileBtnBox">
+                                        <div class="file-upload-wrapper">
+                                            <div>
+                                                <label
+                                                        for="file12"
+                                                        class="custom-file-upload"
+                                                >파일1 선택</label
+                                                >
+                                                <span class="file-name"
+                                                >선택된 파일 없음</span
+                                                >
+                                                <input
+                                                        type="file"
+                                                        id="file12"
+                                                        name="imageList1"
+                                                        class="hidden-file-input"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="file-upload-wrapper">
+                                            <div>
+                                                <label
+                                                        for="file22"
+                                                        class="custom-file-upload"
+                                                >파일2 선택</label
+                                                >
+                                                <span class="file-name"
+                                                >선택된 파일 없음</span
+                                                >
+                                                <input
+                                                        type="file"
+                                                        id="file22"
+                                                        name="imageList2"
+                                                        class="hidden-file-input"
+                                                />
+                                            </div>
+                                        </div>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>반품 유형</th>
-                            <td>
-                                <div class="radio">
-                                    불량/파손<input type="radio" name="refundType" value="broken">
-                                    단순변심<input type="radio" name="refundType" value="dislike">
-                                    주문실수<input type="radio" name="refundType" value="misorder">
-                                    오배송<input type="radio" name="refundType" value="misdelivery">
-                                    배송지연<input type="radio" name="refundType" value="delay">
-                                    상품정보 상이<input type="radio" name="refundType" value="misinfo">
-                                    기타<input type="radio" name="refundType" value="etc">
-                                </div>
-                                <p>개인 변심이나 주문 실수로 인한 반품 배송비는 고객 부담입니다.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="4">반품 사유(자세히)</th>
-                            <td>
-                                <textarea type="text" name="reason"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>사진</th>
-                            <td>
-                                <div>
-                                    <input type="file" name="imageList1" placeholder="선택된 파일 없음">
-                                </div>
-                                <div>
-                                    <input type="file" name="imageList2" placeholder="선택된 파일 없음">
-                                </div>
-                                <div>
-                                    <input type="file" name="imageList3" placeholder="선택된 파일 없음">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                                        <div class="file-upload-wrapper">
+                                            <div>
+                                                <label
+                                                        for="file32"
+                                                        class="custom-file-upload"
+                                                >파일3 선택</label
+                                                >
+                                                <span class="file-name"
+                                                >선택된 파일 없음</span
+                                                >
+                                                <input
+                                                        type="file"
+                                                        id="file32"
+                                                        name="imageList3"
+                                                        class="hidden-file-input"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="review2Btn">
+                            <button type="button" th:onclick="'closePopup(' + ${i.index} + ')'">취소</button>
+                            <button type="submit">반품 신청</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="confirm_button">
-                    <button type="submit">반품신청</button>
-                </div>
-            </form>
-            <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+            </div>
         </div>
     </div>
 
     <!--교환신청 모달-->
-    <div th:each="order, i : ${recentOrder}" th:id="'exchange-popup-' + ${i.index}" class="popup" style="display: none; width: 700px">
-    <div class="popup-content">
-        <h2>교환신청</h2>
-        <form action="/myPage/my_exchange" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
-            <div class="product_info">
-                <h3>상품 정보</h3>
-                <table>
-                    <tr>
-                        <th>주문 번호</th>
-                        <td>[[${order.orderCode}]]</td>
-                        <th>주문일</th>
-                        <td>[[${order.orderDate}]]</td>
-                    </tr>
-                    <tr>
-                        <th>판매자</th>
-                        <td>[[${order.companyName}]]</td>
-                        <th>상품</th>
-                        <td>[[${order.productName}]]&nbsp;/&nbsp;[[${order.quantity}]]개</td>
-                    </tr>
-                    <tr>
-                        <th>결제금액</th>
-                        <td>[[${order.actualMoney}]]원</td>
-                        <th>배송비</th>
-                        <td>[[${order.fee}]]원</td>
-                    </tr>
-                    <tr>
-                        <th>결제수단</th>
-                        <td>[[${order.payment}]]</td>
-                        <th>최종 반품금액</th>
-                        <td>-[[${order.actualMoney}]]원</td>
-                    </tr>
-                </table>
+    <div th:each="order, i : ${recentOrder}" th:id="'exchange-popup-' + ${i.index}" class="modalControl">
+        <div id="changeModal">
+            <div class="modalHeader">
+                <p>교환 신청</p>
+                <button type="button" class="closeBtn" th:onclick="'closePopup(' + ${i.index} + ')'"></button>
             </div>
-            <div class="refund_info">
-                <h3>반품 정보 입력</h3>
-                <table class="refund">
-                    <tr>
-                        <th>주문번호</th>
-                        <td>
-                            <input type="text" readonly name="orderCode" th:value="${order.orderCode}">
+            <div class="modalBody">
+                <h4>상품 정보</h4>
+                <div class="changeModal">
+                    <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
+                        <table>
+                            <tr>
+                                <td>주문번호</td>
+                                <td>[[${order.orderCode}]]</td>
+                                <td>주문 일자</td>
+                                <td>[[${order.orderDate}]]</td>
+                            </tr>
+                            <tr>
+                                <td>판매자</td>
+                                <td>[[${order.companyName}]]</td>
+                                <td>상품명</td>
+                                <td>[[${order.productName}]]&nbsp;/&nbsp;[[${order.quantity}]]개</td>
+                            </tr>
+                            <tr>
+                                <td>결제금액</td>
+                                <td>[[${order.actualMoney}]]원</td>
+                                <td>배송비</td>
+                                <td>[[${order.fee}]]원</td>
+                            </tr>
+                            <tr>
+                                <td>결제수단</td>
+                                <td>[[${order.payment}]]</td>
+                                <td>최종 교환금액</td>
+                                <td>-[[${order.actualMoney}]]원</td>
+                            </tr>
+                            <tr>
+                                <td>교환정보 입력</td>
+                                <td colspan="3">
+                                    <div class="radio">
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="broken"
+                                                id="broken1"
+                                        />
+                                        <label for="broken1"
+                                        >불량/파손</label
+                                        >
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="misdelivery"
+                                                id="misdelivery1"
+                                        />
+                                        <label for="misdelivery1">
+                                            오배송
+                                        </label>
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="size"
+                                                id="size"
+                                        />
+                                        <label for="size"> 사이즈 </label>
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="misinfo"
+                                                id="misinfo1"
+                                        />
+                                        <label for="misinfo1">
+                                            상품정보 상이
+                                        </label>
+                                        <input
+                                                type="radio"
+                                                name="refundType"
+                                                value="etc"
+                                                id="etc1"
+                                        />
+                                        <label for="etc1"> 기타 </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="yourFault"></td>
+                                <td colspan="3" class="yourFault">
+                                    <p>
+                                        개인 변심이나 주문 실수로 인한 교환
+                                        배송비는 고객 부담입니다.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>교환사유</td>
+                                <td colspan="3">
+                                        <textarea
+                                                name="reason"
+                                                placeholder="교환 사유를 자세히 작성해 주세요."
+                                        ></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>사진</td>
+                                <td colspan="3">
+                                    <div class="fileBtnBox">
+                                        <div class="file-upload-wrapper">
+                                            <div>
+                                                <label
+                                                        for="file13"
+                                                        class="custom-file-upload"
+                                                >파일1 선택</label
+                                                >
+                                                <span class="file-name"
+                                                >선택된 파일 없음</span
+                                                >
+                                                <input
+                                                        type="file"
+                                                        id="file13"
+                                                        name="imageList1"
+                                                        class="hidden-file-input"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="file-upload-wrapper">
+                                            <div>
+                                                <label
+                                                        for="file23"
+                                                        class="custom-file-upload"
+                                                >파일2 선택</label
+                                                >
+                                                <span class="file-name"
+                                                >선택된 파일 없음</span
+                                                >
+                                                <input
+                                                        type="file"
+                                                        id="file23"
+                                                        name="imageList2"
+                                                        class="hidden-file-input"
+                                                />
+                                            </div>
+                                        </div>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>교환 유형</th>
-                        <td>
-                            <div class="radio">
-                                불량/파손<input type="radio" name="refundType" value="broken">
-                                오배송<input type="radio" name="refundType" value="misdelivery">
-                                사이즈<input type="radio" name="refundType" value="size">
-                                상품정보 상이<input type="radio" name="refundType" value="misinfo">
-                                기타<input type="radio" name="refundType" value="etc">
-                            </div>
-                            <p>개인 변심이나 주문 실수로 인한 반품 배송비는 고객 부담입니다.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="4">교환 사유(자세히)</th>
-                        <td>
-                            <textarea type="text" name="reason"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>사진</th>
-                        <td>
-                            <div>
-                                <input type="file" name="imageList1" placeholder="선택된 파일 없음">
-                            </div>
-                            <div>
-                                <input type="file" name="imageList2" placeholder="선택된 파일 없음">
-                            </div>
-                            <div>
-                                <input type="file" name="imageList3" placeholder="선택된 파일 없음">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                                        <div class="file-upload-wrapper">
+                                            <div>
+                                                <label
+                                                        for="file33"
+                                                        class="custom-file-upload"
+                                                >파일3 선택</label
+                                                >
+                                                <span class="file-name"
+                                                >선택된 파일 없음</span
+                                                >
+                                                <input
+                                                        type="file"
+                                                        id="file33"
+                                                        name="imageList3"
+                                                        class="hidden-file-input"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="review2Btn">
+                            <button type="button" th:onclick="'closePopup(' + ${i.index} + ')'">취소</button>
+                            <button type="submit">교환 신청</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="confirm_button">
-                <button type="submit">교환신청</button>
-            </div>
-        </form>
-        <button th:onclick="'closePopup(' + ${i.index} + ')'" style="background-color: #8B0000">취소</button>
+        </div>
     </div>
 </div>
 
-    <script th:inline="javascript">
-        //상품정보
-        function showPopup(index) {
-            document.getElementById("popup-" + index).style.display = "block";
-        }
+<script>
+    document
+        .querySelectorAll(".file-upload-wrapper")
+        .forEach((wrapper) => {
+            const input = wrapper.querySelector('input[type="file"]');
+            const fileNameDisplay = wrapper.querySelector(".file-name");
 
-        //회사정보
-        function showCompanyPopup(index) {
-            document.getElementById("company-popup-" + index).style.display = "block";
-        }
+            input.addEventListener("change", function () {
+                fileNameDisplay.textContent =
+                    input.files.length > 0
+                        ? input.files[0].name
+                        : "선택된 파일 없음";
+            });
+        });
+    const mop = document.querySelector(".mop");
+    mop.textContent = mop.textContent.toUpperCase();
+</script>
 
-        //문의하기
-        function showInquiryPopup(index) {
-            // 회사정보 모달 닫기
-            document.getElementById("company-popup-" + index).style.display = "none";
-            // 문의하기 모달 열기
-            document.getElementById("inquiry-popup-" + index).style.display = "block";
-        }
+<script th:inline="javascript">
+    //상품정보
+    function showPopup(index) {
+        document.getElementById("popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-        //상품확정
-        function showConfirmPopup(index) {
-            document.getElementById("confirm-popup-" + index).style.display = "block";
-        }
+    //회사정보
+    function showCompanyPopup(index) {
+        document.getElementById("company-popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-        //상품평
-        function showReviewPopup(index) {
-            document.getElementById("review-popup-" + index).style.display = "block";
-        }
+    //문의하기
+    function showInquiryPopup(index) {
+        // 회사정보 모달 닫기
+        document.getElementById("company-popup-" + index).style.display = "none";
+        // 문의하기 모달 열기
+        document.getElementById("inquiry-popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-        //반품신청
-        function showRefundPopup(index) {
-            document.getElementById("refund-popup-" + index).style.display = "block";
-        }
+    //상품확정
+    function showConfirmPopup(index) {
+        document.getElementById("confirm-popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-        //교환신청
-        function showExchangePopup(index) {
-            document.getElementById("exchange-popup-" + index).style.display = "block";
-        }
+    //상품평
+    function showReviewPopup(index) {
+        document.getElementById("review-popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-        // 모달 닫기
-        function closePopup(index) {
-            document.getElementById("popup-" + index).style.display = "none";
-            document.getElementById("company-popup-" + index).style.display = "none";
-            document.getElementById("inquiry-popup-" + index).style.display = "none";
-            document.getElementById("confirm-popup-" + index).style.display = "none";
-            document.getElementById("review-popup-" + index).style.display = "none";
-            document.getElementById("refund-popup-" + index).style.display = "none";
-            document.getElementById("exchange-popup-" + index).style.display = "none";
-        }
+    //반품신청
+    function showRefundPopup(index) {
+        document.getElementById("refund-popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const stars = document.querySelectorAll(".star");
-            const ratingInput = document.getElementById("rating");
+    //교환신청
+    function showExchangePopup(index) {
+        document.getElementById("exchange-popup-" + index).style.display = "block";
+        document.body.style.overflow = 'hidden';
+    }
 
-            stars.forEach(star => {
-                star.addEventListener("click", function() {
-                    const value = this.getAttribute("data-value");
-                    const reviewForm = this.closest(".review_form"); // 이 별이 속한 리뷰 영역
-                    const ratingInput = reviewForm.querySelector("input[name='rating']"); // 해당 폼의 rating input
+    // 모달 닫기
+    function closePopup(index) {
+        document.getElementById("popup-" + index).style.display = "none";
+        document.getElementById("company-popup-" + index).style.display = "none";
+        document.getElementById("inquiry-popup-" + index).style.display = "none";
+        document.getElementById("confirm-popup-" + index).style.display = "none";
+        document.getElementById("review-popup-" + index).style.display = "none";
+        document.getElementById("refund-popup-" + index).style.display = "none";
+        document.getElementById("exchange-popup-" + index).style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
 
-                    ratingInput.value = value;
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star");
+        const ratingInput = document.getElementById("rating");
 
-                    const allStars = reviewForm.querySelectorAll(".star");
-                    allStars.forEach(s => {
-                        if (s.getAttribute("data-value") <= value) {
-                            s.classList.add("selected");
-                        } else {
-                            s.classList.remove("selected");
-                        }
-                    });
-                });
+        stars.forEach(star => {
+            star.addEventListener("click", function () {
+                const value = this.getAttribute("data-value");
+                const reviewForm = this.closest(".review_form"); // 이 별이 속한 리뷰 영역
+                const ratingInput = reviewForm.querySelector("input[name='rating']"); // 해당 폼의 rating input
 
-                star.addEventListener("mouseover", function() {
-                    const value = this.getAttribute("data-value");
-                    const reviewForm = this.closest(".review_form");
-                    const allStars = reviewForm.querySelectorAll(".star");
+                ratingInput.value = value;
 
-                    allStars.forEach(s => {
-                        if (s.getAttribute("data-value") <= value) {
-                            s.classList.add("selected");
-                        } else {
-                            s.classList.remove("selected");
-                        }
-                    });
-                });
-
-                star.addEventListener("mouseout", function() {
-                    const reviewForm = this.closest(".review_form");
-                    const ratingInput = reviewForm.querySelector("input[name='rating']");
-                    const value = ratingInput.value;
-                    const allStars = reviewForm.querySelectorAll(".star");
-
-                    allStars.forEach(s => {
+                const allStars = reviewForm.querySelectorAll(".star");
+                allStars.forEach(s => {
+                    if (s.getAttribute("data-value") <= value) {
+                        s.classList.add("selected");
+                    } else {
                         s.classList.remove("selected");
-                        if (s.getAttribute("data-value") <= value) {
-                            s.classList.add("selected");
-                        }
-                    });
+                    }
+                });
+            });
+
+            star.addEventListener("mouseover", function () {
+                const value = this.getAttribute("data-value");
+                const reviewForm = this.closest(".review_form");
+                const allStars = reviewForm.querySelectorAll(".star");
+
+                allStars.forEach(s => {
+                    if (s.getAttribute("data-value") <= value) {
+                        s.classList.add("selected");
+                    } else {
+                        s.classList.remove("selected");
+                    }
+                });
+            });
+
+            star.addEventListener("mouseout", function () {
+                const reviewForm = this.closest(".review_form");
+                const ratingInput = reviewForm.querySelector("input[name='rating']");
+                const value = ratingInput.value;
+                const allStars = reviewForm.querySelectorAll(".star");
+
+                allStars.forEach(s => {
+                    s.classList.remove("selected");
+                    if (s.getAttribute("data-value") <= value) {
+                        s.classList.add("selected");
+                    }
                 });
             });
         });
-    </script>
+    });
+</script>
 </div>
 </body>
 </html>
