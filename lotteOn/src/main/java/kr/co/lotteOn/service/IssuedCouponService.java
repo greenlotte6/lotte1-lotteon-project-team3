@@ -4,6 +4,7 @@ import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.entity.Coupon;
 import kr.co.lotteOn.entity.IssuedCoupon;
 import kr.co.lotteOn.entity.Member;
+import kr.co.lotteOn.entity.Order;
 import kr.co.lotteOn.repository.CouponRepository;
 import kr.co.lotteOn.repository.IssuedCouponRepository;
 import kr.co.lotteOn.repository.OrderRepository;
@@ -67,11 +68,16 @@ public class IssuedCouponService {
     public void markCouponAsUsed(int issuedNo, String orderCode) {
         IssuedCoupon issuedCoupon = issuedCouponRepository.findByIssuedNo(issuedNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰이 없습니다."));
+
         issuedCoupon.setUsed(true);
         issuedCoupon.setUseDate(LocalDateTime.now());
-        issuedCoupon.setOrder(orderRepository.findByOrderCode(orderCode));
         issuedCoupon.setStatus("사용 불가");
 
+        Order order = orderRepository.findByOrderCode(orderCode);
+        issuedCoupon.setOrder(order);
+
+        Coupon coupon = issuedCoupon.getCoupon();
+        coupon.setUseCount(coupon.getUseCount() + 1);
 
     }
 }
