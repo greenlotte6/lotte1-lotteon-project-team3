@@ -2,6 +2,8 @@ package kr.co.lotteOn.service;
 
 import kr.co.lotteOn.dto.SalesDTO;
 import kr.co.lotteOn.entity.Sales;
+import kr.co.lotteOn.entity.Seller;
+import kr.co.lotteOn.repository.OrderItemRepository;
 import kr.co.lotteOn.repository.SalesRepository;
 import kr.co.lotteOn.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,23 +20,17 @@ public class SalesService {
 
     private final SalesRepository salesRepository;
     private final SellerRepository sellerRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    public List<SalesDTO> getSalesList(){
+    //주문건수 전
+    public List<SalesDTO> getSalesList() {
+        List<SalesDTO> salesList = sellerRepository.findAllSellerSales();
+        log.info("salesList: {}", salesList);
         return sellerRepository.findAllSellerSales();
     }
 
-    public List<SalesDTO> getOrderCountsBySeller(){
-        List<Object[]> results= salesRepository.findOrderCountsBySeller();
-        List<SalesDTO> salesDTOs= new ArrayList<>();
 
-        for(Object[] result: results){
-            String companyName= (String) result[0];
-            int orderCount= ((Number) result[1]).intValue();
-            SalesDTO salesDTO= new SalesDTO(companyName, orderCount);
-            salesDTO.add(salesDTO);
-        }
-        return salesDTOs;
-    }
+
 
     }
 

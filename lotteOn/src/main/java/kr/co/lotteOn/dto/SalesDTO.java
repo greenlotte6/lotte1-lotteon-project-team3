@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
 @Data
 @NoArgsConstructor
 public class SalesDTO {
@@ -13,17 +15,6 @@ public class SalesDTO {
     private int salesNo;
     private String companyName;
     private String businessNo;
-    private String orderCount;
 
-    public SalesDTO(int salesNo, String companyName, String businessNo) {
-        this.salesNo = salesNo;
-        this.companyName = companyName;
-        this.businessNo = businessNo;
-    }
 
-    public SalesDTO(String companyName, int orderCount) {
-    }
-
-    public void add(SalesDTO salesDTO) {
-    }
 }
