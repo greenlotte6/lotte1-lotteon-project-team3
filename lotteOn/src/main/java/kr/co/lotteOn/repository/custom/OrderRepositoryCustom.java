@@ -14,5 +14,7 @@ public interface OrderRepositoryCustom {
 
     public Page<Tuple> findTop3ByMemberOrderByOrderDateDesc(Member memberId);
 
-    public Page<Tuple> searchOrderByMember_IdAndOrderDate(OrderPageRequestDTO pageRequestDTO, Pageable pageable);
+    public Page<Tuple> findAll(OrderPageRequestDTO pageRequestDTO, Pageable pageable);
+
+    public Page<Tuple> findAllByStatus(OrderPageRequestDTO pageRequestDTO, Pageable pageable);
 }

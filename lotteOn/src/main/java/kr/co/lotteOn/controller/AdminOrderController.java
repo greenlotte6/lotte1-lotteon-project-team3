@@ -1,5 +1,8 @@
 package kr.co.lotteOn.controller;
 
+import kr.co.lotteOn.dto.order.OrderDTO;
+import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
+import kr.co.lotteOn.dto.order.OrderPageResponseDTO;
 import kr.co.lotteOn.dto.refund.RefundDTO;
 import kr.co.lotteOn.dto.refund.RefundPageRequestDTO;
 import kr.co.lotteOn.dto.refund.RefundPageResponseDTO;
@@ -28,13 +31,31 @@ public class AdminOrderController {
 
     //주문관리 - 목록
     @GetMapping("/order/list")
-    public String orderList(){
+    public String orderList(Model model, OrderPageRequestDTO pageRequestDTO) {
+        OrderPageResponseDTO pageResponseDTO = adminOrderService.OrderList(pageRequestDTO);
+
+        for(OrderDTO orderDTO : pageResponseDTO.getDtoList()){
+            orderDTO.setPayment(orderDTO.getPaymentName());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("order", pageResponseDTO.getDtoList());
+
         return "/admin/order/list";
     }
 
     //주문관리 - 주문현황
     @GetMapping("/order/delivery")
-    public String orderDelivery(){
+    public String orderDelivery(Model model, OrderPageRequestDTO pageRequestDTO){
+        OrderPageResponseDTO pageResponseDTO = adminOrderService.DeliveryList(pageRequestDTO);
+
+        for(OrderDTO orderDTO : pageResponseDTO.getDtoList()){
+            orderDTO.setPayment(orderDTO.getPaymentName());
+        }
+
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("delivery", pageResponseDTO.getDtoList());
+
         return "/admin/order/delivery";
     }
 

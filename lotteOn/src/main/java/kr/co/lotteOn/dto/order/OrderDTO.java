@@ -16,7 +16,7 @@ public class OrderDTO {
     private Member member;
     private String name;
     private String productCode;
-    private String totalPrice;
+    private int totalPrice;
     private String payment;
     private String orderStatus;
     private String orderDate;
@@ -44,6 +44,9 @@ public class OrderDTO {
     private String addr2;
     private String zip;
 
+    private String memberId;
+    private String memberName;
+
     public String getOrderDate(){
         if(orderDate != null){
             return orderDate.substring(0,10);   // yyyy-mm-dd
@@ -60,6 +63,10 @@ public class OrderDTO {
             case "phone": return "휴대폰결제";
             default: return null;
         }
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
 }

@@ -2,6 +2,7 @@ package kr.co.lotteOn.repository.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
 import kr.co.lotteOn.entity.*;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -122,7 +124,118 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public Page<Tuple> searchOrderByMember_IdAndOrderDate(OrderPageRequestDTO pageRequestDTO, Pageable pageable) {
-        return null;
+    public Page<Tuple> findAll(OrderPageRequestDTO pageRequestDTO, Pageable pageable) {
+        String searchType = pageRequestDTO.getSearchType();
+        String keyword = pageRequestDTO.getKeyword();
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(qOrder.orderStatus.eq("결제완료"));
+
+        // 검색 조건
+        if (searchType != null && !searchType.isBlank()
+                && keyword != null && !keyword.isBlank()) {
+            BooleanExpression expression = switch (searchType) {
+                case "orderCode" -> qOrder.orderCode.contains(keyword);
+                case "memberId"  -> qOrder.member.id.contains(keyword);
+                case "name"      -> qOrder.member.name.contains(keyword);
+                case "payment"   -> qOrder.payment.contains(keyword);
+                default -> null;
+            };
+            if (expression != null) builder.and(expression);
+        }
+
+        // ✅ 1단계: 페이징된 orderCode 목록 조회
+        List<String> orderCodeList = queryFactory
+                .select(qOrder.orderCode)
+                .from(qOrder)
+                .where(builder)
+                .orderBy(qOrder.orderDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        if (orderCodeList.isEmpty()) {
+            return new PageImpl<>(Collections.emptyList(), pageable, 0);
+        }
+
+        // ✅ 2단계: 상세 정보 조회 (Tuple로)
+        List<Tuple> tupleList = queryFactory
+                .select(qOrder, qMember, qOrderItem, qProduct, qSeller)
+                .from(qOrder)
+                .join(qMember).on(qOrder.member.id.eq(qMember.id))
+                .join(qOrderItem).on(qOrderItem.order.orderCode.eq(qOrder.orderCode))
+                .join(qProduct).on(qOrderItem.product.productCode.eq(qProduct.productCode))
+                .join(qSeller).on(qProduct.companyName.eq(qSeller.companyName))
+                .where(qOrder.orderCode.in(orderCodeList))
+                .orderBy(qOrder.orderDate.desc())
+                .fetch();
+
+        // 전체 개수 조회
+        long total = queryFactory
+                .select(qOrder.count())
+                .from(qOrder)
+                .where(builder)
+                .fetchOne();
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
+
+
+
+    @Override
+    public Page<Tuple> findAllByStatus(OrderPageRequestDTO pageRequestDTO, Pageable pageable) {
+        String searchType = pageRequestDTO.getSearchType();
+        String keyword = pageRequestDTO.getKeyword();
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(qOrder.orderStatus.eq("배송준비중"));
+
+        // 검색 조건
+        if (searchType != null && !searchType.isBlank()
+                && keyword != null && !keyword.isBlank()) {
+            BooleanExpression expression = switch (searchType) {
+                case "orderCode" -> qOrder.orderCode.contains(keyword);
+                case "memberId"  -> qOrder.member.id.contains(keyword);
+                case "name"      -> qOrder.member.name.contains(keyword);
+                case "payment"   -> qOrder.payment.contains(keyword);
+                default -> null;
+            };
+            if (expression != null) builder.and(expression);
+        }
+
+        // ✅ 1단계: 페이징된 orderCode 목록 조회
+        List<String> orderCodeList = queryFactory
+                .select(qOrder.orderCode)
+                .from(qOrder)
+                .where(builder)
+                .orderBy(qOrder.orderDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        if (orderCodeList.isEmpty()) {
+            return new PageImpl<>(Collections.emptyList(), pageable, 0);
+        }
+
+        // ✅ 2단계: 상세 정보 조회 (Tuple로)
+        List<Tuple> tupleList = queryFactory
+                .select(qOrder, qMember, qOrderItem, qProduct, qSeller)
+                .from(qOrder)
+                .join(qMember).on(qOrder.member.id.eq(qMember.id))
+                .join(qOrderItem).on(qOrderItem.order.orderCode.eq(qOrder.orderCode))
+                .join(qProduct).on(qOrderItem.product.productCode.eq(qProduct.productCode))
+                .join(qSeller).on(qProduct.companyName.eq(qSeller.companyName))
+                .where(qOrder.orderCode.in(orderCodeList))
+                .orderBy(qOrder.orderDate.desc())
+                .fetch();
+
+        // 전체 개수 조회
+        long total = queryFactory
+                .select(qOrder.count())
+                .from(qOrder)
+                .where(builder)
+                .fetchOne();
+
+        return new PageImpl<>(tupleList, pageable, total);
     }
 }
