@@ -146,99 +146,35 @@
                     </div>
 
                     <div class="productItem">
-                        <div class="fourItems">
-                            <a th:href="@{/product/detail}">
-                                <img src="/images/554X554.jpg">
+                        <div th:each="p : ${popularProducts}" class="fourItems">
+                            <a th:href="@{'/product/detail?productCode=' + ${p.productCode}}">
+                                <img th:src="@{'/images/' + ${p.imageList}}" alt="상품이미지">
                             </a>
                             <div class="descWrap">
-                                <a th:href="@{/product/detail}" class="text">
-                                    <span class="bold">템포크</span>
-                                    통밀먹인 오겹살 1kg+1kg 구이용
+                                <a th:href="@{'/product/detail?productCode=' + ${p.productCode}}" class="text">
+                                    <span class="bold" th:text="${p.companyName}">[브랜드명]</span><br>
+                                    <span th:text="${p.name}">상품명</span>
                                 </a>
+                                <div class="totalPrice">
+                                    <!-- 원래 가격 -->
+                                    <del>
+                                        <p th:text="${#numbers.formatInteger(p.price, 3, 'COMMA')}"></p>
+                                        <span>원</span>
+                                    </del>
+                                </div>
                                 <div class="priceInfo">
+                                    <p class="discount" th:text="${p.discount + '%'}"></p>
                                     <div class="price">
-                                        <p>21,420</p>
+                                        <p th:text="${#numbers.formatInteger(p.price * (100 - p.discount) / 100, 3, 'COMMA')}"></p>
                                         <span>원</span>
                                     </div>
                                 </div>
                                 <div class="review">
                                     <span class="starGrade"></span>
-                                    <span class="rating">4.8</span>
+                                    <span class="rating">4.8</span> <!-- 평점 평균 값이 있다면 여기에 바인딩 -->
                                     <div class="v-l"></div>
                                     <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount">1</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fourItems">
-                            <a th:href="@{/product/detail}">
-                                <img src="/images/554X554.jpg">
-                            </a>
-                            <div class="descWrap">
-                                <a th:href="@{/product/detail}" class="text">
-                                    <span class="bold">템포크</span>
-                                    통밀먹인 오겹살 1kg+1kg 구이용
-                                </a>
-                                <div class="priceInfo">
-                                    <div class="price">
-                                        <p>21,420</p>
-                                        <span>원</span>
-                                    </div>
-                                </div>
-                                <div class="review">
-                                    <span class="starGrade"></span>
-                                    <span class="rating">4.8</span>
-                                    <div class="v-l"></div>
-                                    <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount">1</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fourItems">
-                            <a th:href="@{/product/detail}">
-                                <img src="/images/554X554.jpg">
-                            </a>
-                            <div class="descWrap">
-                                <a th:href="@{/product/detail}" class="text">
-                                    <span class="bold">템포크</span>
-                                    통밀먹인 오겹살 1kg+1kg 구이용
-                                </a>
-                                <div class="priceInfo">
-                                    <div class="price">
-                                        <p>21,420</p>
-                                        <span>원</span>
-                                    </div>
-                                </div>
-                                <div class="review">
-                                    <span class="starGrade"></span>
-                                    <span class="rating">4.8</span>
-                                    <div class="v-l"></div>
-                                    <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount">1</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fourItems">
-                            <a th:href="@{/product/detail}">
-                                <img src="/images/554X554.jpg">
-                            </a>
-                            <div class="descWrap">
-                                <a th:href="@{/product/detail}" class="text">
-                                    <span class="bold">템포크</span>
-                                    통밀먹인 오겹살 1kg+1kg 구이용
-                                </a>
-                                <div class="priceInfo">
-                                    <div class="price">
-                                        <p>21,420</p>
-                                        <span>원</span>
-                                    </div>
-                                </div>
-                                <div class="review">
-                                    <span class="starGrade"></span>
-                                    <span class="rating">4.8</span>
-                                    <div class="v-l"></div>
-                                    <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount">1</span>
+                                    <span class="reviewCount" th:text="${p.views}"></span>
                                 </div>
                             </div>
                         </div>

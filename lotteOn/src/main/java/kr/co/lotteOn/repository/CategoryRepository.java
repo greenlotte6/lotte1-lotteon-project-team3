@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    @Query("SELECT c FROM Category c LEFT JOIN FETCH c.children WHERE c.parent IS NULL ORDER BY c.sortOrder ASC")
+    @Query("SELECT c FROM Category c LEFT JOIN FETCH c.children WHERE c.depth = 1 ORDER BY c.sortOrder ASC")
     List<Category> findAllWithChildren();
     List<Category> findByParent_CategoryId(Long parentId);
 }

@@ -4,6 +4,7 @@ import kr.co.lotteOn.dto.CategoryDTO;
 import kr.co.lotteOn.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +27,11 @@ public class CategoryApiController {
     @PostMapping
     public void saveCategoryList(@RequestBody List<CategoryDTO> categories) {
         categoryService.saveAll(categories);
+    }
+
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return ResponseEntity.ok().build();
     }
 }
