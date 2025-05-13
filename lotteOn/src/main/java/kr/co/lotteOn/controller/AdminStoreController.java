@@ -8,6 +8,7 @@ import kr.co.lotteOn.entity.Seller;
 import kr.co.lotteOn.repository.SalesRepository;
 import kr.co.lotteOn.repository.SellerProjection;
 import kr.co.lotteOn.repository.ShopRepository;
+import kr.co.lotteOn.service.OrderItemService;
 import kr.co.lotteOn.service.SalesService;
 import kr.co.lotteOn.service.SellerService;
 import kr.co.lotteOn.service.ShopService;
@@ -36,6 +37,7 @@ public class AdminStoreController {
     private final ShopRepository shopRepository;
     private final SalesService salesService;
     private final SalesRepository salesRepository;
+    private final OrderItemService orderItemService;
 
 
     /*------------ 관리자 - 상점관리 ------------*/
@@ -178,7 +180,7 @@ public class AdminStoreController {
     public String shopSales(Model model){
 
         List<SalesDTO> salesList= salesService.getSalesList();
-        log.info("Sales List: {}", salesList);
+
         model.addAttribute("salesList", salesList);
         return "/admin/shop/sales";
     }
