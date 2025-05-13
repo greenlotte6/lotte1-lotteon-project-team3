@@ -11,19 +11,19 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="/script/swiper3.js"></script>
 
+    <!-- Script -->
+    <script src="/script/search.js"></script>
+    <script src="/script/myPointComma.js"></script>
+
     <!-- Style -->
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
     <link rel="stylesheet" href="/style/mypage/myPages.css">
 
-    <!-- Script -->
-    <script src="/script/search.js"></script>
-    <script src="/script/myPointComma.js"></script>
-
     <!-- Favicon -->
     <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
-    <title>상품문의 : 롯데ON</title>
+    <title>문의하기 : 롯데ON</title>
 </head>
 
 <body>
@@ -34,31 +34,7 @@
             <div class="mainContainer">
                 <aside>
                     <h2>마이롯데</h2>
-                    <div class="asideLink">
-                        <a th:href="@{/myPage/my_order}">주문 내역</a>
-                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
-                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
-                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
-                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
-                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
-                        <a th:href="@{/myPage/my_info}">나의 설정</a>
-                    </div>
-                    <div class="customerService">
-                        <p>롯데ON 고객센터</p>
-                        <div>
-                            <h4>1899-7000</h4>
-                        </div>
-                        <p>월~금요일 09:00 ~ 18:00</p>
-                        <p>주말, 공휴일 휴무</p>
-                    </div>
-                    <div class="asideBtn">
-                        <a th:href="@{/cust/cust_main}">
-                            <button>고객센터</button>
-                        </a>
-                        <a href="#">
-                            <button>문의하기</button>
-                        </a>
-                    </div>
+                    <th:block th:insert="~{/myPage/_side.html}"/>
                 </aside>
                 <section>
                     <div class="simpleInfoWrapper">
@@ -125,32 +101,65 @@
                             </div>
                         </div>
                     </div>
-                    <div class="productService var">
+                    <div class="customerCenter var">
                         <div class="varTitle">
-                            <h3>상품 문의</h3>
+                            <h3>반품/교환신청 내역</h3>
                         </div>
-                        <div class="orderHeader">
+                        <div class="orderHeader" th:if="${#lists.isEmpty(refund)}">
                             <div>
-                                <p>등록된 문의가 없습니다.</p>
+                                <p>신청 내역이 없습니다.</p>
                             </div>
                         </div>
-                        <div class="productServiceList">
+                        <div class="helpList" th:unless="${#lists.isEmpty(refund)}">
                             <table>
                                 <tr>
                                     <th>번호</th>
-                                    <th>주문코드</th>
-                                    <th>제목</th>
+                                    <th>채널</th>
+                                    <th>유형</th>
+                                    <th>주문번호</th>
                                     <th>작성일</th>
+                                    <th>내용</th>
                                     <th>상태</th>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1helloworld2</td>
-                                    <td>소고기가 너무 맛이가 없자나 응?</td>
-                                    <td>2025.05.08</td>
-                                    <td>답변 대기 중</td>
+                                <tr th:each="refund, i : ${refund}">
+                                    <td th:text="${refund.refundNo}">1</td>
+                                    <td th:text="${refund.channel}"></td>
+                                    <td th:text="${refund.refundType}">반품신청/철회</td>
+                                    <td th:text="${#strings.length(refund.orderCode) > 10} ? ${refund.orderCode.substring(0, 10)} + '...' : ${refund.orderCode}"></td>
+                                    <td th:text="${refund.regDate}">2025.05.08</td>
+                                    <td th:text="${#strings.length(refund.reason) > 20} ? ${refund.reason.substring(0, 10)} + '...' : ${refund.reason}"></td>
+                                    <td>[[${refund.channel}]][[${refund.status}]]</td>
                                 </tr>
                             </table>
+                            <div class="pageBtn">
+                                <th:block th:if="${page?.end > 0}">
+                                    <th:block th:if="${page.prev}">
+                                        <a th:href="@{/myPage/my_refundList(pg=${page.start-2})}" class="prev">
+                                            <img src="/images/back-double.png">
+                                        </a>
+                                    </th:block>
+                                    <th:block th:if="${page.prev}">
+                                        <a th:href="@{/myPage/my_refundList(pg=${page.start-1})}" class="prev">
+                                            <img src="/images/back-single.png" class="single">
+                                        </a>
+                                    </th:block>
+
+                                    <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                        <a th:href="@{/myPage/my_refundList(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                                    </th:block>
+
+                                    <th:block th:if="${page.next}">
+                                        <a th:href="@{/myPage/my_refundList(pg=${page.end+1})}" class="next">
+                                            <img src="/images/right-single.png" class="single">
+                                        </a>
+                                    </th:block>
+                                    <th:block th:if="${page.next}">
+                                        <a th:href="@{/myPage/my_refundList(pg=${page.end+2})}" class="next">
+                                            <img src="/images/right-double.png">
+                                        </a>
+                                    </th:block>
+                                </th:block>
+                            </div>
                         </div>
                     </div>
                 </section>

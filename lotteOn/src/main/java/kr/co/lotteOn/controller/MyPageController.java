@@ -2,7 +2,9 @@ package kr.co.lotteOn.controller;
 
 
 import kr.co.lotteOn.dto.MemberDTO;
-import kr.co.lotteOn.dto.ReturnDTO;
+import kr.co.lotteOn.dto.refund.RefundDTO;
+import kr.co.lotteOn.dto.refund.RefundPageRequestDTO;
+import kr.co.lotteOn.dto.refund.RefundPageResponseDTO;
 import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponPageRequestDTO;
@@ -100,18 +102,18 @@ public class MyPageController {
 
     //반품신청
     @PostMapping("/my_refund")
-    public String writeRefund(ReturnDTO returnDTO) {
-        returnDTO.setChannel("반품");
-        int no = myPageService.writeRefund(returnDTO);
+    public String writeRefund(RefundDTO refundDTO) {
+        refundDTO.setChannel("반품");
+        int no = myPageService.writeRefund(refundDTO);
 
         return "redirect:/myPage/my_home";
     }
 
     //교환신청
     @PostMapping("/my_exchange")
-    public String writeExchange(ReturnDTO returnDTO) {
-        returnDTO.setChannel("교환");
-        int no = myPageService.writeRefund(returnDTO);
+    public String writeExchange(RefundDTO refundDTO) {
+        refundDTO.setChannel("교환");
+        int no = myPageService.writeRefund(refundDTO);
 
         return "redirect:/myPage/my_home";
     }
@@ -119,7 +121,7 @@ public class MyPageController {
 
     //마이페이지 - 메인
     @GetMapping("/my_home")
-    public String myHome(@AuthenticationPrincipal MyUserDetails userDetails, Model model, QnaPageRequestDTO pageRequestDTO) {
+    public String myHome(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
 
         // 1. 로그인한 회원의 ID 가져오기
         String memberId = userDetails.getUsername();
@@ -133,14 +135,19 @@ public class MyPageController {
         List<PointDTO> recentPointTop3 = myPageService.findPointByMemberIdByLimit3(memberDTO);
         List<OrderDTO> recentOrderTop3 = myPageService.findOrderByMemberIdByLimit3(memberDTO);
         List<ReviewDTO> recentReviewTop3 = myPageService.findReviewByMemberIdByLimit3(memberDTO);
+        List<RefundDTO> recentRefundTop3 = myPageService.getTop3RefundsByMember(memberId);
         for(OrderDTO orderDTO : recentOrderTop3){
             orderDTO.setPayment(orderDTO.getPaymentName());
+        }
+        for (RefundDTO refundDTO : recentRefundTop3) {
+            refundDTO.setRefundType(refundDTO.getReturnType());
         }
         // 4. 모델에 추가
         model.addAttribute("recentQna", recentQnaTop3);
         model.addAttribute("recentPoint", recentPointTop3);
         model.addAttribute("recentOrder", recentOrderTop3);
         model.addAttribute("recentReview", recentReviewTop3);
+        model.addAttribute("recentRefund", recentRefundTop3);
 
         return "/myPage/my_home";
     }
@@ -264,6 +271,23 @@ public class MyPageController {
         return "/myPage/my_qna"; // 실제 뷰 경로
     }
 
+    //마이페이지 - 반품/교환신청 내역
+    @GetMapping("/my_refundList")
+    public String myRefundList(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
+                               @ModelAttribute Member member, RefundPageRequestDTO pageRequestDTO) {
+        Member currentMember = userDetails.getMember();
+        String loginId = currentMember.getId();
+        pageRequestDTO.setMemberId(loginId);
+
+        RefundPageResponseDTO pageResponseDTO = myPageService.getRefundByMemberId(pageRequestDTO);
+        for(RefundDTO refundDTO : pageResponseDTO.getDtoList()) {
+            refundDTO.setRefundType(refundDTO.getReturnType());
+        }
+        model.addAttribute("page", pageResponseDTO);
+        model.addAttribute("refund", pageResponseDTO.getDtoList());
+
+        return "/myPage/my_refundList";
+    }
 
 
     //마이페이지 - 나의설정

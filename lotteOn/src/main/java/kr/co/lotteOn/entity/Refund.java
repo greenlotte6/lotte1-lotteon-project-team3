@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -15,12 +14,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Return")
-public class Return {
+@Table(name = "Refund")
+public class Refund {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int returnNo;
+    private int refundNo;
 
 
     private String orderCode;
@@ -29,7 +28,7 @@ public class Return {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    private String returnType;
+    private String refundType;
     private String reason;
     private String image1;
     private String image2;
