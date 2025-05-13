@@ -627,6 +627,7 @@
                 <div class="refundModal">
                     <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
+                        <input type="hidden" name="orderCode" th:value="${order.orderCode}">
                         <table>
                             <tr>
                                 <td>주문번호</td>
@@ -823,6 +824,7 @@
                 <div class="changeModal">
                     <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
+                        <input type="hidden" name="orderCode" th:value="${order.orderCode}">
                         <table>
                             <tr>
                                 <td>주문번호</td>

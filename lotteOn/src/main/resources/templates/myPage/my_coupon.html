@@ -112,7 +112,7 @@
                                 <p>보유한 쿠폰이 없습니다.</p>
                             </div>
                         </div>
-                        <div class="couponList">
+                        <div class="couponList" th:unless="${#lists.isEmpty(coupons)}">
                             <table>
                                 <tr>
                                     <th>쿠폰명</th>
@@ -120,7 +120,7 @@
                                     <th>상태</th>
                                     <th>유효 기간</th>
                                 </tr>
-                                <tr th:each="coupon, i : ${coupons}" th:unless="${#lists.isEmpty(coupons)}">
+                                <tr th:each="coupon, i : ${coupons}">
                                     <td>
                                         <a th:href="@{/myPage/my_view_coupon(issuedNo=${coupon.issuedNo})}">
                                             [[${coupon.couponName}]]
