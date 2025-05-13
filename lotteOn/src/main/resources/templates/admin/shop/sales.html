@@ -47,12 +47,13 @@
                         <th>주문합계</th>
                         <th>매출합계</th>
                     </tr>
-                    <tr th:each="sale : ${salesList}">
+                    <p th:text="${#lists.size(salesList)}+'개 조회됨'"></p>
+                    <tr th:each="sale, iterStat : ${salesList}">
                         <td><input type="checkbox"></td>
-                        <td th:text="${sale.salesNo}"></td>
+                        <td th:text="${iterStat.index + 1}"></td>
                         <td th:text="${sale.companyName}"></td>
                         <td th:text="${sale.businessNo}"></td>
-                        <td>100</td>
+                        <td th:text="${sale.orderCount}"></td>
                         <td>90</td>
                         <td>55</td>
                         <td>52</td>

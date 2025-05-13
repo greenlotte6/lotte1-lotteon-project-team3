@@ -1,6 +1,7 @@
 package kr.co.lotteOn.repository;
 
 import jakarta.transaction.Transactional;
+import kr.co.lotteOn.dto.SalesDTO;
 import kr.co.lotteOn.entity.Seller;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
@@ -48,4 +49,7 @@ public interface SellerRepository extends JpaRepository<Seller, String> {
     Seller findBySellerId(String sellerId);
 
     Seller findByCompanyName(String companyName);
+
+    @Query("SELECT new kr.co.lotteOn.dto.SalesDTO(0, s.companyName, s.businessNo) FROM Seller s")
+    List<SalesDTO> findAllSellerSales();
 }

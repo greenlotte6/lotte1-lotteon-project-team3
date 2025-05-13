@@ -178,6 +178,7 @@ public class AdminStoreController {
     public String shopSales(Model model){
 
         List<SalesDTO> salesList= salesService.getSalesList();
+        log.info("Sales List: {}", salesList);
         model.addAttribute("salesList", salesList);
         return "/admin/shop/sales";
     }
