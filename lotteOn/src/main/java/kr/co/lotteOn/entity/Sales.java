@@ -22,6 +22,8 @@ public class Sales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int salesNo;
 
+    @Column(name= "sellerId")
+    private String sellerId;
 
     @ManyToOne
     @JoinColumn(name = "sellerId", referencedColumnName = "sellerId", insertable = false, updatable = false)
