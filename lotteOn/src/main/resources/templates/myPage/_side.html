@@ -1,13 +1,25 @@
-<section class="left_section">
-    <aside class="sidebar">
-        <ul>
-            <li><a th:href="@{/myPage/my_order}">전체주문내역</a></li>
-            <li><a th:href="@{/myPage/my_point}">포인트내역</a></li>
-            <li><a th:href="@{/myPage/my_coupon}">쿠폰</a></li>
-            <li><a th:href="@{/myPage/my_review}">나의리뷰</a></li>
-            <li><a th:href="@{/myPage/my_qna}">문의하기</a></li>
-            <li><a th:href="@{/myPage/my_qna_product}">상품문의</a></li>
-            <li><a th:href="@{/myPage/my_info}">나의설정</a></li>
-        </ul>
-    </aside>
-</section>
+<div class="asideLink">
+    <a th:href="@{/myPage/my_order}">주문 내역</a>
+    <a th:href="@{/myPage/my_point}">포인트 내역</a>
+    <a th:href="@{/myPage/my_coupon}">쿠폰</a>
+    <a th:href="@{/myPage/my_review}">나의 리뷰</a>
+    <a th:href="@{/myPage/my_qna}">문의 내역</a>
+    <a th:href="@{/myPage/my_refundList}">반품/교환신청 내역</a>
+    <a th:href="@{/myPage/my_info}">나의 설정</a>
+</div>
+<div class="customerService">
+    <p>롯데ON 고객센터</p>
+    <div>
+        <h4>1899-7000</h4>
+    </div>
+    <p>월~금요일 09:00 ~ 18:00</p>
+    <p>주말, 공휴일 휴무</p>
+</div>
+<div class="asideBtn">
+    <a th:href="@{/cust/cust_main}">
+        <button>고객센터</button>
+    </a>
+    <a th:href="@{/cust/cust_question_write}">
+        <button>문의하기</button>
+    </a>
+</div>

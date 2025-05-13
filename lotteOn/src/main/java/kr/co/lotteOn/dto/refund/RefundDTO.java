@@ -1,5 +1,6 @@
-package kr.co.lotteOn.dto;
+package kr.co.lotteOn.dto.refund;
 
+import kr.co.lotteOn.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReturnDTO {
+public class RefundDTO {
 
-    private int returnNo;
+    private int refundNo;
     private String orderCode;
     private String memberId;
-    private String returnType;
+    private String refundType;
     private String reason;
+
     private String image1;
     private String image2;
     private String image3;
@@ -45,14 +47,15 @@ public class ReturnDTO {
     }
 
     public String getReturnType(){
-        if(returnType != null){
-            return switch (this.returnType) {
+        if(refundType != null){
+            return switch (this.refundType) {
                 case "broken" -> "불량/파손";
                 case "dislike" -> "단순변심";
                 case "misorder" -> "주문실수";
                 case "misdelivery" -> "오배송";
                 case "misinfo" -> "상품정보 상이";
                 case "delay" -> "배송지연";
+                case "size" -> "사이즈";
                     default -> "기타";
             };
         }

@@ -3,6 +3,9 @@ package kr.co.lotteOn.service;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteOn.dto.*;
+import kr.co.lotteOn.dto.refund.RefundDTO;
+import kr.co.lotteOn.dto.refund.RefundPageRequestDTO;
+import kr.co.lotteOn.dto.refund.RefundPageResponseDTO;
 import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
@@ -48,7 +51,7 @@ public class MyPageService {
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
-    private final ReturnRepository returnRepository;
+    private final RefundRepository refundRepository;
     private final PointService pointService;
 
     //회원별 문의내역
@@ -284,6 +287,32 @@ public class MyPageService {
                 .total(total)
                 .build();
     }
+    
+    //고객별 반품/교환신청 내역 불러오기
+    public RefundPageResponseDTO getRefundByMemberId(RefundPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("memberId");
+        String memberId = pageRequestDTO.getMemberId();
+        List<Refund> refund = refundRepository.findAllByMember_Id(memberId, pageable);
+
+        List<RefundDTO> refundDTOList = refund
+                .stream()
+                .map(refund1 -> {
+                    RefundDTO refundDTO = modelMapper.map(refund1, RefundDTO.class);
+                    refundDTO.setMemberId(memberId);
+
+                    return refundDTO;
+                }).toList();
+
+        int total = (int) refundDTOList.size();
+
+        return RefundPageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(refundDTOList)
+                .total(total)
+                .build();
+    }
+
 
 
     /*메인페이지 시작*/    /*메인페이지 시작*/    /*메인페이지 시작*/    /*메인페이지 시작*/
@@ -401,6 +430,19 @@ public class MyPageService {
         return reviewDTOList;
     }
 
+    //최근 교환/환불 신청 내역 불러오기(3)
+    public List<RefundDTO> getTop3RefundsByMember(String memberId) {
+        List<Refund> refundList = refundRepository.findTop3ByMember_IdOrderByRegDateDesc(memberId);
+
+        return refundList.stream()
+                .map(refund -> {
+                    RefundDTO dto = modelMapper.map(refund, RefundDTO.class);
+                    dto.setMemberId(memberId);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
     //고객 상품 문의(channel = 판매자 게시판)
     public int qnaWrite(QnaDTO qnaDTO){
         Member member = Member.builder()
@@ -483,33 +525,42 @@ public class MyPageService {
     
     //교환 및 반품신청
     @Transactional
-    public int writeRefund(ReturnDTO returnDTO){
+    public int writeRefund(RefundDTO refundDTO){
+
         Member member = Member.builder()
-                .id((returnDTO.getMemberId()))
+                .id((refundDTO.getMemberId()))
                 .build();
 
-        Return returns = modelMapper.map(returnDTO, Return.class);
-        returns.setMember(member);
+        Refund refunds = modelMapper.map(refundDTO, Refund.class);
+        refunds.setMember(member);
 
         // 이미지 파일이 null이 아닐 때만 파일 이름을 설정
-        if (returnDTO.getImageList1() != null && !returnDTO.getImageList1().isEmpty()) {
-            returns.setImage1(returnDTO.getImageList1().getOriginalFilename());
+        if (refundDTO.getImageList1() != null && !refundDTO.getImageList1().isEmpty()) {
+            refunds.setImage1(refundDTO.getImageList1().getOriginalFilename());
         }
-        if (returnDTO.getImageList2() != null && !returnDTO.getImageList2().isEmpty()) {
-            returns.setImage2(returnDTO.getImageList2().getOriginalFilename());
+        if (refundDTO.getImageList2() != null && !refundDTO.getImageList2().isEmpty()) {
+            refunds.setImage2(refundDTO.getImageList2().getOriginalFilename());
         }
-        if (returnDTO.getImageList3() != null && !returnDTO.getImageList3().isEmpty()) {
-            returns.setImage3(returnDTO.getImageList3().getOriginalFilename());
+        if (refundDTO.getImageList3() != null && !refundDTO.getImageList3().isEmpty()) {
+            refunds.setImage3(refundDTO.getImageList3().getOriginalFilename());
         }
 
-        Return savedReturn = returnRepository.save(returns);
+        Order order = orderRepository.findByOrderCode(refundDTO.getOrderCode());
 
-        return savedReturn.getReturnNo();
+        if("반품".equals(refundDTO.getChannel())){
+            order.setConfirm("반품신청 접수");
+        } else if ("교환".equals(refundDTO.getChannel())){
+            order.setConfirm("교환신청 접수");
+        }
+
+        orderRepository.save(order);
+
+        Refund savedRefunds = refundRepository.save(refunds);
+
+        return savedRefunds.getRefundNo();
     }
 
-
-
-
+    
     /*메인페이지 끝*/    /*메인페이지 끝*/    /*메인페이지 끝*/    /*메인페이지 끝*/    /*메인페이지 끝*/
 
 

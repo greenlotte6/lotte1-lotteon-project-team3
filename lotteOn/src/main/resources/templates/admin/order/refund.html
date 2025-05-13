@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자-배송상세</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+    <!--Style-->
+    <link rel="stylesheet" href="/style/admin/order/delivery.css"/>
+    <link rel="stylesheet" href="/style/admin/header.css">
+    <link rel="stylesheet" href="/style/admin/footer.css">
+    <link rel="stylesheet" href="/style/admin/adminaside.css">
+    <!--JavaScript-->
+    <script src="/script/aside.js"></script>
+    <style>
+        .pageBtn {
+            display: flex;
+            justify-content: center;
+            column-gap: 3px;
+            margin-top: 50px;
+        }
+
+        .pageBtn > a {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+        }
+
+        .current {
+            background-color: #f7f7f7;
+            color: #333333;
+        }
+
+        .num {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <th:block th:include="/admin/_adminHeader"/>
+    <main>
+        <th:block th:include="/admin/_adminAside"/>
+        <div class="adminMain">
+            <div class="mainTop">
+                <h4>교환/환불신청 현황</h4>
+                <div><span>HOME > 주문관리 > <p>교환/환불신청 현황</p></span></div>
+            </div>
+            <div class="shopArea">
+                <table>
+                    <tr>
+                        <th>번호</th>
+                        <th>채널</th>
+                        <th>유형</th>
+                        <th>주문번호</th>
+                        <th>신청인</th>
+                        <th>작성일</th>
+                        <th>내용</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                    <tr th:each="refund, i : ${refund}">
+                        <td>[[${refund.refundNo}]]</td>
+                        <td>[[${refund.channel}]]</td>
+                        <td>[[${refund.refundType}]]</td>
+                        <td th:text="${#strings.length(refund.orderCode) > 10} ? ${refund.orderCode.substring(0, 10)} + '...' : ${refund.orderCode}"></td>
+                        <td>[[${refund.memberId}]]</td>
+                        <td>[[${refund.regDate}]]</td>
+                        <td>[[${refund.reason}]]</td>
+                        <td>[[${refund.status}]]</td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <form th:action="@{/admin/refund/updateStatus}" method="post">
+                                    <input type="hidden" name="refundNo" th:value="${refund.refundNo}">
+                                    <input type="hidden" name="status" value="승인 완료">
+                                    <button type="submit">접수</button>
+                                </form>
+
+                                <form th:action="@{/admin/refund/updateStatus}" method="post">
+                                    <input type="hidden" name="refundNo" th:value="${refund.refundNo}">
+                                    <input type="hidden" name="status" value="상품 회수중">
+                                    <button type="submit">회수</button>
+                                </form>
+
+                                <form th:action="@{/admin/refund/updateStatus}" method="post">
+                                    <input type="hidden" name="refundNo" th:value="${refund.refundNo}">
+                                    <input type="hidden" name="status" value="반품처리 완료">
+                                    <button type="submit">완료</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="pageBtn">
+                    <th:block th:if="${page?.end > 0}">
+                        <th:block th:if="${page.prev}">
+                            <a th:href="@{/admin/order/refund(pg=${page.start-2})}" class="prev">
+                                <img src="/images/back-double.png">
+                            </a>
+                        </th:block>
+                        <th:block th:if="${page.prev}">
+                            <a th:href="@{/admin/order/refund(pg=${page.start-1})}" class="prev">
+                                <img src="/images/back-single.png" class="single">
+                            </a>
+                        </th:block>
+
+                        <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                            <a th:href="@{/admin/order/refund(pg=${num})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        </th:block>
+
+                        <th:block th:if="${page.next}">
+                            <a th:href="@{/admin/order/refund(pg=${page.end+1})}" class="next">
+                                <img src="/images/right-single.png" class="single">
+                            </a>
+                        </th:block>
+                        <th:block th:if="${page.next}">
+                            <a th:href="@{/admin/order/refund(pg=${page.end+2})}" class="next">
+                                <img src="/images/right-double.png">
+                            </a>
+                        </th:block>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="/admin/_adminFooter.html :: footerFragment(versionId=${selectedVersionId})"/>
+</div>
+</body>
+</html>

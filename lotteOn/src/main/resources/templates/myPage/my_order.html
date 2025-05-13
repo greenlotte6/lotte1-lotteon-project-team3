@@ -494,31 +494,7 @@
             <div class="mainContainer">
                 <aside>
                     <h2>마이롯데</h2>
-                    <div class="asideLink">
-                        <a th:href="@{/myPage/my_order}">주문 내역</a>
-                        <a th:href="@{/myPage/my_point}">포인트 내역</a>
-                        <a th:href="@{/myPage/my_coupon}">쿠폰</a>
-                        <a th:href="@{/myPage/my_review}">나의 리뷰</a>
-                        <a th:href="@{/myPage/my_qna}">문의 내역</a>
-                        <a th:href="@{/myPage/my_qna_product}">상품 문의</a>
-                        <a th:href="@{/myPage/my_info}">나의 설정</a>
-                    </div>
-                    <div class="customerService">
-                        <p>롯데ON 고객센터</p>
-                        <div>
-                            <h4>1899-7000</h4>
-                        </div>
-                        <p>월~금요일 09:00 ~ 18:00</p>
-                        <p>주말, 공휴일 휴무</p>
-                    </div>
-                    <div class="asideBtn">
-                        <a th:href="@{/cust/cust_main}">
-                            <button>고객센터</button>
-                        </a>
-                        <a href="#">
-                            <button>문의하기</button>
-                        </a>
-                    </div>
+                    <th:block th:insert="~{/myPage/_side.html}"/>
                 </aside>
                 <section>
                     <div class="simpleInfoWrapper">
