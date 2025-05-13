@@ -16,6 +16,12 @@ main > div > * {
     overflow: hidden;
 }
 
+.swiper2 .productItem {
+    display: flex;
+    justify-content: space-between;
+    width: 200px !important;
+}
+
 .swiper-button-next, .swiper-button-prev {
     position: static;
     color: #888;
