@@ -14,6 +14,7 @@
     <!-- Script -->
     <script src="/script/search.js"></script>
     <script src="/script/myPointComma.js"></script>
+    <script src="/script/starPoint.js"></script>
 
     <link rel="stylesheet" href="/style/common/_footer.css">
     <link rel="stylesheet" href="/style/common/_header.css">
@@ -120,12 +121,12 @@
                                     <th>작성일</th>
                                 </tr>
                                 <tr th:each="review, i : ${review}">
-                                    <td th:text="${review.reviewNo}">1</td>
-                                    <td th:text="${review.productName}">한우 1++ 1kg</td>
-                                    <td th:text="${review.title}">한우 맞나요?</td>
-                                    <td th:text="${review.content}">한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
-                                    <td th:text="${review.rating}">⭐⭐⭐⭐⭐</td>
-                                    <td th:text="${review.regDate}">2025.05.08</td>
+                                    <td th:text="${review.reviewNo}"></td>
+                                    <td th:text="${review.productName}"></td>
+                                    <td th:text="${review.title}"></td>
+                                    <td th:text="${review.content}"></td>
+                                    <td th:text="${review.rating}" class="starPoint"></td>
+                                    <td th:text="${review.regDate}"></td>
                                 </tr>
                             </table>
                         </div>

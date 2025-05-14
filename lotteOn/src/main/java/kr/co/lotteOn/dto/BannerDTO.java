@@ -16,6 +16,8 @@ import java.time.LocalTime;
 public class BannerDTO {
 
     private String name;
+    private String sliderTitle;
+    private String sliderSubTitle;
     private String size;
     private String backgroundColor;
     private String link;

@@ -48,7 +48,8 @@ public class ReviewDTO {
         return null;
     }
 
-    public String getRating(){
+    public String getRatingEmoji(){
+        // 기존에 메서드 getRating이 이모지를 반환하는 것으로 의심이 돼서 메서드명을 변경했음.
         if(rating != null){
             return switch (this.rating) {
                 case "1" -> "⭐";

@@ -3,17 +3,20 @@ package kr.co.lotteOn.controller;
 import kr.co.lotteOn.dto.BannerDTO;
 import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.repository.BannerRepository;
+import kr.co.lotteOn.service.BannerService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -21,6 +24,7 @@ public class BannerController {
 
     private final BannerRepository bannerRepository;
     private final ModelMapper modelMapper;
+    private final BannerService bannerService;
 
     @PostMapping("/admin/config/banners")
     public String createBanner(@ModelAttribute BannerDTO bannerDTO) throws IOException {
@@ -33,7 +37,23 @@ public class BannerController {
         banner.setImagePath("/images/banners/" + fileName);
         banner.setActive(false);
 
+        banner.setSliderTitle(bannerDTO.getSliderTitle());
+        banner.setSliderSubTitle(bannerDTO.getSliderSubTitle());
+
         bannerRepository.save(banner);
         return "redirect:/admin/config/banner";
     }
+
+    @PostMapping("/banners/activate/{id}")
+    public String activateBanner(@PathVariable int id) {
+        bannerService.activateBanner(id);
+        return "redirect:/admin/config/banner";
+    }
+
+    @PostMapping("/banners/deactivate/{id}")
+    public String deactivateBanner(@PathVariable int id) {
+        bannerService.deactivateBanner(id);
+        return "redirect:/admin/config/banner";
+    }
+
 }

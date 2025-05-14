@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const swiper = new Swiper('.swiper', {
-        // Optional parameters
+        slidesPerView: 3,
+        slidesPerGroup: 3,
         direction: 'horizontal',
         spaceBetween: 20,
         autoplay: {

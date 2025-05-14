@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.List;
+
 @Component
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -36,8 +38,12 @@ public class GlobalModelAttributeAdvice {
     }
 
     @ModelAttribute("mainTopBanner")
-    public Banner mainTopBanner() {
-        return bannerService.findByLocation("MAIN1");
+    public List<Banner> mainTopBanner() {
+        return bannerService.findValidBanner("MAIN1");
+    }
+    @ModelAttribute("swiperBanner")
+    public List<Banner> swiperBanner() {
+        return bannerService.findValidBanner("SLIDER");
     }
 
     @ModelAttribute("loginUser")

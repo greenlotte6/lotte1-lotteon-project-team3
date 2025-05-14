@@ -22,6 +22,8 @@ public class Banner {
     private int id;
 
     private String imagePath;
+    private String sliderTitle;
+    private String sliderSubTitle;
     private String name;
     private String size;
     private String backgroundColor;

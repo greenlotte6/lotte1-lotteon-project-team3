@@ -70,7 +70,9 @@ public class AdminLotteController {
         return "/admin/config/bannerLogin";
     }
     @GetMapping("/config/bannerMainsl")
-    public String bannerMainsl(){
+    public String bannerMainsl(Model model){
+        List<Banner> banners = bannerRepository.findAll();
+        model.addAttribute("banners", banners);
         return "/admin/config/bannerMainsl";
     }
     @GetMapping("/config/bannerMypage")
