@@ -16,30 +16,20 @@
     <script src="/script/aside.js"></script>
 
     <style>
-        a.current {
+        .submitbtn {
+            padding: 5px;
             border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px;
-            background-color: #dfdfdf;
+            border-radius: 10px;
+        }
+        .modalTable select {
+            font-size: 16px;
+            padding: 7px;
         }
 
-        a.num {
-            border: 1px solid #dfdfdf;
-            width: 15px;
-            text-align: center;
-            margin: 5px;
-            padding: 10px;
-        }
-        input[name="addr"] {
-            float: left;
-            border: none;
-            width: 100%;
-        }
-        input {
-            border: none;
-            width: 100%;
+        .submitbtn.disabled-btn {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -62,6 +52,7 @@
                             <option value="memberId">주문자</option>
                             <option value="name">주문자명</option>
                             <option value="payment">결제수단</option>
+                            <option value="status">주문상태</option>
                         </select>
                         <input type="text" name="keyword" placeholder="검색어 입력">
                         <button type="submit">검색</button>
@@ -85,21 +76,30 @@
                             <button type="submit"
                                     class="orderinfo"
                                     th:onclick="'orderinfoPopup(' + ${i.index} + ')'"
-                                    th:text="${#strings.length(order.orderCode) > 10} ? ${order.orderCode.substring(0, 10)} + '...' : ${order.orderCode}">
+                                    th:text="${#strings.length(order.orderCode) > 10} ? ${order.orderCode.substring(0, 15)} + '...' : ${order.orderCode}">
                             </button>
                         </td>
                         <td th:text="${order.memberId}">abc123</td>
                         <td th:text="${order.memberName}">정상수</td>
-                        <td th:text="${order.productName}">도리토스</td>
+                        <td th:text="${order.displayProductName}">도리토스</td>
                         <td th:text="${order.quantity}">100</td>
                         <td th:text="${order.actualMoney}">170,000</td>
                         <td th:text="${order.payment}">신용카드</td>
-                        <td th:text="${order.orderStatus}">결제완료</td>
+                        <td th:text="${#strings.isEmpty(order.confirm) ? order.orderStatus : order.confirm}">결제완료</td>
                         <td th:text="${order.orderDate}"></td>
                         <td>
-                            <button type="submit" class="submitbtn"
-                                    th:onclick="'submitPopup(' + ${i.index} + ')'">
-                                [ 배송하기 ]
+                            <button type="button" class="submitbtn"
+                                    th:onclick="'submitPopup(' + ${i.index} + ')'"
+                                    th:disabled="${order.confirm == '구매 확정'
+                                                 or order.confirm == '배송준비중'
+                                                 or order.refundStatus == '반품처리 완료'
+                                                 or order.refundStatus == '교환처리 완료'}"
+                                    th:classappend="${order.confirm == '구매 확정'
+                                                or order.confirm == '배송준비중'
+                                                or order.refundStatus == '반품처리 완료'
+                                                or order.refundStatus == '교환처리 완료'} ? ' disabled-btn'"
+                                    th:text="${order.confirm == '배송준비중'} ? '입력완료' : '배송하기'">
+                                배송하기
                             </button>
                         </td>
                     </tr>
@@ -157,7 +157,6 @@
                                 <th>판매자</th>
                                 <th>가격</th>
                                 <th>할인</th>
-                                <th>수량</th>
                                 <th>배송비</th>
                             </tr>
                             <tr>
@@ -169,12 +168,16 @@
                                 <td th:text="${order.companyName}"></td>
                                 <td th:text="${order.price}">170,000</td>
                                 <td th:text="${order.discount}">-70,000</td>
-                                <td th:text="${order.quantity}">100</td>
                                 <td th:text="${order.fee}">100</td>
                             </tr>
+
                         </table>
                         <div class="total">
                             <table>
+                                <tr>
+                                    <td>총 구매수량</td>
+                                    <td th:text="${order.quantity} + ' 개'">100</td>
+                                </tr>
                                 <tr>
                                     <td>총 상품금액</td>
                                     <td th:text="${order.totalPrice} + '원'">340,000</td>
@@ -252,9 +255,8 @@
                 <span class="close">&times;</span>
                 <div class="modaltop">
                     <h3>배송입력</h3>
-                    <p>10101010101</p>
                 </div>
-                <form>
+                <form th:action="@{/admin/order/post}" method="post">
                     <div class="modalTable">
                         <table>
                             <tr>
@@ -269,7 +271,7 @@
                                 <th>수령인</th>
                                 <td>
                                     <div>
-                                        <input type="text" readonly name="addr" th:value="${order.receiver}">
+                                        <input type="text" readonly name="receiver" th:value="${order.receiver}">
                                     </div>
                                 </td>
                             </tr>
@@ -297,25 +299,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>운송장번호</th>
-                                <td>
-                                    <div>
-                                        <input type="text" name="waybill" placeholder="운송장번호 입력" class="addr">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
                                 <th>기타</th>
                                 <td>
                                     <div>
-                                        <input type="text" name="etc" placeholder="기타정보 입력" class="subinfo">
+                                        <input type="text" name="etc" class="subinfo" th:value="${order.etc}">
                                     </div>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="modalbtn">
-                        <button>등록하기</button>
+                        <button type="submit">등록하기</button>
                     </div>
                 </form>
             </div>

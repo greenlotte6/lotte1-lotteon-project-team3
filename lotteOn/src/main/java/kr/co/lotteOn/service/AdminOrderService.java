@@ -1,7 +1,8 @@
 package kr.co.lotteOn.service;
 
 import com.querydsl.core.Tuple;
-import kr.co.lotteOn.dto.SellerDTO;
+import jakarta.transaction.Transactional;
+import kr.co.lotteOn.dto.delivery.DeliveryDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
 import kr.co.lotteOn.dto.order.OrderPageResponseDTO;
@@ -10,6 +11,7 @@ import kr.co.lotteOn.dto.refund.RefundPageRequestDTO;
 import kr.co.lotteOn.dto.refund.RefundPageResponseDTO;
 import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.*;
+import kr.co.lotteOn.util.DeliveryCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -32,8 +34,11 @@ public class AdminOrderService {
     private final OrderItemRepository orderItemRepository;
     private final ModelMapper modelMapper;
     private final SellerRepository sellerRepository;
+    private final DeliveryRepository deliveryRepository;
+    private final DeliveryCodeGenerator codeGenerator;
 
     //관리자 주문관리 - 주문현황
+    @Transactional
     public OrderPageResponseDTO OrderList(OrderPageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("orderCode");
         Page<Tuple> orders = orderRepository.findAll(pageRequestDTO, pageable);
@@ -71,29 +76,9 @@ public class AdminOrderService {
             orderDTO.setMemberName(member.getName());
             orderDTO.setMember(member);
 
-            // 대표 상품 정보 (첫 번째 항목 기준)
-            orderDTO.setCompanyName(product.getCompanyName());
-            orderDTO.setDescription(product.getDescription());
-            orderDTO.setPrice(product.getPrice());
-            orderDTO.setPoint(product.getPoint());
-            orderDTO.setProductName(product.getName());
-            orderDTO.setImageList(product.getImageList());
-            orderDTO.setOrderCode(order.getOrderCode());
-            orderDTO.setQuantity(orderItem.getQuantity());
-            orderDTO.setProductCode(orderItem.getProduct().getProductCode());
-            orderDTO.setTotalPrice(product.getPrice() * orderItem.getQuantity()); // ✅ 추가
-
-            // 판매자 정보 설정
-            String companyName = product.getCompanyName();
-            Seller sellerInfo = sellerRepository.findByCompanyName(companyName);
-            orderDTO.setRating(sellerInfo.getRating());
-            orderDTO.setDelegate(sellerInfo.getDelegate());
-            orderDTO.setHp(sellerInfo.getHp());
-            orderDTO.setBusinessNo(sellerInfo.getBusinessNo());
-            orderDTO.setFax(sellerInfo.getFax());
-            orderDTO.setAddr1(sellerInfo.getAddr1());
-            orderDTO.setAddr2(sellerInfo.getAddr2());
-            orderDTO.setZip(sellerInfo.getZip());
+            // ✅ 한 줄로 설정
+            orderDTO.setProductInfo(product, orderItem);
+            orderDTO.setSellerInfo(seller);
 
             // orderMap에 저장
             orderMap.put(orderCode, orderDTO);
@@ -109,11 +94,35 @@ public class AdminOrderService {
                 .build();
     }
 
+    public int deliveryWrite(DeliveryDTO deliveryDTO) {
+
+        Delivery savedDelivery = codeGenerator.createDelivery(deliveryDTO);
+        Order order = orderRepository.findByOrderCode(deliveryDTO.getOrderCode());
+        Refund refund = refundRepository.findByOrderCode(deliveryDTO.getOrderCode());
+
+        // 주문 상태 업데이트
+        order.setConfirm("배송준비중");
+        orderRepository.save(order);
+
+        // 환불이 존재할 경우에만 상태 업데이트
+        if (refund != null) {
+            refund.setStatus("상품회수중");
+            refundRepository.save(refund);
+        } else {
+            log.info("환불 정보가 없는 주문입니다. 주문코드: {}", deliveryDTO.getOrderCode());
+        }
+
+        return savedDelivery.getDeliveryNo();
+    }
+
+
 
     //관리자 주문관리 - 배송현황
     public OrderPageResponseDTO DeliveryList(OrderPageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("orderCode");
         Page<Tuple> orders = orderRepository.findAllByStatus(pageRequestDTO, pageable);
+
+        Map<String, OrderDTO> orderMap = new LinkedHashMap<>(); // 순서 보존
 
         List<OrderDTO> orderDTOList = orders
                 .getContent()
@@ -121,12 +130,50 @@ public class AdminOrderService {
                 .map(tuple -> {
                     Order order = tuple.get(0, Order.class);
                     Member member = tuple.get(1, Member.class);
+                    OrderItem orderItem = tuple.get(2, OrderItem.class);
+                    Product product = tuple.get(3, Product.class);
+                    Delivery delivery = tuple.get(4, Delivery.class);
+
                     String memberId = member.getId();
                     String memberName = member.getName();
+
+                            String orderCode = order.getOrderCode();
+
+                            if (orderMap.containsKey(orderCode)) {
+                                // 기존 DTO에 누적
+                                OrderDTO existing = orderMap.get(orderCode);
+
+                                // 수량 누적
+                                int prevQty = existing.getQuantity();
+                                existing.setQuantity(prevQty + orderItem.getQuantity());
+
+                                // 가격 누적
+                                int prevTotal = existing.getTotalPrice();
+                                int added = product.getPrice() * orderItem.getQuantity();
+                                existing.setTotalPrice(prevTotal + added);
+
+                            } else {
+                                // 새 DTO 생성
+                                OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+                                orderDTO.setMemberId(member.getId());
+                                orderDTO.setMemberName(member.getName());
+                                orderDTO.setProductInfo(product, orderItem);  // 상품 1개만 설정
+                                orderDTO.setDeliveryInfo(delivery);
+
+                                // 수량, 총가격 초기 설정
+                                orderDTO.setQuantity(orderItem.getQuantity());
+                                orderDTO.setTotalPrice(product.getPrice() * orderItem.getQuantity());
+
+                                orderMap.put(orderCode, orderDTO);
+                            }
 
                     OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
                     orderDTO.setMemberId(memberId);
                     orderDTO.setMemberName(memberName);
+
+                    // ✅ 한 줄로 설정
+                    orderDTO.setProductInfo(product, orderItem);
+                    orderDTO.setDeliveryInfo(delivery);
 
                     return orderDTO;
                 }).toList();

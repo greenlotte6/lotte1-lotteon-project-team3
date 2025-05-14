@@ -23,6 +23,38 @@ img {
     height: 25px;
 }
 /* --------------------- main --------------------- */
+
+.pageBtn {
+    display: flex;
+    justify-content: center;
+    column-gap: 3px;
+    margin-top: 50px;
+}
+
+.pageBtn > a {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+}
+
+.current {
+    background-color: #f7f7f7;
+    color: #333333;
+}
+
+.num {
+    color: #555;
+}
+button {
+    all: unset;
+    cursor: pointer;
+    border: 1px solid #dfdfdf;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 12px;
+}
+
 .adminMain {
     width: 860px;
     height: auto;
@@ -146,31 +178,6 @@ tr td select option {
 }
 
 
-a.current {
-    border: 1px solid #dfdfdf;
-    width: 15px;
-    text-align: center;
-    margin: 5px;
-    padding: 10px;
-    background-color: #dfdfdf;
-}
-
-a.num {
-    border: 1px solid #dfdfdf;
-    width: 15px;
-    text-align: center;
-    margin: 5px;
-    padding: 10px;
-}
-input[name="addr"] {
-    float: left;
-    border: none;
-    width: 100%;
-}
-.modalTable input {
-    border: none;
-    width: 100%;
-}
 
 /* 모달 전체 화면 덮기 */
 .modal {
@@ -268,25 +275,6 @@ input[name="addr"] {
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
-
-/* 모달 창 내부 */
-.submodal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 800px;
-    height: auto;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* 닫기 버튼 */
-.submodal .close {
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-}
 .modaltop {
     display: flex;
 }
@@ -294,61 +282,6 @@ input[name="addr"] {
     margin-left: 15px;
     position: relative;
     top: 5px;
-}
-.submodal .modalbtn {
-    display: flex;
-    justify-content: center;
-}
-.submodal button {
-    width: 100px;
-    height: 50px;
-    background-color: #3f97f6;
-    color: white;
-    text-align: center;
-    margin-top: 15px;
-    border-radius: 5px;
-}
-.submodal table {
-    margin-bottom: 20px;
-}
-.submodal table th {
-    width: 90px;
-    height: 50px;
-}
-.submodal table td div {
-    text-align: left;
-    display: flex;
-}
-.submodal .fst {
-    margin-bottom: 20px;
-}
-.submodal table td input {
-    padding: 10px;
-}
-.submodal table td p {
-    position: relative;
-    top: 10px;
-    margin-left: 10px;
-}
-.submodal table td .status {
-    font-size: 16px;
-}
-.submodal table input {
-    width: 400px;
-    border-radius: 3px;
-    border: 1px solid #8a8a8a;
-    box-sizing: border-box;
-}
-.submodal table tr td div select {
-    font-size: 16px;
-    width: 400px;
-    height: 43px;
-}
-.submodal table tr td div option {
-    font-size: 16px;
-}
-.submodal .thd tr td div input {
-    width: 240px;
 }
 .modalTable {
     padding: 20px;
@@ -361,11 +294,8 @@ input[name="addr"] {
     border-bottom: 2px solid black;
     margin-bottom: 20px;
 }
-.submodal table .addr{
-    width: 600px;
-}
-.submodal table .subinfo {
-    width: 600px;
-    height: 200px;
+.modal .info table td{
+    text-align: left;
+    font-size: 14px;
 }
 /* --------------------- main --------------------- */

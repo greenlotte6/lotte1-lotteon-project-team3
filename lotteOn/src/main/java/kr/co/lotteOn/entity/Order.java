@@ -32,6 +32,7 @@ public class Order {
     private String fee;
     private String actualMoney;
     private String orderStatus;
+    private String refundStatus;
 
     @Column(nullable = false)
     private String receiver;
@@ -40,6 +41,7 @@ public class Order {
     private LocalDateTime orderDate = LocalDateTime.now();
 
     private String confirm;
+    private String etc;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @Builder.Default

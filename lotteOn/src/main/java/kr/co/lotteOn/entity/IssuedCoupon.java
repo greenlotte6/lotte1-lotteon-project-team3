@@ -31,6 +31,7 @@ public class IssuedCoupon {
     @JoinColumn(name="memberId")
     private Member member;
 
+    @Builder.Default
     private boolean used = false;
 
     //사용된 주문 코드

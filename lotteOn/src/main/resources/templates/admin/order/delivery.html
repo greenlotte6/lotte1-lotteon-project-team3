@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/style/admin/footer.css">
     <link rel="stylesheet" href="/style/admin/adminaside.css">
     <!--JavaScript-->
-    <script src="/script/orderList.js"></script>
     <script src="/script/aside.js"></script>
 </head>
 <body>
@@ -27,13 +26,13 @@
             </div>
             <div class="shopArea">
                 <div class="searchArea">
-                    <select>
+                    <select name="searchType">
                         <option>선택</option>
-                        <option>송장번호</option>
-                        <option>주문번호</option>
-                        <option>수령인</option>
+                        <option value="waybill">송장번호</option>
+                        <option value="orderCode">주문번호</option>
+                        <option value="receiver">수령인</option>
                     </select>
-                    <input type="text" placeholder="검색어 입력">
+                    <input type="text" name="keyword" placeholder="검색어 입력">
                     <button type="submit">검색</button>
                 </div>
                 <table>
@@ -49,22 +48,19 @@
                         <th>배송상태</th>
                         <th>접수일</th>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr th:each="delivery, i : ${delivery}">
+                        <td th:text="${delivery.waybill}">
                             <button type="submit" class="orderinfo">15121451241</button>
                         </td>
-                        <td>로젠택배</td>
-                        <td>10101010101</td>
-                        <td>정상수</td>
-                        <td>도리토스</td>
-                        <td>20</td>
-                        <td>200,200</td>
-                        <td>200</td>
-                        <td>배송준비</td>
-                        <td>
-                            2025-04-16<br>
-                            16:09:12
-                        </td>
+                        <td th:text="${delivery.post}">로젠택배</td>
+                        <td th:text="${delivery.orderCode}">10101010101</td>
+                        <td th:text="${delivery.receiver}">정상수</td>
+                        <td th:text="${delivery.productName}">도리토스</td>
+                        <td th:text="${delivery.quantity}">20</td>
+                        <td th:text="${delivery.actualMoney}">200,200</td>
+                        <td th:text="${delivery.fee}">200</td>
+                        <td th:text="${delivery.confirm}">배송준비</td>
+                        <td th:text="${delivery.regDate}"></td>
                     </tr>
                 </table>
                 <div class="btnarea">

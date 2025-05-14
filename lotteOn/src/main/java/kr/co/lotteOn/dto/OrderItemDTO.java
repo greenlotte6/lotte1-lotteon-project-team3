@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +25,13 @@ public class OrderItemDTO {
     private int total;
     private Long id;
     private String orderCode;
+    private List<OrderItemDTO> items;
+    
+    //추가필드
+    private String productName;
+    private int point;
+    private String imageList;
+    private String companyName;
 
     public static OrderItem toEntity(Order order, Product product, OrderItemDTO dto) {
         return OrderItem.builder()
