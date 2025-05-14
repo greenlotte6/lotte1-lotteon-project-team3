@@ -3,6 +3,8 @@ package kr.co.lotteOn.service;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteOn.dto.delivery.DeliveryDTO;
+import kr.co.lotteOn.dto.delivery.DeliveryPageRequestDTO;
+import kr.co.lotteOn.dto.delivery.DeliveryPageResponseDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
 import kr.co.lotteOn.dto.order.OrderPageResponseDTO;
@@ -118,71 +120,52 @@ public class AdminOrderService {
 
 
     //관리자 주문관리 - 배송현황
-    public OrderPageResponseDTO DeliveryList(OrderPageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("orderCode");
-        Page<Tuple> orders = orderRepository.findAllByStatus(pageRequestDTO, pageable);
+    public DeliveryPageResponseDTO DeliveryList(DeliveryPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("deliveryNo");
+        Page<Tuple> pageDelivery = deliveryRepository.findAll(pageRequestDTO, pageable);
 
-        Map<String, OrderDTO> orderMap = new LinkedHashMap<>(); // 순서 보존
+        Map<String, DeliveryDTO> deliveryMap = new LinkedHashMap<>();
 
-        List<OrderDTO> orderDTOList = orders
-                .getContent()
-                .stream()
-                .map(tuple -> {
-                    Order order = tuple.get(0, Order.class);
-                    Member member = tuple.get(1, Member.class);
-                    OrderItem orderItem = tuple.get(2, OrderItem.class);
-                    Product product = tuple.get(3, Product.class);
-                    Delivery delivery = tuple.get(4, Delivery.class);
+        for (Tuple tuple : pageDelivery.getContent()) {
+            Delivery delivery = tuple.get(0, Delivery.class);
+            Order order = tuple.get(1, Order.class);
+            OrderItem orderItem = tuple.get(2, OrderItem.class);
+            Product product = tuple.get(3, Product.class);
+            Member member = tuple.get(4, Member.class);
 
-                    String memberId = member.getId();
-                    String memberName = member.getName();
+            String orderCode = delivery.getOrderCode();
 
-                            String orderCode = order.getOrderCode();
+            if (deliveryMap.containsKey(orderCode)) {
+                DeliveryDTO existing = deliveryMap.get(orderCode);
 
-                            if (orderMap.containsKey(orderCode)) {
-                                // 기존 DTO에 누적
-                                OrderDTO existing = orderMap.get(orderCode);
+                int prevQty = existing.getQuantity();
+                existing.setQuantity(prevQty + orderItem.getQuantity());
 
-                                // 수량 누적
-                                int prevQty = existing.getQuantity();
-                                existing.setQuantity(prevQty + orderItem.getQuantity());
+                int prevTotal = existing.getTotalPrice();
+                int added = product.getPrice() * orderItem.getQuantity();
+                existing.setTotalPrice(prevTotal + added);
 
-                                // 가격 누적
-                                int prevTotal = existing.getTotalPrice();
-                                int added = product.getPrice() * orderItem.getQuantity();
-                                existing.setTotalPrice(prevTotal + added);
+                continue;
+            }
 
-                            } else {
-                                // 새 DTO 생성
-                                OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-                                orderDTO.setMemberId(member.getId());
-                                orderDTO.setMemberName(member.getName());
-                                orderDTO.setProductInfo(product, orderItem);  // 상품 1개만 설정
-                                orderDTO.setDeliveryInfo(delivery);
+            DeliveryDTO deliveryDTO = modelMapper.map(delivery, DeliveryDTO.class);
+            deliveryDTO.setMemberId(member.getId());
+            deliveryDTO.setMemberName(member.getName());
+            deliveryDTO.setMember(member);
 
-                                // 수량, 총가격 초기 설정
-                                orderDTO.setQuantity(orderItem.getQuantity());
-                                orderDTO.setTotalPrice(product.getPrice() * orderItem.getQuantity());
+            deliveryDTO.setProductInfo(product, orderItem);
+            deliveryDTO.setOrderInfo(order);
 
-                                orderMap.put(orderCode, orderDTO);
-                            }
+            deliveryMap.put(orderCode, deliveryDTO);
 
-                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-                    orderDTO.setMemberId(memberId);
-                    orderDTO.setMemberName(memberName);
+        }
 
-                    // ✅ 한 줄로 설정
-                    orderDTO.setProductInfo(product, orderItem);
-                    orderDTO.setDeliveryInfo(delivery);
+        List<DeliveryDTO> deliveryDTOList = new ArrayList<>(deliveryMap.values());
+        int total = (int) pageDelivery.getTotalElements();
 
-                    return orderDTO;
-                }).toList();
-
-        int total = (int) orders.getTotalElements();
-
-        return OrderPageResponseDTO.builder()
+        return DeliveryPageResponseDTO.builder()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(orderDTOList)
+                .dtoList(deliveryDTOList)
                 .total(total)
                 .build();
     }

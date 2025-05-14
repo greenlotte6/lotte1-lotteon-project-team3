@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -190,48 +191,36 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(
-                qOrder.confirm.eq("배송준비중")
-                        .or(
-                                qOrder.refundStatus.in(
-                                        "교환승인 완료",
-                                        "반품승인 완료",
-                                        "교환상품 회수중",
-                                        "반품상품 회수중",
-                                        "반품처리 완료",
-                                        "교환처리 완료"
-                                )
-                        )
+                qOrder.confirm.in(
+                        "반품신청 접수",
+                        "교환신청 접수",
+                        "반품상품 회수중",
+                        "교환상품 회수중",
+                        "반품처리 완료",
+                        "교환처리 완료",
+                        "배송준비중"
+                )
         );
 
         // 검색 조건
         if (searchType != null && !searchType.isBlank()
                 && keyword != null && !keyword.isBlank()) {
             BooleanExpression expression = switch (searchType) {
-                case "orderCode" -> qDelivery.orderCode.contains(keyword);
+                case "orderCode" -> qOrder.orderCode.contains(keyword);
                 case "waybill"  -> qDelivery.waybill.contains(keyword);
                 case "receiver"      -> qDelivery.receiver.contains(keyword);
-                default -> null;
-            };
-            if (expression != null) builder.and(expression);
-        }
-
-        // 검색 조건
-        if (searchType != null && !searchType.isBlank()
-                && keyword != null && !keyword.isBlank()) {
-            BooleanExpression expression = switch (searchType) {
-                case "waybill" -> qDelivery.waybill.contains(keyword);
-                case "orderCode"  -> qDelivery.orderCode.contains(keyword);
-                case "name"      -> qOrder.member.name.contains(keyword);
-                case "payment"   -> qOrder.payment.contains(keyword);
+                case "post"      -> qDelivery.post.contains(keyword);
                 default -> null;
             };
             if (expression != null) builder.and(expression);
         }
 
         // ✅ 1단계: 페이징된 orderCode 목록 조회
-        List<String> orderCodeList = queryFactory
-                .select(qOrder.orderCode)
+        List<Tuple> orderCodeList = queryFactory
+                .select(qOrder.orderCode, qDelivery)
                 .from(qOrder)
+                .join(qDelivery)
+                .on(qOrder.orderCode.eq(qDelivery.orderCode))
                 .where(builder)
                 .orderBy(qOrder.orderDate.desc())
                 .offset(pageable.getOffset())
@@ -254,7 +243,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .on(qOrderItem.product.productCode.eq(qProduct.productCode))
                 .join(qDelivery)
                 .on(qDelivery.orderCode.eq(qOrder.orderCode))
-                .where(qOrder.orderCode.in(orderCodeList))
+                .where(qOrder.orderCode.in(orderCodeList.stream()
+                        .map(tuple -> tuple.get(qOrder.orderCode))
+                        .collect(Collectors.toList()))) // orderCodeList에서 orderCode만 추출하여 필터링
                 .orderBy(qOrder.orderDate.desc())
                 .fetch();
 

@@ -23,6 +23,23 @@ img {
     height: 25px;
 }
 /* --------------------- main --------------------- */
+
+a.current {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    background-color: #dfdfdf;
+}
+
+a.num {
+    border: 1px solid #dfdfdf;
+    width: 15px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+}
 .adminMain {
     width: 840px;
     height: auto;
