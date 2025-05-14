@@ -62,15 +62,16 @@ public class AdminOrderController {
 
     //주문관리 - 주문현황
     @GetMapping("/order/delivery")
-    public String orderDelivery(Model model, OrderPageRequestDTO pageRequestDTO){
-        OrderPageResponseDTO pageResponseDTO = adminOrderService.DeliveryList(pageRequestDTO);
+    public String orderDelivery(Model model, DeliveryPageRequestDTO pageRequestDTO){
+        DeliveryPageResponseDTO pageResponseDTO = adminOrderService.DeliveryList(pageRequestDTO);
 
-        for(OrderDTO orderDTO : pageResponseDTO.getDtoList()){
-            orderDTO.setPayment(orderDTO.getPaymentName());
+        for(DeliveryDTO deliveryDTO : pageResponseDTO.getDtoList()){
+            deliveryDTO.setPayment(deliveryDTO.getPaymentName());
         }
 
         model.addAttribute("page", pageResponseDTO);
         model.addAttribute("delivery", pageResponseDTO.getDtoList());
+
 
         return "/admin/order/delivery";
     }

@@ -25,16 +25,19 @@
                 <div><span>HOME > 주문관리 > <p>배송현황</p></span></div>
             </div>
             <div class="shopArea">
-                <div class="searchArea">
-                    <select name="searchType">
-                        <option>선택</option>
-                        <option value="waybill">송장번호</option>
-                        <option value="orderCode">주문번호</option>
-                        <option value="receiver">수령인</option>
-                    </select>
-                    <input type="text" name="keyword" placeholder="검색어 입력">
-                    <button type="submit">검색</button>
-                </div>
+                <form>
+                    <div class="searchArea">
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="waybill">송장번호</option>
+                            <option value="orderCode">주문번호</option>
+                            <option value="receiver">수령인</option>
+                            <option value="post">택배사</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <button type="submit">검색</button>
+                    </div>
+                </form>
                 <table>
                     <tr>
                         <th>송장번호</th>
@@ -49,13 +52,17 @@
                         <th>접수일</th>
                     </tr>
                     <tr th:each="delivery, i : ${delivery}">
-                        <td th:text="${delivery.waybill}">
-                            <button type="submit" class="orderinfo">15121451241</button>
+                        <td>
+                            <button button type="submit"
+                                    class="orderinfo"
+                                    th:onclick="'orderinfoPopup(' + ${i.index} + ')'"
+                                    th:text="${delivery.waybill}">
+                            </button>
                         </td>
                         <td th:text="${delivery.post}">로젠택배</td>
                         <td th:text="${delivery.orderCode}">10101010101</td>
                         <td th:text="${delivery.receiver}">정상수</td>
-                        <td th:text="${delivery.productName}">도리토스</td>
+                        <td th:text="${delivery.displayProductName}">도리토스</td>
                         <td th:text="${delivery.quantity}">20</td>
                         <td th:text="${delivery.actualMoney}">200,200</td>
                         <td th:text="${delivery.fee}">200</td>
@@ -65,18 +72,38 @@
                 </table>
                 <div class="btnarea">
                     <div class="pageBtn">
-                        <a href=""><img src="/images/back-double.png"></a>
-                        <a href=""><img src="/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="/images/right-single.png" class="single"></a>
-                        <a href=""><img src="/images/right-double.png"></a>
+                        <th:block th:if="${page?.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.start-2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.start-1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/admin/order/delivery(pg=${num}, searchType=${page.searchType}, keyword=${page.keyword})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
+
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.end+1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.end+2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
+                        </th:block>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="bannerModal" class="modal">
+        <div  th:each="delivery, i : ${delivery}" th:id="'orderinfoPopup-' + ${i.index}" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div class="modaltop">
@@ -166,6 +193,19 @@
             </div>
         </div>
     </main>
+    <script th:inline="javascript">
+        //상품정보열기
+        function orderinfoPopup(index) {
+            document.getElementById("orderinfoPopup-" + index).style.display = "block";
+        }
+
+        // 닫기
+        document.querySelectorAll('.modal .close').forEach(btn => {
+            btn.addEventListener('click', function () {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+    </script>
     <th:block th:replace="/admin/_adminFooter.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
 </body>
