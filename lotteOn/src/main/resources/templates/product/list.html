@@ -176,12 +176,40 @@
                         </div>
                         <div class="sortList">
                             <ul>
-                                <li><a href="#">판매량순</a></li>
-                                <li><a href="#">낮은 가격순</a></li>
-                                <li><a href="#">높은 가격순</a></li>
+                                <!-- 판매량순 -->
+                                <li th:if="${categoryId != null}">
+                                    <a th:href="@{/product/list(sort='sale', categoryId=${categoryId})}">판매량순</a>
+                                </li>
+                                <li th:if="${categoryId == null}">
+                                    <a th:href="@{/product/list(sort='sale')}">판매량순</a>
+                                </li>
+
+                                <!-- 낮은 가격순 -->
+                                <li th:if="${categoryId != null}">
+                                    <a th:href="@{/product/list(sort='low', categoryId=${categoryId})}">낮은 가격순</a>
+                                </li>
+                                <li th:if="${categoryId == null}">
+                                    <a th:href="@{/product/list(sort='low')}">낮은 가격순</a>
+                                </li>
+
+                                <!-- 높은 가격순 -->
+                                <li th:if="${categoryId != null}">
+                                    <a th:href="@{/product/list(sort='high', categoryId=${categoryId})}">높은 가격순</a>
+                                </li>
+                                <li th:if="${categoryId == null}">
+                                    <a th:href="@{/product/list(sort='high')}">높은 가격순</a>
+                                </li>
+
+                                <!-- 등록순 -->
+                                <li th:if="${categoryId != null}">
+                                    <a th:href="@{/product/list(sort='date', categoryId=${categoryId})}">등록순</a>
+                                </li>
+                                <li th:if="${categoryId == null}">
+                                    <a th:href="@{/product/list(sort='date')}">등록순</a>
+                                </li>
+
                                 <li><a href="#">평점순</a></li>
                                 <li><a href="#">후기순</a></li>
-                                <li><a href="#">등록순</a></li>
                             </ul>
                         </div>
                     </div>

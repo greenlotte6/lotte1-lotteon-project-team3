@@ -10,6 +10,7 @@ import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,17 +95,47 @@ public class ProductController {
 
     //상품 - 목록
     @GetMapping("/list")
-    public String productList(@RequestParam(name = "categoryId", required = false) Long categoryId, Model model) {
+    public String productList(@RequestParam(name = "categoryId", required = false) Long categoryId,
+                              @RequestParam(name = "filter", required = false) String filter,
+                              @RequestParam(name = "sort", required = false, defaultValue = "date") String sort,
+                              @RequestParam(name = "event", required = false) String event,
+                              Model model) {
         List<ProductDTO> products;
-        if (categoryId != null) {
-            products = productService.getProductsByCategoryId(categoryId);
+        List<ProductDTO> bestProducts;
+
+        if ("special".equals(event)) {
+            products = productService.getDiscountedProducts();
+            bestProducts = productService.getBest10DiscountedProducts();
+        }
+        else if ("fashion".equals(filter)) {
+            List<Long> categoryIds = List.of(25346451L, 25346452L,25346453L,25346456L,25346457L,25346458L);
+            products = productService.getSortedProductsByCategories(categoryIds, sort);
+            bestProducts = productService.getBest10ProductsByCategories(categoryIds);
+        }
+        else if ("food".equals(filter)) {
+            List<Long> categoryIds = List.of(25346481L, 25346482L,25346483L,25346484L);
+            products = productService.getSortedProductsByCategories(categoryIds, sort);
+            bestProducts = productService.getBest10ProductsByCategories(categoryIds);
+        }
+        else if ("life".equals(filter)) {
+            List<Long> categoryIds = List.of(25346779L, 25346780L);
+            products = productService.getSortedProductsByCategories(categoryIds, sort);
+            bestProducts = productService.getBest10ProductsByCategories(categoryIds);
+        }
+        else if (categoryId != null) {
+            products = productService.getSortedProductsByCategory(categoryId, sort);
+            bestProducts = productService.getBest10ProductsByCategoryId(categoryId);
         }else {
-            products = productService.getAllProducts();
+            products = productService.getSortedAllProducts(sort);
+            bestProducts = productService.getBest10Products();
         }
 
-        List<ProductDTO> bestProducts = productService.getBest10Products();
         model.addAttribute("products", products);
         model.addAttribute("bestProducts", bestProducts);
+        model.addAttribute("sort", sort);
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("event", event);
+        model.addAttribute("filter", filter);
         return "/product/list";
     }
 
