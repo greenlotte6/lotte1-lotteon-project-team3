@@ -55,70 +55,7 @@
                     <th:block th:insert="~{/myPage/_side.html}"/>
                 </aside>
                 <section>
-                    <div class="simpleInfoWrapper">
-                        <div class="simpleInfo">
-                            <div>
-                                <p>쇼핑하기 좋은 날이에요!</p>
-                                <a th:href="@{/myPage/my_info}" class="nameBox">
-                                    <p class="bold" th:text="${loginUser.name}"></p>
-                                    <p>님</p>
-                                </a>
-                                <div class="ratingBox">
-                                    <img src="/images/icon_mylotte.png" alt="등급">
-                                    <p class="bold">롯데ON</p>
-                                    <p class="bold" th:text="${loginUser.rating}"></p>
-                                    <p>등급이네요!</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="myPoint">
-                                    <a th:href="@{/myPage/my_order}">
-                                        <p>주문 수</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalOrder}"></p>
-                                            <p>건</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myPoint">
-                                    <a th:href="@{/myPage/my_point}">
-                                        <p>POINT</p>
-                                        <div>
-                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
-                                            <p>P</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myCoupon">
-                                    <a th:href="@{/myPage/my_coupon}">
-                                        <p>나의 쿠폰</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalCoupon}"></p>
-                                            <p>개</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myReview">
-                                    <a th:href="@{/myPage/my_qna}">
-                                        <p>문의 수</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalQnaCount}"></p>
-                                            <p>개</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="simpleInfoFooter">
-                            <div class="swiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
-                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
-                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <th:block th:insert="~{/myPage/_myInfo.html}"/>
                     <div class="recentOrder var">
                         <div class="varTitle">
                             <h3>최근 주문 내역</h3>
