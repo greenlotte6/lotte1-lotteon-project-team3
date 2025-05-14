@@ -14,6 +14,7 @@
     <!--JavaScript-->
     <script src="/script/banner.js"></script>
     <script src="/script/aside.js"></script>
+    <script src="/script/deleteBanner.js"></script>
 </head>
 <body>
 <div id="container">
@@ -51,8 +52,8 @@
                         <th>종료시간</th>
                         <th>관리</th>
                     </tr>
-                    <tr th:each="banner, iterStat : ${banners}" th:if="${banner.location == 'SLIDER'}">
-                        <td><input type="checkbox" name="selectedIds" th:value="${banner.id}"></td>
+                    <tr th:each="banner, iterStat : ${banners}" th:if="${banner.location == 'SLIDER'}" th:data-id="${banner.id}">
+                        <td><input type="checkbox" class="delete-check" th:value="${banner.id}"></td>
                         <td th:text="${iterStat.count}">1</td>
                         <td><img th:src="@{${banner.imagePath}}" width="100"></td>
                         <td>
@@ -77,7 +78,7 @@
                     </tr>
                 </table>
                 <div class="btnarea">
-                    <button class="delbutton">선택삭제</button>
+                    <button id="deleteBtn" class="delbutton">선택삭제</button>
                     <button class="regbutton">배너등록</button>
                 </div>
             </div>

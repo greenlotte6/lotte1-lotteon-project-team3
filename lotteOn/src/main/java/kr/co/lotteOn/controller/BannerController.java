@@ -56,4 +56,13 @@ public class BannerController {
         return "redirect:/admin/config/banner";
     }
 
+    @PostMapping("/banners/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteBanners(@RequestBody List<Integer> bannerIds) {
+        if (bannerIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("삭제할 항목이 없습니다.");
+        }
+        bannerService.deleteByIdIn(bannerIds);
+        return ResponseEntity.ok().build();
+    }
 }
