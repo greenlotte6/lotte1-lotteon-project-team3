@@ -53,15 +53,16 @@
                         <td th:text="${iterStat.index + 1}"></td>
                         <td th:text="${sale.companyName}"></td>
                         <td th:text="${sale.businessNo}"></td>
-                        <td>0</td>
-                        <td>90</td>
-                        <td>55</td>
-                        <td>52</td>
-                        <td>50</td>
-                        <td>12,870,600</td>
-                        <td>10,870,600</td>
+                        <td th:text="${sale.orderCount+'건'}"></td>
+                        <td th:text="${sale.payDone+'건'}"></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td th:text="${sale.orderTotal == 0 ? '0원' : #numbers.formatInteger(sale.orderTotal, 3, 'COMMA')+'원'}"></td>
+                        <td th:text="${sale.salesTotal == 0 ? '0원' : #numbers.formatInteger(sale.salesTotal, 3, 'COMMA')+'원'}"></td>
                     </tr>
                 </table>
+
                 <div class="btnarea">
                     <div class="pageBtn">
                         <a href=""><img src="/images/back-double.png"></a>
@@ -73,6 +74,11 @@
                         <a href=""><img src="/images/right-double.png"></a>
                     </div>
                 </div>
+
+
+
+
+
             </div>
         </div>
         <div id="bannerModal" class="modal">

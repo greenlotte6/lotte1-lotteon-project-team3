@@ -27,5 +27,13 @@ public interface OrderRepository extends JpaRepository<Order, String> ,
     int countByMember_Id(String memberId);
 
     Order findByOrderCode(String orderCode);
+
+    //상점 매출현황 추가
+    @Query("SELECT COUNT(o) FROM Order o " +
+            "JOIN o.items i " +
+            "JOIN i.product p " +
+            "WHERE o.orderStatus = '결제완료' AND p.companyName = :companyName")
+    int countCompletedOrdersByCompanyName(@Param("companyName") String companyName);
 }
+
 
