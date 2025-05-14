@@ -19,7 +19,9 @@ public class indexController {
     @GetMapping("/")
     public String index(Model model) {
         List<ProductDTO> popularProducts = productService.getPopularProducts();
+        List<ProductDTO> specialProducts = productService.getDiscountedProducts();
         model.addAttribute("popularProducts", popularProducts);
+        model.addAttribute("specialProducts", specialProducts);
         return "/index";
     }
 }

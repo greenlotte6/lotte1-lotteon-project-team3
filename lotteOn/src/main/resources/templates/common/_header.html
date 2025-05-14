@@ -41,12 +41,12 @@
                     </div>
                 </div>
                 <div class="various">
-                    <a th:href="@{/product/list}">신상품</a>
-                    <a th:href="@{/product/list}">베스트</a>
-                    <a th:href="@{/product/list}">패션</a>
-                    <a th:href="@{/product/list}">뷰티</a>
-                    <a th:href="@{/product/list}">라이프</a>
-                    <a th:href="@{/product/list}">특가/혜택</a>
+                    <a th:href="@{/product/list(sort='date')}">신상품</a>
+                    <a th:href="@{/product/list(sort='sale')}">베스트</a>
+                    <a th:href="@{/product/list(filter='fashion')}">패션</a>
+                    <a th:href="@{/product/list(filter='food')}">식품</a>
+                    <a th:href="@{/product/list(filter='life')}">라이프</a>
+                    <a th:href="@{/product/list(event='special')}">특가/혜택</a>
                 </div>
                 <a href="#" class="deliv">
                     <p>주문배송</p>

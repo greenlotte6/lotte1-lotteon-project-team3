@@ -19,10 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +34,25 @@ public class ProductService {
     private final ModelMapper modelMapper;
     private final PointRepository pointRepository;
     private final OrderItemRepository orderItemRepository;
+
+
+    private Comparator<Product> getComparator(String sort) {
+        if ("low".equals(sort)) {
+            return Comparator.comparing(this::getDiscountedPrice);
+        } else if ("high".equals(sort)) {
+            return Comparator.comparing(this::getDiscountedPrice, Comparator.reverseOrder());
+        } else {
+            return Comparator.comparing(Product::getId).reversed();
+        }
+    }
+
+    private int getDiscountedPrice(Product p) {
+        int price = p.getPrice();
+        int discount = p.getDiscount(); // 퍼센트
+        return price - (price * discount / 100);
+    }
+
+
 
     @Transactional(readOnly = true)
     public List<ProductDTO> getAllProducts() {
@@ -218,9 +234,125 @@ public class ProductService {
         List<String> codes = orderItemRepository.findTopPopularProductCodes(top10);
         if (codes.isEmpty()) return List.of();
 
-        List<Product> products = productRepository.findByProductCodeIn(codes);
+        List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
         Map<String, Product> map = products.stream()
                 .collect(Collectors.toMap(Product::getProductCode, p -> p));
+
+        return codes.stream()
+                .map(map::get)
+                .filter(Objects::nonNull)
+                .map(ProductDTO::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getBest10ProductsByCategoryId(Long categoryId) {
+        Pageable top10 = PageRequest.of(0, 10);
+        List<String> codes = productRepository.findTopPopularProductCodesByCategoryId(categoryId, top10);
+
+        if (codes.isEmpty()) return List.of();
+
+        List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
+        Map<String, Product> map = products.stream()
+                .collect(Collectors.toMap(Product::getProductCode, p -> p));
+
+        return codes.stream()
+                .map(map::get)
+                .filter(Objects::nonNull)
+                .map(ProductDTO::fromEntity)
+                .toList();
+    }
+
+
+    public List<ProductDTO> getSortedAllProducts(String sort) {
+        if ("sale".equals(sort)) {
+            Pageable top = PageRequest.of(0, 100);
+            List<String> codes = orderItemRepository.findTopPopularProductCodes(top);
+            List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
+            Map<String, Product> map = products.stream()
+                    .collect(Collectors.toMap(Product::getProductCode, p -> p));
+            return codes.stream().map(map::get).filter(Objects::nonNull).map(ProductDTO::fromEntity).toList();
+
+        } else if ("low".equals(sort)) {
+            return productRepository.findAllOrderByDiscountedPriceAsc()
+                    .stream().map(ProductDTO::fromEntity).toList();
+
+        } else if ("high".equals(sort)) {
+            return productRepository.findAllOrderByDiscountedPriceDesc()
+                    .stream().map(ProductDTO::fromEntity).toList();
+
+        } else {
+            return productRepository.findAllWithFetchJoinOrderByIdDesc()
+                    .stream().map(ProductDTO::fromEntity).toList();
+        }
+    }
+
+
+    public List<ProductDTO> getSortedProductsByCategory(Long categoryId, String sort) {
+        if ("sale".equals(sort)) {
+            Pageable top = PageRequest.of(0, 100);
+            List<String> codes = productRepository.findTopPopularProductCodesByCategoryId(categoryId, top);
+            List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
+            Map<String, Product> map = products.stream()
+                    .collect(Collectors.toMap(Product::getProductCode, p -> p));
+            return codes.stream().map(map::get).filter(Objects::nonNull).map(ProductDTO::fromEntity).toList();
+        } else if ("low".equals(sort)) {
+            return productRepository.findByCategoryWithDiscountedPriceAsc(categoryId)
+                    .stream().map(ProductDTO::fromEntity).toList();
+        } else if ("high".equals(sort)) {
+            return productRepository.findByCategoryWithDiscountedPriceDesc(categoryId)
+                    .stream().map(ProductDTO::fromEntity).toList();
+        } else {
+            return productRepository.findWithFetchJoinByCategoryIdOrderByIdDesc(categoryId)
+                    .stream().map(ProductDTO::fromEntity).toList();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getDiscountedProducts() {
+        List<Product> products = productRepository.findAllWithFetchJoinWhereDiscountOver20();
+        return products.stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getBest10DiscountedProducts() {
+        Pageable top10 = PageRequest.of(0, 100); // 먼저 판매량 높은 상품 Top100 가져옴
+        List<String> codes = orderItemRepository.findTopPopularProductCodes(top10);
+        if (codes.isEmpty()) return List.of();
+
+        // 상품 + 옵션 + 카테고리 다 fetch join으로 가져옴
+        List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
+
+        // 필터링: 할인율 20% 이상만
+        List<Product> filtered = products.stream()
+                .filter(p -> p.getDiscount() >= 20)
+                .limit(10) // 여기서 상위 10개로 제한
+                .toList();
+
+        return filtered.stream()
+                .map(ProductDTO::fromEntity)
+                .toList();
+    }
+
+    // 다중 카테고리 기준 정렬된 상품
+    public List<ProductDTO> getSortedProductsByCategories(List<Long> categoryIds, String sort) {
+        List<Product> products = productRepository.findAllByCategory_CategoryIdInWithOptions(categoryIds);
+        // 정렬 기준 적용 - 예: discountPrice 기준으로 정렬
+        return products.stream()
+                .sorted(getComparator(sort))
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductDTO> getBest10ProductsByCategories(List<Long> categoryIds) {
+        Pageable top10 = PageRequest.of(0, 10);
+        List<String> codes = orderItemRepository.findTopPopularProductCodesByCategoryIds(categoryIds, top10);
+        if (codes.isEmpty()) return List.of();
+
+        List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
+        Map<String, Product> map = products.stream().collect(Collectors.toMap(Product::getProductCode, p -> p));
 
         return codes.stream()
                 .map(map::get)

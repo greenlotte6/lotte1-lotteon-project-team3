@@ -183,75 +183,27 @@
                 <div class="specialProduct products">
                     <div class="titleWrap">
                         <h2 class="titleLarge">온쇼페 특가에 진심</h2>
-                        <p class="text">먼저 보는자가 특가를 가진다</p>
+                        <p class="text">먼저 보는 자가 특가를 가진다</p>
                     </div>
                     <div class="productItem">
-                        <div class="threeItems">
-                            <a href="#">
-                                <img src="/images/360x203(1).png">
+                        <div class="threeItems" th:each="product : ${specialProducts}">
+                            <a th:href="@{'/product/detail/' + ${product.productCode}}">
+                                <img th:src="@{'/images/' + ${product.imageList}}" alt="상품이미지">
                             </a>
                             <div class="descWrap">
-                                <a href="#" class="text">
-                                    <span class="bold">농협안심한우</span>
-                                    1등급 한우 프리미엄 구이 선물세트 1.2kg
+                                <a th:href="@{'/product/detail/' + ${product.productCode}}" class="text">
+                                    <span class="bold" th:text="${product.companyName}">농협안심한우</span>
+                                    <span th:text="${product.name}">상품명</span>
                                 </a>
                                 <div class="priceInfo">
-                                    <p class="discount">20%</p>
+                                    <p class="discount" th:text="${product.discount + '%'}">20%</p>
                                     <div class="price">
-                                        <p>184,600</p>
+                                        <p th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100, 3, 'COMMA')}"></p>
                                         <span>원</span>
                                     </div>
                                     <div class="totalPrice">
                                         <del>
-                                            <p>147,680</p>
-                                            <span>원</span>
-                                        </del>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="threeItems">
-                            <a href="#">
-                                <img src="/images/360x203(2).png">
-                            </a>
-                            <div class="descWrap">
-                                <a href="#" class="text">
-                                    <span class="bold">농협안심한우</span>
-                                    1등급 한우 프리미엄 구이 선물세트 1.2kg
-                                </a>
-                                <div class="priceInfo">
-                                    <p class="discount">20%</p>
-                                    <div class="price">
-                                        <p>184,600</p>
-                                        <span>원</span>
-                                    </div>
-                                    <div class="totalPrice">
-                                        <del>
-                                            <p>147,680</p>
-                                            <span>원</span>
-                                        </del>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="threeItems">
-                            <a href="#">
-                                <img src="/images/360x203(3).png">
-                            </a>
-                            <div class="descWrap">
-                                <a href="#" class="text">
-                                    <span class="bold">농협안심한우</span>
-                                    1등급 한우 프리미엄 구이 선물세트 1.2kg
-                                </a>
-                                <div class="priceInfo">
-                                    <p class="discount">20%</p>
-                                    <div class="price">
-                                        <p>184,600</p>
-                                        <span>원</span>
-                                    </div>
-                                    <div class="totalPrice">
-                                        <del>
-                                            <p>147,680</p>
+                                            <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
                                             <span>원</span>
                                         </del>
                                     </div>
