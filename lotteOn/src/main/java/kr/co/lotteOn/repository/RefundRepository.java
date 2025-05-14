@@ -16,4 +16,6 @@ public interface RefundRepository extends JpaRepository<Refund, Integer> , Refun
     List<Refund> findTop3ByMember_IdOrderByRegDateDesc(String memberId);
 
     Page<Refund> findAll(Pageable pageable);
+
+    Refund findByOrderCode(String orderCode);
 }

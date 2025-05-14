@@ -549,8 +549,10 @@ public class MyPageService {
 
         if("반품".equals(refundDTO.getChannel())){
             order.setConfirm("반품신청 접수");
+            order.setRefundStatus("반품신청");
         } else if ("교환".equals(refundDTO.getChannel())){
             order.setConfirm("교환신청 접수");
+            order.setRefundStatus("교환신청");
         }
 
         orderRepository.save(order);

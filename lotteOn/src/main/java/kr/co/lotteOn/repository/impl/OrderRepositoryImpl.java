@@ -30,6 +30,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final QProduct qProduct = QProduct.product;
     private final QOrderItem qOrderItem = QOrderItem.orderItem;
     private final QSeller qSeller = QSeller.seller;
+    private final QDelivery qDelivery = QDelivery.delivery;
 
 
     @Override
@@ -129,7 +130,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         String keyword = pageRequestDTO.getKeyword();
 
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(qOrder.orderStatus.eq("결제완료"));
 
         // 검색 조건
         if (searchType != null && !searchType.isBlank()
@@ -139,6 +139,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 case "memberId"  -> qOrder.member.id.contains(keyword);
                 case "name"      -> qOrder.member.name.contains(keyword);
                 case "payment"   -> qOrder.payment.contains(keyword);
+                case "status" -> qOrder.confirm.contains(keyword).or(qOrder.orderStatus.contains(keyword));
                 default -> null;
             };
             if (expression != null) builder.and(expression);
@@ -188,14 +189,38 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         String keyword = pageRequestDTO.getKeyword();
 
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(qOrder.orderStatus.eq("배송준비중"));
+        builder.and(
+                qOrder.confirm.eq("배송준비중")
+                        .or(
+                                qOrder.refundStatus.in(
+                                        "교환승인 완료",
+                                        "반품승인 완료",
+                                        "교환상품 회수중",
+                                        "반품상품 회수중",
+                                        "반품처리 완료",
+                                        "교환처리 완료"
+                                )
+                        )
+        );
 
         // 검색 조건
         if (searchType != null && !searchType.isBlank()
                 && keyword != null && !keyword.isBlank()) {
             BooleanExpression expression = switch (searchType) {
-                case "orderCode" -> qOrder.orderCode.contains(keyword);
-                case "memberId"  -> qOrder.member.id.contains(keyword);
+                case "orderCode" -> qDelivery.orderCode.contains(keyword);
+                case "waybill"  -> qDelivery.waybill.contains(keyword);
+                case "receiver"      -> qDelivery.receiver.contains(keyword);
+                default -> null;
+            };
+            if (expression != null) builder.and(expression);
+        }
+
+        // 검색 조건
+        if (searchType != null && !searchType.isBlank()
+                && keyword != null && !keyword.isBlank()) {
+            BooleanExpression expression = switch (searchType) {
+                case "waybill" -> qDelivery.waybill.contains(keyword);
+                case "orderCode"  -> qDelivery.orderCode.contains(keyword);
                 case "name"      -> qOrder.member.name.contains(keyword);
                 case "payment"   -> qOrder.payment.contains(keyword);
                 default -> null;
@@ -219,12 +244,16 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         // ✅ 2단계: 상세 정보 조회 (Tuple로)
         List<Tuple> tupleList = queryFactory
-                .select(qOrder, qMember, qOrderItem, qProduct, qSeller)
+                .select(qOrder, qMember, qOrderItem, qProduct, qDelivery)
                 .from(qOrder)
-                .join(qMember).on(qOrder.member.id.eq(qMember.id))
-                .join(qOrderItem).on(qOrderItem.order.orderCode.eq(qOrder.orderCode))
-                .join(qProduct).on(qOrderItem.product.productCode.eq(qProduct.productCode))
-                .join(qSeller).on(qProduct.companyName.eq(qSeller.companyName))
+                .join(qMember)
+                .on(qOrder.member.id.eq(qMember.id))
+                .join(qOrderItem)
+                .on(qOrderItem.order.orderCode.eq(qOrder.orderCode))
+                .join(qProduct)
+                .on(qOrderItem.product.productCode.eq(qProduct.productCode))
+                .join(qDelivery)
+                .on(qDelivery.orderCode.eq(qOrder.orderCode))
                 .where(qOrder.orderCode.in(orderCodeList))
                 .orderBy(qOrder.orderDate.desc())
                 .fetch();

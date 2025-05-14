@@ -7,35 +7,14 @@
     <link rel="stylesheet" as="style" crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
     <!--Style-->
-    <link rel="stylesheet" href="/style/admin/order/delivery.css"/>
+    <link rel="stylesheet" href="/style/admin/order/refund.css"/>
     <link rel="stylesheet" href="/style/admin/header.css">
     <link rel="stylesheet" href="/style/admin/footer.css">
     <link rel="stylesheet" href="/style/admin/adminaside.css">
     <!--JavaScript-->
     <script src="/script/aside.js"></script>
     <style>
-        .pageBtn {
-            display: flex;
-            justify-content: center;
-            column-gap: 3px;
-            margin-top: 50px;
-        }
 
-        .pageBtn > a {
-            font-size: 14px;
-            font-weight: 500;
-            padding: 10px 14px;
-            border: 1px solid #ddd;
-        }
-
-        .current {
-            background-color: #f7f7f7;
-            color: #333333;
-        }
-
-        .num {
-            color: #555;
-        }
     </style>
 </head>
 <body>
@@ -86,7 +65,7 @@
 
                                 <form th:action="@{/admin/refund/updateStatus}" method="post">
                                     <input type="hidden" name="refundNo" th:value="${refund.refundNo}">
-                                    <input type="hidden" name="status" value="반품처리 완료">
+                                    <input type="hidden" name="status" value="처리 완료">
                                     <button type="submit">완료</button>
                                 </form>
                             </div>
