@@ -19,14 +19,14 @@ button {
     cursor: pointer;
 }
 img {
-    width: 25px;
-    height: 25px;
+    width: 55px;
+    height: 55px;
 }
 /* --------------------- main --------------------- */
 .adminMain {
-    width: 840px;
+    width: 100%;
     height: auto;
-    padding: 15px 60px 30px 0;
+    margin: 15px 0px 30px 30px;
 }
 .mainTop {
     display: flex;
@@ -123,9 +123,7 @@ table tr td {
 .btnarea .delbutton {
     background-color: #8a8a8a;
 }
-.bannerArea {
-    padding: 20px;
-}
+
 .bannerArea button {
     line-height: 10px;
 }
@@ -187,5 +185,9 @@ table tr td {
     height: 100%;
     padding-left: 10px;
     box-sizing: border-box;
+}
+
+td * {
+    font-size: 13px;
 }
 /* --------------------- main --------------------- */

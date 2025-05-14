@@ -51,17 +51,17 @@
                         <th>종료시간</th>
                         <th>관리</th>
                     </tr>
-                    <tr th:each="banner, iterStat : ${banners}">
+                    <tr th:each="banner, iterStat : ${banners}" th:if="${banner.location == 'MAIN1'}">
                         <td><input type="checkbox" name="selectedIds" th:value="${banner.id}"></td>
                         <td th:text="${iterStat.count}">1</td>
                         <td><img th:src="@{${banner.imagePath}}" width="100"></td>
                         <td>
                             <span th:text="${banner.name}"></span><br>
-                            크기 <span th:text="${banner.size}"></span><br>
-                            배경색 <span th:text="${banner.backgroundColor}"></span><br>
+                            <span th:text="${banner.size}"></span><br>
+                            <span th:text="${banner.backgroundColor}"></span><br>
                             <a th:href="${banner.link}">배너링크</a>
                         </td>
-                        <td th:text="${banner.location}">MAIN1</td>
+                        <td th:text="${banner.location}"></td>
                         <td th:text="${banner.startDate}"></td>
                         <td th:text="${banner.endDate}"></td>
                         <td th:text="${banner.startTime}"></td>

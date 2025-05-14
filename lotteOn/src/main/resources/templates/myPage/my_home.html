@@ -17,6 +17,8 @@
     <!-- Script -->
     <script src="/script/search.js"></script>
     <script src="/script/myPointComma.js"></script>
+    <script src="/script/countRatingStar.js"></script>
+    <script src="/script/starPoint.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
@@ -238,12 +240,12 @@
                                     <th>작성일</th>
                                 </tr>
                                 <tr th:each="review, i : ${recentReview}">
-                                    <td th:text="${review.reviewNo}">1</td>
-                                    <td th:text="${review.productName}">한우 1++ 1kg</td>
-                                    <td th:text="${review.title}">한우 맞나요?</td>
-                                    <td th:text="${review.content}">한우 맞나요? 그짓말 하시는거죠? 호주산이잖아횽!</td>
-                                    <td th:text="${review.rating}">⭐⭐⭐⭐⭐</td>
-                                    <td th:text="${review.regDate}">2025.05.08</td>
+                                    <td th:text="${review.reviewNo}"></td>
+                                    <td th:text="${review.productName}"></td>
+                                    <td th:text="${review.title}"></td>
+                                    <td th:text="${review.content}"></td>
+                                    <td th:text="${review.rating}" class="starPoint"></td>
+                                    <td th:text="${review.regDate}"></td>
                                 </tr>
                             </table>
                         </div>
@@ -529,7 +531,7 @@
                     <form action="/myPage/my_review_write" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="productCode" th:value="${order.productCode}"/>
                         <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
-                        <table>
+                        <table class="review_form">
                             <tr>
                                 <td>상품명</td>
                                 <td>[[${order.productName}]]</td>
@@ -543,8 +545,8 @@
                                         <span class="star" data-value="3">&#9733;</span>
                                         <span class="star" data-value="4">&#9733;</span>
                                         <span class="star" data-value="5">&#9733;</span>
-                                        <input type="hidden" name="rating" id="rating"/>
                                     </div>
+                                    <input type="hidden" name="rating" id="rating"/>
                                 </td>
                             </tr>
                             <tr>
@@ -1065,58 +1067,6 @@
         document.getElementById("exchange-popup-" + index).style.display = "none";
         document.body.style.overflow = 'auto';
     }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const stars = document.querySelectorAll(".star");
-        const ratingInput = document.getElementById("rating");
-
-        stars.forEach(star => {
-            star.addEventListener("click", function () {
-                const value = this.getAttribute("data-value");
-                const reviewForm = this.closest(".review_form"); // 이 별이 속한 리뷰 영역
-                const ratingInput = reviewForm.querySelector("input[name='rating']"); // 해당 폼의 rating input
-
-                ratingInput.value = value;
-
-                const allStars = reviewForm.querySelectorAll(".star");
-                allStars.forEach(s => {
-                    if (s.getAttribute("data-value") <= value) {
-                        s.classList.add("selected");
-                    } else {
-                        s.classList.remove("selected");
-                    }
-                });
-            });
-
-            star.addEventListener("mouseover", function () {
-                const value = this.getAttribute("data-value");
-                const reviewForm = this.closest(".review_form");
-                const allStars = reviewForm.querySelectorAll(".star");
-
-                allStars.forEach(s => {
-                    if (s.getAttribute("data-value") <= value) {
-                        s.classList.add("selected");
-                    } else {
-                        s.classList.remove("selected");
-                    }
-                });
-            });
-
-            star.addEventListener("mouseout", function () {
-                const reviewForm = this.closest(".review_form");
-                const ratingInput = reviewForm.querySelector("input[name='rating']");
-                const value = ratingInput.value;
-                const allStars = reviewForm.querySelectorAll(".star");
-
-                allStars.forEach(s => {
-                    s.classList.remove("selected");
-                    if (s.getAttribute("data-value") <= value) {
-                        s.classList.add("selected");
-                    }
-                });
-            });
-        });
-    });
 </script>
 </div>
 </body>

@@ -2,7 +2,7 @@
 <header>
     <div class="headerContainer">
         <div class="headerUtil">
-            <a sec:authorize="hasRole('ROLE_ADMIN')" href="admin/admin" class="themeColor">관리자</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/admin" class="themeColor">관리자</a>
             <a sec:authorize="isAnonymous()" href="/member/register" class="themeColor">회원가입</a>
             <div sec:authorize="isAnonymous()" class="v-l"></div>
             <div sec:authorize="hasRole('ROLE_ADMIN')" class="v-l"></div>
