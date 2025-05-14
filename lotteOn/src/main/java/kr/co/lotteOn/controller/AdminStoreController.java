@@ -175,6 +175,8 @@ public class AdminStoreController {
 
 
 
+
+
     //상점관리 - 매출관리
     @GetMapping("/shop/sales")
     public String shopSales(Model model){
@@ -184,6 +186,7 @@ public class AdminStoreController {
         model.addAttribute("salesList", salesList);
         return "/admin/shop/sales";
     }
+
 
 
 

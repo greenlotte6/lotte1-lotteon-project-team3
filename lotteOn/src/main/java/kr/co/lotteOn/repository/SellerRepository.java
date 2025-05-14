@@ -50,6 +50,6 @@ public interface SellerRepository extends JpaRepository<Seller, String> {
 
     Seller findByCompanyName(String companyName);
 
-    @Query("SELECT new kr.co.lotteOn.dto.SalesDTO(0, s.companyName, s.businessNo) FROM Seller s")
+    @Query("SELECT new kr.co.lotteOn.dto.SalesDTO(s.companyName, s.businessNo) FROM Seller s")
     List<SalesDTO> findAllSellerSales();
 }

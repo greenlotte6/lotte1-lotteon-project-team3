@@ -19,4 +19,23 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
     @Query("SELECT oi.product.productCode FROM OrderItem oi GROUP BY oi.product.productCode ORDER BY COUNT(oi.product.productCode) DESC")
     List<String> findTopPopularProductCodes(Pageable pageable);
 
+    //상점 매출현황 추가
+    @Query("""
+        SELECT SUM (oi.quantity)
+        FROM OrderItem oi
+        JOIN oi.product p
+        WHERE p.companyName= :companyName
+""")
+    Integer sumQuantityByCompanyName(@Param("companyName") String companyName);
+
+
+    @Query("SELECT SUM(oi.price * oi.quantity) FROM OrderItem oi " +
+            "JOIN oi.product p " +
+            "WHERE p.companyName = :companyName")
+    Integer sumOrderPriceByCompanyName(@Param("companyName") String companyName);
+
+    @Query("SELECT SUM(i.total) FROM OrderItem i " +
+            "JOIN i.product p " +
+            "WHERE p.companyName = :companyName")
+    Integer sumsalesTotalByCompanyName(@Param("companyName") String companyName);
 }
