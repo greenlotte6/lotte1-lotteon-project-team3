@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,4 +21,6 @@ public interface QnaRepository extends JpaRepository<Qna, Integer> , QnaReposito
     public List<Qna> findTop3ByWriterOrderByRegDateDesc(Member writer);
 
     public int countByWriter_Id(String writerId);
+
+    long countByRegDateBetween(LocalDateTime start, LocalDateTime end);
 }

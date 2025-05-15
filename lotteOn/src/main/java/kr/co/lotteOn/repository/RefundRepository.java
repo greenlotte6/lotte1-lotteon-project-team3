@@ -18,4 +18,6 @@ public interface RefundRepository extends JpaRepository<Refund, Integer> , Refun
     Page<Refund> findAll(Pageable pageable);
 
     Refund findByOrderCode(String orderCode);
+
+    long countByChannel(String channel);
 }

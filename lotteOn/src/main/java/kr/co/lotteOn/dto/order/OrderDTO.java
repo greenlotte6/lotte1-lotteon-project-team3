@@ -27,7 +27,7 @@ public class OrderDTO {
     private String delivery;
     private String discount;
     private String fee;
-    private String actualMoney;
+    private Long actualMoney;
     private String confirm;
     private String receiver;
 

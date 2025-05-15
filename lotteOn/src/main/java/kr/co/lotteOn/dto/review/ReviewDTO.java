@@ -60,4 +60,11 @@ public class ReviewDTO {
         }
         return null;
     }
+    public int getRatingNumber() {
+        try {
+            return Integer.parseInt(rating);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
 }

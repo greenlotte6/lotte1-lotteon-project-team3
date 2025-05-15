@@ -48,11 +48,11 @@
                         <th>반품요청</th>
                     </tr>
                     <tr>
-                        <td>101</td>
-                        <td>124</td>
-                        <td>14</td>
-                        <td>7</td>
-                        <td>24</td>
+                        <td th:text="${orderStats['결제완료']}"></td>
+                        <td th:text="${orderStats['배송중']}"></td>
+                        <td th:text="${orderStats['구매확정']}"></td>
+                        <td th:text="${orderStats['교환요청']}"></td>
+                        <td th:text="${orderStats['반품요청']}"></td>
                     </tr>
                 </table>
                 <table class="sectable">
@@ -64,35 +64,35 @@
                         <th colspan="2">문의 게시물</th>
                     </tr>
                     <tr>
-                        <td colspan="2">131</td>
-                        <td colspan="2">3,700,000</td>
-                        <td colspan="2">232</td>
-                        <td colspan="2">2,500</td>
-                        <td colspan="2">25</td>
+                        <td colspan="2" th:text="${orderStats['주문건수']}"></td>
+                        <td colspan="2" th:text="${#numbers.formatInteger(orderStats['주문금액'], 1, 'COMMA')}"></td>
+                        <td colspan="2" th:text="${orderStats['회원가입']}"></td>
+                        <td colspan="2">-</td> <!-- 방문자 수 미구현 -->
+                        <td colspan="2" th:text="${orderStats['문의게시물']}"></td>
                     </tr>
                     <tr>
                         <td>오늘</td>
-                        <td>60</td>
+                        <td th:text="${dailyStats['orderCountToday']}">60</td>
                         <td>오늘</td>
-                        <td>1,200,000</td>
+                        <td th:text="${#numbers.formatInteger(dailyStats['orderMoneyToday'], 1, 'COMMA')}">1,200,000</td>
                         <td>오늘</td>
-                        <td>102</td>
+                        <td th:text="${dailyStats['memberToday']}">102</td>
                         <td>어제</td>
                         <td>1,200</td>
-                        <td>어제</td>
-                        <td>12</td>
+                        <td>오늘</td>
+                        <td th:text="${dailyStats['qnaToday']}">13</td>
                     </tr>
                     <tr>
                         <td>어제</td>
-                        <td>71</td>
+                        <td th:text="${dailyStats['orderCountYesterday']}">71</td>
                         <td>어제</td>
-                        <td>2,500,000</td>
+                        <td th:text="${#numbers.formatInteger(dailyStats['orderMoneyYesterday'], 1, 'COMMA')}">2,500,000</td>
                         <td>어제</td>
-                        <td>130</td>
+                        <td th:text="${dailyStats['memberYesterday']}">130</td>
                         <td>오늘</td>
                         <td>1,300</td>
-                        <td>오늘</td>
-                        <td>13</td>
+                        <td>어제</td>
+                        <td th:text="${dailyStats['qnaYesterday']}">12</td>
                     </tr>
                 </table>
             </div>

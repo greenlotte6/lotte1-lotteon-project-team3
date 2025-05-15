@@ -5,10 +5,12 @@ import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
+import kr.co.lotteOn.entity.Order;
 import kr.co.lotteOn.repository.BannerRepository;
 import kr.co.lotteOn.repository.ConfigRepository;
 import kr.co.lotteOn.service.AdminCSService;
 import kr.co.lotteOn.service.AdminLotteService;
+import kr.co.lotteOn.service.OrderService;
 import kr.co.lotteOn.service.TermsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -30,10 +33,17 @@ public class AdminLotteController {
     private final AdminLotteService adminLotteService;
     private final ConfigRepository configRepository;
     private final BannerRepository bannerRepository;
+    private final OrderService orderService;
 
     //관리자 - 메인
     @GetMapping("/admin")
     public String admin(Model model){
+
+        Map<String, Long> orderStats = orderService.getOrderStatusSummary();
+        Map<String, Long> dailyStats = orderService.getDailyStats();
+        model.addAttribute("orderStats", orderStats);
+        model.addAttribute("dailyStats", dailyStats);
+
         List<NoticeDTO> notices = adminLotteService.findAllNoticeByLimit5();
         List<QnaDTO> qnas = adminLotteService.findAllQnaByLimit5();
 

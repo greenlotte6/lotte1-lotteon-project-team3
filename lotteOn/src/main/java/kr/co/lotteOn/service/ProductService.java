@@ -361,4 +361,11 @@ public class ProductService {
                 .toList();
     }
 
+
+    public String getProductNameByCode(String productCode) {
+        return productRepository.findByProductCode(productCode)
+                .map(Product::getName)
+                .orElse("상품명 없음");
+    }
+
 }

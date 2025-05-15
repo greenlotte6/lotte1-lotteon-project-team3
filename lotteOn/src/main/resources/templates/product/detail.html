@@ -120,37 +120,38 @@
             </div>
             <div class="reviewContainer" id="review">
                 <h2>상품 후기</h2>
-                <p class="reviewTotal">총 1,004개</p>
+                <p class="reviewTotal">총 <span th:text="${reviews.size()}"></span>개</p>
                 <div class="commentList">
-                    <th:block th:each="review : ${reviews}">
-                        <div class="comment">
-                            <div class="writerBox">
-                                <p class="writer" th:text="${review.member.name}">작성자</p>
-                                <div class="ratingBox">
-                                    <th:block th:with="score=${#numbers.formatInteger(review.rating, 0)}">
-                                        <img th:each="i : ${#numbers.sequence(1, 5)}"
-                                             th:src="@{/images/icon_star_full.svg}"
-                                             th:if="${i <= score}"/>
-                                        <img th:each="i : ${#numbers.sequence(1, 5)}"
-                                             th:src="@{/images/icon_star_empty.svg}"
-                                             th:if="${i > score}"/>
-                                        <span class="score" th:text="${score}">5</span>
-                                    </th:block>
-                                </div>
-                            </div>
-                            <div class="contentBox">
-                                <h3 class="purchasedName" th:text="${review.title}">리뷰 제목</h3>
-                                <p class="content" th:text="${review.content}">리뷰 내용</p>
-                                <p class="commentDate" th:text="${#temporals.format(review.regDate, 'yyyy.MM.dd')}">
-                                    작성일</p>
-                                <p th:text="${review.title} ?: '제목 없음'"></p>
-                                <p th:text="${review.rating} ?: '별점 없음'"></p>
-                                <p th:text="${review.content} ?: '내용 없음'"></p>
+                    <div class="comment" th:each="review : ${reviews}">
+                        <div class="writerBox">
+                            <p class="writer" th:text="${review.member.name}">작성자</p>
+                            <div class="ratingBox">
+                                <img th:each="i : ${#numbers.sequence(1, 5)}"
+                                     th:src="${i <= review.ratingNumber} ? '/images/icon_star_full.svg' : '/images/icon_star_empty.svg'"
+                                     alt="">
+                                <span class="score" th:text="${review.rating}">5</span>
                             </div>
                         </div>
-                    </th:block>
-                </div>
 
+                        <div class="contentBox">
+                            <div class="imageBox">
+                                <img th:if="${review.image1 != null}" th:src="@{/images/{file}(file=${review.image1})}" alt="리뷰 이미지1">
+                                <img th:if="${review.image2 != null}" th:src="@{/images/{file}(file=${review.image2})}" alt="리뷰 이미지2">
+                                <img th:if="${review.image3 != null}" th:src="@{/images/{file}(file=${review.image3})}" alt="리뷰 이미지3">
+                            </div>
+                            <h3 class="purchasedName" th:text="${review.title}">리뷰 제목</h3>
+                            <p class="content" th:text="${review.content}">리뷰 내용</p>
+                            <p class="commentDate" th:text="${review.regDate}">작성일</p>
+                        </div>
+                    </div>
+                    <div class="paging">
+                        <button class="prev btn"></button>
+                        <a href="#" class="pageNum thisPage">1</a>
+                        <a href="#" class="pageNum">2</a>
+                        <a href="#" class="pageNum">3</a>
+                        <button class="next btn"></button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

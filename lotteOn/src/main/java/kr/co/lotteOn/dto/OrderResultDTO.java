@@ -25,7 +25,7 @@ public class OrderResultDTO {
     private String payment;
     private String discount;
     private String fee;
-    private String actualMoney;
+    private Long actualMoney;
     private int finalTotal;
     private int couponPointDiscount;
 
