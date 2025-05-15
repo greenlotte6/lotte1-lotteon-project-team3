@@ -24,6 +24,10 @@
     <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
     <title>문의하기 : 롯데ON</title>
+
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -54,17 +58,17 @@
                                     <th>채널</th>
                                     <th>유형</th>
                                     <th>주문번호</th>
-                                    <th>작성일</th>
                                     <th>내용</th>
+                                    <th>작성일</th>
                                     <th>상태</th>
                                 </tr>
                                 <tr th:each="refund, i : ${refund}">
                                     <td th:text="${refund.refundNo}">1</td>
                                     <td th:text="${refund.channel}"></td>
                                     <td th:text="${refund.refundType}">반품신청/철회</td>
-                                    <td th:text="${#strings.length(refund.orderCode) > 10} ? ${refund.orderCode.substring(0, 10)} + '...' : ${refund.orderCode}"></td>
-                                    <td th:text="${refund.regDate}">2025.05.08</td>
+                                    <td th:text="${refund.orderCode}"></td>
                                     <td th:text="${#strings.length(refund.reason) > 20} ? ${refund.reason.substring(0, 10)} + '...' : ${refund.reason}"></td>
+                                    <td th:text="${refund.regDate}">2025.05.08</td>
                                     <td>[[${refund.channel}]][[${refund.status}]]</td>
                                 </tr>
                             </table>

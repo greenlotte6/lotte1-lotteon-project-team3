@@ -15,23 +15,6 @@
     <!--JavaScript-->
     <script src="/script/aside.js"></script>
 
-    <style>
-        .submitbtn {
-            padding: 5px;
-            border: 1px solid #dfdfdf;
-            border-radius: 10px;
-        }
-        .modalTable select {
-            font-size: 16px;
-            padding: 7px;
-        }
-
-        .submitbtn.disabled-btn {
-            background-color: #ccc;
-            color: #666;
-            cursor: not-allowed;
-        }
-    </style>
 </head>
 <body>
 <div id="container">
@@ -58,6 +41,7 @@
                         <button type="submit">검색</button>
                     </div>
                 </form>
+                <p style="font-weight: 600; margin-bottom: 10px"> 주문 번호 클릭 시 상세보기 창 출력 </p>
                 <table>
                     <tr>
                         <th>주문번호</th>
@@ -92,10 +76,12 @@
                                     th:onclick="'submitPopup(' + ${i.index} + ')'"
                                     th:disabled="${order.confirm == '구매 확정'
                                                  or order.confirm == '배송준비중'
+                                                 or order.confirm == '배송완료'
                                                  or order.refundStatus == '반품처리 완료'
                                                  or order.refundStatus == '교환처리 완료'}"
                                     th:classappend="${order.confirm == '구매 확정'
                                                 or order.confirm == '배송준비중'
+                                                or order.confirm == '배송완료'
                                                 or order.refundStatus == '반품처리 완료'
                                                 or order.refundStatus == '교환처리 완료'} ? ' disabled-btn'"
                                     th:text="${order.confirm == '배송준비중'} ? '입력완료' : '배송하기'">

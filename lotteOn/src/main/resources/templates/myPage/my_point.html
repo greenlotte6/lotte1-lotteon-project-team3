@@ -23,6 +23,33 @@
   <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
   <title>포인트내역 : 롯데ON</title>
+
+  <style>
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 500px;
+      height: 500px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 <div id="container">
@@ -122,7 +149,41 @@
         </section>
       </div>
     </div>
+    <!-- 모달창 -->
+    <div th:each="order, i : ${point}" th:id="'pointModal-' + ${i.index}" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>주문 상세 정보</h3>
+        <div id="modalContent">
+          <table>
+            <tr>
+              <th>상품명</th>
+              <td>[[${order.productName}]]</td>
+            </tr>
+            <tr>
+              <th>가격</th>
+              <td>[[${order.price}]]</td>
+            </tr>
+            <tr>
+              <th>포인트</th>
+              <td>[[${order.quantity}]]</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
   </main>
+  <script th:inline="javascript">
+    function showPopup(index) {
+      document.getElementById('pointModal-' + index).style.display = 'block';
+    }
+
+    document.querySelectorAll('.modal .close').forEach(btn => {
+      btn.addEventListener('click', function () {
+        this.closest('.modal').style.display = 'none';
+      });
+    });
+  </script>
   <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
 </body>

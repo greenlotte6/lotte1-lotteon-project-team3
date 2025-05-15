@@ -139,8 +139,11 @@ public class MyPageController {
         for(OrderDTO orderDTO : recentOrderTop3){
             orderDTO.setPayment(orderDTO.getPaymentName());
         }
-        for (RefundDTO refundDTO : recentRefundTop3) {
+        for(RefundDTO refundDTO : recentRefundTop3) {
             refundDTO.setRefundType(refundDTO.getReturnType());
+        }
+        for(ReviewDTO reviewDTO : recentReviewTop3) {
+            reviewDTO.setRating(reviewDTO.getRatingStar());
         }
         // 4. 모델에 추가
         model.addAttribute("recentQna", recentQnaTop3);
@@ -224,6 +227,7 @@ public class MyPageController {
         pageRequestDTO.setWriter(loginId);
 
         ReviewPageResponseDTO pageResponseDTO = myPageService.getReviewByWriter(pageRequestDTO);
+
         model.addAttribute("page", pageResponseDTO);
         model.addAttribute("review", pageResponseDTO.getDtoList());
 

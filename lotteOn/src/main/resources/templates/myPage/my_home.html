@@ -131,11 +131,6 @@
                             <h3>포인트 적립 내역</h3>
                             <a th:href="@{/myPage/my_point}" class="allView">전체보기</a>
                         </div>
-                        <div class="orderHeader" th:if="${#lists.isEmpty(recentPoint)}">
-                            <div>
-                                <p>적립한 포인트가 없습니다.</p>
-                            </div>
-                        </div>
                         <div class="pointList">
                             <table>
                                 <tr>
@@ -152,6 +147,13 @@
                                     <td th:text="${point.orderCode}"></td>
                                     <td th:text="${point.giveContent}"></td>
                                 </tr>
+                                <tr th:if="${#lists.isEmpty(recentPoint)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>적립한 포인트가 없습니다.</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -159,11 +161,6 @@
                         <div class="varTitle">
                             <h3>나의 리뷰</h3>
                             <a th:href="@{/myPage/my_review}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader" th:if="${#lists.isEmpty(recentReview)}">
-                            <div>
-                                <p>작성한 리뷰가 없습니다.</p>
-                            </div>
                         </div>
                         <div class="reviewList">
                             <table>
@@ -183,6 +180,13 @@
                                     <td th:text="${review.rating}" class="starPoint"></td>
                                     <td th:text="${review.regDate}"></td>
                                 </tr>
+                                <tr th:if="${#lists.isEmpty(recentReview)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>작성한 리뷰가 없습니다.</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -190,11 +194,6 @@
                         <div class="varTitle">
                             <h3>고객 문의</h3>
                             <a th:href="@{/myPage/my_qna}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader" th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
-                            <div>
-                                <p>등록된 문의가 없습니다.</p>
-                            </div>
                         </div>
                         <div class="helpList">
                             <table>
@@ -215,6 +214,13 @@
                                     <td th:text="${qna.status}"
                                         th:classappend="${qna.status == '답변완료'} ? ' answered' : ''"></td>
                                 </tr>
+                                <tr th:if="${#lists.isEmpty(recentQna)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>등록된 문의가 없습니다.</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -222,11 +228,6 @@
                         <div class="varTitle">
                             <h3>교환/환불 신청</h3>
                             <a th:href="@{/myPage/my_refundList}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader" th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
-                            <div>
-                                <p>등록된 문의가 없습니다.</p>
-                            </div>
                         </div>
                         <div class="helpList">
                             <table>
@@ -242,9 +243,16 @@
                                     <td th:text="${refund.refundNo}">1</td>
                                     <td th:text="${refund.channel}"></td>
                                     <td th:text="${refund.refundType}">반품신청/철회</td>
-                                    <td th:text="${#strings.length(refund.orderCode) > 10} ? ${refund.orderCode.substring(0, 10)} + '...' : ${refund.orderCode}"></td>
+                                    <td th:text="${refund.orderCode}"></td>
                                     <td th:text="${refund.regDate}">2025.05.08</td>
                                     <td>[[${refund.channel}]][[${refund.status}]]</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(recentRefund)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>등록된 문의가 없습니다.</p>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
