@@ -397,9 +397,15 @@ main > div > * {
     margin-bottom: 30px;
 }
 
-.descImg > img {
+.descImg > div > img {
     width: 1200px;
     object-fit: cover;
+}
+
+.noImgzz {
+    width: 500px !important;
+    object-fit: cover;
+    margin-top: 90px;
 }
 
 .reviewContainer {
