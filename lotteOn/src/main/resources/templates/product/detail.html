@@ -137,13 +137,16 @@
 
                         <div class="contentBox">
                             <div class="imageBox">
+                                <img th:if="${review.image1 == null && review.image2 == null && review.image3 == null}" src="/images/no_img.jpg" class="notAddedImg"></img>
                                 <img th:if="${review.image1 != null}" th:src="@{/images/{file}(file=${review.image1})}" alt="리뷰 이미지1">
                                 <img th:if="${review.image2 != null}" th:src="@{/images/{file}(file=${review.image2})}" alt="리뷰 이미지2">
                                 <img th:if="${review.image3 != null}" th:src="@{/images/{file}(file=${review.image3})}" alt="리뷰 이미지3">
                             </div>
-                            <h3 class="purchasedName" th:text="${review.title}">리뷰 제목</h3>
-                            <p class="content" th:text="${review.content}">리뷰 내용</p>
-                            <p class="commentDate" th:text="${review.regDate}">작성일</p>
+                            <div class="customerReviews">
+                                <h3 class="purchasedName" th:text="${review.title}">리뷰 제목</h3>
+                                <p class="content" th:text="${review.content}">리뷰 내용</p>
+                                <p class="commentDate" th:text="${review.regDate}">작성일</p>
+                            </div>
                         </div>
                     </div>
                     <div class="paging">

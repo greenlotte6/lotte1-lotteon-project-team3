@@ -426,14 +426,27 @@ main > div > * {
     display: flex;
     padding: 30px 20px 20px 20px;
     border-bottom: 1px solid #eee;
-}
-
-.writerBox {
-    flex: 1;
+    column-gap: 32px;
 }
 
 .contentBox {
-    flex: 4;
+    display: flex;
+    column-gap: 32px;
+}
+
+.customerReviews {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+
+.notAddedImg {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
 .writer {
@@ -441,8 +454,6 @@ main > div > * {
 }
 
 .content {
-    padding-top: 12px;
-    padding-right: 20px;
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
@@ -450,22 +461,18 @@ main > div > * {
 
 .purchasedName {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 19px;
-    color: #999;
 }
 
 .commentDate {
-    text-align: right;
-    font-size: 14px;
+    font-size: 11px;
     color: #999;
-    margin-top: 15px;
 }
 
 .ratingBox {
     display: flex;
     align-items: center;
-    width: 85px;
     margin-top: 10px;
 }
 
@@ -531,4 +538,10 @@ main > div > * {
 .optionGroup > label {
     font-size: 14px;
     width: 50px;
+}
+
+.imageBox > img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
