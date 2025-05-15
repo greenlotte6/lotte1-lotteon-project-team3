@@ -111,7 +111,7 @@ public class OrderService {
         // Order 기준
         stats.put("결제완료", orderRepository.countByOrderStatus("결제완료"));
         stats.put("배송중", orderRepository.countByConfirm("배송중"));
-        stats.put("구매확정", orderRepository.countByOrderStatus("구매 확정"));
+        stats.put("구매확정", orderRepository.countByConfirm("구매 확정"));
 
         // Refund 기준
         stats.put("반품요청", refundRepository.countByChannel("반품"));
