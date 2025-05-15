@@ -119,66 +119,32 @@
             </div>
             <div class="reviewContainer" id="review">
                 <h2>상품 후기</h2>
-                <p class="reviewTotal">총 1,004개</p>
+                <p class="reviewTotal">총 <span th:text="${reviews.size()}"></span>개</p>
+
                 <div class="commentList">
-                    <div class="comment">
+                    <div class="comment" th:each="review : ${reviews}">
                         <div class="writerBox">
-                            <p class="writer">소고기</p>
+                            <p class="writer" th:text="${review.member.name}">작성자</p>
                             <div class="ratingBox">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <span class="score">5</span>
+                                <img th:each="i : ${#numbers.sequence(1, 5)}"
+                                     th:src="${i <= review.ratingNumber} ? '/images/icon_star_full.svg' : '/images/icon_star_empty.svg'"
+                                     alt="">
+                                <span class="score" th:text="${review.rating}">5</span>
                             </div>
                         </div>
+
                         <div class="contentBox">
-                            <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
-                            <p class="content">아, 맛있습니다. 좋네요.</p>
-                            <p class="commentDate">2025.04.16</p>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <div class="writerBox">
-                            <p class="writer">닭고기</p>
-                            <div class="ratingBox">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <span class="score">5</span>
+                            <div class="imageBox">
+                                <img th:if="${review.image1 != null}" th:src="@{/images/{file}(file=${review.image1})}" alt="리뷰 이미지1">
+                                <img th:if="${review.image2 != null}" th:src="@{/images/{file}(file=${review.image2})}" alt="리뷰 이미지2">
+                                <img th:if="${review.image3 != null}" th:src="@{/images/{file}(file=${review.image3})}" alt="리뷰 이미지3">
                             </div>
-                        </div>
-                        <div class="contentBox">
-                            <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
-                            <p class="content">이게 맞나 싶을 정도로 맛있네요 ㅎㅎ</p>
-                            <p class="commentDate">2025.04.16</p>
+                            <h3 class="purchasedName" th:text="${review.title}">리뷰 제목</h3>
+                            <p class="content" th:text="${review.content}">리뷰 내용</p>
+                            <p class="commentDate" th:text="${review.regDate}">작성일</p>
                         </div>
                     </div>
-                    <div class="comment">
-                        <div class="writerBox">
-                            <p class="writer">양고기</p>
-                            <div class="ratingBox">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <img src="/images/icon_star_full.svg" alt="">
-                                <span class="score">5</span>
-                            </div>
-                        </div>
-                        <div class="contentBox">
-                            <h3 class="purchasedName">통밀먹인 오겹살 1kg+1kg 구이용</h3>
-                            <p class="content">솔직히 말하면, 이 오겹살은 그냥 고기가 아닙니다. 고기의 탈을 쓴 예술작품이에요. 고기 한 점 입에 넣는 순간, 제 미각이 "이게
-                                진짜 인생이구나"라고 깨달았어요. 마치 삼겹살의 왕족을 초대해서 만찬을 즐긴 기분?
-                                지글지글 익어가는 소리에 정신이 몽롱해지고, 고소한 기름향에 눈물이 핑 돕니다. 씹을수록 퍼지는 감칠맛은 마치 고기가 "사랑해"라고 속삭이는 것 같았어요.
-                                진짜로요. 거짓말 아니라 고기한테 설렜어요.
-                                게다가 육즙이 터지는 그 순간… 제가 왜 이 세상에 태어났는지 알겠더라구요. 이 오겹살을 먹기 위해서였습니다.</p>
-                            <p class="commentDate">2025.04.16</p>
-                        </div>
-                    </div>
+
                     <div class="paging">
                         <button class="prev btn"></button>
                         <a href="#" class="pageNum thisPage">1</a>
@@ -188,6 +154,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>

@@ -1,5 +1,6 @@
 package kr.co.lotteOn.service;
 
+import kr.co.lotteOn.dto.MemberDTO;
 import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Product;
@@ -49,8 +50,25 @@ public class ReviewService {
         product.setViews(product.getViews() + 1);
     }
 
-    public List<Review> getReviewsByProduct(String productCode) {
-        return reviewRepository.findByProductCode(productCode);
+    public List<ReviewDTO> getReviewsByProduct(String productCode) {
+        List<Review> reviews = reviewRepository.findByProductCode(productCode);
+
+        return reviews.stream()
+                .map(review -> ReviewDTO.builder()
+                        .reviewNo(review.getReviewNo())
+                        .writer(review.getMember().getId()) // 또는 getName()
+                        .title(review.getTitle())
+                        .rating(review.getRating())
+                        .content(review.getContent())
+                        .productCode(review.getProductCode())
+                        .regDate(review.getRegDate().toString())
+                        .image1(review.getImage1())
+                        .image2(review.getImage2())
+                        .image3(review.getImage3())
+                        .member(MemberDTO.fromEntity(review.getMember())) // MemberDTO 있는 경우
+                        .productName(productService.getProductNameByCode(review.getProductCode()))
+                        .build())
+                .toList();
     }
 
 }

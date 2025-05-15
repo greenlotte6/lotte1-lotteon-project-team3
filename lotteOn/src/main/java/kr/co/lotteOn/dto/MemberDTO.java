@@ -3,6 +3,7 @@ package kr.co.lotteOn.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import kr.co.lotteOn.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,5 +55,17 @@ public class MemberDTO {
     }
     public String getFormattedVisitDate() {
         return visitDate != null ? visitDate.toString().substring(0, 10) : "";
+    }
+
+    public static MemberDTO fromEntity(Member member) {
+        if (member == null) return null;
+        return MemberDTO.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .gender(member.getGender())
+                .birthDate(member.getBirthDate())
+                .email(member.getEmail())
+                .hp(member.getHp())
+                .build();
     }
 }

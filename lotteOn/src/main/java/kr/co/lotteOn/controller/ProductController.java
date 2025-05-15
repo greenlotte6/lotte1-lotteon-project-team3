@@ -3,6 +3,7 @@ package kr.co.lotteOn.controller;
 import jakarta.validation.Valid;
 import kr.co.lotteOn.dto.*;
 import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
+import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.OrderRepository;
 import kr.co.lotteOn.security.MyUserDetails;
@@ -31,6 +32,7 @@ public class ProductController {
     private final OrderService orderService;
     private final OrderItemService orderItemService;
     private final OrderRepository orderRepository;
+    private final ReviewService reviewService;
 
     private void preparePaymentPage(Member member, List<ProductDTO> products, List<Integer> quantities,List <String> options, Model model) {
         List<Map<String, Object>> items = new ArrayList<>();
@@ -146,7 +148,9 @@ public class ProductController {
         if (product == null) {
             return "redirect:/product/list";
         }
+        List<ReviewDTO> reviews = reviewService.getReviewsByProduct(productCode);
         model.addAttribute("product", product);
+        model.addAttribute("reviews", reviews);
         return "/product/detail";
     }
 
@@ -231,7 +235,7 @@ public class ProductController {
         int originalPrice = items.stream()
                         .mapToInt(i -> i.getPrice() * i.getQuantity())
                                 .sum();
-        int actualMoney = Integer.parseInt(order.getActualMoney());
+        Long actualMoney = order.getActualMoney();
         int totalDiscount = Integer.parseInt(order.getDiscount());
         int productDiscount = items.stream()
                         .mapToInt(i -> (i.getPrice() * i.getDiscount() / 100) * i.getQuantity())

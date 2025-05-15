@@ -30,7 +30,7 @@ public class Order {
     private String payment;
     private String discount;
     private String fee;
-    private String actualMoney;
+    private Long actualMoney;
     private String orderStatus;
     private String refundStatus;
 

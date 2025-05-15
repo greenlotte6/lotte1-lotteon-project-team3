@@ -23,7 +23,7 @@ public class OrderRequestDTO {
     private String discount;
     private String fee;
     private String receiver;
-    private String actualMoney;
+    private Long actualMoney;
     private String productCode;  // ✔ Product 대신 productCode만 받음
     private String quantity;
     private String totalPrice;

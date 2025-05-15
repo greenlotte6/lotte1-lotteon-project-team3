@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,20 @@ public interface OrderRepository extends JpaRepository<Order, String> ,
             "JOIN i.product p " +
             "WHERE o.orderStatus = '결제완료' AND p.companyName = :companyName")
     int countCompletedOrdersByCompanyName(@Param("companyName") String companyName);
+
+    long countByOrderStatus(String orderStatus);
+    long countByConfirm(String confirm);
+
+    @Query("SELECT COALESCE(SUM(o.actualMoney), 0) FROM Order o WHERE o.orderStatus = :orderStatus")
+    Long sumActualMoneyByOrderStatus(@Param("orderStatus") String orderStatus);
+
+    long countByOrderDateBetween(LocalDateTime start, LocalDateTime end);
+
+    @Query("SELECT COALESCE(SUM(o.actualMoney), 0) FROM Order o WHERE o.orderStatus = :orderStatus AND o.orderDate BETWEEN :start AND :end")
+    Long sumActualMoneyByOrderStatusAndOrderDate(@Param("orderStatus") String orderStatus,
+                                                 @Param("start") LocalDateTime start,
+                                                 @Param("end") LocalDateTime end);
+
 }
 
 
