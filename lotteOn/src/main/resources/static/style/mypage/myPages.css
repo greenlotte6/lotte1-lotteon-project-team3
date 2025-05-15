@@ -536,9 +536,11 @@ section {
     height: 50px;
     border-bottom: 1px solid #eee;
 }
-
-.helpList table td {
-    width: 100px;
+.helpList td:nth-child(4) {
+    width: 150px !important;
+}
+.helpList td:nth-child(5) {
+    width: 300px !important;
 }
 
 .helpList table td:nth-of-type(3) {

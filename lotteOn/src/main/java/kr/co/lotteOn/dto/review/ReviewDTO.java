@@ -48,7 +48,7 @@ public class ReviewDTO {
         return null;
     }
 
-    public String getRating(){
+    public String getRatingStar(){
         if(rating != null){
             return switch (this.rating) {
                 case "1" -> "⭐";

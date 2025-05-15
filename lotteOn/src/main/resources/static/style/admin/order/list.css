@@ -144,7 +144,21 @@ tr td select {
 tr td select option {
     font-size: 12px;
 }
+.submitbtn {
+    padding: 5px;
+    border: 1px solid #dfdfdf;
+    border-radius: 10px;
+}
+.modalTable select {
+    font-size: 16px;
+    padding: 7px;
+}
 
+.submitbtn.disabled-btn {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
 
 a.current {
     border: 1px solid #dfdfdf;

@@ -274,6 +274,7 @@ public class MyPageService {
 
                     reviewDTO.setProductName(product.getName());
                     reviewDTO.setMember(memberDTO);
+                    reviewDTO.setRating(reviewDTO.getRatingStar());
 
                     return reviewDTO;
                 }).collect(Collectors.toList());
