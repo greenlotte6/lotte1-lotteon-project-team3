@@ -53,4 +53,8 @@ public class ReviewService {
         return reviewRepository.findByProductCode(productCode);
     }
 
+    public List<Review> getReviewsByProductCode(String productCode) {
+        return reviewRepository.findByProductCodeOrderByRegDateDesc(productCode);
+    }
+
 }
