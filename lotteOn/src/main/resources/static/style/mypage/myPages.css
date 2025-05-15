@@ -445,7 +445,6 @@ section {
     width: 100%;
     border-top: 1px solid #ddd;
     border-collapse: collapse;
-
 }
 
 .reviewList table tr:first-child {
@@ -458,22 +457,19 @@ section {
 }
 
 .reviewList table td:nth-of-type(1) {
-    width: 80px;
-}
-
-.reviewList table td:nth-of-type(2) {
-    width: 180px;
+    width: 110px;
 }
 
 .reviewList table td:nth-of-type(3) {
-    width: 250px;
+    width: 225px;
 }
+
 .reviewList table td:nth-of-type(4) {
-    width: 250px;
+    width: 225px;
 }
 
 .reviewList table td {
-    width: 120px;
+    width: 146.6px;
 }
 
 
@@ -538,23 +534,12 @@ section {
     height: 50px;
     border-bottom: 1px solid #eee;
 }
-.helpList td:nth-child(4) {
-    width: 150px !important;
-}
-.helpList td:nth-child(5) {
-    width: 300px !important;
+.helpList td:nth-of-type(4) {
+    width: 450px;
 }
 
-.helpList table td:nth-of-type(3) {
-    width: 130px;
-}
-
-.helpList table td:nth-of-type(4) {
-    width: 410px;
-}
-
-.helpList table td:nth-of-type(5), .helpList table td:nth-of-type(6) {
-    width: 130px;
+.helpList td {
+    width: 110px;
 }
 
 
@@ -791,6 +776,41 @@ table tr:not(:first-child) * {
     padding: 12px 18px;
     border-radius: 3px;
     font-weight: 300;
+}
+
+.customerCenterList table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+
+}
+
+.customerCenterList table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.customerCenterList table tr:first-child {
+    background-color: #f8f8f8;
+}
+
+.customerCenterList table tr {
+    height: 50px;
+    border-bottom: 1px solid #eee;
+}
+
+.customerCenterList table td {
+    width: 100px;
+    text-align: center;
+}
+
+.customerCenterList table td:nth-of-type(4),
+.customerCenterList table td:nth-of-type(5) {
+    width: 200px;
+}
+.customerCenterList table td:nth-of-type(6),
+.customerCenterList table td:nth-of-type(7){
+    width: 150px;
 }
 
 
