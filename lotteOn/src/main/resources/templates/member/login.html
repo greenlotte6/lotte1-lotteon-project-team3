@@ -47,6 +47,9 @@
                         </div>
                     </div>
                 </form>
+                <div class="adBox" th:each="banner : ${loginBanner}" th:if="${loginBanner != null}">
+                    <img th:src="${banner.imagePath}" th:alt="${banner.name}">
+                </div>
                 <div class="easyLogin">
                     <p>간편하게 쇼핑 계속하기</p>
                     <div class="easyLoginBtn">
