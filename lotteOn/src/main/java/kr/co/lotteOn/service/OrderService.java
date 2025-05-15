@@ -8,12 +8,14 @@ import kr.co.lotteOn.entity.Member;
 import kr.co.lotteOn.entity.Order;
 import kr.co.lotteOn.entity.OrderItem;
 import kr.co.lotteOn.entity.Product;
+import kr.co.lotteOn.repository.CartRepository;
 import kr.co.lotteOn.repository.MemberRepository;
 import kr.co.lotteOn.repository.OrderRepository;
 import kr.co.lotteOn.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,7 +31,9 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
     private final OrderItemService orderItemService;
+    private final CartRepository cartRepository;
 
+    @Transactional
     public String createOrder(OrderRequestDTO dto, List<OrderItemDTO> items) {
         // 1. Member, Product 조회
         Member member = memberRepository.findById(dto.getMemberId())
@@ -57,6 +61,11 @@ public class OrderService {
             Product product = productRepository.findByProductCode(itemDTO.getProductCode())
                     .orElseThrow(() -> new IllegalArgumentException("상품 없음"));
 
+            // 🟡 재고 차감
+            int newStock = product.getStock() - itemDTO.getQuantity();
+            if (newStock < 0) throw new IllegalStateException("재고 부족: " + product.getName());
+            product.setStock(newStock);
+
             OrderItem item = OrderItem.builder()
                     .order(order)
                     .product(product)
@@ -68,6 +77,11 @@ public class OrderService {
             order.getItems().add(item);
         }
         orderRepository.save(order);
+
+        if (dto.getCartIds() != null && !dto.getCartIds().isEmpty()) {
+            cartRepository.deleteByIdIn(dto.getCartIds());
+        }
+
         return orderCode; // 이후 조회용으로 return
     }
 
@@ -83,5 +97,7 @@ public class OrderService {
 
         return prefix + "-" + date + "-" + random;
     }
+
+
 
 }

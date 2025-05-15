@@ -29,5 +29,6 @@ public class OrderRequestDTO {
     private String totalPrice;
     private int usedPoint;
     private Integer issuedNo;
+    private List<Long> cartIds;
 
 }

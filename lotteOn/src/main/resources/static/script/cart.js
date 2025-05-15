@@ -137,26 +137,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const productCodes = [];
         const quantities = [];
         const options = [];
+        const cartIds = [];
 
         selected.forEach(chk => {
             const cartItem = chk.closest('.cartItem');
 
-            const href = cartItem.querySelector('a').getAttribute('href');
             const productCode = chk.dataset.code;
+            const cartId = chk.dataset.id;
             const quantity = cartItem.querySelector('.count').textContent.trim();
             const option = cartItem.querySelector('.itemOption').textContent.trim();
 
             productCodes.push(productCode);
             quantities.push(quantity);
             options.push(option);
+            cartIds.push(cartId);
         });
 
-        const query = productCodes.map((code, i) =>
-            `productCode=${code}&quantity=${quantities[i]}&option=${encodeURIComponent(options[i])}`
-        ).join('&');
+        const queryParams = [];
 
+        productCodes.forEach((code, i) => {
+            queryParams.push(`productCode=${code}`);
+            queryParams.push(`quantity=${quantities[i]}`);
+            queryParams.push(`option=${encodeURIComponent(options[i])}`);
+        });
+
+        cartIds.forEach(id => {
+            queryParams.push(`cartIds=${id}`);
+        });
+
+        const query = queryParams.join('&');
         location.href = `/product/payment?${query}`;
     });
+
 
     recalculateTotal(); // 페이지 로딩 시 초기 계산
 });
