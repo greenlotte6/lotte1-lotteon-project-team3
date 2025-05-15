@@ -120,17 +120,17 @@
                                     <span class="bold" th:text="${product.companyName}">농협안심한우</span>
                                     <span th:text="${product.name}">상품명</span>
                                 </a>
+                                <div class="totalPrice">
+                                    <del>
+                                        <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
+                                        <span>원</span>
+                                    </del>
+                                </div>
                                 <div class="priceInfo">
                                     <p class="discount" th:text="${product.discount + '%'}">20%</p>
                                     <div class="price">
                                         <p th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100, 3, 'COMMA')}"></p>
                                         <span>원</span>
-                                    </div>
-                                    <div class="totalPrice">
-                                        <del>
-                                            <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
-                                            <span>원</span>
-                                        </del>
                                     </div>
                                 </div>
                             </div>

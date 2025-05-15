@@ -188,7 +188,7 @@ main > div > * {
 
 .totalPrice {
     display: flex;
-    margin-top: 1px;
+    margin-top: 4px;
 }
 
 del {
@@ -223,28 +223,23 @@ del {
 }
 
 .productItem {
-    display: flex;
+    display: grid;
+    grid-template-columns: 265px 265px 265px 265px ;
+    grid-template-rows: 380px;
     justify-content: space-between;
-}
-
-.fourItems {
-    width: 265px;
-    box-sizing: border-box;
+    row-gap: 50px;
 }
 
 .productItem > .fourItems > a > img {
     width: 265px;
     height: 265px;
-}
-
-.threeItems {
-    width: 360px;
-    box-sizing: border-box;
+    object-fit: cover;
 }
 
 .productItem > .threeItems > a > img {
-    width: 380px;
-    height: 212px;
+    width: 265px;
+    height: 265px;
+    object-fit: cover;
 }
 
 .descWrap {
