@@ -74,15 +74,31 @@ public class MyPageController {
 
     }
 
-    //문의글작성하기
+    //문의글작성하기(홈)
+    @PostMapping("/my_seller_qnaH")
+    public String sellerQnaWriteH(QnaDTO qnaDTO){
+        int no = myPageService.qnaWrite(qnaDTO);
+
+        return "redirect:/myPage/my_home";
+    }
+    //문의글작성하기(주문목록)
     @PostMapping("/my_seller_qna")
     public String sellerQnaWrite(QnaDTO qnaDTO){
         int no = myPageService.qnaWrite(qnaDTO);
 
-        return "redirect:/myPage/my_qna";
+        return "redirect:/myPage/my_order";
     }
 
-    //구매확정하기
+    //구매확정하기(홈)
+    @PostMapping("/my_confirmH")
+    public String confirmPurchaseH(@RequestParam("orderCode") String orderCode) {
+        System.out.println(orderCode);
+
+        myPageService.confirmPurchase(orderCode);
+
+        return "redirect:/myPage/my_home";
+    }
+    //구매확정하기(주문목록)
     @PostMapping("/my_confirm")
     public String confirmPurchase(@RequestParam("orderCode") String orderCode) {
         System.out.println(orderCode);
@@ -92,30 +108,56 @@ public class MyPageController {
         return "redirect:/myPage/my_order";
     }
 
-    //리뷰쓰기
+    //리뷰쓰기(홈)
+    @PostMapping("/my_review_writeH")
+    public String writeReviewH(ReviewDTO reviewDTO) {
+        int no = myPageService.writeReview(reviewDTO);
+
+        return "redirect:/myPage/my_home";
+    }
+
+    //리뷰쓰기(주문내역)
     @PostMapping("/my_review_write")
     public String writeReview(ReviewDTO reviewDTO) {
         int no = myPageService.writeReview(reviewDTO);
 
-        return "redirect:/myPage/my_review";
+        return "redirect:/myPage/my_order";
     }
 
-    //반품신청
-    @PostMapping("/my_refund")
-    public String writeRefund(RefundDTO refundDTO) {
+    //반품신청(홈)
+    @PostMapping("/my_refundH")
+    public String writeRefundH(RefundDTO refundDTO) {
         refundDTO.setChannel("반품");
         int no = myPageService.writeRefund(refundDTO);
 
         return "redirect:/myPage/my_home";
     }
 
-    //교환신청
+    //반품신청(주문내역)
+    @PostMapping("/my_refund")
+    public String writeRefund(RefundDTO refundDTO) {
+        refundDTO.setChannel("반품");
+        int no = myPageService.writeRefund(refundDTO);
+
+        return "redirect:/myPage/my_order";
+    }
+
+    //교환신청(홈)
+    @PostMapping("/my_exchangeH")
+    public String writeExchangeH(RefundDTO refundDTO) {
+        refundDTO.setChannel("교환");
+        int no = myPageService.writeRefund(refundDTO);
+
+        return "redirect:/myPage/my_home";
+    }
+
+    //교환신청(주문내역)
     @PostMapping("/my_exchange")
     public String writeExchange(RefundDTO refundDTO) {
         refundDTO.setChannel("교환");
         int no = myPageService.writeRefund(refundDTO);
 
-        return "redirect:/myPage/my_home";
+        return "redirect:/myPage/my_order";
     }
 
 
@@ -155,7 +197,7 @@ public class MyPageController {
         return "/myPage/my_home";
     }
 
-    //마이페이지 - 전체주문내역(갯수)
+    //마이페이지 - 전체주문내역
     @GetMapping("/my_order")
     public String myOrder(@AuthenticationPrincipal MyUserDetails userDetails, Model model,
                           OrderPageRequestDTO pageRequestDTO) {

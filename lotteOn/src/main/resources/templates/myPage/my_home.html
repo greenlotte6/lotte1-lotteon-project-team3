@@ -399,7 +399,7 @@
             </div>
             <div class="modalBody">
                 <div class="contactModal">
-                    <form th:action="@{/myPage/my_seller_qna}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/myPage/my_seller_qnaH}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}">
                         <table>
                             <tr>
@@ -444,7 +444,7 @@
                 <button class="closeBtn" type="button" th:onclick="'closePopup(' + ${i.index} + ')'"></button>
             </div>
             <div class="modalBody">
-                <form action="/myPage/my_confirm" method="post">
+                <form action="/myPage/my_confirmH" method="post">
                     <input type="hidden" name="orderCode" th:value="${order.orderCode}">
                     <div class="okPurchase">
                         <p>상품을 받으셨나요?</p>
@@ -472,7 +472,7 @@
             </div>
             <div class="modalBody">
                 <div class="writeReview2">
-                    <form action="/myPage/my_review_write" method="post" enctype="multipart/form-data">
+                    <form action="/myPage/my_review_writeH" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="productCode" th:value="${order.productCode}"/>
                         <input type="hidden" name="writer" th:value="${#authentication.principal.member.id}"/>
                         <table class="review_form">
@@ -571,7 +571,7 @@
             <div class="modalBody">
                 <h4>상품 정보</h4>
                 <div class="refundModal">
-                    <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
+                    <form action="/myPage/my_refundH" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
                         <input type="hidden" name="orderCode" th:value="${order.orderCode}">
                         <table>
@@ -690,7 +690,7 @@
             <div class="modalBody">
                 <h4>상품 정보</h4>
                 <div class="changeModal">
-                    <form action="/myPage/my_refund" method="post" enctype="multipart/form-data">
+                    <form action="/myPage/my_refundH" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
                         <input type="hidden" name="orderCode" th:value="${order.orderCode}">
                         <table>
@@ -889,6 +889,5 @@
         document.body.style.overflow = 'auto';
     }
 </script>
-</div>
 </body>
 </html>

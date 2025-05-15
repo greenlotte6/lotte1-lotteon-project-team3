@@ -231,6 +231,7 @@ public class MyPageService {
                     Product product = tuple.get(2, Product.class);
                     Member member = tuple.get(3, Member.class);
 
+                    // 상품 정보 설정
                     OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
                     orderDTO.setMember(member);
                     orderDTO.setCompanyName(product.getCompanyName());
@@ -238,8 +239,24 @@ public class MyPageService {
                     orderDTO.setPrice(product.getPrice());
                     orderDTO.setPoint(product.getPoint());
                     orderDTO.setProductName(product.getName());
-                    orderDTO.setQuantity(orderItem.getQuantity());
                     orderDTO.setImageList(product.getImageList());
+                    orderDTO.setOrderCode(order.getOrderCode());
+                    orderDTO.setQuantity(orderItem.getQuantity());
+                    orderDTO.setProductCode(orderItem.getProduct().getProductCode());
+
+                    // 판매자 정보 조회
+                    String companyName = product.getCompanyName();
+                    Seller seller = sellerRepository.findByCompanyName(companyName);
+
+                    // 판매자 정보 설정
+                    orderDTO.setRating(seller.getRating());
+                    orderDTO.setDelegate(seller.getDelegate());
+                    orderDTO.setHp(seller.getHp());
+                    orderDTO.setBusinessNo(seller.getBusinessNo());
+                    orderDTO.setFax(seller.getFax());
+                    orderDTO.setAddr1(seller.getAddr1());
+                    orderDTO.setAddr2(seller.getAddr2());
+                    orderDTO.setZip(seller.getZip());
 
 
 

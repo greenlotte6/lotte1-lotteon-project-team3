@@ -38,17 +38,40 @@
       margin: 10% auto;
       padding: 20px;
       width: 500px;
-      height: 500px;
+      height: 350px;
       border-radius: 8px;
       text-align: center;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-
     .close {
       float: right;
       font-size: 20px;
       cursor: pointer;
     }
+    .modal-content table {
+      width: 90%;
+      border-top: 1px solid #dfdfdf;
+      border-bottom: 1px solid #dfdfdf;
+      margin: 20px;
+    }
+
+    #modalContent table th {
+      font-size: 15px;
+      height: 50px;
+    }
+    #modalContent table td {
+      font-size: 13px;
+    }
+    .modal-content h3 {
+      font-size: 20px;
+      margin: 40px 40px 40px 30px;
+    }
+    #modalContent {
+      text-align: center;
+      border-spacing: 0;
+      line-height: 2;
+    }
+
   </style>
 </head>
 <body>
@@ -157,16 +180,20 @@
         <div id="modalContent">
           <table>
             <tr>
+              <th>주문번호</th>
+              <td>[[${order.orderCode}]]</td>
+            </tr>
+            <tr th:if="${order.productName} != null">
               <th>상품명</th>
               <td>[[${order.productName}]]</td>
             </tr>
-            <tr>
+            <tr th:if="${order.price} != null">
               <th>가격</th>
               <td>[[${order.price}]]</td>
             </tr>
             <tr>
               <th>포인트</th>
-              <td>[[${order.quantity}]]</td>
+              <td>[[${order.givePoint}]]</td>
             </tr>
           </table>
         </div>
