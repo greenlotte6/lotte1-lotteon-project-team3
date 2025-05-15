@@ -18,7 +18,6 @@
     <script src="/script/search.js"></script>
     <script src="/script/myPointComma.js"></script>
     <script src="/script/countRatingStar.js"></script>
-    <script src="/script/starPoint.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
@@ -55,70 +54,7 @@
                     <th:block th:insert="~{/myPage/_side.html}"/>
                 </aside>
                 <section>
-                    <div class="simpleInfoWrapper">
-                        <div class="simpleInfo">
-                            <div>
-                                <p>쇼핑하기 좋은 날이에요!</p>
-                                <a th:href="@{/myPage/my_info}" class="nameBox">
-                                    <p class="bold" th:text="${loginUser.name}"></p>
-                                    <p>님</p>
-                                </a>
-                                <div class="ratingBox">
-                                    <img src="/images/icon_mylotte.png" alt="등급">
-                                    <p class="bold">롯데ON</p>
-                                    <p class="bold" th:text="${loginUser.rating}"></p>
-                                    <p>등급이네요!</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="myPoint">
-                                    <a th:href="@{/myPage/my_order}">
-                                        <p>주문 수</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalOrder}"></p>
-                                            <p>건</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myPoint">
-                                    <a th:href="@{/myPage/my_point}">
-                                        <p>POINT</p>
-                                        <div>
-                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
-                                            <p>P</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myCoupon">
-                                    <a th:href="@{/myPage/my_coupon}">
-                                        <p>나의 쿠폰</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalCoupon}"></p>
-                                            <p>개</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myReview">
-                                    <a th:href="@{/myPage/my_qna}">
-                                        <p>문의 수</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalQnaCount}"></p>
-                                            <p>개</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="simpleInfoFooter">
-                            <div class="swiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
-                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
-                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <th:block th:insert="~{/myPage/_myInfo.html}"/>
                     <div class="recentOrder var">
                         <div class="varTitle">
                             <h3>최근 주문 내역</h3>
@@ -195,11 +131,6 @@
                             <h3>포인트 적립 내역</h3>
                             <a th:href="@{/myPage/my_point}" class="allView">전체보기</a>
                         </div>
-                        <div class="orderHeader" th:if="${#lists.isEmpty(recentPoint)}">
-                            <div>
-                                <p>적립한 포인트가 없습니다.</p>
-                            </div>
-                        </div>
                         <div class="pointList">
                             <table>
                                 <tr>
@@ -216,6 +147,13 @@
                                     <td th:text="${point.orderCode}"></td>
                                     <td th:text="${point.giveContent}"></td>
                                 </tr>
+                                <tr th:if="${#lists.isEmpty(recentPoint)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>적립한 포인트가 없습니다.</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -223,11 +161,6 @@
                         <div class="varTitle">
                             <h3>나의 리뷰</h3>
                             <a th:href="@{/myPage/my_review}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader" th:if="${#lists.isEmpty(recentReview)}">
-                            <div>
-                                <p>작성한 리뷰가 없습니다.</p>
-                            </div>
                         </div>
                         <div class="reviewList">
                             <table>
@@ -247,6 +180,13 @@
                                     <td th:text="${review.rating}" class="starPoint"></td>
                                     <td th:text="${review.regDate}"></td>
                                 </tr>
+                                <tr th:if="${#lists.isEmpty(recentReview)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>작성한 리뷰가 없습니다.</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -254,11 +194,6 @@
                         <div class="varTitle">
                             <h3>고객 문의</h3>
                             <a th:href="@{/myPage/my_qna}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader" th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
-                            <div>
-                                <p>등록된 문의가 없습니다.</p>
-                            </div>
                         </div>
                         <div class="helpList">
                             <table>
@@ -279,6 +214,13 @@
                                     <td th:text="${qna.status}"
                                         th:classappend="${qna.status == '답변완료'} ? ' answered' : ''"></td>
                                 </tr>
+                                <tr th:if="${#lists.isEmpty(recentQna)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>등록된 문의가 없습니다.</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -286,11 +228,6 @@
                         <div class="varTitle">
                             <h3>교환/환불 신청</h3>
                             <a th:href="@{/myPage/my_refundList}" class="allView">전체보기</a>
-                        </div>
-                        <div class="orderHeader" th:if="${recentQna == null or #lists.isEmpty(recentQna)}">
-                            <div>
-                                <p>등록된 문의가 없습니다.</p>
-                            </div>
                         </div>
                         <div class="helpList">
                             <table>
@@ -306,9 +243,16 @@
                                     <td th:text="${refund.refundNo}">1</td>
                                     <td th:text="${refund.channel}"></td>
                                     <td th:text="${refund.refundType}">반품신청/철회</td>
-                                    <td th:text="${#strings.length(refund.orderCode) > 10} ? ${refund.orderCode.substring(0, 10)} + '...' : ${refund.orderCode}"></td>
+                                    <td th:text="${refund.orderCode}"></td>
                                     <td th:text="${refund.regDate}">2025.05.08</td>
                                     <td>[[${refund.channel}]][[${refund.status}]]</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(recentRefund)}">
+                                    <td colspan="6">
+                                        <div>
+                                            <p>등록된 문의가 없습니다.</p>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -566,9 +510,9 @@
                                 <td>
                                     <div class="file-upload-wrapper">
                                         <div>
-                                            <label for="file11" class="custom-file-upload">파일1 선택</label>
+                                            <label th:for="'file11-' + ${i.index}" class="custom-file-upload">파일1 선택</label>
                                             <span class="file-name">선택된 파일 없음</span>
-                                            <input type="file" id="file11" name="imageList1" class="hidden-file-input"/>
+                                            <input type="file" th:id="'file11-' + ${i.index}" name="imageList1" class="hidden-file-input"/>
                                         </div>
                                         <div>
                                             <p>
@@ -579,9 +523,9 @@
                                     </div>
                                     <div class="file-upload-wrapper">
                                         <div>
-                                            <label for="file21" class="custom-file-upload">파일2 선택</label>
+                                            <label th:for="'file21-' + ${i.index}" class="custom-file-upload">파일2 선택</label>
                                             <span class="file-name">선택된 파일 없음</span>
-                                            <input type="file" id="file21" name="imageList2" class="hidden-file-input"/>
+                                            <input type="file" th:id="'file21-' + ${i.index}" name="imageList2" class="hidden-file-input"/>
                                         </div>
                                         <div>
                                             <p>
@@ -593,9 +537,9 @@
 
                                     <div class="file-upload-wrapper">
                                         <div>
-                                            <label for="file31" class="custom-file-upload">파일3 선택</label>
+                                            <label th:for="'file31-' + ${i.index}" class="custom-file-upload">파일3 선택</label>
                                             <span class="file-name">선택된 파일 없음</span>
-                                            <input type="file" id="file31" name="imageList3" class="hidden-file-input"/>
+                                            <input type="file" th:id="'file31-' + ${i.index}" name="imageList3" class="hidden-file-input"/>
                                         </div>
                                         <div>
                                             <p>
@@ -659,67 +603,26 @@
                                 <td>반품정보 입력</td>
                                 <td colspan="3">
                                     <div class="radio">
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="broken"
-                                                id="broken"
-                                        />
-                                        <label for="broken"
-                                        >불량/파손</label
-                                        >
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="dislike"
-                                                id="dislike"
-                                        />
-                                        <label for="dislike"
-                                        >단순변심</label
-                                        >
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="misorder"
-                                                id="misorder"
-                                        />
-                                        <label for="misorder"
-                                        >주문실수</label
-                                        >
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="misdelivery"
-                                                id="misdelivery"
-                                        />
-                                        <label for="misdelivery">
-                                            오배송
-                                        </label>
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="delay"
-                                                id="delay"
-                                        />
-                                        <label for="delay">
-                                            배송지연
-                                        </label>
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="misinfo"
-                                                id="misinfo"
-                                        />
-                                        <label for="misinfo">
-                                            상품정보 상이
-                                        </label>
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="etc"
-                                                id="etc"
-                                        />
-                                        <label for="etc"> 기타 </label>
+                                        <input type="radio" name="refundType" value="broken" id="broken" />
+                                        <label for="broken">불량/파손</label>
+
+                                        <input type="radio" name="refundType" value="dislike" id="dislike" />
+                                        <label for="dislike">단순변심</label>
+
+                                        <input type="radio" name="refundType" value="misorder" id="misorder" />
+                                        <label for="misorder">주문실수</label>
+
+                                        <input type="radio" name="refundType" value="misdelivery" id="misdelivery" />
+                                        <label for="misdelivery">오배송</label>
+
+                                        <input type="radio" name="refundType" value="delay" id="delay" />
+                                        <label for="delay">배송지연</label>
+
+                                        <input type="radio" name="refundType" value="misinfo" id="misinfo" />
+                                        <label for="misinfo">상품정보 상이</label>
+
+                                        <input type="radio" name="refundType" value="etc" id="etc" />
+                                        <label for="etc">기타</label>
                                     </div>
                                 </td>
                             </tr>
@@ -735,10 +638,7 @@
                             <tr>
                                 <td>반품사유</td>
                                 <td colspan="3">
-                                        <textarea
-                                                name="reason"
-                                                placeholder="반품 사유를 자세히 작성해 주세요."
-                                        ></textarea>
+                                    <textarea name="reason" placeholder="반품 사유를 자세히 작성해 주세요."></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -747,57 +647,23 @@
                                     <div class="fileBtnBox">
                                         <div class="file-upload-wrapper">
                                             <div>
-                                                <label
-                                                        for="file12"
-                                                        class="custom-file-upload"
-                                                >파일1 선택</label
-                                                >
-                                                <span class="file-name"
-                                                >선택된 파일 없음</span
-                                                >
-                                                <input
-                                                        type="file"
-                                                        id="file12"
-                                                        name="imageList1"
-                                                        class="hidden-file-input"
-                                                />
+                                                <label th:for="'file12-' + ${i.index}" class="custom-file-upload">파일1 선택</label>
+                                                <span class="file-name">선택된 파일 없음</span>
+                                                <input type="file" th:id="'file12-' + ${i.index}" name="imageList1" class="hidden-file-input"/>
                                             </div>
                                         </div>
                                         <div class="file-upload-wrapper">
                                             <div>
-                                                <label
-                                                        for="file22"
-                                                        class="custom-file-upload"
-                                                >파일2 선택</label
-                                                >
-                                                <span class="file-name"
-                                                >선택된 파일 없음</span
-                                                >
-                                                <input
-                                                        type="file"
-                                                        id="file22"
-                                                        name="imageList2"
-                                                        class="hidden-file-input"
-                                                />
+                                                <label th:for="'file22-' + ${i.index}" class="custom-file-upload">파일2 선택</label>
+                                                <span class="file-name">선택된 파일 없음</span>
+                                                <input type="file" th:id="'file22-' + ${i.index}" name="imageList2" class="hidden-file-input"/>
                                             </div>
                                         </div>
-
                                         <div class="file-upload-wrapper">
                                             <div>
-                                                <label
-                                                        for="file32"
-                                                        class="custom-file-upload"
-                                                >파일3 선택</label
-                                                >
-                                                <span class="file-name"
-                                                >선택된 파일 없음</span
-                                                >
-                                                <input
-                                                        type="file"
-                                                        id="file32"
-                                                        name="imageList3"
-                                                        class="hidden-file-input"
-                                                />
+                                                <label th:for="'file32-' + ${i.index}" class="custom-file-upload">파일3 선택</label>
+                                                <span class="file-name">선택된 파일 없음</span>
+                                                <input type="file" th:id="'file32-' + ${i.index}" name="imageList3" class="hidden-file-input"/>
                                             </div>
                                         </div>
                                     </div>
@@ -856,47 +722,20 @@
                                 <td>교환정보 입력</td>
                                 <td colspan="3">
                                     <div class="radio">
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="broken"
-                                                id="broken1"
-                                        />
-                                        <label for="broken1"
-                                        >불량/파손</label
-                                        >
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="misdelivery"
-                                                id="misdelivery1"
-                                        />
-                                        <label for="misdelivery1">
-                                            오배송
-                                        </label>
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="size"
-                                                id="size"
-                                        />
-                                        <label for="size"> 사이즈 </label>
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="misinfo"
-                                                id="misinfo1"
-                                        />
-                                        <label for="misinfo1">
-                                            상품정보 상이
-                                        </label>
-                                        <input
-                                                type="radio"
-                                                name="refundType"
-                                                value="etc"
-                                                id="etc1"
-                                        />
-                                        <label for="etc1"> 기타 </label>
+                                        <input type="radio" name="refundType" value="broken" id="broken1"/>
+                                        <label for="broken1">불량/파손</label>
+
+                                        <input type="radio" name="refundType" value="misdelivery" id="misdelivery1"/>
+                                        <label for="misdelivery1">오배송</label>
+
+                                        <input type="radio" name="refundType" value="size" id="size"/>
+                                        <label for="size">사이즈</label>
+
+                                        <input type="radio" name="refundType" value="misinfo" id="misinfo1"/>
+                                        <label for="misinfo1">상품정보 상이</label>
+
+                                        <input type="radio" name="refundType" value="etc" id="etc1"/>
+                                        <label for="etc1">기타</label>
                                     </div>
                                 </td>
                             </tr>
@@ -912,10 +751,7 @@
                             <tr>
                                 <td>교환사유</td>
                                 <td colspan="3">
-                                        <textarea
-                                                name="reason"
-                                                placeholder="교환 사유를 자세히 작성해 주세요."
-                                        ></textarea>
+                                    <textarea name="reason" placeholder="교환 사유를 자세히 작성해 주세요."></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -924,57 +760,23 @@
                                     <div class="fileBtnBox">
                                         <div class="file-upload-wrapper">
                                             <div>
-                                                <label
-                                                        for="file13"
-                                                        class="custom-file-upload"
-                                                >파일1 선택</label
-                                                >
-                                                <span class="file-name"
-                                                >선택된 파일 없음</span
-                                                >
-                                                <input
-                                                        type="file"
-                                                        id="file13"
-                                                        name="imageList1"
-                                                        class="hidden-file-input"
-                                                />
+                                                <label th:for="'file13-' + ${i.index}" class="custom-file-upload">파일1 선택</label>
+                                                <span class="file-name">선택된 파일 없음</span>
+                                                <input type="file" th:id="'file13-' + ${i.index}" name="imageList1" class="hidden-file-input"/>
                                             </div>
                                         </div>
                                         <div class="file-upload-wrapper">
                                             <div>
-                                                <label
-                                                        for="file23"
-                                                        class="custom-file-upload"
-                                                >파일2 선택</label
-                                                >
-                                                <span class="file-name"
-                                                >선택된 파일 없음</span
-                                                >
-                                                <input
-                                                        type="file"
-                                                        id="file23"
-                                                        name="imageList2"
-                                                        class="hidden-file-input"
-                                                />
+                                                <label th:for="'file23-' + ${i.index}" class="custom-file-upload">파일2 선택</label>
+                                                <span class="file-name">선택된 파일 없음</span>
+                                                <input type="file" th:id="'file23-' + ${i.index}" name="imageList2" class="hidden-file-input"/>
                                             </div>
                                         </div>
-
                                         <div class="file-upload-wrapper">
                                             <div>
-                                                <label
-                                                        for="file33"
-                                                        class="custom-file-upload"
-                                                >파일3 선택</label
-                                                >
-                                                <span class="file-name"
-                                                >선택된 파일 없음</span
-                                                >
-                                                <input
-                                                        type="file"
-                                                        id="file33"
-                                                        name="imageList3"
-                                                        class="hidden-file-input"
-                                                />
+                                                <label th:for="'file33-' + ${i.index}" class="custom-file-upload">파일3 선택</label>
+                                                <span class="file-name">선택된 파일 없음</span>
+                                                <input type="file" th:id="'file33-' + ${i.index}" name="imageList3" class="hidden-file-input"/>
                                             </div>
                                         </div>
                                     </div>
@@ -993,19 +795,17 @@
 </div>
 
 <script>
-    document
-        .querySelectorAll(".file-upload-wrapper")
-        .forEach((wrapper) => {
+    document.querySelectorAll(".modalControl").forEach((modal) => {
+        modal.querySelectorAll(".file-upload-wrapper").forEach((wrapper) => {
             const input = wrapper.querySelector('input[type="file"]');
             const fileNameDisplay = wrapper.querySelector(".file-name");
 
             input.addEventListener("change", function () {
                 fileNameDisplay.textContent =
-                    input.files.length > 0
-                        ? input.files[0].name
-                        : "선택된 파일 없음";
+                    input.files.length > 0 ? input.files[0].name : "선택된 파일 없음";
             });
         });
+    });
     const mop = document.querySelector(".mop");
     mop.textContent = mop.textContent.toUpperCase();
 </script>
@@ -1058,13 +858,34 @@
 
     // 모달 닫기
     function closePopup(index) {
-        document.getElementById("popup-" + index).style.display = "none";
-        document.getElementById("company-popup-" + index).style.display = "none";
-        document.getElementById("inquiry-popup-" + index).style.display = "none";
-        document.getElementById("confirm-popup-" + index).style.display = "none";
-        document.getElementById("review-popup-" + index).style.display = "none";
-        document.getElementById("refund-popup-" + index).style.display = "none";
-        document.getElementById("exchange-popup-" + index).style.display = "none";
+        const modalIds = [
+            "popup-",
+            "company-popup-",
+            "inquiry-popup-",
+            "confirm-popup-",
+            "review-popup-",
+            "refund-popup-",
+            "exchange-popup-"
+        ];
+
+        modalIds.forEach((prefix) => {
+            const modal = document.getElementById(prefix + index);
+            if (modal) {
+                modal.style.display = "none";
+
+                // 내부 form 초기화
+                const form = modal.querySelector("form");
+                if (form) {
+                    form.reset();
+                }
+
+                // 파일명 텍스트 초기화
+                modal.querySelectorAll(".file-name").forEach((span) => {
+                    span.textContent = "선택된 파일 없음";
+                });
+            }
+        });
+
         document.body.style.overflow = 'auto';
     }
 </script>

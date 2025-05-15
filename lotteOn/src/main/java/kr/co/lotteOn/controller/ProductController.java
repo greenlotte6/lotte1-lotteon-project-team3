@@ -6,6 +6,7 @@ import kr.co.lotteOn.dto.issuedCoupon.IssuedCouponDTO;
 import kr.co.lotteOn.dto.review.ReviewDTO;
 import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.OrderRepository;
+import kr.co.lotteOn.repository.ReviewRepository;
 import kr.co.lotteOn.security.MyUserDetails;
 import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -148,7 +150,9 @@ public class ProductController {
         if (product == null) {
             return "redirect:/product/list";
         }
+
         List<ReviewDTO> reviews = reviewService.getReviewsByProduct(productCode);
+
         model.addAttribute("product", product);
         model.addAttribute("reviews", reviews);
         return "/product/detail";
@@ -159,6 +163,7 @@ public class ProductController {
                              @RequestParam List<String> productCode,
                              @RequestParam List<Integer> quantity,
                              @RequestParam List<String> option,
+                             @RequestParam (required = false) List<Long> cartIds,
                              Model model) {
 
         Member member = myUserDetails.getMember();
@@ -180,6 +185,7 @@ public class ProductController {
         }
 
         preparePaymentPage(member, products, quantity, option, model);
+        model.addAttribute("cartIds", cartIds);
         return "/product/payment";
     }
 
@@ -254,7 +260,13 @@ public class ProductController {
 
     @PostMapping("/completeOrder")
     public String completeOrder(@ModelAttribute OrderRequestDTO orderRequestDTO,
-                                @ModelAttribute OrderItemListDTO itemListDTO) {
+                                @ModelAttribute OrderItemListDTO itemListDTO,
+                                @RequestParam(value = "cartIds", required = false) List<Long> cartIds,
+                                RedirectAttributes redirectAttributes) {
+
+        orderRequestDTO.setCartIds(cartIds);
+        log.info("넘어온 cartIds = {}", orderRequestDTO.getCartIds()); // 👈
+
         String orderCode = orderService.createOrder(orderRequestDTO, itemListDTO.getItems());
 
         pointService.usePoint(orderRequestDTO.getMemberId(), orderRequestDTO.getUsedPoint(), orderCode);

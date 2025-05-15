@@ -32,90 +32,13 @@
             <div class="mainContainer">
                 <div class="swiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide banners">
+                        <div class="swiper-slide banners" th:each="banner : ${swiperBanner}">
                             <div class="bannerCard">
                                 <a href="#">
-                                    <img src="/images/bannerCard2.png">
+                                    <img th:src="${banner.imagePath}" th:alt="${banner.name}">
                                     <div class="bannerCardText">
-                                        <p class="bannerCardTitle">
-                                            패션52<br>
-                                            타미힐피거/타미진스
-                                        </p>
-                                        <p class="bannerCardDesc">
-                                            스페셜위크 최대 52% OFF+카드할인
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="bannerCard">
-                                <a href="#">
-                                    <img src="/images/bannerCard4.png">
-                                    <div class="bannerCardText">
-                                        <p class="bannerCardTitle">
-                                            패션52<br>
-                                            타미힐피거/타미진스
-                                        </p>
-                                        <p class="bannerCardDesc">
-                                            스페셜위크 최대 52% OFF+카드할인
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="bannerCard">
-                                <a href="#">
-                                    <img src="/images/bannerCard3.png">
-                                    <div class="bannerCardText">
-                                        <p class="bannerCardTitle">
-                                            패션52<br>
-                                            타미힐피거/타미진스
-                                        </p>
-                                        <p class="bannerCardDesc">
-                                            스페셜위크 최대 52% OFF+카드할인
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide banners">
-                            <div class="bannerCard">
-                                <a href="#">
-                                    <img src="/images/bannerCard5.png">
-                                    <div class="bannerCardText">
-                                        <p class="bannerCardTitle">
-                                            패션52<br>
-                                            타미힐피거/타미진스
-                                        </p>
-                                        <p class="bannerCardDesc">
-                                            스페셜위크 최대 52% OFF+카드할인
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="bannerCard">
-                                <a href="#">
-                                    <img src="/images/bannerCard2.png">
-                                    <div class="bannerCardText">
-                                        <p class="bannerCardTitle">
-                                            패션52<br>
-                                            타미힐피거/타미진스
-                                        </p>
-                                        <p class="bannerCardDesc">
-                                            스페셜위크 최대 52% OFF+카드할인
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="bannerCard">
-                                <a href="#">
-                                    <img src="/images/bannerCard4.png">
-                                    <div class="bannerCardText">
-                                        <p class="bannerCardTitle">
-                                            패션52<br>
-                                            타미힐피거/타미진스
-                                        </p>
-                                        <p class="bannerCardDesc">
-                                            스페셜위크 최대 52% OFF+카드할인
-                                        </p>
+                                        <p class="bannerCardTitle" th:utext="${#strings.replace(banner.sliderTitle, '\n', '<br/>')}"></p>
+                                        <p class="bannerCardDesc" th:utext="${#strings.replace(banner.sliderSubTitle, '\n', '<br/>')}"></p>
                                     </div>
                                 </a>
                             </div>

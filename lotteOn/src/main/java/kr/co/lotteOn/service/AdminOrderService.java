@@ -3,6 +3,8 @@ package kr.co.lotteOn.service;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteOn.dto.delivery.DeliveryDTO;
+import kr.co.lotteOn.dto.delivery.DeliveryPageRequestDTO;
+import kr.co.lotteOn.dto.delivery.DeliveryPageResponseDTO;
 import kr.co.lotteOn.dto.order.OrderDTO;
 import kr.co.lotteOn.dto.order.OrderPageRequestDTO;
 import kr.co.lotteOn.dto.order.OrderPageResponseDTO;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -118,73 +121,102 @@ public class AdminOrderService {
 
 
     //관리자 주문관리 - 배송현황
-    public OrderPageResponseDTO DeliveryList(OrderPageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("orderCode");
-        Page<Tuple> orders = orderRepository.findAllByStatus(pageRequestDTO, pageable);
+    @Transactional
+    public DeliveryPageResponseDTO DeliveryList(DeliveryPageRequestDTO pageRequestDTO) {
+        //페이징
+        Pageable pageable = pageRequestDTO.getPageable("deliveryNo");
+        Page<Tuple> pageDelivery = deliveryRepository.findAll(pageRequestDTO, pageable);
+        
+        Map<String, DeliveryDTO> deliveryMap = new LinkedHashMap<>();
 
-        Map<String, OrderDTO> orderMap = new LinkedHashMap<>(); // 순서 보존
+        for (Tuple tuple : pageDelivery.getContent()) {
+            Delivery delivery = tuple.get(0, Delivery.class);
+            Order order = tuple.get(1, Order.class);
+            OrderItem orderItem = tuple.get(2, OrderItem.class);
+            Product product = tuple.get(3, Product.class);
+            Member member = tuple.get(4, Member.class);
 
-        List<OrderDTO> orderDTOList = orders
-                .getContent()
-                .stream()
-                .map(tuple -> {
-                    Order order = tuple.get(0, Order.class);
-                    Member member = tuple.get(1, Member.class);
-                    OrderItem orderItem = tuple.get(2, OrderItem.class);
-                    Product product = tuple.get(3, Product.class);
-                    Delivery delivery = tuple.get(4, Delivery.class);
+            String orderCode = delivery.getOrderCode();
 
-                    String memberId = member.getId();
-                    String memberName = member.getName();
+            if (deliveryMap.containsKey(orderCode)) {
+                DeliveryDTO existing = deliveryMap.get(orderCode);
 
-                            String orderCode = order.getOrderCode();
+                int prevQty = existing.getQuantity();
+                existing.setQuantity(prevQty + orderItem.getQuantity());
 
-                            if (orderMap.containsKey(orderCode)) {
-                                // 기존 DTO에 누적
-                                OrderDTO existing = orderMap.get(orderCode);
+                int prevTotal = existing.getTotalPrice();
+                int added = product.getPrice() * orderItem.getQuantity();
+                existing.setTotalPrice(prevTotal + added);
 
-                                // 수량 누적
-                                int prevQty = existing.getQuantity();
-                                existing.setQuantity(prevQty + orderItem.getQuantity());
+                continue;
+            }
 
-                                // 가격 누적
-                                int prevTotal = existing.getTotalPrice();
-                                int added = product.getPrice() * orderItem.getQuantity();
-                                existing.setTotalPrice(prevTotal + added);
+            // ✅ regDate 기준 배송 상태 판단
+            LocalDate regDate = delivery.getRegDate().toLocalDate(); // LocalDateTime이면 .toLocalDate() 사용
+            LocalDate today = LocalDate.now();
+            // 기준일 계산
+            LocalDate readyDate = regDate.plusDays(1); // 배송중 기준
+            LocalDate completeDate = regDate.plusDays(3); // 배송완료 기준
 
-                            } else {
-                                // 새 DTO 생성
-                                OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-                                orderDTO.setMemberId(member.getId());
-                                orderDTO.setMemberName(member.getName());
-                                orderDTO.setProductInfo(product, orderItem);  // 상품 1개만 설정
-                                orderDTO.setDeliveryInfo(delivery);
+            if (order.getRefundStatus() != null) {
+                // 환불 상태가 있으면 수거 상태로 변경
+                if (!today.isBefore(completeDate)) {
+                    order.setConfirm("수거완료");
+                } else if (!today.isBefore(readyDate)) {
+                    order.setConfirm("수거중");
+                }
+            } else {
+                // 환불 상태가 없으면 기존 배송 상태로
+                if (!today.isBefore(completeDate)) {
+                    order.setConfirm("배송완료");
+                } else if (!today.isBefore(readyDate)) {
+                    order.setConfirm("배송중");
+                }
+            }
 
-                                // 수량, 총가격 초기 설정
-                                orderDTO.setQuantity(orderItem.getQuantity());
-                                orderDTO.setTotalPrice(product.getPrice() * orderItem.getQuantity());
+            // ✅ DTO 생성 및 매핑
+            DeliveryDTO deliveryDTO = modelMapper.map(delivery, DeliveryDTO.class);
+            deliveryDTO.setMemberId(member.getId());
+            deliveryDTO.setMemberName(member.getName());
+            deliveryDTO.setMember(member);
+            deliveryDTO.setHp(member.getHp());
 
-                                orderMap.put(orderCode, orderDTO);
-                            }
+            deliveryDTO.setProductInfo(product, orderItem);
+            deliveryDTO.setOrderInfo(order);
 
-                    OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-                    orderDTO.setMemberId(memberId);
-                    orderDTO.setMemberName(memberName);
+            deliveryMap.put(orderCode, deliveryDTO);
 
-                    // ✅ 한 줄로 설정
-                    orderDTO.setProductInfo(product, orderItem);
-                    orderDTO.setDeliveryInfo(delivery);
+        }
 
-                    return orderDTO;
-                }).toList();
+        List<DeliveryDTO> deliveryDTOList = new ArrayList<>(deliveryMap.values());
+        int total = (int) pageDelivery.getTotalElements();
 
-        int total = (int) orders.getTotalElements();
-
-        return OrderPageResponseDTO.builder()
+        return DeliveryPageResponseDTO.builder()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(orderDTOList)
+                .dtoList(deliveryDTOList)
                 .total(total)
                 .build();
+    }
+
+    @Transactional
+    public void updateDeliveryStatusByDate() {
+        List<Delivery> deliveries = deliveryRepository.findAll();
+
+        for (Delivery delivery : deliveries) {
+            LocalDate regDate = delivery.getRegDate().toLocalDate();
+            LocalDate today = LocalDate.now();
+
+            String code = delivery.getOrderCode();
+
+            Order order = orderRepository.findByOrderCode(code);
+
+            if (!today.isBefore(regDate.plusDays(3))) {
+                order.setConfirm("배송완료");
+            } else if (!today.isBefore(regDate.plusDays(1))) {
+                order.setConfirm("배송중");
+            }
+        }
+        // 트랜잭션 안이므로 변경 감지(Dirty Checking)로 자동 저장됨
     }
 
     //관리자 환불/교환 신청 내역 불러오기

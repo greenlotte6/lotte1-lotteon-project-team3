@@ -1,11 +1,13 @@
 package kr.co.lotteOn.service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
 import kr.co.lotteOn.repository.BannerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class BannerService {
 
     private final BannerRepository bannerRepository;
+    private final EntityManager entityManager;
 
     public void activateBanner(int id) {
         Banner banner = bannerRepository.findById(id).orElseThrow();
@@ -47,5 +50,11 @@ public class BannerService {
                     return !now.isBefore(start) && !now.isAfter(end); // 시간 범위 내
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteByIdIn(List<Integer> bannerIds) {
+        bannerRepository.deleteByIdIn(bannerIds);
+        entityManager.clear();
     }
 }

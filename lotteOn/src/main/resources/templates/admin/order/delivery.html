@@ -25,16 +25,20 @@
                 <div><span>HOME > 주문관리 > <p>배송현황</p></span></div>
             </div>
             <div class="shopArea">
-                <div class="searchArea">
-                    <select name="searchType">
-                        <option>선택</option>
-                        <option value="waybill">송장번호</option>
-                        <option value="orderCode">주문번호</option>
-                        <option value="receiver">수령인</option>
-                    </select>
-                    <input type="text" name="keyword" placeholder="검색어 입력">
-                    <button type="submit">검색</button>
-                </div>
+                <form>
+                    <div class="searchArea">
+                        <select name="searchType">
+                            <option>선택</option>
+                            <option value="waybill">송장번호</option>
+                            <option value="orderCode">주문번호</option>
+                            <option value="receiver">수령인</option>
+                            <option value="post">택배사</option>
+                        </select>
+                        <input type="text" name="keyword" placeholder="검색어 입력">
+                        <button type="submit">검색</button>
+                    </div>
+                </form>
+                <p style="font-weight: 600; margin-bottom: 10px"> 송장 번호 클릭 시 상세보기 창 출력 </p>
                 <table>
                     <tr>
                         <th>송장번호</th>
@@ -49,13 +53,17 @@
                         <th>접수일</th>
                     </tr>
                     <tr th:each="delivery, i : ${delivery}">
-                        <td th:text="${delivery.waybill}">
-                            <button type="submit" class="orderinfo">15121451241</button>
+                        <td>
+                            <button button type="submit"
+                                    class="orderinfo"
+                                    th:onclick="'orderinfoPopup(' + ${i.index} + ')'"
+                                    th:text="${delivery.waybill}">
+                            </button>
                         </td>
                         <td th:text="${delivery.post}">로젠택배</td>
                         <td th:text="${delivery.orderCode}">10101010101</td>
                         <td th:text="${delivery.receiver}">정상수</td>
-                        <td th:text="${delivery.productName}">도리토스</td>
+                        <td th:text="${delivery.displayProductName}">도리토스</td>
                         <td th:text="${delivery.quantity}">20</td>
                         <td th:text="${delivery.actualMoney}">200,200</td>
                         <td th:text="${delivery.fee}">200</td>
@@ -65,23 +73,42 @@
                 </table>
                 <div class="btnarea">
                     <div class="pageBtn">
-                        <a href=""><img src="/images/back-double.png"></a>
-                        <a href=""><img src="/images/back-single.png" class="single"></a>
-                        <a href="" class="number">1</a>
-                        <a href="" class="number">2</a>
-                        <a href="" class="number">3</a>
-                        <a href=""><img src="/images/right-single.png" class="single"></a>
-                        <a href=""><img src="/images/right-double.png"></a>
+                        <th:block th:if="${page?.end > 0}">
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.start-2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
+                                    <img src="/images/back-double.png">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.prev}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.start-1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="prev">
+                                    <img src="/images/back-single.png" class="single">
+                                </a>
+                            </th:block>
+
+                            <th:block th:each="num:${#numbers.sequence(page.start, page.end)}">
+                                <a th:href="@{/admin/order/delivery(pg=${num}, searchType=${page.searchType}, keyword=${page.keyword})}" th:class="${num == page.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            </th:block>
+
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.end+1}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
+                                    <img src="/images/right-single.png" class="single">
+                                </a>
+                            </th:block>
+                            <th:block th:if="${page.next}">
+                                <a th:href="@{/admin/order/delivery(pg=${page.end+2}, searchType=${page.searchType}, keyword=${page.keyword})}" class="next">
+                                    <img src="/images/right-double.png">
+                                </a>
+                            </th:block>
+                        </th:block>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="bannerModal" class="modal">
+        <div  th:each="delivery, i : ${delivery}" th:id="'orderinfoPopup-' + ${i.index}" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div class="modaltop">
                     <h3>주문상세</h3>
-                    <p>10101010101</p>
                 </div>
                 <form>
                     <div class="modalTable">
@@ -93,37 +120,23 @@
                                 <th>상품이미지</th>
                                 <th>상품번호</th>
                                 <th>상품명</th>
-                                <th>판매자</th>
+                                <th>판매사</th>
                                 <th>가격</th>
-                                <th>수량</th>
+                                <th>할인</th>
                                 <th>배송비</th>
                                 <th>결제금액</th>
                             </tr>
                             <tr>
-                                <td><img src="/images/browser.png"></td>
-                                <td>12121212121</td>
-                                <td>도리토스</td>
                                 <td>
-                                    (주)<br>
-                                    롯데온
+                                    <img th:src="@{'/images/' + ${delivery.imageList}}">
                                 </td>
-                                <td>1,700</td>
-                                <td>100</td>
-                                <td>100</td>
-                                <td>170,100</td>
-                            </tr>
-                            <tr>
-                                <td><img src="/images/browser.png"></td>
-                                <td>12121212121</td>
-                                <td>도리토스</td>
-                                <td>
-                                    (주)<br>
-                                    롯데온
-                                </td>
-                                <td>1,700</td>
-                                <td>100</td>
-                                <td>100</td>
-                                <td>170,100</td>
+                                <td th:text="${delivery.productCode}">12121212121</td>
+                                <td th:text="${delivery.productName}">도리토스</td>
+                                <td th:text="${delivery.companyName}"></td>
+                                <td th:text="${delivery.price} + '원'">1,700</td>
+                                <td th:text="'-' + ${delivery.discount} + '원'">100</td>
+                                <td th:text="${delivery.fee} + '원'">100</td>
+                                <td th:text="${delivery.actualMoney} + '원'">170,100</td>
                             </tr>
                         </table>
                         <div class="info">
@@ -133,31 +146,31 @@
                             <table>
                                 <tr>
                                     <th>주문번호</th>
-                                    <td>12121212121</td>
+                                    <td th:text="${delivery.orderCode}">12121212121</td>
                                 </tr>
                                 <tr>
                                     <th>수령인</th>
-                                    <td>정상수</td>
+                                    <td th:text="${delivery.receiver}">정상수</td>
                                 </tr>
                                 <tr>
                                     <th>연락처</th>
-                                    <td>010-1234-1234</td>
+                                    <td th:text="${delivery.hp}">010-1234-1234</td>
                                 </tr>
                                 <tr>
                                     <th>배송지 주소</th>
-                                    <td>부산 부산진구</td>
+                                    <td th:text="${delivery.addr}">부산 부산진구</td>
                                 </tr>
                                 <tr>
                                     <th>택배사</th>
-                                    <td>로젠택배</td>
+                                    <td th:text="${delivery.post}">로젠택배</td>
                                 </tr>
                                 <tr>
                                     <th>송장번호</th>
-                                    <td>12121212121</td>
+                                    <td th:text="${delivery.waybill}">12121212121</td>
                                 </tr>
                                 <tr>
                                     <th>기타</th>
-                                    <td>감사수고</td>
+                                    <td th:text="${delivery.etc}">감사수고</td>
                                 </tr>
                             </table>
                         </div>
@@ -166,6 +179,19 @@
             </div>
         </div>
     </main>
+    <script th:inline="javascript">
+        //상품정보열기
+        function orderinfoPopup(index) {
+            document.getElementById("orderinfoPopup-" + index).style.display = "block";
+        }
+
+        // 닫기
+        document.querySelectorAll('.modal .close').forEach(btn => {
+            btn.addEventListener('click', function () {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+    </script>
     <th:block th:replace="/admin/_adminFooter.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
 </body>

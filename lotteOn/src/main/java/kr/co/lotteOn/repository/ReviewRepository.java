@@ -15,4 +15,5 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Integer>, ReviewRepositoryCustom {
 
     List<Review> findByProductCode(String productCode);
+    List<Review> findByProductCodeOrderByRegDateDesc(String productCode);
 }

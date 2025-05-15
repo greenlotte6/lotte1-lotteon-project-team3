@@ -23,6 +23,33 @@
   <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
   <title>포인트내역 : 롯데ON</title>
+
+  <style>
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 500px;
+      height: 500px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 <div id="container">
@@ -35,70 +62,7 @@
           <th:block th:insert="~{/myPage/_side.html}"/>
         </aside>
         <section>
-          <div class="simpleInfoWrapper">
-            <div class="simpleInfo">
-              <div>
-                <p>쇼핑하기 좋은 날이에요!</p>
-                <a th:href="@{/myPage/my_info}" class="nameBox">
-                  <p class="bold" th:text="${loginUser.name}"></p>
-                  <p>님</p>
-                </a>
-                <div class="ratingBox">
-                  <img src="/images/icon_mylotte.png" alt="등급">
-                  <p class="bold">롯데ON</p>
-                  <p class="bold" th:text="${loginUser.rating}"></p>
-                  <p>등급이네요!</p>
-                </div>
-              </div>
-              <div>
-                <div class="myPoint">
-                  <a th:href="@{/myPage/my_order}">
-                    <p>주문 수</p>
-                    <div>
-                      <p class="bold" th:text="${totalOrder}"></p>
-                      <p>건</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="myPoint">
-                  <a th:href="@{/myPage/my_point}">
-                    <p>POINT</p>
-                    <div>
-                      <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
-                      <p>P</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="myCoupon">
-                  <a th:href="@{/myPage/my_coupon}">
-                    <p>나의 쿠폰</p>
-                    <div>
-                      <p class="bold" th:text="${totalCoupon}"></p>
-                      <p>개</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="myReview">
-                  <a th:href="@{/myPage/my_qna}">
-                    <p>문의 수</p>
-                    <div>
-                      <p class="bold" th:text="${totalQnaCount}"></p>
-                      <p>개</p>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="simpleInfoFooter">
-              <div class="swiper">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
-                  <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
-                  <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <th:block th:insert="~{/myPage/_myInfo.html}"/>
           <div class="pointHistory var">
             <div class="varTitle">
               <h3>포인트 내역</h3>
@@ -185,7 +149,41 @@
         </section>
       </div>
     </div>
+    <!-- 모달창 -->
+    <div th:each="order, i : ${point}" th:id="'pointModal-' + ${i.index}" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>주문 상세 정보</h3>
+        <div id="modalContent">
+          <table>
+            <tr>
+              <th>상품명</th>
+              <td>[[${order.productName}]]</td>
+            </tr>
+            <tr>
+              <th>가격</th>
+              <td>[[${order.price}]]</td>
+            </tr>
+            <tr>
+              <th>포인트</th>
+              <td>[[${order.quantity}]]</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
   </main>
+  <script th:inline="javascript">
+    function showPopup(index) {
+      document.getElementById('pointModal-' + index).style.display = 'block';
+    }
+
+    document.querySelectorAll('.modal .close').forEach(btn => {
+      btn.addEventListener('click', function () {
+        this.closest('.modal').style.display = 'none';
+      });
+    });
+  </script>
   <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
 </body>

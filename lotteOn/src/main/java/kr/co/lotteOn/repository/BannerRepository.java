@@ -10,4 +10,5 @@ import java.util.List;
 public interface BannerRepository extends JpaRepository<Banner, Integer> {
 
     List<Banner> findByLocation(String location);
+    void deleteByIdIn(List<Integer> bannerIds);
 }

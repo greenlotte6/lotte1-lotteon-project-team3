@@ -24,6 +24,10 @@
     <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
     <title>문의하기 : 롯데ON</title>
+
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -37,73 +41,10 @@
                     <th:block th:insert="~{/myPage/_side.html}"/>
                 </aside>
                 <section>
-                    <div class="simpleInfoWrapper">
-                        <div class="simpleInfo">
-                            <div>
-                                <p>쇼핑하기 좋은 날이에요!</p>
-                                <a th:href="@{/myPage/my_info}" class="nameBox">
-                                    <p class="bold" th:text="${loginUser.name}"></p>
-                                    <p>님</p>
-                                </a>
-                                <div class="ratingBox">
-                                    <img src="/images/icon_mylotte.png" alt="등급">
-                                    <p class="bold">롯데ON</p>
-                                    <p class="bold" th:text="${loginUser.rating}"></p>
-                                    <p>등급이네요!</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="myPoint">
-                                    <a th:href="@{/myPage/my_order}">
-                                        <p>주문 수</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalOrder}"></p>
-                                            <p>건</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myPoint">
-                                    <a th:href="@{/myPage/my_point}">
-                                        <p>POINT</p>
-                                        <div>
-                                            <p class="bold thisIsMyPoint" th:text="${totalPointCount}"></p>
-                                            <p>P</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myCoupon">
-                                    <a th:href="@{/myPage/my_coupon}">
-                                        <p>나의 쿠폰</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalCoupon}"></p>
-                                            <p>개</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="myReview">
-                                    <a th:href="@{/myPage/my_qna}">
-                                        <p>문의 수</p>
-                                        <div>
-                                            <p class="bold" th:text="${totalQnaCount}"></p>
-                                            <p>개</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="simpleInfoFooter">
-                            <div class="swiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">롯데ON에 오신 것을 환영합니다!</div>
-                                    <div class="swiper-slide">오늘도 행복한 하루 보내세요!</div>
-                                    <div class="swiper-slide">롯데6차 수강생들 프로젝트 화이팅! 💪</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <th:block th:insert="~{/myPage/_myInfo.html}"/>
                     <div class="customerCenter var">
                         <div class="varTitle">
-                            <h3>반품/교환신청 내역</h3>
+                            <h3>반품 / 교환신청 내역</h3>
                         </div>
                         <div class="orderHeader" th:if="${#lists.isEmpty(refund)}">
                             <div>
@@ -117,17 +58,17 @@
                                     <th>채널</th>
                                     <th>유형</th>
                                     <th>주문번호</th>
-                                    <th>작성일</th>
                                     <th>내용</th>
+                                    <th>작성일</th>
                                     <th>상태</th>
                                 </tr>
                                 <tr th:each="refund, i : ${refund}">
                                     <td th:text="${refund.refundNo}">1</td>
                                     <td th:text="${refund.channel}"></td>
                                     <td th:text="${refund.refundType}">반품신청/철회</td>
-                                    <td th:text="${#strings.length(refund.orderCode) > 10} ? ${refund.orderCode.substring(0, 10)} + '...' : ${refund.orderCode}"></td>
-                                    <td th:text="${refund.regDate}">2025.05.08</td>
+                                    <td th:text="${refund.orderCode}"></td>
                                     <td th:text="${#strings.length(refund.reason) > 20} ? ${refund.reason.substring(0, 10)} + '...' : ${refund.reason}"></td>
+                                    <td th:text="${refund.regDate}">2025.05.08</td>
                                     <td>[[${refund.channel}]][[${refund.status}]]</td>
                                 </tr>
                             </table>
