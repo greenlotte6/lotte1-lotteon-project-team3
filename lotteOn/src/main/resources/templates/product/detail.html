@@ -50,9 +50,9 @@
                             <span class="won">원</span>
                         </div>
                     </div>
-                    <div class="adBanner">
-                        <a href="#">
-                            <img src="/images/adBanner.jpg" alt="광고 배너">
+                    <div class="adBanner" th:if="${productBanner != null}">
+                        <a href="#" th:each="banner : ${productBanner}">
+                            <img th:src="${banner.imagePath}" alt="광고 배너">
                         </a>
                     </div>
                     <!--optionValue에서 ,로 구분은 dto에서 실행함.-->

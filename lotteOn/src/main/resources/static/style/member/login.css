@@ -10,6 +10,7 @@ main > div > * {
 .mainWrapper {
     margin-top: 50px;
     margin-bottom: 110px;
+    position: relative;
 }
 
 .mainWrapper > h2 {
@@ -22,7 +23,7 @@ main > div > * {
 .inputContainer {
     display: flex;
     flex-direction: column;
-    padding-bottom: 70px;
+    padding-bottom: 35px;
 }
 
 .selectUser {
@@ -184,4 +185,13 @@ label > input {
     padding-top: 60px;
     font-size: 14px;
     border: none;
+}
+
+.adBox {
+    padding-bottom: 30px;
+    cursor: pointer;
+}
+
+.adBox img {
+    width: 420px;
 }

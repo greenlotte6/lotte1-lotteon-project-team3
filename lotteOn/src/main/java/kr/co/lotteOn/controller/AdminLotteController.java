@@ -66,7 +66,9 @@ public class AdminLotteController {
         return "/admin/config/banner";
     }
     @GetMapping("/config/bannerLogin")
-    public String bannerLogin(){
+    public String bannerLogin(Model model) {
+        List<Banner> banners = bannerRepository.findAll();
+        model.addAttribute("banners", banners);
         return "/admin/config/bannerLogin";
     }
     @GetMapping("/config/bannerMainsl")
@@ -76,11 +78,15 @@ public class AdminLotteController {
         return "/admin/config/bannerMainsl";
     }
     @GetMapping("/config/bannerMypage")
-    public String bannerMypage(){
+    public String bannerMypage(Model model){
+        List<Banner> banners = bannerRepository.findAll();
+        model.addAttribute("banners", banners);
         return "/admin/config/bannerMypage";
     }
     @GetMapping("/config/bannerProduct")
-    public String bannerProduct(){
+    public String bannerProduct(Model model){
+        List<Banner> banners = bannerRepository.findAll();
+        model.addAttribute("banners", banners);
         return "/admin/config/bannerProduct";
     }
 

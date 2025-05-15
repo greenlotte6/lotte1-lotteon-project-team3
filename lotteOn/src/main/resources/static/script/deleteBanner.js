@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const checkedBoxes = document.querySelectorAll(".delete-check:checked");
 
         const bannerIds = Array.from(checkedBoxes).map(cb =>
-            cb.closest("tr").dataset.bannerIds
+            cb.closest("tr").dataset.id
         );
+
+        console.log(bannerIds);
 
         // 선택된 항목이 없으면 경고
         if (bannerIds.length === 0) {

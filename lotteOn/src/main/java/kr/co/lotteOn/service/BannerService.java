@@ -6,6 +6,7 @@ import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
 import kr.co.lotteOn.repository.BannerRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BannerService {
@@ -54,7 +56,7 @@ public class BannerService {
 
     @Transactional
     public void deleteByIdIn(List<Integer> bannerIds) {
+        log.info("bannerIds Service {} ", bannerIds);
         bannerRepository.deleteByIdIn(bannerIds);
-        entityManager.clear();
     }
 }

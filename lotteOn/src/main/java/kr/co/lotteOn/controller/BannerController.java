@@ -5,6 +5,7 @@ import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.repository.BannerRepository;
 import kr.co.lotteOn.service.BannerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class BannerController {
@@ -59,6 +61,7 @@ public class BannerController {
     @PostMapping("/banners/delete")
     @ResponseBody
     public ResponseEntity<?> deleteBanners(@RequestBody List<Integer> bannerIds) {
+        log.info("bannerIds = {}", bannerIds);
         if (bannerIds.isEmpty()) {
             return ResponseEntity.badRequest().body("삭제할 항목이 없습니다.");
         }

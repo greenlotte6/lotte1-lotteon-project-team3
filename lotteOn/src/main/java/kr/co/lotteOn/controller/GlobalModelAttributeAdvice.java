@@ -1,6 +1,5 @@
 package kr.co.lotteOn.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
 import kr.co.lotteOn.entity.Member;
@@ -44,6 +43,18 @@ public class GlobalModelAttributeAdvice {
     @ModelAttribute("swiperBanner")
     public List<Banner> swiperBanner() {
         return bannerService.findValidBanner("SLIDER");
+    }
+    @ModelAttribute("productBanner")
+    public List<Banner> productBanner() {
+        return bannerService.findValidBanner("PRODUCT");
+    }
+    @ModelAttribute("loginBanner")
+    public List<Banner> loginBanner() {
+        return bannerService.findValidBanner("LOGIN");
+    }
+    @ModelAttribute("myPageBanner")
+    public List<Banner> myPageBanner() {
+        return bannerService.findValidBanner("MYPAGE");
     }
 
     @ModelAttribute("loginUser")
