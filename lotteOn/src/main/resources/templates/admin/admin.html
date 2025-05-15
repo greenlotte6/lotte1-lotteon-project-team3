@@ -67,7 +67,7 @@
                         <td colspan="2" th:text="${orderStats['주문건수']}"></td>
                         <td colspan="2" th:text="${#numbers.formatInteger(orderStats['주문금액'], 1, 'COMMA')}"></td>
                         <td colspan="2" th:text="${orderStats['회원가입']}"></td>
-                        <td colspan="2">-</td> <!-- 방문자 수 미구현 -->
+                        <td colspan="2" th:text="${todayVisit}">0</td> <!-- 방문자 수 미구현 -->
                         <td colspan="2" th:text="${orderStats['문의게시물']}"></td>
                     </tr>
                     <tr>
@@ -77,8 +77,8 @@
                         <td th:text="${#numbers.formatInteger(dailyStats['orderMoneyToday'], 1, 'COMMA')}">1,200,000</td>
                         <td>오늘</td>
                         <td th:text="${dailyStats['memberToday']}">102</td>
-                        <td>어제</td>
-                        <td>1,200</td>
+                        <td>오늘</td>
+                        <td th:text="${todayVisit}">0</td>
                         <td>오늘</td>
                         <td th:text="${dailyStats['qnaToday']}">13</td>
                     </tr>
@@ -89,8 +89,8 @@
                         <td th:text="${#numbers.formatInteger(dailyStats['orderMoneyYesterday'], 1, 'COMMA')}">2,500,000</td>
                         <td>어제</td>
                         <td th:text="${dailyStats['memberYesterday']}">130</td>
-                        <td>오늘</td>
-                        <td>1,300</td>
+                        <td>어제</td>
+                        <td th:text="${yesterdayVisit}">0</td>
                         <td>어제</td>
                         <td th:text="${dailyStats['qnaYesterday']}">12</td>
                     </tr>
