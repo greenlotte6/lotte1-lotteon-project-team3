@@ -113,12 +113,17 @@
                 <ul>
                     <li><a href="#" class="productDescBtn">상품설명</a></li>
                     <li><a href="#detailInfo" class="detailInfoBtn">상세정보</a></li>
-                    <li><a href="#review" class="reviewBtn">후기<span class="reviewCount">(1,004)</span></a></li>
+                    <li><a href="#review" class="reviewBtn">후기<span class="reviewCount" th:text="${'(' + reviews.size() + ')'}"></span></a></li>
                 </ul>
             </div>
             <div class="substitution"></div>
             <div class="descImg" id="detailInfo">
-                <img th:src="@{'/images/' + ${product.imageDetail}}" alt="상품설명">
+                <div th:if="${product.imageDetail == null or #strings.isEmpty(product.imageDetail)}">
+                    <img src="/images/no_img.jpg" alt="사진 없음" class="noImgzz">
+                </div>
+                <div th:if="${product.imageDetail != null and !#strings.isEmpty(product.imageDetail)}">
+                    <img th:src="@{/images/{fileName}(fileName=${product.imageDetail})}" alt="상품 설명">
+                </div>
             </div>
             <div class="reviewContainer" id="review">
                 <h2>상품 후기</h2>
