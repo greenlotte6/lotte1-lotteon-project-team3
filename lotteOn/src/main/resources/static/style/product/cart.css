@@ -82,30 +82,35 @@ main > div > * {
 
 .itemMain {
     display: flex;
-    padding-left: 30px;
-    padding-top: 16px;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 30px 10px 0 10px;
+
 }
 
 .itemMain > a > img {
-    border-radius: 6px;
-    width: 360px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
 }
 
 .itemSub {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin-left: 16px;
-    padding: 6px 0;
+    justify-content: center;
     align-items: center;
+    margin-left: 16px;
+    row-gap: 14px;
+    padding: 6px 0;
 }
 
-.itemPrice {
-    position: relative;
-    bottom: 10px;
-    left: 1px;
+.itemSub > p {
+    text-align: right;
+    padding-right: 8px;
+    font-weight: 700;
+}
+
+.itemSub > .itemPrice {
 }
 
 .remove {
@@ -135,10 +140,6 @@ main > div > * {
     width: 88px;
     padding: 0 1px;
     border-radius: 16px;
-    margin-top: 10px;
-}
-.itemOption {
-    margin-bottom: 8px;
 }
 
 .minus {

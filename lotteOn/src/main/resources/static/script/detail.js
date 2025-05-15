@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             selected.innerHTML = `
                 <p>${name}: ${value}</p>
-                <button class="removeBtn">X</button>
+                <button class="removeBtn"></button>
             `;
             selectedContainer.appendChild(selected);
 

@@ -247,7 +247,7 @@ del {
     grid-template-columns: 210px 210px 210px 210px 210px;
     grid-template-rows: 380px;
     column-gap: 37px;
-    row-gap: 10px;
+    row-gap: 50px;
 }
 
 .best10 {

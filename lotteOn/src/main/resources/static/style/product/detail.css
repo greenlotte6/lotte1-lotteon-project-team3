@@ -17,7 +17,8 @@ main > div > * {
 .productImage > img {
     border-radius: 15px;
     width: 540px;
-    height: 100%;
+    height: 540px;
+    object-fit: cover;
 }
 
 .no {
@@ -100,12 +101,15 @@ main > div > * {
     width: 128px;
     font-size: 14px;
     position: relative;
-    bottom: 17px;
 }
 
 .chooseOption {
     width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
 }
 
 .chooseOption > p {
@@ -183,31 +187,38 @@ main > div > * {
 }
 
 .selectedOptions {
-    padding: 11px 10px 11px 15px;
-    margin-top: 5px;
-    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    width: inherit;
     position: relative;
-    bottom: 18px;
 }
 
 .selectedOption {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    column-gap: 12px;
+    margin-top: 14px;
+    padding-right: 12px;
+    padding-left: 12px;
 }
 
-.selectedOption:nth-of-type(2) {
-    margin-top: 12px;
+.selectedOption:last-child {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
 .selectedOption > p {
-    font-size: 12px;
+    font-size: 14px;
 }
 
-.selectedOption > button {
-    background-color: white;
+.removeBtn {
+    width: 16px;
+    height: 16px;
     border: none;
-    height: 24px;
+    background-color: white;
+    background-image: url("../../images/deleteSearchKeyword.svg");
 }
 
 .control {
@@ -220,32 +231,34 @@ main > div > * {
     border-radius: 3px;
 }
 
+.countControl p {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+}
+
 .minus {
     width: 28px;
     height: 28px;
-    border: none;
     font-size: 1px;
     color: transparent;
     background-size: cover;
     background-color: transparent;
     background-image: url("../../images/minus.svg");
-    vertical-align: top;
-    position: relative;
-    bottom: 4px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
 }
 
 .plus {
     width: 28px;
     height: 28px;
-    border: none;
     font-size: 1px;
     color: transparent;
     background-size: cover;
     background-color: transparent;
     background-image: url("../../images/plus.svg");
-    vertical-align: top;
-    position: relative;
-    bottom: 4px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
 }
 
 .totalPriceBox {
@@ -253,6 +266,7 @@ main > div > * {
     justify-content: space-between;
     align-items: flex-end;
     padding-top: 30px;
+    padding-bottom: 15px;
 }
 
 .totalPriceBox > *:first-child {
@@ -269,9 +283,16 @@ main > div > * {
     line-height: 30px;
 }
 
+.totalPriceBox > p {
+    display: flex;
+    align-items: center;
+}
+
 .totalPrice {
     font-size: 32px;
     font-weight: bold;
+    margin-left: 8px;
+    margin-right: 2px;
 }
 
 .btnContainer {
@@ -328,7 +349,6 @@ main > div > * {
 
 .mr-tb {
     margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 .substitution {
@@ -377,7 +397,13 @@ main > div > * {
     margin-bottom: 30px;
 }
 
+.descImg > img {
+    width: 1200px;
+    object-fit: cover;
+}
+
 .reviewContainer {
+    margin-top: 50px;
     margin-bottom: 50px;
 }
 
@@ -495,11 +521,14 @@ main > div > * {
     width: 300px;
     height: 40px;
     position: relative;
-    bottom: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
 }
 .optionGroup {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    column-gap: 16px;
+}
+
+.optionGroup > label {
+    font-size: 14px;
+    width: 50px;
 }

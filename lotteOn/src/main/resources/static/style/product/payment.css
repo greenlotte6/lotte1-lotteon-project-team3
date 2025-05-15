@@ -51,6 +51,10 @@ main > div > * {
     border-bottom: 1px solid #eee;
 }
 
+.productSection:first-child {
+    border-top: 1px solid #eee;
+}
+
 .productSection:last-child {
     border: none;
 }
@@ -71,6 +75,10 @@ del {
 }
 
 .productTitle {
+    margin-bottom: 3px;
+}
+
+.productInfo > p {
     font-size: 14px;
 }
 
@@ -87,6 +95,7 @@ del {
 .productPrice > span:nth-of-type(2) {
     color: #565e67;
     font-weight: 400;
+    margin-left: 6px;
 }
 
 .productPrice > *:not(:nth-child(2)) {
