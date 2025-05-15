@@ -8,10 +8,7 @@ import kr.co.lotteOn.entity.Config;
 import kr.co.lotteOn.entity.Order;
 import kr.co.lotteOn.repository.BannerRepository;
 import kr.co.lotteOn.repository.ConfigRepository;
-import kr.co.lotteOn.service.AdminCSService;
-import kr.co.lotteOn.service.AdminLotteService;
-import kr.co.lotteOn.service.OrderService;
-import kr.co.lotteOn.service.TermsService;
+import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +31,7 @@ public class AdminLotteController {
     private final ConfigRepository configRepository;
     private final BannerRepository bannerRepository;
     private final OrderService orderService;
+    private final VisitCounterService visitCounterService;
 
     //관리자 - 메인
     @GetMapping("/admin")
@@ -50,7 +48,18 @@ public class AdminLotteController {
         model.addAttribute("notices", notices);
         model.addAttribute("qnas", qnas);
 
+
+        /* --------------- 방문자 수 카운트 로직 --------------- */
+        String uri = "/";
+
+        long todayCount = visitCounterService.getTodayVisitCount(uri);
+        long yesterdayCount = visitCounterService.getYesterdayVisitCount(uri);
+
+        model.addAttribute("todayVisit", todayCount);
+        model.addAttribute("yesterdayVisit", yesterdayCount);
+
         return "/admin/admin";
+        /* ------------------------------------------------- */
     }
 
 
