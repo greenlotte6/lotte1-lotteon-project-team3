@@ -46,7 +46,7 @@ public class AdminChartService {
 
     public CategorySalesDTO getCategorySales() {
         List<Long> fashionIds = List.of(25346451L, 25346452L, 25346453L, 25346456L, 25346457L, 25346458L);
-        List<Long> lifeIds    = List.of(25346779L, 25346780L);
+        List<Long> lifeIds    = List.of(25346779L, 25346780L, 25346781L);
         List<Long> foodIds    = List.of(25346681L, 25346684L, 25346685L);
 
         List<Long> allUsed = new ArrayList<>();
