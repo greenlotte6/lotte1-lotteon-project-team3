@@ -112,12 +112,12 @@
                     </div>
                     <div class="productItem">
                         <div class="threeItems" th:each="product : ${specialProducts}">
-                            <a th:href="@{'/product/detail/' + ${product.productCode}}">
+                            <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
                                 <img th:src="@{'/images/' + ${product.imageList}}" alt="상품이미지">
                             </a>
                             <div class="descWrap">
-                                <a th:href="@{'/product/detail/' + ${product.productCode}}" class="text">
-                                    <span class="bold" th:text="${product.companyName}">농협안심한우</span>
+                                <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}" class="text">
+                                    <span class="bold" th:text="${product.companyName}"></span>
                                     <span th:text="${product.name}">상품명</span>
                                 </a>
                                 <div class="totalPrice">
