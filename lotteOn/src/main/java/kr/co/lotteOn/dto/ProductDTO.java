@@ -65,6 +65,7 @@ public class ProductDTO {
                 .imageList(product.getImageList())
                 .imageMain(product.getImageMain())
                 .imageDetail(product.getImageDetail())
+                .imageInfo(product.getImageInfo())
                 .views(product.getViews())
                 .categoryId(product.getCategory() != null ? product.getCategory().getCategoryId() : null)
                 .options(

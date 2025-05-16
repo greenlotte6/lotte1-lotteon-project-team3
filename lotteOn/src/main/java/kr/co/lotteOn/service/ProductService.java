@@ -79,6 +79,7 @@ public class ProductService {
         product.setImageList(dto.getImageListFile().getOriginalFilename());
         product.setImageMain(dto.getImageMainFile().getOriginalFilename());
         product.setImageDetail(dto.getImageDetailFile().getOriginalFilename());
+        product.setImageInfo(dto.getImageInfoFile().getOriginalFilename());
 
         // 카테고리 설정
         Category category = categoryRepository.findById(dto.getCategoryId())
