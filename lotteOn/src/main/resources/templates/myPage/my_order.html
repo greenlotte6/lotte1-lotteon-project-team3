@@ -307,7 +307,7 @@
                         <tr>
                             <td>카테고리</td>
                             <td>
-                                <select name="cate1">
+                                <select name="cate1" required>
                                     <option value="product">상품</option>
                                     <option value="delivery">배송</option>
                                     <option value="cancel">반품 / 취소 / 교환</option>
@@ -318,13 +318,13 @@
                         <tr>
                             <td>제목</td>
                             <td>
-                                <input type="text" name="title" placeholder="제목을 입력해 주세요">
+                                <input type="text" name="title" required placeholder="제목을 입력해 주세요">
                             </td>
                         </tr>
                         <tr>
                             <td>문의 내용</td>
                             <td>
-                                <textarea name="content" placeholder="문의 내용을 작성해 주세요"></textarea>
+                                <textarea name="content" required placeholder="문의 내용을 작성해 주세요"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -392,19 +392,19 @@
                                     <span class="star" data-value="4">&#9733;</span>
                                     <span class="star" data-value="5">&#9733;</span>
                                 </div>
-                                <input type="hidden" name="rating" id="rating"/>
+                                <input type="hidden" required name="rating" id="rating"/>
                             </td>
                         </tr>
                         <tr>
                             <td>제목</td>
                             <td>
-                                <input type="text" name="title" placeholder="제목을 입력하세요."/>
+                                <input type="text" name="title" required placeholder="제목을 입력하세요."/>
                             </td>
                         </tr>
                         <tr>
                             <td>내용</td>
                             <td>
-                                <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                                <textarea name="content" required placeholder="내용을 입력하세요."></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -523,7 +523,7 @@
                                     <input type="radio" name="refundType" value="misinfo" id="misinfo" />
                                     <label for="misinfo">상품정보 상이</label>
 
-                                    <input type="radio" name="refundType" value="etc" id="etc" />
+                                    <input type="radio" name="refundType" value="etc" id="etc" checked/>
                                     <label for="etc">기타</label>
                                 </div>
                             </td>
@@ -540,7 +540,7 @@
                         <tr>
                             <td>반품사유</td>
                             <td colspan="3">
-                                <textarea name="reason" placeholder="반품 사유를 자세히 작성해 주세요."></textarea>
+                                <textarea name="reason" required placeholder="반품 사유를 자세히 작성해 주세요."></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -636,7 +636,7 @@
                                     <input type="radio" name="refundType" value="misinfo" id="misinfo1"/>
                                     <label for="misinfo1">상품정보 상이</label>
 
-                                    <input type="radio" name="refundType" value="etc" id="etc1"/>
+                                    <input type="radio" name="refundType" value="etc" id="etc1" checked/>
                                     <label for="etc1">기타</label>
                                 </div>
                             </td>
@@ -653,7 +653,7 @@
                         <tr>
                             <td>교환사유</td>
                             <td colspan="3">
-                                <textarea name="reason" placeholder="교환 사유를 자세히 작성해 주세요."></textarea>
+                                <textarea name="reason" required placeholder="교환 사유를 자세히 작성해 주세요."></textarea>
                             </td>
                         </tr>
                         <tr>

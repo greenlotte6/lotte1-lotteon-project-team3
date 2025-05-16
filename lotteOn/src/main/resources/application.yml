@@ -86,8 +86,8 @@ spring:
       client:
         registration:
           naver:
-            client-id: ENC(ZD9s4Pr2Zb4cy3JCsWhFfXeQOsyODwqPCN2yR/q5WcQ=)
-            client-secret: ENC(YqfbD3pIjAWfDjQPcDfGo+TC+KHNDX0t)
+            client-id: ENC('ZD9s4Pr2Zb4cy3JCsWhFfXeQOsyODwqPCN2yR/q5WcQ=')
+            client-secret: ENC('YqfbD3pIjAWfDjQPcDfGo+TC+KHNDX0t')
             redirect-uri: https://lotteon.online/login/oauth2/code/naver
             scope:
               - name
@@ -98,14 +98,15 @@ spring:
             client-name: Naver
 
           google:
-            client-id: ENC(/lw+h+X+ONh9zuLC4MNheKL2Vnrl0dI12Jp2HdaQVYDFmTZoQpTS0cBinBtUv4bp2IVzpHLNWQOylax36zMvjXhxAIgeioSDQIcX9WLd11l0b4DYHidcEA==)
-            client-secret: ENC(+FkZqfhR+MAxMOjYvrmiYYqMAE8f6DLc4PsVPWog6EKGBvQzqS+eU3M2GROC+VLZ)
-            redirect-uri: https://lotteon.online/login/oauth2/code/google
+            client-id: ENC('/lw+h+X+ONh9zuLC4MNheKL2Vnrl0dI12Jp2HdaQVYDFmTZoQpTS0cBinBtUv4bp2IVzpHLNWQOylax36zMvjXhxAIgeioSDQIcX9WLd11l0b4DYHidcEA==')
+            client-secret: ENC('+FkZqfhR+MAxMOjYvrmiYYqMAE8f6DLc4PsVPWog6EKGBvQzqS+eU3M2GROC+VLZ')
+            redirect-uri: https://lotteon.online:8081/login/oauth2/code/google
             scope:
               - email
+              - profile
 
           kakao:
-            client-id: ENC(oaAexC4IIJ14CHKf6UwU2hoTHyGqUPSqsi68MUyRA9vkEOVZ1UKiVA/BgRMvNV1V)
+            client-id: ENC('oaAexC4IIJ14CHKf6UwU2hoTHyGqUPSqsi68MUyRA9vkEOVZ1UKiVA/BgRMvNV1V')
             client-secret:
             redirect-uri: https://lotteon.online/login/oauth2/code/kakao
             scope:
