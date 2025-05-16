@@ -4,8 +4,7 @@ import kr.co.lotteOn.dto.notice.NoticeDTO;
 import kr.co.lotteOn.dto.qna.QnaDTO;
 import kr.co.lotteOn.entity.Notice;
 import kr.co.lotteOn.entity.Qna;
-import kr.co.lotteOn.repository.NoticeRepository;
-import kr.co.lotteOn.repository.QnaRepository;
+import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,6 +23,9 @@ public class AdminLotteService {
     private final NoticeRepository noticeRepository;
     private final ModelMapper modelMapper;
     private final QnaRepository qnaRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final RefundRepository refundRepository;
 
     public List<NoticeDTO> findAllNoticeByLimit5(){
         List<Notice> notice = noticeRepository.findTop5ByOrderByRegDateDesc();
@@ -49,9 +52,5 @@ public class AdminLotteService {
 
         return qnaDTOList;
     }
-
-
-
-
 
 }

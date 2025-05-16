@@ -59,4 +59,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
             "JOIN i.product p " +
             "WHERE p.companyName = :companyName")
     Integer sumsalesTotalByCompanyName(@Param("companyName") String companyName);
+
 }
