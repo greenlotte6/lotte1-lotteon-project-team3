@@ -53,6 +53,7 @@ public class MyPageService {
     private final ReviewRepository reviewRepository;
     private final RefundRepository refundRepository;
     private final PointService pointService;
+    private final ReviewService reviewService;
 
     //회원별 문의내역
     public QnaPageResponseDTO getQnaByWriter(QnaPageRequestDTO qnaPageRequestDTO) {
@@ -536,6 +537,8 @@ public class MyPageService {
         }
 
         Review savedReview = reviewRepository.save(review);
+
+        productRepository.incrementViewByProductCode(review.getProductCode());
 
         return savedReview.getReviewNo();
 

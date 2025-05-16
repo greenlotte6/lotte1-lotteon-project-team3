@@ -44,10 +44,8 @@ public class ReviewService {
                 .image3(dto.getImage3())
                 .build();
 
-        reviewRepository.save(review);
+        productRepository.incrementViewByProductCode(dto.getProductCode());
 
-        // 상품 조회수 +1
-        product.setViews(product.getViews() + 1);
     }
 
     public List<ReviewDTO> getReviewsByProduct(String productCode) {

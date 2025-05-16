@@ -3,10 +3,7 @@ package kr.co.lotteOn.service;
 import kr.co.lotteOn.dto.ProductDTO;
 import kr.co.lotteOn.dto.ProductNoticeDTO;
 import kr.co.lotteOn.dto.ProductOptionDTO;
-import kr.co.lotteOn.entity.Category;
-import kr.co.lotteOn.entity.Product;
-import kr.co.lotteOn.entity.ProductNotice;
-import kr.co.lotteOn.entity.ProductOption;
+import kr.co.lotteOn.entity.*;
 import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +31,7 @@ public class ProductService {
     private final ModelMapper modelMapper;
     private final PointRepository pointRepository;
     private final OrderItemRepository orderItemRepository;
+    private final ReviewRepository reviewRepository;
 
 
     private Comparator<Product> getComparator(String sort) {
@@ -284,7 +282,14 @@ public class ProductService {
 
         } else {
             return productRepository.findAllWithFetchJoinOrderByIdDesc()
-                    .stream().map(ProductDTO::fromEntity).toList();
+                    .stream()
+                    .map(product -> {
+                        ProductDTO dto = ProductDTO.fromEntity(product);
+                        double avgRating = reviewRepository.getAverageRatingByProductCode(product.getProductCode());
+                        dto.setAvgRating(avgRating);
+                        return dto;
+                    })
+                    .toList();
         }
     }
 
@@ -368,5 +373,6 @@ public class ProductService {
                 .map(Product::getName)
                 .orElse("상품명 없음");
     }
+
 
 }
