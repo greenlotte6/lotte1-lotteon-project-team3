@@ -117,12 +117,12 @@ public class ProductController {
             bestProducts = productService.getBest10ProductsByCategories(categoryIds);
         }
         else if ("food".equals(filter)) {
-            List<Long> categoryIds = List.of(25346481L, 25346482L,25346483L,25346484L);
+            List<Long> categoryIds = List.of(25346681L, 25346684L, 25346685L);
             products = productService.getSortedProductsByCategories(categoryIds, sort);
             bestProducts = productService.getBest10ProductsByCategories(categoryIds);
         }
         else if ("life".equals(filter)) {
-            List<Long> categoryIds = List.of(25346779L, 25346780L);
+            List<Long> categoryIds = List.of(25346779L, 25346780L, 25346781L);
             products = productService.getSortedProductsByCategories(categoryIds, sort);
             bestProducts = productService.getBest10ProductsByCategories(categoryIds);
         }

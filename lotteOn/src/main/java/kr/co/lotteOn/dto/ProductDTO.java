@@ -48,6 +48,7 @@ public class ProductDTO {
     private List<ProductOptionDTO> options;
     private ProductNoticeDTO notice;
 
+    private double avgRating;
 
 
     public static ProductDTO fromEntity(Product product) {
