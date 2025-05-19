@@ -1,15 +1,13 @@
 package kr.co.lotteOn.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,7 +15,8 @@ import java.util.List;
 @Table(name = "Product")
 public class Product {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -44,10 +43,38 @@ public class Product {
     @JoinColumn(name = "categoryId", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ProductOption> options = new ArrayList<>();
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProductNotice notice;
+
+    public void setNotice(ProductNotice notice) {
+        this.notice = notice;
+        if (notice != null) {
+            notice.setProduct(this);
+        }
+    }
+    public void setOptions(List<ProductOption> options) {
+        this.options = options;
+        if (options != null) {
+            for (ProductOption option : options) {
+                option.setProduct(this); // 양방향 연관 설정
+            }
+        }
+    }
+
+    // equals/hashCode는 id 기준
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        return id != null && id.equals(((Product) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }
