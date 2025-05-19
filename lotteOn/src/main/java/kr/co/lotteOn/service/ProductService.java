@@ -73,6 +73,7 @@ public class ProductService {
 
     @Transactional
     public Product saveProduct(ProductDTO dto) {
+        // 1. DTO → Entity 매핑
         Product product = modelMapper.map(dto, Product.class);
         product.setViews(0);
         product.setImageList(dto.getImageListFile().getOriginalFilename());
@@ -80,23 +81,25 @@ public class ProductService {
         product.setImageDetail(dto.getImageDetailFile().getOriginalFilename());
         product.setImageInfo(dto.getImageInfoFile().getOriginalFilename());
 
+        // 2. 카테고리 설정
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("카테고리 없음"));
         product.setCategory(category);
 
-        // 🎯 여기서 ID 없이 save하면 productCode 못 만드니까 flush 필요
+        // 3. ID 확보를 위해 먼저 저장
         product = productRepository.saveAndFlush(product);
 
-        // 💡 ID 기반으로 productCode 생성
+        // 4. productCode 설정 후 저장
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         product.setProductCode(String.format("P%s%04d", today, product.getId()));
 
-        // 공지사항, 옵션 등 추가
+        // 5. 공지사항 연결
         if (dto.getNotice() != null) {
             ProductNotice notice = modelMapper.map(dto.getNotice(), ProductNotice.class);
-            product.setNotice(notice);
+            product.setNotice(notice); // 연관 메서드 내에서 notice.setProduct(this)
         }
 
+        // 6. 옵션 처리 - 연관관계 포함해서 안전하게 설정
         List<ProductOption> optionList = new ArrayList<>();
         if (dto.getOptions() != null) {
             for (ProductOptionDTO opt : dto.getOptions()) {
@@ -105,15 +108,17 @@ public class ProductService {
                             .optionName(opt.getOptionName())
                             .optionValue(opt.getOptionValue())
                             .build();
+                    option.setProduct(product); // ✅ 연관 설정
                     optionList.add(option);
                 }
             }
         }
-        product.setOptions(optionList);
+        product.setOptions(optionList); // 내부에서 clear 후 add, 연관 포함
 
-        // ✅ 최종 저장 (productCode 포함)
+        // 7. 최종 저장 (productCode 포함)
         return productRepository.save(product);
     }
+
 
 
     @Transactional
