@@ -96,10 +96,15 @@
                                 </div>
                                 <div class="review">
                                     <span class="starGrade"></span>
-                                    <span class="rating">4.8</span> <!-- 평점 평균 값이 있다면 여기에 바인딩 -->
+
+                                    <!-- 평점 (예: 4.5) -->
+                                    <span class="rating" th:text="${#numbers.formatDecimal(p.avgRating, 1, 1)}">0.0</span>
+
                                     <div class="v-l"></div>
+
+                                    <!-- 리뷰 수 (예: 20) -->
                                     <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount" th:text="${p.views}"></span>
+                                    <span class="reviewCount" th:text="${p.views}">0</span>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +138,14 @@
                                         <span>원</span>
                                     </div>
                                 </div>
+                                <div class="review">
+                                    <span class="starGrade"></span>
+                                    <span class="rating" th:text="${#numbers.formatDecimal(product.avgRating, 1, 1)}">0.0</span>
+                                    <div class="v-l"></div>
+                                    <span class="reviewInfo">리뷰</span>
+                                    <span class="reviewCount" th:text="${product.views}">0</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>

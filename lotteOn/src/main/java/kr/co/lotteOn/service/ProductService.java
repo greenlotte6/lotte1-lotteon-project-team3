@@ -156,6 +156,10 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> searchProducts(String field, String keyword, Pageable pageable) {
+
+        if (field == null) field = "";
+        if (keyword == null) keyword = "";
+
         Page<Product> products = switch (field) {
             case "name" -> productRepository.findByNameContaining(keyword, pageable);
             case "productCode" -> productRepository.findByProductCodeContaining(keyword, pageable);
@@ -171,14 +175,24 @@ public class ProductService {
                 .map(ProductDTO::fromEntity).toList();
     }
 
-    public List<ProductDTO> getPopularProducts() {
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getPopularProductsWithReview() {
         Pageable top4 = PageRequest.of(0, 4);
         List<String> codes = orderItemRepository.findTopPopularProductCodes(top4);
         if (codes.isEmpty()) return List.of();
 
         List<Product> products = productRepository.findAllByProductCodeInWithOptions(codes);
-        Map<String, Product> map = products.stream().collect(Collectors.toMap(Product::getProductCode, p -> p));
-        return codes.stream().map(map::get).filter(Objects::nonNull).map(ProductDTO::fromEntity).toList();
+        Map<String, Product> map = products.stream()
+                .collect(Collectors.toMap(Product::getProductCode, p -> p));
+
+        Map<String, ReviewSummary> reviewMap = reviewRepository.getReviewSummaries().stream()
+                .collect(Collectors.toMap(ReviewSummary::getCode, r -> r));
+
+        return codes.stream()
+                .map(map::get)
+                .filter(Objects::nonNull)
+                .map(p -> mapToDTOWithReviewData(p, reviewMap)) // ✅ 리뷰 데이터 들어감
+                .toList();
     }
 
     @Transactional(readOnly = true)
@@ -233,9 +247,16 @@ public class ProductService {
                 .toList();
     }
 
-    public List<ProductDTO> getDiscountedProducts() {
-        return productRepository.findAllWithFetchJoinWhereDiscountOver20().stream()
-                .map(ProductDTO::fromEntity).toList();
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getDiscountedProductsWithReview() {
+        List<Product> products = productRepository.findAllWithFetchJoinWhereDiscountOver20();
+
+        Map<String, ReviewSummary> reviewMap = reviewRepository.getReviewSummaries().stream()
+                .collect(Collectors.toMap(ReviewSummary::getCode, r -> r));
+
+        return products.stream()
+                .map(p -> mapToDTOWithReviewData(p, reviewMap))
+                .toList();
     }
 
     public String getProductNameByCode(String code) {
