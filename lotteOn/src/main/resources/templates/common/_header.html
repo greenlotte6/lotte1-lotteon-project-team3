@@ -16,11 +16,13 @@
                 <a th:href="@{/}">
                     <img th:src="@{'/images/config/' + ${config.headerLogo}}" alt="lotteOn Logo" class="logo">
                 </a>
-                <div class="search">
-                    <input type="text" placeholder="검색어를 입력해주세요" class="inputSearch">
-                    <button class="deleteSearchKeyword"></button>
-                    <a href="#" class="searchIcon icon"></a>
-                </div>
+                <form th:action="@{/product/searchResult}" method="get" id="searchForm">
+                    <div class="search">
+                        <input type="text" name="keyword" placeholder="검색어를 입력해주세요" class="inputSearch">
+                        <button type="button" class="deleteSearchKeyword"></button>
+                        <button type="button" class="searchIcon icon" onclick="document.getElementById('searchForm').submit();"></button>
+                    </div>
+                </form>
                 <p><span class="redColor rank">1</span>검색어 순위를 혀? 말어?</p>
             </div>
             <div class="contentLink">

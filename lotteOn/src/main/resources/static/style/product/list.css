@@ -303,3 +303,11 @@ del {
     margin-bottom: 2px;
     background: url(../../images/ico_stargrade_black.svg) no-repeat 50% 50%;
 }
+
+.titleWrap2 {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -335,4 +335,9 @@ public class ProductService {
                 .map(p -> mapToDTOWithReviewData(p, reviewMap))
                 .toList();
     }
+
+    public List<Product> searchingProducts(String keyword) {
+       return productRepository.findByNameContainingIgnoreCase(keyword);
+    }
+
 }
