@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/script/swiper.js"></script>
+    <script src="/script/swiper2.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
+
+    <!-- Script -->
+    <script src="/script/search.js"></script>
+    <script src="/script/productSorting.js"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/style/product/list.css"/>
+    <link rel="stylesheet" href="/style/common/_header.css"/>
+    <link rel="stylesheet" href="/style/common/_footer.css"/>
+    <title>롯데ON</title>
+</head>
+<body>
+<div id="container">
+    <th:block th:include="/common/_header.html"/>
+    <main>
+        <div class="mainContainer">
+            <div class="products">
+                <div class="titleWrap2">
+                    <div>
+                        <h2 class="titleLarge">검색 결과</h2>
+                        <p class="text" th:text="${keyword} + '에 대한 검색 결과입니다.'"></p>
+                    </div>
+                    <div th:if="${searchResults.isEmpty()}">
+                        <p>검색 결과가 없습니다.</p>
+                    </div>
+                    <div class="sortList">
+                        <ul>
+                            <!-- 판매량순 -->
+                            <li>
+                                <a>판매량순</a>
+                            </li>
+
+                            <!-- 낮은 가격순 -->
+                            <li>
+                                <a>낮은 가격순</a>
+                            </li>
+
+                            <!-- 높은 가격순 -->
+                            <li>
+                                <a>높은 가격순</a>
+                            </li>
+
+                            <!-- 등록순 -->
+                            <li>
+                                <a>등록순</a>
+                            </li>
+
+                            <!-- 평점순 -->
+                            <li>
+                                <a>평점순</a>
+                            </li>
+
+                            <!-- 리뷰순 -->
+                            <li>
+                                <a>리뷰순</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="productItem" th:if="${!searchResults.isEmpty()}">
+                    <div class="items" th:each="product : ${searchResults}">
+                        <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
+                            <img th:src="@{'/images/' + ${product.imageList}}" alt="상품">
+                        </a>
+                        <div class="descWrap">
+                            <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}" class="text">
+                                <span class="bold" th:text="${product.companyName}"></span>
+                                <span th:text="${product.name}"></span>
+                            </a>
+                            <div class="totalPrice">
+                                <!-- 원래 가격 -->
+                                <del>
+                                    <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
+                                    <span>원</span>
+                                </del>
+                            </div>
+                            <div class="priceInfo">
+                                <p class="discount" th:text="${product.discount + '%'}"></p>
+                                <div class="price">
+                                    <!-- 할인 적용된 가격 -->
+                                    <p th:text="${#numbers.formatInteger(((product.price * (100.0 - product.discount)) / 100), 3, 'COMMA')}"></p>
+                                    <span>원</span>
+                                </div>
+                            </div>
+                            <div class="review">
+                                <span class="starGrade"></span>
+
+                                <!-- 평점 (예: 4.5) -->
+                                <span class="rating" th:text="${#numbers.formatDecimal(p.avgRating, 1, 1)}">0.0</span>
+
+                                <div class="v-l"></div>
+
+                                <!-- 리뷰 수 (예: 20) -->
+                                <span class="reviewInfo">리뷰</span>
+                                <span class="reviewCount" th:text="${p.views}">0</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
+</div>
+</body>
+</html>
