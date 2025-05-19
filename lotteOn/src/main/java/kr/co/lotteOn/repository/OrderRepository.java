@@ -68,6 +68,10 @@ public interface OrderRepository extends JpaRepository<Order, String> ,
 """)
     int sumActualMoneyExcludeCategoryIds(@Param("excludeIds") List<Long> excludeIds);
 
+
+
+    //매출현황 배송중/배송완료/구매확정
+
 }
 
 
