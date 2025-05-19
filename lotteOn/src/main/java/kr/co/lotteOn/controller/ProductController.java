@@ -297,7 +297,7 @@ public class ProductController {
 
     @GetMapping("/searchResult")
     public String searchResult(@RequestParam String keyword, Model model) {
-        List<Product> searchResults = productService.searchingProducts(keyword);
+        List<Product> searchResults = productService.searchingProducts(keyword, keyword);
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchResults", searchResults);
         return "/product/searchResult";

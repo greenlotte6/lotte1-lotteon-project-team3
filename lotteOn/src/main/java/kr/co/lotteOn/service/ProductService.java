@@ -341,8 +341,8 @@ public class ProductService {
                 .toList();
     }
 
-    public List<Product> searchingProducts(String keyword) {
-       return productRepository.findByNameContainingIgnoreCase(keyword);
+    public List<Product> searchingProducts(String nameKeyword, String companyNameKeyword) {
+       return productRepository.findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(nameKeyword, companyNameKeyword);
     }
 
 }
