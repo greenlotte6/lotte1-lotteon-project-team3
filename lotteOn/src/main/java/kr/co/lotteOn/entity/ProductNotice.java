@@ -25,6 +25,6 @@ public class ProductNotice {
     private String origin;
 
     @OneToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "productId", nullable = false)
     private Product product;
 }

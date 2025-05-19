@@ -73,6 +73,7 @@ public class ProductService {
 
     @Transactional
     public Product saveProduct(ProductDTO dto) {
+        // 1. Product 매핑
         Product product = modelMapper.map(dto, Product.class);
         product.setViews(0);
         product.setImageList(dto.getImageListFile().getOriginalFilename());
@@ -84,29 +85,38 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("카테고리 없음"));
         product.setCategory(category);
 
-        Product saved = productRepository.save(product);
+        // 2. 먼저 저장해서 ID 확보
+        product = productRepository.saveAndFlush(product); // ID 확보됨
+
+        // 3. productCode 설정하고 다시 저장
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        saved.setProductCode(String.format("P%s%04d", today, saved.getId()));
-        productRepository.save(saved);
+        product.setProductCode(String.format("P%s%04d", today, product.getId()));
+        product = productRepository.save(product); // productCode 포함 저장
 
-        Optional.ofNullable(dto.getOptions()).ifPresent(options -> options.forEach(opt -> {
-            if (opt.getOptionName() != null && !opt.getOptionName().trim().isEmpty()) {
-                ProductOption option = new ProductOption();
-                option.setOptionName(opt.getOptionName());
-                option.setOptionValue(opt.getOptionValue());
-                option.setProduct(saved);
-                productOptionRepository.save(option);
-            }
-        }));
-
+        // 4. 공지사항 연결 (연관관계 메서드 활용)
         if (dto.getNotice() != null) {
-            ProductNoticeDTO ndto = dto.getNotice();
-            ProductNotice notice = modelMapper.map(ndto, ProductNotice.class);
-            notice.setProduct(saved);
-            productNoticeRepository.save(notice);
+            ProductNotice notice = modelMapper.map(dto.getNotice(), ProductNotice.class);
+            product.setNotice(notice); // 내부에서 notice.setProduct(this) 포함
         }
-        return saved;
+
+        List<ProductOption> optionList = new ArrayList<>();
+        if (dto.getOptions() != null) {
+            for (ProductOptionDTO opt : dto.getOptions()) {
+                if (opt.getOptionName() != null && !opt.getOptionName().isBlank()) {
+                    ProductOption option = ProductOption.builder()
+                            .optionName(opt.getOptionName())
+                            .optionValue(opt.getOptionValue())
+                            .build(); // 여기선 setProduct 안 해도 됨
+                    optionList.add(option);
+                }
+            }
+        }
+        product.setOptions(optionList); // 여기서 연관 다 묶임
+
+        // 6. 옵션까지 포함해서 마지막 저장
+        return productRepository.save(product);
     }
+
 
     @Transactional
     public void modifyProduct(ProductDTO dto) {
