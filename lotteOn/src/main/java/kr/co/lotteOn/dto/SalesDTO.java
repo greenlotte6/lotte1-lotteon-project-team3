@@ -21,6 +21,8 @@ public class SalesDTO {
     private int orderCount;
     private int orderTotal;
     private int salesTotal;
+    private Long purchaseDone;
+
 
     //추가
     public SalesDTO(String companyName, String businessNo){
