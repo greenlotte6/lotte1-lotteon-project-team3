@@ -111,7 +111,7 @@ public class ProductController {
         List<ProductDTO> bestProducts;
 
         if ("special".equals(event)) {
-            products = productService.getDiscountedProducts();
+            products = productService.getDiscountedProductsWithReview();
             bestProducts = productService.getBest10DiscountedProducts();
         }
         else if ("fashion".equals(filter)) {
