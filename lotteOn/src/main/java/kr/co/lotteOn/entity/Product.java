@@ -57,10 +57,11 @@ public class Product {
         }
     }
     public void setOptions(List<ProductOption> options) {
-        this.options = options;
+        this.options.clear(); // 기존 리스트 비우고
         if (options != null) {
             for (ProductOption option : options) {
-                option.setProduct(this); // 양방향 연관 설정
+                option.setProduct(this);
+                this.options.add(option); // 새로운 옵션 추가
             }
         }
     }
