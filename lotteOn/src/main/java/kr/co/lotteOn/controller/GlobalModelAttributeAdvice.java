@@ -3,10 +3,8 @@ package kr.co.lotteOn.controller;
 import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
 import kr.co.lotteOn.entity.Member;
-import kr.co.lotteOn.service.BannerService;
-import kr.co.lotteOn.service.ConfigService;
-import kr.co.lotteOn.service.MemberService;
-import kr.co.lotteOn.service.VersionService;
+import kr.co.lotteOn.entity.SearchKeyword;
+import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +23,7 @@ public class GlobalModelAttributeAdvice {
     private final ConfigService configService;
     private final BannerService bannerService;
     private final MemberService memberService;
+    private final SearchKeywordService searchKeywordService;
 
     @ModelAttribute("selectedVersionId")
     public String addLatestVersionIdToModel() {
@@ -67,5 +66,10 @@ public class GlobalModelAttributeAdvice {
         }
         System.out.println(">>> 로그인 안됨");
         return null;
+    }
+
+    @ModelAttribute("topKeywords")
+    public List<SearchKeyword> getTopKeywords() {
+        return searchKeywordService.getTopKeywords();
     }
 }
