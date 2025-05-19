@@ -23,3 +23,6 @@
         <button>문의하기</button>
     </a>
 </div>
+<div class="myPageAdvertising" th:each="banner : ${myPageBanner}" th:style="'background-color:' + ${banner.backgroundColor}" th:if="${myPageBanner != null}">
+    <img th:src="${banner.imagePath}" th:alt="${banner.name}">
+</div>
