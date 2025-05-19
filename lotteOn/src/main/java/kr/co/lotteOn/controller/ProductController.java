@@ -12,6 +12,9 @@ import kr.co.lotteOn.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -145,16 +148,29 @@ public class ProductController {
 
     //상품 - 상세보기
     @GetMapping("/detail")
-    public String detail(@RequestParam String productCode, Model model) {
+    public String detail(@RequestParam String productCode,
+                         @RequestParam(defaultValue = "0") int page,
+                         Model model) {
         ProductDTO product = productService.getProductByCode(productCode);
         if (product == null) {
             return "redirect:/product/list";
         }
 
-        List<ReviewDTO> reviews = reviewService.getReviewsByProduct(productCode);
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<ReviewDTO> reviews = reviewService.getReviewsByProductPaged(productCode, pageable);
+
+        // 페이지 그룹 계산
+        int currentPage = reviews.getNumber(); // 0-based
+        int totalPages = reviews.getTotalPages();
+        int groupSize = 10;
+
+        int startPage = (currentPage / groupSize) * groupSize;
+        int endPage = Math.min(startPage + groupSize, totalPages);
 
         model.addAttribute("product", product);
         model.addAttribute("reviews", reviews);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "/product/detail";
     }
 

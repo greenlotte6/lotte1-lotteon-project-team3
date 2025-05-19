@@ -50,7 +50,6 @@ public class ProductDTO {
 
     private double avgRating;
 
-
     public static ProductDTO fromEntity(Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
@@ -87,6 +86,7 @@ public class ProductDTO {
                                         .origin(product.getNotice().getOrigin())
                                         .build() : null
                 )
+                .avgRating(0)
                 .build();
     }
 }

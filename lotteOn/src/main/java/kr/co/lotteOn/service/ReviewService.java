@@ -10,6 +10,8 @@ import kr.co.lotteOn.repository.ProductRepository;
 import kr.co.lotteOn.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +39,7 @@ public class ReviewService {
                 .member(member)
                 .productCode(dto.getProductCode())
                 .title(dto.getTitle())
-                .rating(dto.getRating())
+                .rating(Double.parseDouble(dto.getRating()))
                 .content(dto.getContent())
                 .image1(dto.getImage1())
                 .image2(dto.getImage2())
@@ -47,7 +49,7 @@ public class ReviewService {
         productRepository.incrementViewByProductCode(dto.getProductCode());
 
     }
-
+/*
     public List<ReviewDTO> getReviewsByProduct(String productCode) {
         List<Review> reviews = reviewRepository.findByProductCode(productCode);
 
@@ -68,9 +70,16 @@ public class ReviewService {
                         .build())
                 .toList();
     }
+ */
 
     public List<Review> getReviewsByProductCode(String productCode) {
         return reviewRepository.findByProductCodeOrderByRegDateDesc(productCode);
     }
+
+    public Page<ReviewDTO> getReviewsByProductPaged(String productCode, Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findByProductCode(productCode, pageable);
+        return reviews.map(ReviewDTO::fromEntity);
+    }
+
 
 }

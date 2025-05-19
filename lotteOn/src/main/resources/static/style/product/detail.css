@@ -551,3 +551,24 @@ main > div > * {
     height: 100px;
     object-fit: cover;
 }
+
+.fth {
+    width: 900px;
+    margin: 0 auto;
+    border: 2px solid rgba(0, 0, 0, 0.22);
+    border-radius: 15px;
+    padding: 20px;
+}
+.fth tr {
+    padding: 10px;
+}
+.fth tr input {
+    padding: 10px;
+    width: 650px;
+    border: none;
+    font-size: 16px;
+}
+.fth th {
+    text-align: left;
+}
+

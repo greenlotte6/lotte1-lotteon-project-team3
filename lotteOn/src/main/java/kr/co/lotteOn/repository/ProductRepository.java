@@ -151,4 +151,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("UPDATE Product p SET p.views = p.views + 1 WHERE p.productCode = :productCode")
     void incrementViewByProductCode(@Param("productCode") String productCode);
 
+    @Query("SELECT p FROM Product p JOIN FETCH p.category")
+    List<Product> findAllWithFetchJoin();
+
 }

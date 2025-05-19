@@ -28,7 +28,7 @@ public class Review {
     private String productCode;
 
     private String title;
-    private String rating;
+    private double rating;
     private String content;
 
     private String image1;
