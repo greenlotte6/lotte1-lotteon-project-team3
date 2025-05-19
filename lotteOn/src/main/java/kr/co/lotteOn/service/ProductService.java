@@ -73,7 +73,6 @@ public class ProductService {
 
     @Transactional
     public Product saveProduct(ProductDTO dto) {
-        // 1. Product 매핑
         Product product = modelMapper.map(dto, Product.class);
         product.setViews(0);
         product.setImageList(dto.getImageListFile().getOriginalFilename());
@@ -85,18 +84,17 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("카테고리 없음"));
         product.setCategory(category);
 
-        // 2. 먼저 저장해서 ID 확보
-        product = productRepository.saveAndFlush(product); // ID 확보됨
+        // 🎯 여기서 ID 없이 save하면 productCode 못 만드니까 flush 필요
+        product = productRepository.saveAndFlush(product);
 
-        // 3. productCode 설정하고 다시 저장
+        // 💡 ID 기반으로 productCode 생성
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         product.setProductCode(String.format("P%s%04d", today, product.getId()));
-        product = productRepository.save(product); // productCode 포함 저장
 
-        // 4. 공지사항 연결 (연관관계 메서드 활용)
+        // 공지사항, 옵션 등 추가
         if (dto.getNotice() != null) {
             ProductNotice notice = modelMapper.map(dto.getNotice(), ProductNotice.class);
-            product.setNotice(notice); // 내부에서 notice.setProduct(this) 포함
+            product.setNotice(notice);
         }
 
         List<ProductOption> optionList = new ArrayList<>();
@@ -106,14 +104,14 @@ public class ProductService {
                     ProductOption option = ProductOption.builder()
                             .optionName(opt.getOptionName())
                             .optionValue(opt.getOptionValue())
-                            .build(); // 여기선 setProduct 안 해도 됨
+                            .build();
                     optionList.add(option);
                 }
             }
         }
-        product.setOptions(optionList); // 여기서 연관 다 묶임
+        product.setOptions(optionList);
 
-        // 6. 옵션까지 포함해서 마지막 저장
+        // ✅ 최종 저장 (productCode 포함)
         return productRepository.save(product);
     }
 
@@ -158,6 +156,7 @@ public class ProductService {
                 .map(ProductDTO::fromEntity).orElse(null);
     }
 
+    @Transactional
     public void deleteProduct(String code) {
         Product product = productRepository.findWithCategoryByProductCode(code)
                 .orElseThrow(() -> new RuntimeException("상품 없음"));
