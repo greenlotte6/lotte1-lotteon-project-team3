@@ -813,6 +813,20 @@ table tr:not(:first-child) * {
     width: 150px;
 }
 
+.myPageAdvertising {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: auto;
+    margin-top: 30px;
+}
+
+.myPageAdvertising img {
+    width: inherit;
+    height: auto;
+    object-fit: cover;
+}
 
 .bold {
     font-weight: 700;
