@@ -31,9 +31,19 @@ public class AdminProductController {
                                 @PageableDefault(size = 10) Pageable pageable,
                                 Model model) {
         Page<ProductDTO> products = productService.searchProducts(searchField, searchKeyword, pageable);
+
+        int currentPage = products.getNumber();       // 현재 페이지
+        int totalPages = products.getTotalPages();    // 전체 페이지 수
+        int groupSize = 10;                            // 한 번에 보여줄 페이지 수
+
+        int startPage = (currentPage / groupSize) * groupSize;
+        int endPage = Math.min(startPage + groupSize, totalPages);
+
         model.addAttribute("products", products);
         model.addAttribute("searchField", searchField);
         model.addAttribute("searchKeyword", searchKeyword);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "/admin/product/list";
     }
 

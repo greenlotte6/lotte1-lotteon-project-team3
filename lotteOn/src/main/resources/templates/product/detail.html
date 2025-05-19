@@ -113,7 +113,10 @@
                 <ul>
                     <li><a href="#details" class="productDescBtn">상품설명</a></li>
                     <li><a href="#detailInfo" class="detailInfoBtn">상세정보</a></li>
-                    <li><a href="#review" class="reviewBtn">후기<span class="reviewCount" th:text="${'(' + reviews.size() + ')'}"></span></a></li>
+                    <li><a href="#review" class="reviewBtn">후기<span class="reviewCount"
+                                                                    th:text="${'(' + reviews.totalElements + ')'}"></span>
+                    </a>
+                    </li>
                 </ul>
             </div>
             <div class="substitution"></div>
@@ -133,11 +136,63 @@
                     <img th:src="@{/images/{fileName}(fileName=${product.imageInfo})}" alt="상품 설명">
                 </div>
             </div>
+
+            <div class="infoTable">
+                <table class="fth">
+                    <tr>
+                        <th>상품상태</th>
+                        <td>
+                            <div>
+                                <input type="text" name="notice.prodStatus" placeholder="상품상태 입력"
+                                       th:value="${product.notice.prodStatus}" readonly>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>부가세 면세여부</th>
+                        <td>
+                            <div>
+                                <input type="text" name="notice.vatYn" placeholder="부가세 면세여부 입력"
+                                       th:value="${product.notice.vatYn}" readonly>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>영수증 발행</th>
+                        <td>
+                            <div>
+                                <input type="text" name="notice.receiptYn" placeholder="영수증 발행 입력"
+                                       th:value="${product.notice.receiptYn}" readonly>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>사업자 구분</th>
+                        <td>
+                            <div>
+                                <input type="text" name="notice.businessType" placeholder="사업자 구분 입력"
+                                       th:value="${product.notice.businessType}" readonly>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>원산지</th>
+                        <td>
+                            <div>
+                                <input type="text" name="notice.origin" placeholder="원산지 입력"
+                                       th:value="${product.notice.origin}" readonly>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
             <div class="reviewContainer" id="review">
                 <h2>상품 후기</h2>
-                <p class="reviewTotal">총 <span th:text="${reviews.size()}"></span>개</p>
+                <p class="reviewTotal">총 <span th:text="${reviews.totalElements}"></span>개</p>
                 <div class="commentList">
-                    <div class="comment" th:each="review : ${reviews}">
+                    <div class="comment" th:each="review : ${reviews.content}">
                         <div class="writerBox">
                             <p class="writer" th:text="${review.member.name}">작성자</p>
                             <div class="ratingBox">
@@ -150,10 +205,14 @@
 
                         <div class="contentBox">
                             <div class="imageBox">
-                                <img th:if="${review.image1 == null && review.image2 == null && review.image3 == null}" src="/images/no_img.jpg" class="notAddedImg"></img>
-                                <img th:if="${review.image1 != null}" th:src="@{/images/{file}(file=${review.image1})}" alt="리뷰 이미지1">
-                                <img th:if="${review.image2 != null}" th:src="@{/images/{file}(file=${review.image2})}" alt="리뷰 이미지2">
-                                <img th:if="${review.image3 != null}" th:src="@{/images/{file}(file=${review.image3})}" alt="리뷰 이미지3">
+                                <img th:if="${review.image1 == null && review.image2 == null && review.image3 == null}"
+                                     src="/images/no_img.jpg" class="notAddedImg"></img>
+                                <img th:if="${review.image1 != null}" th:src="@{/images/{file}(file=${review.image1})}"
+                                     alt="리뷰 이미지1">
+                                <img th:if="${review.image2 != null}" th:src="@{/images/{file}(file=${review.image2})}"
+                                     alt="리뷰 이미지2">
+                                <img th:if="${review.image3 != null}" th:src="@{/images/{file}(file=${review.image3})}"
+                                     alt="리뷰 이미지3">
                             </div>
                             <div class="customerReviews">
                                 <h3 class="purchasedName" th:text="${review.title}">리뷰 제목</h3>
@@ -163,12 +222,29 @@
                         </div>
                     </div>
                     <div class="paging">
-                        <button class="prev btn"></button>
-                        <a href="#" class="pageNum thisPage">1</a>
-                        <a href="#" class="pageNum">2</a>
-                        <a href="#" class="pageNum">3</a>
-                        <button class="next btn"></button>
+                        <!-- 이전 버튼 -->
+                        <button class="prev btn"
+                                th:if="${startPage > 0}"
+                                th:onclick="|location.href='@{/product/detail(productCode=${product.productCode}, page=${startPage - 1})}'|">
+                            &lt;
+                        </button>
+
+                        <!-- 현재 그룹의 페이지 번호들 -->
+                        <th:block th:each="i : ${#numbers.sequence(startPage, endPage - 1)}">
+                            <a class="pageNum"
+                               th:classappend="${i == reviews.number} ? ' thisPage'"
+                               th:href="@{/product/detail(productCode=${product.productCode}, page=${i})}"
+                               th:text="${i + 1}"></a>
+                        </th:block>
+
+                        <!-- 다음 버튼 -->
+                        <button class="next btn"
+                                th:if="${endPage < reviews.totalPages}"
+                                th:onclick="|location.href='@{/product/detail(productCode=${product.productCode}, page=${endPage})}'|">
+                            &gt;
+                        </button>
                     </div>
+
                 </div>
             </div>
         </div>

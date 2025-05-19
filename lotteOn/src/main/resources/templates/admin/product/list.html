@@ -75,8 +75,8 @@
                     <button class="delbutton" type="submit">선택삭제</button>
 
                     <div class="pageBtn">
-                        <a th:if="${products.hasPrevious()}"
-                           th:href="@{|/admin/product/list?page=0&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
+                        <a th:if="${products.hasPrevious() and startPage > 0}"
+                           th:href="@{|/admin/product/list?page=${startPage - 1}&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
                             <img src="/images/back-double.png">
                         </a>
 
@@ -85,7 +85,8 @@
                             <img src="/images/back-single.png" class="single">
                         </a>
 
-                        <a th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                        <!-- 10개 단위로 자른 페이징 번호 -->
+                        <a th:each="i : ${#numbers.sequence(startPage, endPage - 1)}"
                            th:href="@{|/admin/product/list?page=${i}&searchField=${searchField}&searchKeyword=${searchKeyword}|}"
                            th:text="${i + 1}"
                            class="number"
@@ -96,8 +97,8 @@
                             <img src="/images/right-single.png" class="single">
                         </a>
 
-                        <a th:if="${products.hasNext()}"
-                           th:href="@{|/admin/product/list?page=${products.totalPages - 1}&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
+                        <a th:if="${endPage < products.totalPages}"
+                           th:href="@{|/admin/product/list?page=${endPage}&searchField=${searchField}&searchKeyword=${searchKeyword}|}">
                             <img src="/images/right-double.png">
                         </a>
                     </div>

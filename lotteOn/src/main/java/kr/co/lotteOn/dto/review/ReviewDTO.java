@@ -1,6 +1,9 @@
 package kr.co.lotteOn.dto.review;
 
 import kr.co.lotteOn.dto.MemberDTO;
+import kr.co.lotteOn.dto.ProductDTO;
+import kr.co.lotteOn.entity.Product;
+import kr.co.lotteOn.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -67,4 +70,21 @@ public class ReviewDTO {
             return 0;
         }
     }
+
+    public static ReviewDTO fromEntity(Review review) {
+        return ReviewDTO.builder()
+                .reviewNo(review.getReviewNo())
+                .writer(review.getMember().getName()) // Member 이름 추출
+                .title(review.getTitle())
+                .rating(String.valueOf(review.getRating()))
+                .content(review.getContent())
+                .productCode(review.getProductCode())
+                .image1(review.getImage1())
+                .image2(review.getImage2())
+                .image3(review.getImage3())
+                .regDate(review.getRegDate() != null ? review.getRegDate().toString() : null)
+                .member(MemberDTO.fromEntity(review.getMember())) // Member 객체 전체도 DTO로 포함
+                .build();
+    }
+
 }
