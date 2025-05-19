@@ -10,11 +10,9 @@
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="/script/swiper.js"></script>
-    <script src="/script/swiper2.js"></script>
 
     <!-- Favicon -->
-    <link rel="icon" sizes="32x32" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png">
+    <link rel="icon" sizes="32x32" th:href="@{'/images/config/' + ${config.favicon}}">
 
     <!-- Script -->
     <script src="/script/search.js"></script>
@@ -24,7 +22,7 @@
     <link rel="stylesheet" href="/style/product/list.css"/>
     <link rel="stylesheet" href="/style/common/_header.css"/>
     <link rel="stylesheet" href="/style/common/_footer.css"/>
-    <title>롯데ON</title>
+    <title>검색 결과 : 롯데ON</title>
 </head>
 <body>
 <div id="container">
@@ -36,9 +34,6 @@
                     <div>
                         <h2 class="titleLarge">검색 결과</h2>
                         <p class="text" th:text="${keyword} + '에 대한 검색 결과입니다.'"></p>
-                    </div>
-                    <div th:if="${searchResults.isEmpty()}">
-                        <p>검색 결과가 없습니다.</p>
                     </div>
                     <div class="sortList">
                         <ul>
@@ -74,6 +69,9 @@
                         </ul>
                     </div>
                 </div>
+                <div th:if="${searchResults.isEmpty()}" class="nothing">
+                    <p>검색 결과가 없습니다.</p>
+                </div>
                 <div class="productItem" th:if="${!searchResults.isEmpty()}">
                     <div class="items" th:each="product : ${searchResults}">
                         <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
@@ -103,13 +101,13 @@
                                 <span class="starGrade"></span>
 
                                 <!-- 평점 (예: 4.5) -->
-                                <span class="rating" th:text="${#numbers.formatDecimal(p.avgRating, 1, 1)}">0.0</span>
+<!--                                <span class="rating" th:text="${product.avgRating != null ? #numbers.formatDecimal(product.avgRating, 1, 1) : '0.0'}">0.0</span>-->
 
                                 <div class="v-l"></div>
 
                                 <!-- 리뷰 수 (예: 20) -->
                                 <span class="reviewInfo">리뷰</span>
-                                <span class="reviewCount" th:text="${p.views}">0</span>
+                                <span class="reviewCount" th:text="${product.views}">0</span>
                             </div>
 
                         </div>
