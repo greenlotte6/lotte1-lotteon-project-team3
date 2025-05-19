@@ -38,6 +38,7 @@ public class ProductController {
     private final OrderItemService orderItemService;
     private final OrderRepository orderRepository;
     private final ReviewService reviewService;
+    private final SearchKeywordService searchKeywordService;
 
     private void preparePaymentPage(Member member, List<ProductDTO> products, List<Integer> quantities,List <String> options, Model model) {
         List<Map<String, Object>> items = new ArrayList<>();
@@ -297,6 +298,7 @@ public class ProductController {
 
     @GetMapping("/searchResult")
     public String searchResult(@RequestParam String keyword, Model model) {
+        searchKeywordService.saveOrUpdateKeyword(keyword);
         List<Product> searchResults = productService.searchingProducts(keyword, keyword);
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchResults", searchResults);

@@ -1,4 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="/script/swiper4.js"></script>
 <header>
     <div class="headerContainer">
         <div class="headerUtil">
@@ -23,7 +26,14 @@
                         <button type="button" class="searchIcon icon" onclick="document.getElementById('searchForm').submit();"></button>
                     </div>
                 </form>
-                <p><span class="redColor rank">1</span>검색어 순위를 혀? 말어?</p>
+                <div class="swiper4">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" th:each="keyword, iterStat : ${topKeywords}">
+                            <span class="redColor rank" th:text="${iterStat.index + 1}"></span>
+                            <span th:text="${keyword.keyword}"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="contentLink">
                 <a href="#" class="heart icon"></a>

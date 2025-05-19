@@ -38,6 +38,7 @@ header > div > * {
 .headerContent-left {
     display: flex;
     align-items: center;
+    height: 48px;
 }
 
 .headerContent-left > a {
@@ -304,4 +305,15 @@ button {
 
 input {
     font-size: 14px;
+}
+
+.swiper4 {
+    height: inherit;
+    overflow: hidden;
+    position: relative;
+}
+
+.swiper4 .swiper-slide {
+    display: flex;
+    align-items: center;
 }
