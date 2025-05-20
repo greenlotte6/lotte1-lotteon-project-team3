@@ -298,11 +298,18 @@ public class ProductController {
 
     @GetMapping("/searchResult")
     public String searchResult(@RequestParam String keyword, Model model) {
+        // 검색어 저장 (이건 그대로 유지)
         searchKeywordService.saveOrUpdateKeyword(keyword);
-        List<Product> searchResults = productService.searchingProducts(keyword, keyword);
+
+        // Redis 캐싱이 적용된 DTO 리스트 호출
+        List<ProductDTO> searchResults = productService.searchingProducts(keyword, keyword);
+
+        // View에 전달
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchResults", searchResults);
+
         return "/product/searchResult";
     }
+
 
 }

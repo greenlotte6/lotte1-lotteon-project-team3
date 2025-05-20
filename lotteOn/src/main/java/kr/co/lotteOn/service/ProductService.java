@@ -9,6 +9,7 @@ import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -341,8 +342,15 @@ public class ProductService {
                 .toList();
     }
 
-    public List<Product> searchingProducts(String nameKeyword, String companyNameKeyword) {
-       return productRepository.findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(nameKeyword, companyNameKeyword);
-    }
+    @Cacheable(value = "searchCache")
+    public List<ProductDTO> searchingProducts(String nameKeyword, String companyNameKeyword) {
+        log.info("[캐시 미적용] DB에서 검색 수행: {}, {}", nameKeyword, companyNameKeyword);
+        List<Product> products = productRepository.findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(
+                nameKeyword, companyNameKeyword
+        );
 
+        return products.stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
 }
