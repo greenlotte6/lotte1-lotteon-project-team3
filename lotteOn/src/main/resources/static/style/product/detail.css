@@ -86,6 +86,30 @@ main > div > * {
     border-radius: 6px;
 }
 
+a.rcoupon {
+    display: flex;
+    width: 350px;
+    height: 55px;
+    margin-top: 12px;
+    border-radius: 6px;
+    background-color: #ff7043;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+a.rcoupon:hover {
+    background-color: #f4511e;
+}
+
+a.rcoupon:active {
+    background-color: #e64a19;
+}
+
 .chooseProduct {
     display: flex;
     border-top: 1px solid #eee;
