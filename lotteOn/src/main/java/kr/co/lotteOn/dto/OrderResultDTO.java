@@ -8,11 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderResultDTO {
+public class OrderResultDTO implements Serializable {
 
     private String orderCode;
     private String memberId;

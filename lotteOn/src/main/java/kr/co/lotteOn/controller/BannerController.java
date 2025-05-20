@@ -42,7 +42,12 @@ public class BannerController {
         banner.setSliderTitle(bannerDTO.getSliderTitle());
         banner.setSliderSubTitle(bannerDTO.getSliderSubTitle());
 
+        bannerService.deleteBannerCache();
+
         bannerRepository.save(banner);
+
+        List<BannerDTO> list = bannerService.registerCache();
+
         return "redirect:/admin/config/banner";
     }
 

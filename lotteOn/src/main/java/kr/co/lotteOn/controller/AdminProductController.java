@@ -47,8 +47,19 @@ public class AdminProductController {
         return "/admin/product/list";
     }
 
+
     @PostMapping("/register")
     public String register(@ModelAttribute ProductDTO dto) {
+
+        productService.deleteSearchCache();
+        productService.deleteSortedProductByCate();
+        productService.deleteGetBest10ProductsByCategories();
+        productService.deleteGetBest10ProductsByCategoryId();
+        productService.deleteGetSortedProductsByCategories();
+        productService.deleteGetBest10DiscountedProducts();
+        productService.deleteGetDiscountedProductsWithReview();
+        productService.deleteGetSortedAllProducts();
+        productService.deleteGetPopularProductsWithReview();
 
         productService.saveProduct(dto);
         return "redirect:/admin/product/list";

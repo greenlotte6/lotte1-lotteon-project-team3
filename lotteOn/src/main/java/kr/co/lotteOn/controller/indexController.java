@@ -23,6 +23,7 @@ public class indexController {
 
         model.addAttribute("popularProducts", popularProducts);
         model.addAttribute("specialProducts", specialProducts);
+
         return "/index";
     }
 }

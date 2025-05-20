@@ -7,11 +7,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductNoticeDTO {
+public class ProductNoticeDTO implements Serializable {
 
     private String prodStatus;
     private String vatYn;

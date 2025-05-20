@@ -5,6 +5,8 @@ import kr.co.lotteOn.entity.Category;
 import kr.co.lotteOn.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class CategoryService {
      * 카테고리 전체 조회 (1차 + 2차 포함)
      */
     @Transactional(readOnly = true)
+    @Cacheable(value = "categoriesCache")
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepository.findAllWithChildren();
 
@@ -33,6 +36,7 @@ public class CategoryService {
     /**
      * 카테고리 저장 (병합 방식: 삭제 X)
      */
+    @CacheEvict(value = "categoriesCache", allEntries = true)
     @Transactional
     public void saveAll(List<CategoryDTO> dtos) {
 
