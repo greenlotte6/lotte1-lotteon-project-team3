@@ -138,7 +138,11 @@ public class ProductController {
             bestProducts = productService.getBest10Products();
         }
 
-        model.addAttribute("products", products);
+        List<ProductDTO> limitedProducts = products.stream()
+                .limit(10)
+                .toList();
+
+        model.addAttribute("products", limitedProducts);
         model.addAttribute("bestProducts", bestProducts);
         model.addAttribute("sort", sort);
         model.addAttribute("categoryId", categoryId);

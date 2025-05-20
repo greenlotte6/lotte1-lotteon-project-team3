@@ -279,3 +279,19 @@ del {
     margin-bottom: 2px;
     background: url(../images/ico_stargrade_black.svg) no-repeat 50% 50%;
 }
+
+.hidden-item {
+    display: none;
+}
+
+.more-button {
+    margin: 16px auto;
+    display: block;
+    padding: 10px 20px;
+    border: none;
+    background-color: #ff7043;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}

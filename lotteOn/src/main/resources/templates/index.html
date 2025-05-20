@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
 
     <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
 
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -25,134 +26,138 @@
     <title th:text="${config.title + ' - ' + config.subTitle}"></title>
 </head>
 <body>
-    <div id="container">
-        <div id="mainTopBanner" th:if="${mainTopBanner != null}">
-            <div th:each="banner : ${mainTopBanner}">
-                <img th:src="${banner.imagePath}" th:alt="${banner.name}">
-                <button class="bannerClose"></button>
-            </div>
+<div id="container">
+    <div id="mainTopBanner" th:if="${mainTopBanner != null}">
+        <div th:each="banner : ${mainTopBanner}">
+            <img th:src="${banner.imagePath}" th:alt="${banner.name}">
+            <button class="bannerClose"></button>
         </div>
-        <th:block th:insert="~{/common/_header.html}"/>
-        <main>
-            <div class="mainContainer">
-                <div class="swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide banners" th:each="banner : ${swiperBanner}">
-                            <div class="bannerCard">
-                                <a href="#">
-                                    <img th:src="${banner.imagePath}" th:alt="${banner.name}">
-                                    <div class="bannerCardText">
-                                        <p class="bannerCardTitle" th:utext="${#strings.replace(banner.sliderTitle, '\n', '<br/>')}"></p>
-                                        <p class="bannerCardDesc" th:utext="${#strings.replace(banner.sliderSubTitle, '\n', '<br/>')}"></p>
-                                    </div>
-                                </a>
-                            </div>
+    </div>
+    <th:block th:insert="~{/common/_header.html}"/>
+    <main>
+        <div class="mainContainer">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide banners" th:each="banner : ${swiperBanner}">
+                        <div class="bannerCard">
+                            <a href="#">
+                                <img th:src="${banner.imagePath}" th:alt="${banner.name}">
+                                <div class="bannerCardText">
+                                    <p class="bannerCardTitle"
+                                       th:utext="${#strings.replace(banner.sliderTitle, '\n', '<br/>')}"></p>
+                                    <p class="bannerCardDesc"
+                                       th:utext="${#strings.replace(banner.sliderSubTitle, '\n', '<br/>')}"></p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="adContainer products">
-                    <div class="titleWrap">
-                        <h2 class="titleLarge">예정 중인 이벤트</h2>
-                        <p class="text">브랜드판타지</p>
-                    </div>
-                    <div class="adImages">
-                        <a href="#">
-                            <img src="/images/ad3.png" alt="롯데온 광고1">
-                        </a>
-                        <a href="#">
-                            <img src="/images/ad4.png" alt="롯데온 광고2">
-                        </a>
-                    </div>
+            </div>
+            <div class="adContainer products">
+                <div class="titleWrap">
+                    <h2 class="titleLarge">예정 중인 이벤트</h2>
+                    <p class="text">브랜드판타지</p>
                 </div>
-                <div class="bestProduct products">
-                    <div class="titleWrap">
-                        <h2 class="titleLarge">온쇼페 베스트 상품</h2>
-                        <p class="text">온쇼페의 베스트 상품을 가져왔어요</p>
-                    </div>
+                <div class="adImages">
+                    <a href="https://larosee.co.kr/218?utm_source=google&utm_medium=paid_GG_SA&utm_campaign=GG_may_main&utm_content=GG_SA_may_main_250514A&imweb_mkt=ue_GSA_may_main_0514_A&gad_source=1&gad_campaignid=22549360008&gbraid=0AAAAA_GEhoY6JciA7PWEr7ql4Lbklbb9A&gclid=CjwKCAjwravBBhBjEiwAIr30VCvjvLcXX9hSymYYhH0zX6GuPGZOR72IS_OS-5kk_fp0LWRdCsEHzhoCvcAQAvD_BwE">
+                        <img src="/images/ad3.png" alt="롯데온 광고1">
+                    </a>
+                    <a href="https://www.lotteon.com/display/planV2/planDetail/116392?mall_no=1">
+                        <img src="/images/ad4.png" alt="롯데온 광고2">
+                    </a>
+                </div>
+            </div>
+            <div class="bestProduct products">
+                <div class="titleWrap">
+                    <h2 class="titleLarge">온쇼페 베스트 상품</h2>
+                    <p class="text">온쇼페의 베스트 상품을 가져왔어요</p>
+                </div>
 
-                    <div class="productItem">
-                        <div th:each="p : ${popularProducts}" class="fourItems">
-                            <a th:href="@{'/product/detail?productCode=' + ${p.productCode}}">
-                                <img th:src="@{'/images/' + ${p.imageList}}" alt="상품이미지">
+                <div class="productItem">
+                    <div th:each="p : ${popularProducts}" class="fourItems">
+                        <a th:href="@{'/product/detail?productCode=' + ${p.productCode}}">
+                            <img th:src="@{'/images/' + ${p.imageList}}" alt="상품이미지">
+                        </a>
+                        <div class="descWrap">
+                            <a th:href="@{'/product/detail?productCode=' + ${p.productCode}}" class="text">
+                                <span class="bold" th:text="${p.companyName}">[브랜드명]</span><br>
+                                <span th:text="${p.name}">상품명</span>
                             </a>
-                            <div class="descWrap">
-                                <a th:href="@{'/product/detail?productCode=' + ${p.productCode}}" class="text">
-                                    <span class="bold" th:text="${p.companyName}">[브랜드명]</span><br>
-                                    <span th:text="${p.name}">상품명</span>
-                                </a>
-                                <div class="totalPrice">
-                                    <!-- 원래 가격 -->
-                                    <del>
-                                        <p th:text="${#numbers.formatInteger(p.price, 3, 'COMMA')}"></p>
-                                        <span>원</span>
-                                    </del>
-                                </div>
-                                <div class="priceInfo">
-                                    <p class="discount" th:text="${p.discount + '%'}"></p>
-                                    <div class="price">
-                                        <p th:text="${#numbers.formatInteger(p.price * (100 - p.discount) / 100, 3, 'COMMA')}"></p>
-                                        <span>원</span>
-                                    </div>
-                                </div>
-                                <div class="review">
-                                    <span class="starGrade"></span>
-
-                                    <!-- 평점 (예: 4.5) -->
-                                    <span class="rating" th:text="${#numbers.formatDecimal(p.avgRating, 1, 1)}">0.0</span>
-
-                                    <div class="v-l"></div>
-
-                                    <!-- 리뷰 수 (예: 20) -->
-                                    <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount" th:text="${p.views}">0</span>
+                            <div class="totalPrice">
+                                <!-- 원래 가격 -->
+                                <del>
+                                    <p th:text="${#numbers.formatInteger(p.price, 3, 'COMMA')}"></p>
+                                    <span>원</span>
+                                </del>
+                            </div>
+                            <div class="priceInfo">
+                                <p class="discount" th:text="${p.discount + '%'}"></p>
+                                <div class="price">
+                                    <p th:text="${#numbers.formatInteger(p.price * (100 - p.discount) / 100, 3, 'COMMA')}"></p>
+                                    <span>원</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="specialProduct products">
-                    <div class="titleWrap">
-                        <h2 class="titleLarge">온쇼페 특가에 진심</h2>
-                        <p class="text">먼저 보는 자가 특가를 가진다</p>
-                    </div>
-                    <div class="productItem">
-                        <div class="threeItems" th:each="product : ${specialProducts}">
-                            <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
-                                <img th:src="@{'/images/' + ${product.imageList}}" alt="상품이미지">
-                            </a>
-                            <div class="descWrap">
-                                <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}" class="text">
-                                    <span class="bold" th:text="${product.companyName}"></span>
-                                    <span th:text="${product.name}">상품명</span>
-                                </a>
-                                <div class="totalPrice">
-                                    <del>
-                                        <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
-                                        <span>원</span>
-                                    </del>
-                                </div>
-                                <div class="priceInfo">
-                                    <p class="discount" th:text="${product.discount + '%'}">20%</p>
-                                    <div class="price">
-                                        <p th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100, 3, 'COMMA')}"></p>
-                                        <span>원</span>
-                                    </div>
-                                </div>
-                                <div class="review">
-                                    <span class="starGrade"></span>
-                                    <span class="rating" th:text="${#numbers.formatDecimal(product.avgRating, 1, 1)}">0.0</span>
-                                    <div class="v-l"></div>
-                                    <span class="reviewInfo">리뷰</span>
-                                    <span class="reviewCount" th:text="${product.views}">0</span>
-                                </div>
+                            <div class="review">
+                                <span class="starGrade"></span>
 
+                                <!-- 평점 (예: 4.5) -->
+                                <span class="rating" th:text="${#numbers.formatDecimal(p.avgRating, 1, 1)}">0.0</span>
+
+                                <div class="v-l"></div>
+
+                                <!-- 리뷰 수 (예: 20) -->
+                                <span class="reviewInfo">리뷰</span>
+                                <span class="reviewCount" th:text="${p.views}">0</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-        <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
-    </div>
+            <div class="specialProduct products">
+                <div class="titleWrap">
+                    <h2 class="titleLarge">온쇼페 특가에 진심</h2>
+                    <p class="text">먼저 보는 자가 특가를 가진다</p>
+                </div>
+
+                <div class="productItem">
+                    <div th:each="product, iterStat : ${specialProducts}"
+                         th:classappend="${iterStat.index >= 16} ? 'hidden-item'" class="threeItems">
+                        <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}">
+                            <img th:src="@{'/images/' + ${product.imageList}}" alt="상품이미지">
+                        </a>
+                        <div class="descWrap">
+                            <a th:href="@{'/product/detail?productCode=' + ${product.productCode}}" class="text">
+                                <span class="bold" th:text="${product.companyName}"></span>
+                                <span th:text="${product.name}">상품명</span>
+                            </a>
+                            <div class="totalPrice">
+                                <del>
+                                    <p th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></p>
+                                    <span>원</span>
+                                </del>
+                            </div>
+                            <div class="priceInfo">
+                                <p class="discount" th:text="${product.discount + '%'}">20%</p>
+                                <div class="price">
+                                    <p th:text="${#numbers.formatInteger(product.price * (100 - product.discount) / 100, 3, 'COMMA')}"></p>
+                                    <span>원</span>
+                                </div>
+                            </div>
+                            <div class="review">
+                                <span class="starGrade"></span>
+                                <span class="rating" th:text="${#numbers.formatDecimal(product.avgRating, 1, 1)}">0.0</span>
+                                <div class="v-l"></div>
+                                <span class="reviewInfo">리뷰</span>
+                                <span class="reviewCount" th:text="${product.views}">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
+</div>
 </body>
 </html>
