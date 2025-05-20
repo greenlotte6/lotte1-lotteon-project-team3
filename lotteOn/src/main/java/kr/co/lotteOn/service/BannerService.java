@@ -2,15 +2,20 @@ package kr.co.lotteOn.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import kr.co.lotteOn.dto.BannerDTO;
 import kr.co.lotteOn.entity.Banner;
 import kr.co.lotteOn.entity.Config;
 import kr.co.lotteOn.repository.BannerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +26,7 @@ import java.util.stream.Collectors;
 public class BannerService {
 
     private final BannerRepository bannerRepository;
-    private final EntityManager entityManager;
+    private final ModelMapper modelMapper;
 
     public void activateBanner(int id) {
         Banner banner = bannerRepository.findById(id).orElseThrow();
@@ -58,5 +63,21 @@ public class BannerService {
     public void deleteByIdIn(List<Integer> bannerIds) {
         log.info("bannerIds Service {} ", bannerIds);
         bannerRepository.deleteByIdIn(bannerIds);
+    }
+
+    @CacheEvict(value = "deleteBannerCache", allEntries = true)
+    public void deleteBannerCache() {}
+
+    @Cacheable(value = "deleteBannerCache")
+    public List<BannerDTO> registerCache() {
+        List<Banner> banners = bannerRepository.findAll();
+
+        List<BannerDTO> list = new ArrayList<>();
+        for(Banner banner : banners) {
+            BannerDTO bannerDTO = modelMapper.map(banner, BannerDTO.class);
+            list.add(bannerDTO);
+        }
+
+        return list;
     }
 }

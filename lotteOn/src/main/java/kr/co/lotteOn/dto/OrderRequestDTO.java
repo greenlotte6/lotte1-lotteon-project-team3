@@ -8,13 +8,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderRequestDTO {
+public class OrderRequestDTO implements Serializable {
 
     private String memberId;     // ✔ Member 대신 memberId만 받음
     private String name;

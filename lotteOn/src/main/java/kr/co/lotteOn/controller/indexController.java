@@ -22,6 +22,7 @@ public class indexController {
         List<ProductDTO> specialProducts = productService.getDiscountedProductsWithReview();
         model.addAttribute("popularProducts", popularProducts);
         model.addAttribute("specialProducts", specialProducts);
+
         return "/index";
     }
 }

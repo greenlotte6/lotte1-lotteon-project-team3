@@ -9,6 +9,7 @@ import kr.co.lotteOn.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,13 +66,6 @@ public class ProductService {
         return dto;
     }
 
-
-    @Transactional(readOnly = true)
-    public List<ProductDTO> getAllProducts() {
-        return productRepository.findAll().stream()
-                .map(ProductDTO::fromEntity).toList();
-    }
-
     @Transactional
     public Product saveProduct(ProductDTO dto) {
         // 1. DTO → Entity 매핑
@@ -119,8 +113,6 @@ public class ProductService {
         // 7. 최종 저장 (productCode 포함)
         return productRepository.save(product);
     }
-
-
 
     @Transactional
     public void modifyProduct(ProductDTO dto) {
@@ -184,12 +176,7 @@ public class ProductService {
         return products.map(ProductDTO::fromEntity);
     }
 
-    @Transactional(readOnly = true)
-    public List<ProductDTO> getProductsByCategoryId(Long categoryId) {
-        return productRepository.findByCategory_CategoryId(categoryId).stream()
-                .map(ProductDTO::fromEntity).toList();
-    }
-
+    @Cacheable(value = "getPopularProductsWithReview")
     @Transactional(readOnly = true)
     public List<ProductDTO> getPopularProductsWithReview() {
         Pageable top4 = PageRequest.of(0, 4);
@@ -210,6 +197,7 @@ public class ProductService {
                 .toList();
     }
 
+    @Cacheable(value = "getBest10Products")
     @Transactional(readOnly = true)
     public List<ProductDTO> getBest10Products() {
         Pageable top10 = PageRequest.of(0, 10);
@@ -232,7 +220,7 @@ public class ProductService {
                 .toList();
     }
 
-
+    @Cacheable(value = "getSortedAllProducts")
     @Transactional(readOnly = true)
     public List<ProductDTO> getSortedAllProducts(String sort) {
         List<Product> products = productRepository.findAllWithFetchJoin();
@@ -262,6 +250,7 @@ public class ProductService {
                 .toList();
     }
 
+    @Cacheable(value = "getDiscountedProductsWithReview")
     @Transactional(readOnly = true)
     public List<ProductDTO> getDiscountedProductsWithReview() {
         List<Product> products = productRepository.findAllWithFetchJoinWhereDiscountOver20();
@@ -274,11 +263,7 @@ public class ProductService {
                 .toList();
     }
 
-    public String getProductNameByCode(String code) {
-        return productRepository.findByProductCode(code)
-                .map(Product::getName).orElse("상품명 없음");
-    }
-
+    @Cacheable(value = "getBest10DiscountedProducts")
     public List<ProductDTO> getBest10DiscountedProducts() {
         Pageable top10 = PageRequest.of(0, 100);
         List<String> codes = orderItemRepository.findTopPopularProductCodes(top10);
@@ -289,11 +274,13 @@ public class ProductService {
                 .limit(10).map(ProductDTO::fromEntity).toList();
     }
 
+    @Cacheable(value = "getSortedProductsByCategories")
     public List<ProductDTO> getSortedProductsByCategories(List<Long> categoryIds, String sort) {
         List<Product> products = productRepository.findAllByCategory_CategoryIdInWithOptions(categoryIds);
         return products.stream().sorted(getComparator(sort)).map(ProductDTO::fromEntity).toList();
     }
 
+    @Cacheable(value = "getBest10ProductsByCategoryId")
     public List<ProductDTO> getBest10ProductsByCategoryId(Long categoryId) {
         Pageable top10 = PageRequest.of(0, 10);
         List<String> codes = productRepository.findTopPopularProductCodesByCategoryId(categoryId, top10);
@@ -304,6 +291,7 @@ public class ProductService {
         return codes.stream().map(map::get).filter(Objects::nonNull).map(ProductDTO::fromEntity).toList();
     }
 
+    @Cacheable(value = "getBest10ProductsByCategories")
     public List<ProductDTO> getBest10ProductsByCategories(List<Long> categoryIds) {
         Pageable top10 = PageRequest.of(0, 10);
         List<String> codes = orderItemRepository.findTopPopularProductCodesByCategoryIds(categoryIds, top10);
@@ -314,6 +302,7 @@ public class ProductService {
         return codes.stream().map(map::get).filter(Objects::nonNull).map(ProductDTO::fromEntity).toList();
     }
 
+    @Cacheable(value = "sortedProductByCate")
     @Transactional(readOnly = true)
     public List<ProductDTO> getSortedProductsByCategory(Long categoryId, String sort) {
         List<Product> products = productRepository.findWithFetchJoinByCategoryIdOrderByIdDesc(categoryId);
@@ -344,7 +333,6 @@ public class ProductService {
 
     @Cacheable(value = "searchCache")
     public List<ProductDTO> searchingProducts(String nameKeyword, String companyNameKeyword) {
-        log.info("[캐시 미적용] DB에서 검색 수행: {}, {}", nameKeyword, companyNameKeyword);
         List<Product> products = productRepository.findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(
                 nameKeyword, companyNameKeyword
         );
@@ -353,4 +341,32 @@ public class ProductService {
                 .map(ProductDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @CacheEvict(value = "searchCache", allEntries = true)
+    public void deleteSearchCache() {}
+
+    @CacheEvict(value = "sortedProductByCate", allEntries = true)
+    public void deleteSortedProductByCate() {}
+
+    @CacheEvict(value = "getBest10ProductsByCategories", allEntries = true)
+    public void deleteGetBest10ProductsByCategories() {}
+
+    @CacheEvict(value = "getBest10ProductsByCategoryId", allEntries = true)
+    public void deleteGetBest10ProductsByCategoryId() {}
+
+    @CacheEvict(value = "getSortedProductsByCategories", allEntries = true)
+    public void deleteGetSortedProductsByCategories() {}
+
+    @CacheEvict(value = "getBest10DiscountedProducts", allEntries = true)
+    public void deleteGetBest10DiscountedProducts() {}
+
+    @CacheEvict(value = "getDiscountedProductsWithReview", allEntries = true)
+    public void deleteGetDiscountedProductsWithReview() {}
+
+    @CacheEvict(value = "getSortedAllProducts", allEntries = true)
+    public void deleteGetSortedAllProducts() {}
+
+    @CacheEvict(value = "getPopularProductsWithReview", allEntries = true)
+    public void deleteGetPopularProductsWithReview() {}
+
 }

@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class SalesDTO {
+public class SalesDTO implements Serializable {
 
     private String companyName;
     private String businessNo;
