@@ -315,5 +315,11 @@ public class ProductController {
         return "/product/searchResult";
     }
 
+    @GetMapping("/api/search/auto")
+    @ResponseBody
+    public List<String> autoComplete(@RequestParam String keyword) {
+        return productService.autoCompleteProductNames(keyword);
+    }
+
 
 }
