@@ -319,14 +319,14 @@ input {
 }
 .searchWrapper {
     position: relative;
-    width: 100%;
+    width: 500px;
 }
 
 .autocomplete-list {
     position: absolute;
     top: 100%;
-    left: 71px;
-    width: 380px;
+    left: 60px;
+    width: 400px;
     max-height: 300px;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -343,4 +343,8 @@ input {
 
 .autocomplete-list li:hover {
     background-color: #f8f8f8;
+}
+
+.searchKeywords {
+    width: 300px;
 }
