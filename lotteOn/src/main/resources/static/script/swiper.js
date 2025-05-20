@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 자동재생 여부
             delay: 5000, // 시작시간 설정
         },
-        loop: true
+        loop: true,
+        navigation: false
     });
 });

@@ -22,8 +22,9 @@ server:
 spring:
   data:
     redis:
-      host: localhost
+      host: 54.180.162.217
       port: 6379
+      timeout: 6000
 
   servlet:
     multipart:

@@ -154,6 +154,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p JOIN FETCH p.category")
     List<Product> findAllWithFetchJoin();
 
-    List<Product> findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(String nameKeyword, String companyNameKeyword);
-
+    @EntityGraph(attributePaths = {"options", "notice", "category"})
+    List<Product> findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(String name, String companyName);
 }
+

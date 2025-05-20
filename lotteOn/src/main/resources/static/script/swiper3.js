@@ -6,5 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         loop: true,
         allowTouchMove: false,
+        navigation: false
     });
 });

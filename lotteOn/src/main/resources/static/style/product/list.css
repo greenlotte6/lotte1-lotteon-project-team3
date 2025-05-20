@@ -16,26 +16,10 @@ main > div > * {
     overflow: hidden;
 }
 
-.swiper-button-next, .swiper-button-prev {
-    position: static;
-    color: #888;
-    margin: 0;
-}
-
-.swiper-button-next {
-    margin-left: 20px;
-}
-
 .paging {
     display: flex;
     align-items: center;
 }
-
-:root {
-    --swiper-navigation-size: 22px;
-}
-
-/* Swiper Custom */
 
 .banners {
     display: flex;

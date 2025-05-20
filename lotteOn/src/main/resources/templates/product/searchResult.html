@@ -31,39 +31,6 @@
                         <h2 class="titleLarge">검색 결과</h2>
                         <p class="text" th:text="${keyword} + '에 대한 검색 결과입니다.'"></p>
                     </div>
-                    <div class="sortList">
-                        <ul>
-                            <!-- 판매량순 -->
-                            <li>
-                                <a>판매량순</a>
-                            </li>
-
-                            <!-- 낮은 가격순 -->
-                            <li>
-                                <a>낮은 가격순</a>
-                            </li>
-
-                            <!-- 높은 가격순 -->
-                            <li>
-                                <a>높은 가격순</a>
-                            </li>
-
-                            <!-- 등록순 -->
-                            <li>
-                                <a>등록순</a>
-                            </li>
-
-                            <!-- 평점순 -->
-                            <li>
-                                <a>평점순</a>
-                            </li>
-
-                            <!-- 리뷰순 -->
-                            <li>
-                                <a>리뷰순</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 <div th:if="${searchResults.isEmpty()}" class="nothing">
                     <p>검색 결과가 없습니다.</p>
@@ -93,19 +60,6 @@
                                     <span>원</span>
                                 </div>
                             </div>
-                            <div class="review">
-                                <span class="starGrade"></span>
-
-                                <!-- 평점 (예: 4.5) -->
-<!--                                <span class="rating" th:text="${product.avgRating != null ? #numbers.formatDecimal(product.avgRating, 1, 1) : '0.0'}">0.0</span>-->
-
-                                <div class="v-l"></div>
-
-                                <!-- 리뷰 수 (예: 20) -->
-                                <span class="reviewInfo">리뷰</span>
-                                <span class="reviewCount" th:text="${product.views}">0</span>
-                            </div>
-
                         </div>
                     </div>
                 </div>
