@@ -20,6 +20,7 @@ public class indexController {
     public String index(Model model) {
         List<ProductDTO> popularProducts = productService.getPopularProductsWithReview();
         List<ProductDTO> specialProducts = productService.getDiscountedProductsWithReview();
+
         model.addAttribute("popularProducts", popularProducts);
         model.addAttribute("specialProducts", specialProducts);
 

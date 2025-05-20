@@ -369,4 +369,10 @@ public class ProductService {
     @CacheEvict(value = "getPopularProductsWithReview", allEntries = true)
     public void deleteGetPopularProductsWithReview() {}
 
+    public List<String> autoCompleteProductNames(String keyword) {
+        return productRepository.findTop10ByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(Product::getName)
+                .toList();
+    }
 }

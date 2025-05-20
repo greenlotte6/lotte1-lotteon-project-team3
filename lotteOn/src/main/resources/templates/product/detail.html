@@ -51,10 +51,18 @@
                         </div>
                     </div>
                     <div class="adBanner" th:if="${productBanner != null}">
-                        <a href="#" th:each="banner : ${productBanner}">
+                        <a href="#" th:each="banner : ${productBanner}" onclick="issueRandomCoupon()">
                             <img th:src="${banner.imagePath}" alt="광고 배너">
                         </a>
                     </div>
+                    <a th:if="${productBanner != null}"
+                       th:each="banner : ${productBanner}"
+                       href="#"
+                       class="rcoupon"
+                       onclick="issueRandomCoupon()">
+                        랜덤쿠폰, 지금만 발급!
+                    </a>
+
                     <!--optionValue에서 ,로 구분은 dto에서 실행함.-->
                     <div class="chooseProduct">
                         <p>상품 선택</p>
@@ -251,5 +259,27 @@
     </main>
     <th:block th:replace="/common/_footer.html :: footerFragment(versionId=${selectedVersionId})"/>
 </div>
+<script>
+    async function issueRandomCoupon() {
+        try {
+            const res = await fetch('/coupon/issue-random', { method: 'POST' });
+            const data = await res.json();
+
+            if (res.status === 401) {
+                alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+                window.location.href = '/member/login'; // ← 로그인 경로 맞게 수정
+                return;
+            }
+
+            if (res.ok) {
+                alert('쿠폰이 발급되었습니다!\n' + data.couponName);
+            } else {
+                alert('❌ 발급 실패: ' + data.message);
+            }
+        } catch (e) {
+            alert('⚠ 서버 오류 발생');
+        }
+    }
+</script>
 </body>
 </html>

@@ -19,13 +19,21 @@
                 <a th:href="@{/}">
                     <img th:src="@{'/images/config/' + ${config.headerLogo}}" alt="lotteOn Logo" class="logo">
                 </a>
-                <form th:action="@{/product/searchResult}" method="get" id="searchForm">
-                    <div class="search">
-                        <input type="text" name="keyword" placeholder="검색어를 입력해주세요" class="inputSearch">
-                        <button type="button" class="deleteSearchKeyword"></button>
-                        <button type="button" class="searchIcon icon" onclick="document.getElementById('searchForm').submit();"></button>
-                    </div>
-                </form>
+
+                <!-- ✅ 여기를 감싸서 자동완성 리스트 위치 지정 -->
+                <div class="searchWrapper">
+                    <form th:action="@{/product/searchResult}" method="get" id="searchForm">
+                        <div class="search">
+                            <input type="text" name="keyword" placeholder="검색어를 입력해주세요" class="inputSearch" autocomplete="off">
+                            <button type="button" class="deleteSearchKeyword"></button>
+                            <button type="button" class="searchIcon icon" onclick="document.getElementById('searchForm').submit();"></button>
+                        </div>
+                    </form>
+
+                    <!-- ✅ 자동완성 리스트 -->
+                    <ul id="autoList" class="autocomplete-list"></ul>
+                </div>
+
                 <div class="swiper4">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide" th:each="keyword, iterStat : ${topKeywords}">
@@ -35,6 +43,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="contentLink">
                 <a href="#" class="heart icon"></a>
                 <a th:href="@{/myPage/my_home}" class="my icon"></a>
