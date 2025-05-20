@@ -353,4 +353,11 @@ public class ProductService {
                 .map(ProductDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    public List<String> autoCompleteProductNames(String keyword) {
+        return productRepository.findTop10ByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(Product::getName)
+                .toList();
+    }
 }

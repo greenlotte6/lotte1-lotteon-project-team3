@@ -156,5 +156,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @EntityGraph(attributePaths = {"options", "notice", "category"})
     List<Product> findByNameContainingIgnoreCaseOrCompanyNameContainingIgnoreCase(String name, String companyName);
+
+    List<Product> findTop10ByNameContainingIgnoreCase(String keyword);
 }
 
