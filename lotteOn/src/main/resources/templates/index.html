@@ -27,8 +27,8 @@
 </head>
 <body>
 <div id="container">
-    <div id="mainTopBanner" th:if="${mainTopBanner != null}">
-        <div th:each="banner : ${mainTopBanner}">
+    <div id="mainTopBanner" th:if="${#lists.isEmpty(mainTopBanner) == false}">
+        <div th:each="banner : ${mainTopBanner}" th:if="${banner.active == true}">
             <img th:src="${banner.imagePath}" th:alt="${banner.name}">
             <button class="bannerClose"></button>
         </div>
