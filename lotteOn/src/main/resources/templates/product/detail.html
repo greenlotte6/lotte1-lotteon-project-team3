@@ -51,15 +51,11 @@
                         </div>
                     </div>
                     <div class="adBanner" th:if="${productBanner != null}">
-                        <a href="#" th:each="banner : ${productBanner}" onclick="issueRandomCoupon()">
+                        <a href="#" th:each="banner : ${productBanner}">
                             <img th:src="${banner.imagePath}" alt="광고 배너">
                         </a>
                     </div>
-                    <a th:if="${productBanner != null}"
-                       th:each="banner : ${productBanner}"
-                       href="#"
-                       class="rcoupon"
-                       onclick="issueRandomCoupon()">
+                    <a href="#" class="rcoupon" onclick="issueRandomCoupon()">
                         랜덤쿠폰, 지금만 발급!
                     </a>
 
