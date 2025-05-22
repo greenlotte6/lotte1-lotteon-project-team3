@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!confirm("수정하시겠습니까?")) return;
 
         const formData = new FormData(siteForm);
+        console.log(siteForm.action);
 
         try {
             const response = await fetch(siteForm.action, {
@@ -23,12 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 alert("수정했습니다.");
+                console.log(siteForm.action);
             } else {
                 alert("수정에 실패했습니다. 다시 시도해주세요.");
+                console.log(siteForm.action);
             }
         } catch (error) {
             console.error("에러 발생:", error);
             alert("서버 오류가 발생했습니다.");
+            console.log(siteForm.action);
         }
     });
 
