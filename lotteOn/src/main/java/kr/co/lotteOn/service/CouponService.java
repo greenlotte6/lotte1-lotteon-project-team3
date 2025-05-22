@@ -40,7 +40,7 @@ public class CouponService {
                 .coupon(selected)
                 .member(member)
                 .expiredDate(LocalDateTime.parse(selected.getEndDate() + "T23:59:59"))
-                .status("사용가능")
+                .status("미사용")
                 .build();
 
         return issuedCouponRepository.save(issued);
